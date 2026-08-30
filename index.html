@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MedCompass - an interactive premed and BS/MD college selection tool: 80 schools, live admit-chance modeling, fit scoring, merit and 8-year cost analysis, direct-pathway tracking.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>MedCompass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{
+  --bg:#0a0e1a; --panel:#0f1526; --panel2:#131b30; --line:#1e2a45;
+  --green:#00ff88; --cyan:#00d4ff; --amber:#f5a623; --purple:#a855f7;
+  --white:#ffffff; --body:#cbd5e1; --mut:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--body);font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:14.5px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.lbl.g{color:var(--green)}.lbl.c{color:var(--cyan)}.lbl.a{color:var(--amber)}.lbl.p{color:var(--purple)}
+h1{color:var(--white);font-size:clamp(28px,4vw,40px);font-weight:900;letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+h2{color:var(--white);font-size:20px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--body);max-width:70ch;margin-top:8px}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:3px 9px;border:1px solid var(--line);border-radius:3px;color:var(--mut);text-transform:uppercase}
+.badge.warn{border-color:var(--amber);color:var(--amber)}
+/* controls */
+.controls{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:22px -20px 0;padding:14px 20px}
+.ctl-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px 22px;align-items:end}
+.ctl .lbl{display:flex;justify-content:space-between;margin-bottom:6px}
+.ctl .val{color:var(--cyan);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:var(--line);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--green);cursor:pointer;border:2px solid var(--bg)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--green);cursor:pointer;border:2px solid var(--bg)}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:6px 0}
+.tg{width:34px;height:18px;border-radius:9px;background:var(--line);position:relative;transition:background .15s;flex:none}
+.tg::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--mut);transition:all .15s}
+.toggle.on .tg{background:var(--green)}
+.toggle.on .tg::after{left:18px;background:var(--bg)}
+.toggle span.t{font-size:12px;font-weight:600;color:var(--body)}
+/* tabs */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:24px 0 20px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;cursor:pointer}
+.tab:hover{color:var(--body)}
+.tab.on{color:var(--green);border-bottom-color:var(--green)}
+.tab:focus-visible,.chip:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+section[hidden]{display:none}
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--body);font:inherit;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:3px;cursor:pointer}
+.chip.on{border-color:var(--cyan);color:var(--cyan)}
+.bchip{opacity:.45}.bchip.on{opacity:1;border-color:currentColor}
+.tblwrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.tbl th{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+.tbl th:hover{color:var(--cyan)}
+.tbl th.sorted{color:var(--green)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td.nm{color:var(--white);font-weight:700;border-left:3px solid var(--line)}
+.tbl tr.Safety td.nm{border-left-color:var(--green)}.tbl tr.Likely td.nm{border-left-color:var(--cyan)}
+.tbl tr.Target td.nm{border-left-color:var(--amber)}.tbl tr.Reach td.nm{border-left-color:var(--purple)}
+select{background:var(--panel);border:1px solid var(--line);color:var(--body);font:inherit;font-size:12px;padding:6px 8px;border-radius:3px}
+/* summary strip */
+.sumstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:18px 0 22px}
+.stat{background:var(--panel);border-top:2px solid var(--line);padding:12px 14px}
+.stat .n{color:var(--white);font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:4px}
+.stat.g{border-top-color:var(--green)}.stat.c{border-top-color:var(--cyan)}.stat.a{border-top-color:var(--amber)}.stat.p{border-top-color:var(--purple)}
+/* school cards */
+.card{background:var(--panel);border-left:3px solid var(--line);margin-bottom:10px;padding:14px 16px;cursor:pointer;transition:background .12s}
+.card:hover{background:var(--panel2)}
+.card.Safety{border-left-color:var(--green)}.card.Likely{border-left-color:var(--cyan)}.card.Target{border-left-color:var(--amber)}.card.Reach{border-left-color:var(--purple)}
+.crow{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline}
+.cname{color:var(--white);font-weight:800;font-size:16px}
+.cloc{color:var(--mut);font-size:12px}
+.pill{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px}
+.pill.Safety{background:rgba(0,255,136,.12);color:var(--green)}
+.pill.Likely{background:rgba(0,212,255,.12);color:var(--cyan)}
+.pill.Target{background:rgba(245,166,35,.14);color:var(--amber)}
+.pill.Reach{background:rgba(168,85,247,.15);color:var(--purple)}
+.pill.wue{background:none;border:1px solid var(--line);color:var(--mut)}
+.cnums{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px 18px;margin-top:10px}
+.cnums .lbl{margin-bottom:2px}
+.cnums .v{color:var(--white);font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+.cnums .v small{color:var(--mut);font-weight:500;font-size:11px}
+.over{color:var(--amber)!important}
+.detail{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:12px;font-size:13px}
+.card.open .detail{display:block}
+.detail p{margin-bottom:8px;max-width:90ch}
+.detail b{color:var(--white)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
+.dot.solid{background:var(--green)}.dot.rep{background:var(--amber)}
+.links a{color:var(--cyan);text-decoration:none;font-weight:600;font-size:12.5px;margin-right:16px}
+.links a:hover{text-decoration:underline}
+/* weights */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 26px;margin-top:16px}
+.presets{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+/* compare */
+.cmp{display:grid;grid-template-columns:160px repeat(3,1fr);gap:1px;background:var(--line);margin-top:14px;overflow-x:auto;font-size:13px}
+.cmp>div{background:var(--panel);padding:9px 12px}
+.cmp .hd{color:var(--white);font-weight:800}
+.cmp .rl{color:var(--mut);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center}
+.cmp .best{color:var(--green);font-weight:700}
+.cmpwrap{overflow-x:auto}
+/* cost bars */
+.bar-row{margin-bottom:14px}
+.bar-head{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px}
+.bar-head b{color:var(--white)}
+.bar-head span{font-variant-numeric:tabular-nums;color:var(--body)}
+.bar{height:14px;background:var(--panel);border:1px solid var(--line);display:flex;overflow:hidden}
+.bar .ug{background:var(--cyan);height:100%}
+.bar .md{background:var(--purple);height:100%;opacity:.75}
+.legend{display:flex;gap:18px;margin:10px 0 20px;font-size:11.5px}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin:16px 0 0 6px;padding-left:20px}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-item::before{content:'';position:absolute;left:-25px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--cyan)}
+.tl-item.crit::before{background:var(--green)}
+.tl-item .d{color:var(--white);font-weight:800;font-variant-numeric:tabular-nums}
+.tl-item .w{font-size:13px}
+.note{background:var(--panel);border-left:3px solid var(--amber);padding:12px 16px;margin:14px 0;font-size:13px;max-width:100ch}
+.note b{color:var(--white)}
+button.act{background:none;border:1px solid var(--green);color:var(--green);font:inherit;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;cursor:pointer;border-radius:3px}
+button.act:hover{background:rgba(0,255,136,.08)}
+.qbox{background:var(--panel);border:1px solid var(--line);color:var(--body);font:inherit;font-size:12.5px;padding:7px 12px;border-radius:3px;min-width:220px}
+.qbox:focus{outline:none;border-color:var(--cyan)}
+.pcard.restricted{border-left-color:var(--amber)}
+textarea{width:100%;max-width:760px;background:var(--panel);border:1px solid var(--line);color:var(--body);font:inherit;font-size:13px;padding:10px 12px;border-radius:3px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--cyan)}
+.star{margin-left:auto;background:none;border:none;color:var(--mut);font-size:18px;line-height:1;cursor:pointer;padding:0 2px}
+.star.on{color:var(--amber)}
+.pcard{background:var(--panel);border-left:3px solid var(--line);margin-bottom:10px;padding:14px 16px}
+.pcard.attainable{border-left-color:var(--green)}
+.pcard.stretch{border-left-color:var(--amber)}
+.pcard.out{border-left-color:var(--purple)}
+.pcard p{font-size:13px;margin-top:6px;max-width:95ch}
+@media (max-width:640px){.cmp{grid-template-columns:110px repeat(3,minmax(120px,1fr))}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="lbl g">Premed College Selection &mdash; Class of 2027 Entry</div>
+  <h1>MedCompass</h1>
+  <p class="sub">Non-UC candidates for a California premed applicant. Move any input &mdash; the whole list re-scores and re-classifies live. UCs are handled separately (you're applying to all of them) under the UC Reference tab.</p>
+  <div style="margin-top:10px"><span class="badge warn">Data: 2024&ndash;26 cycle estimates &mdash; verify via links before applying</span></div>
+</div>
+
+<div class="controls"><div class="ctl-grid">
+  <div class="ctl"><div class="lbl">Unweighted GPA <span class="val" id="vGpa">3.55</span></div><input type="range" id="inGpa" min="3.0" max="4.0" step="0.01" value="3.55" aria-label="Unweighted GPA"></div>
+  <div class="ctl"><div class="lbl">SAT <span class="val" id="vSat">1330</span></div><input type="range" id="inSat" min="1100" max="1550" step="10" value="1330" aria-label="SAT score"></div>
+  <div class="ctl"><div class="lbl">Budget / yr <span class="val" id="vBud">$45k</span></div><input type="range" id="inBud" min="20000" max="90000" step="1000" value="45000" aria-label="Annual budget"></div>
+  <div class="ctl"><div class="toggle" id="tgTO" role="switch" aria-checked="false" tabindex="0"><div class="tg"></div><span class="t">Test-optional</span></div></div>
+  <div class="ctl"><div class="toggle on" id="tgOver" role="switch" aria-checked="true" tabindex="0"><div class="tg"></div><span class="t">Show over-budget</span></div></div>
+</div></div>
+
+<div class="wrap" style="padding-top:0">
+  <div class="tabs" role="tablist">
+    <button class="tab" data-t="profile">Profile</button>
+    <button class="tab on" data-t="list">The List</button>
+    <button class="tab" data-t="all">All Colleges</button>
+    <button class="tab" data-t="weights">Weights</button>
+    <button class="tab" data-t="compare">Compare</button>
+    <button class="tab" data-t="cost">8-Year Cost</button>
+    <button class="tab" data-t="path">Direct Pathways</button>
+    <button class="tab" data-t="uc">UC Reference</button>
+    <button class="tab" data-t="time">Timeline</button>
+    <button class="tab" data-t="method">Method</button>
+  </div>
+
+  <section id="s-profile" hidden>
+    <h2>Applicant profile</h2>
+    <p class="sub">These feed the admit-chance model. ECs, rigor, and hooks matter most at holistic, lower-admit-rate schools and barely move auto-admit publics &mdash; the model applies them proportionally.</p>
+    <div class="note" style="border-left-color:var(--green)"><b>EC tier set to Exceptional</b> &mdash; graded by Claude from his UC Activities List (Aug 2026): USABO Semifinalist, 8th nationally at HOSA (Anatomy &amp; Physiology), research manuscript under review, 100+ clinical hours, multiple leadership roles. The research-publication hook is also switched on. Details are pre-loaded in the EC box below.</div>
+    <div class="wgrid" style="margin-top:18px">
+      <div class="ctl"><div class="lbl">Extracurricular strength</div>
+        <select id="ecSel" aria-label="EC strength" style="width:100%">
+          <option value="minimal">Minimal — little premed activity yet</option>
+          <option value="average">Average — clubs, some volunteering</option>
+          <option value="strong" selected>Strong — 100+ clinical/volunteer hrs, leadership</option>
+          <option value="exceptional">Exceptional — research + clinical + leadership</option>
+        </select></div>
+      <div class="ctl"><div class="lbl">AP / IB courses (total) <span class="val" id="vAp">8</span></div><input type="range" id="inAp" min="0" max="14" step="1" value="8" aria-label="AP course count"></div>
+      <div class="ctl"><div class="lbl">AP exam scores of 5 <span class="val" id="vAp5">0</span></div><input type="range" id="inAp5" min="0" max="10" step="1" value="0" aria-label="Count of AP 5 scores"></div>
+      <div class="ctl"><div class="lbl">AP exam scores of 4 <span class="val" id="vAp4">0</span></div><input type="range" id="inAp4" min="0" max="10" step="1" value="0" aria-label="Count of AP 4 scores"></div>
+      <div class="ctl"><div class="toggle on" id="tgSci" role="switch" aria-checked="true" tabindex="0"><div class="tg"></div><span class="t">Rigor includes AP sciences (Bio/Chem/Physics)</span></div></div>
+      <div class="ctl"><div class="lbl">Track</div>
+        <select id="trackSel" aria-label="Track" style="width:100%">
+          <option value="premed">Traditional pre-med only</option>
+          <option value="both" selected>Both — premed list + direct pathways</option>
+          <option value="bsmd">BS/MD focus</option>
+        </select></div>
+    </div>
+    <div class="lbl" style="margin:22px 0 8px">Hooks (select all that apply)</div>
+    <div class="filters">
+      <button class="chip" data-h="firstgen">First-generation</button>
+      <button class="chip" data-h="research">Research publication</button>
+      <button class="chip" data-h="athlete">Recruited athlete</button>
+      <button class="chip" data-h="legacy">Legacy</button>
+    </div>
+    <div class="lbl" style="margin:22px 0 8px">His EC list</div>
+    <textarea id="ecText" rows="6" placeholder="Paste his actual extracurriculars here — clinical hours, research, volunteering, leadership, awards. Saved in this browser only. Paste the same list to Claude in chat to get the tier above re-graded and school notes updated." aria-label="EC list"></textarea>
+    <h2 style="margin-top:28px">Dealbreakers</h2>
+    <p class="sub">Hard filters &mdash; these remove schools entirely (weights only re-rank).</p>
+    <div class="wgrid" style="margin-top:14px">
+      <div class="ctl"><div class="toggle" id="tgRelig" role="switch" aria-checked="false" tabindex="0"><div class="tg"></div><span class="t">Exclude religiously affiliated schools</span></div><div class="lbl" style="margin-top:4px;text-transform:none;letter-spacing:0">Removes the Jesuit/Christian schools (SLU, Creighton, Gonzaga, LMU, USD, SCU, Marquette, Loyola Chicago, Seattle U, Baylor). Jesuit campuses are academically secular in practice.</div></div>
+      <div class="ctl"><div class="toggle" id="tgHon" role="switch" aria-checked="false" tabindex="0"><div class="tg"></div><span class="t">Require an honors college</span></div></div>
+    </div>
+  </section>
+
+  <section id="s-list">
+    <div class="sumstrip" id="sumstrip"></div>
+    <div class="filterbar"></div>
+    <div id="listBox"></div>
+    <div class="note"><b>How to read this:</b> Fit score (0&ndash;100) is your weighted priorities applied to each school &mdash; tune them in the Weights tab. Chance bands use his GPA/SAT vs. each school's admitted middle-50%: Safety &ge;75%, Likely 55&ndash;75%, Target 30&ndash;55%, Reach &lt;30%. CSUs are test-blind, so SAT is ignored there automatically. Click any card for premed notes, merit details, deadlines, and links. <span class="dot solid"></span>= solid published data, <span class="dot rep"></span>= reputational (student reports, softer sources).</div>
+  </section>
+
+  <section id="s-all" hidden>
+    <h2>All colleges &mdash; complete roster, no filters</h2>
+    <p class="sub">Every school in the dataset (<span id="allCount" style="color:var(--cyan)"></span>). Nothing here is ever hidden by filters &mdash; only this search box narrows it. Click column headers to sort.</p>
+    <div class="filters"><input id="allq" class="qbox" type="search" placeholder="Search all columns&hellip;" aria-label="Search all colleges"></div>
+    <div id="allBox"></div>
+  </section>
+
+  <section id="s-weights" hidden>
+    <h2>Your priorities</h2>
+    <p class="sub">These weights drive the fit score. They auto-normalize to 100%.</p>
+    <div class="presets">
+      <button class="act" data-p="bal">Balanced</button>
+      <button class="act" data-p="cost">Cost-first</button>
+      <button class="act" data-p="out">Outcomes-first</button>
+    </div>
+    <div class="wgrid" id="wgrid"></div>
+  </section>
+
+  <section id="s-compare" hidden>
+    <h2>Head-to-head</h2>
+    <div class="filters" style="margin-top:12px">
+      <select id="cmpA"></select><select id="cmpB"></select><select id="cmpC"></select>
+    </div>
+    <div class="cmpwrap"><div class="cmp" id="cmpBox"></div></div>
+  </section>
+
+  <section id="s-cost" hidden>
+    <h2>The 8-year picture</h2>
+    <p class="sub">Undergrad is only half the bill. Bars show estimated 4-year net cost at your merit level, stacked with a median med-school debt assumption you control. Sorted cheapest first.</p>
+    <div class="ctl" style="max-width:320px;margin-top:14px"><div class="lbl">Med school debt assumption <span class="val" id="vMed">$250k</span></div><input type="range" id="inMed" min="0" max="400000" step="10000" value="250000" aria-label="Med school debt assumption"></div>
+    <div class="legend"><span><i style="background:var(--cyan)"></i>Undergrad 4-yr net</span><span><i style="background:var(--purple);opacity:.75"></i>Med school debt</span></div>
+    <div id="costBox"></div>
+  </section>
+
+  <section id="s-path" hidden>
+    <h2>Direct pathways &mdash; BS/MD and early assurance</h2>
+    <div id="pathBox"></div>
+  </section>
+
+  <section id="s-method" hidden>
+    <h2>How the numbers are made</h2>
+    <div class="note" style="border-left-color:var(--cyan)"><b>Admit chance</b> = school's admit rate &times; position of his stats inside the admitted middle-50% band (0.35&ndash;2.0&times; multiplier), then adjusted by ECs, AP rigor, and hooks. Each adjustment is scaled by a <b>holism factor</b> (1 &minus; admit rate): at Miami (19% admit) a strong EC profile boosts chance ~15%; at Arizona (87% admit, stat-driven) it does almost nothing, which reflects how those schools actually read applications. Test-blind schools (all UCs/CSUs) ignore SAT automatically. The same full model now drives the UC Reference tab &mdash; UCs use comprehensive (holistic) review, so ECs and rigor count there too. AP <i>exam scores</i> get only a small validation bump by design: colleges weight course rigor over exam results, and UCs don't use AP scores in admission at all (they matter later, for credit/placement). Bands: <b>Safety &ge;75%</b> (would be surprised by a denial), <b>Likely 55&ndash;75%</b> (odds in his favor), <b>Target 30&ndash;55%</b> (genuine coin-flip), <b>Reach &lt;30%</b>. Est. net/yr = Sticker COA (tuition + fees + housing + food + books/travel; <b>UCs and CSUs use California in-state rates</b>) minus estimated annual merit for his band; need-based aid and ~3&ndash;4%/yr tuition inflation are not modeled. <b>Rating (1&ndash;10)</b> is an objective quality index \u2014 80% the average of premed environment, research access, bio strength, and med placement, 20% the 4-yr grad rate \u2014 deliberately independent of your weight sliders. <b>School admit rate vs program acceptance:</b> every percentage in the bands is admission to the COLLEGE; direct-med programs (BS/MD, early assurance) accept a far smaller share, shown separately as an estimate on those cards, and the Attainable/Stretch/Restricted/Out program bands are Claude's qualitative judgment of that harder door.</div>
+    <div class="note" style="border-left-color:var(--green)"><b>Fit score (0&ndash;100)</b> = weighted average of 10 sub-scores using your Weights-tab sliders: cost-vs-budget (net &le;75% of budget = 10/10, degrading past budget), premed environment, med-school placement, research accessibility, bio quality, geography (CA 10 / West 8 / rest 4.5), size match, merit generosity (merit &divide; sticker), honors college, social life. Admit chance is deliberately <b>not</b> part of fit &mdash; it's the separate color band, so a great-fit reach never hides behind a mediocre safety.</div>
+    <div class="note"><b>Research accessibility (1&ndash;10), defined:</b> how easily a <b>median</b> premed &mdash; not a superstar &mdash; lands a real lab position or clinical role by sophomore year. Scored from: teaching hospital / med school physically on or adjacent to campus; undergrad-to-grad-student ratio (grad students absorb lab seats); formal undergrad research programs with guaranteed slots; and volume of clinical volunteering within transit reach. Utah, Pitt, SLU score high because the hospital is on campus; Cal Poly and Chapman score low because the medical ecosystem simply isn't there.</div>
+    <div class="note"><b>Social life (1&ndash;10), defined:</b> campus energy (D1 sports, Greek/social scene), college-town or city quality, % of students living on/near campus, and weekend-emptiness risk. Entirely reputational data &mdash; treat &plusmn;2 as noise and verify with a visit.</div>
+    <div class="note" style="border-left-color:var(--purple)"><b>Data confidence:</b> <span class="dot solid"></span>solid = published institutional data (admit rates, costs, published merit tiers). <span class="dot rep"></span>reputational = student reports, forums, softer sources (premed climate, social life, committee-letter practices). All figures are 2024&ndash;26 cycle estimates; the links on each card are the ground truth.</div>
+  </section>
+
+  <section id="s-uc" hidden>
+    <h2>UC Reference &mdash; all 9 campuses, one application</h2>
+    <div class="note" style="border-left-color:var(--cyan)"><b>The 9 UCs now also appear in The List</b> (filter Type &rarr; UC) with full fit scores, costs, premed data, and table sorting &mdash; this tab stays as the quick strategy view.</div>
+    <div class="note"><b>Three UC facts that change strategy:</b> UCs are permanently test-blind (his SAT does nothing here &mdash; the GPA slider drives these bands). UCs use their own GPA: 10th&ndash;11th grade A&ndash;G courses, weighted but capped at 8 honors semesters &mdash; often higher than unweighted. One application covers all 9 (4 PIQs from 8 prompts), <b>filing window opens Oct 1, submit by Nov 30, 2026</b>. Bands below are estimated from unweighted GPA and are conservative; majors matter (biology is more competitive than the campus average).</div>
+    <div class="filterbar"></div>
+    <div id="ucBox"></div>
+  </section>
+
+  <section id="s-time" hidden>
+    <h2>Application timeline &mdash; senior year 2026&ndash;27</h2>
+    <div class="note"><b>The trap to avoid:</b> many merit scholarship deadlines land Nov 1 &ndash; Dec 1, <b>earlier than regular admission deadlines</b>. Applying RD in January can silently forfeit $80&ndash;100k of merit over 4 years. Rolling-admission schools (Arizona, ASU, SLU, Pitt) reward applying in September&ndash;October.</div>
+    <div class="tl" id="tlBox"></div>
+    <h2 style="margin-top:30px">Per-college deadlines</h2>
+    <div class="note"><b>Four application platforms cover everything:</b> the <b>UC App</b> (one app + 4 PIQ essays = all 9 UCs, due Nov 30) &middot; <b>Cal State Apply</b> (one app, no essays = all CSUs, due Nov 30) &middot; the <b>Common App</b> (one main essay reused everywhere + short per-college supplements where noted) &middot; and <b>own portals</b> (Arizona, UT Dallas — quick, essay-light). BS/MD and early-assurance programs usually require an extra application on top, due early.</div>
+    <div id="tlTable"></div>
+  </section>
+
+  <div style="margin-top:34px;border-top:1px solid var(--line);padding-top:14px">
+    <span class="lbl">MedCompass &middot; figures are 2024&ndash;26 cycle estimates, always verify on official links &middot; ask Claude to update data or add schools</span>
+  </div>
+</div>
+
+<script>
+// ---------------- DATA (2024-26 cycle estimates; verify via links) ----------------
+// g25/g75 = est. unweighted GPA middle 50% of admits; s25/s75 = SAT mid 50 (0 = test-blind)
+// coa = annual sticker cost of attendance (CA resident where CSU); merit = realistic annual award for a 3.5/1330-band applicant
+const SCHOOLS=[
+{id:'sdsu',n:'San Diego State',city:'San Diego',st:'CA',region:'CA',type:'CSU',size:'L',admit:.39,g25:3.45,g75:3.85,s25:0,s75:0,tb:true,coa:34000,merit:2000,meritName:'Limited campus merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:7,research:7,bio:8,med:6,grad4:57,honors:'Weber Honors College',wue:false,conf:'solid',
+note:'Strong bio dept and health-career pipelines; biology is an impacted major so getting the major matters as much as getting in. Big premed clubs, decent clinical volunteering access via Sharp/Scripps systems.',medNote:'No committee letter gatekeeping; advising is adequate but you self-drive. Test-blind like all CSUs.',links:[['Admissions','https://admissions.sdsu.edu'],['Costs & Aid','https://sdsu.edu/financial-aid']]},
+{id:'slo',n:'Cal Poly San Luis Obispo',city:'San Luis Obispo',st:'CA',region:'CA',type:'CSU',size:'L',admit:.30,g25:3.6,g75:3.95,s25:0,s75:0,tb:true,coa:33000,merit:1500,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:6,research:6,bio:8,med:5,grad4:62,honors:null,wue:false,conf:'solid',
+note:'Excellent hands-on bio program, best 4-yr grad rate in the CSU. Weaker premed ecosystem: no nearby med school or major hospital system, so clinical hours take planning.',medNote:'Learn-by-doing culture suits research; premed advising thinner than SDSU. Bio admission is selective for his band.',links:[['Admissions','https://admissions.calpoly.edu']]},
+{id:'lb',n:'CSU Long Beach',city:'Long Beach',st:'CA',region:'CA',type:'CSU',size:'L',admit:.47,g25:3.2,g75:3.7,s25:0,s75:0,tb:true,coa:31000,merit:1500,meritName:'President’s Scholars (competitive)',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:6,research:5,bio:7,med:5,grad4:44,honors:'University Honors',wue:false,conf:'solid',
+note:'True in-state safety with a real bio program and LA-metro clinical volunteering within reach. 4-yr grad rate is the weak spot — plan courses aggressively.',medNote:'You build your own premed path here; advising exists but is stretched.',links:[['Admissions','https://www.csulb.edu/admissions']]},
+{id:'ua',n:'University of Arizona',city:'Tucson',st:'AZ',region:'West',type:'Public',size:'L',admit:.87,g25:3.2,g75:3.85,s25:1120,s75:1360,tb:false,coa:59000,merit:24000,meritName:'Arizona Excellence (auto, GPA-tiered)',dl:'Rolling — apply Sept/Oct; merit auto with admission',dlDate:'2026-10-15',premed:8,research:8,bio:8,med:7,grad4:53,honors:'W.A. Franke Honors',wue:false,conf:'solid',
+note:'The value anchor of this list: automatic merit by GPA tier drops net cost near in-state levels, own MD school + Banner University Medical Center on campus for clinical/research hours.',medNote:'Guaranteed-tier merit means no scholarship lottery. Franke Honors adds small classes at flagship scale.',links:[['Admissions','https://admissions.arizona.edu'],['Merit tiers','https://financialaid.arizona.edu']]},
+{id:'asu',n:'Arizona State (Barrett)',city:'Tempe',st:'AZ',region:'West',type:'Public',size:'L',admit:.90,g25:3.2,g75:3.8,s25:1130,s75:1360,tb:false,coa:56000,merit:16000,meritName:'New American Univ. Scholarship (auto)',dl:'Rolling; Barrett priority Nov 1, 2026',dlDate:'2026-11-01',premed:7,research:8,bio:8,med:7,grad4:56,honors:'Barrett Honors College',wue:false,conf:'solid',
+note:'Barrett is the play here — arguably the strongest honors college in the country layered on huge research capacity. Mayo Clinic partnership (MedStart, shadowing pipelines) is a real premed asset.',medNote:'At ASU scale you must self-advocate, but Barrett shrinks it. Auto merit by stats.',links:[['Admissions','https://admission.asu.edu'],['Scholarship est.','https://scholarships.asu.edu']]},
+{id:'utah',n:'University of Utah',city:'Salt Lake City',st:'UT',region:'West',type:'Public',size:'L',admit:.87,g25:3.3,g75:3.9,s25:1130,s75:1390,tb:false,coa:52000,merit:14000,meritName:'Nonresident merit + WUE (limited)',dl:'Dec 1, 2026 priority (merit auto-considered)',dlDate:'2026-12-01',premed:8,research:8,bio:7,med:7,grad4:41,honors:'Honors College',wue:true,conf:'solid',
+note:'University hospital and med school physically on campus — unusually easy clinical and research access for undergrads. WUE awards exist but are limited; merit stack still lands near budget.',medNote:'Health-sciences campus adjacency is the differentiator. 4-yr grad rate lags (many students work/serve missions) — not a quality signal.',links:[['Admissions','https://admissions.utah.edu']]},
+{id:'unr',n:'University of Nevada, Reno',city:'Reno',st:'NV',region:'West',type:'Public',size:'M',admit:.87,g25:3.1,g75:3.8,s25:1080,s75:1320,tb:false,coa:48000,merit:15000,meritName:'WUE rate (auto for CA residents)',dl:'Rolling; WUE/merit priority Feb 1, 2027',dlDate:'2026-12-15',premed:7,research:6,bio:7,med:7,grad4:36,honors:'Honors College',wue:true,conf:'solid',
+note:'WUE makes this one of the cheapest real options on the list (~$33k net), 3.5 hrs from Sacramento, and UNR has its own MD school with early-assurance pathways for its undergrads.',medNote:'Smaller pond = easier access to labs and physician shadowing. Grad-rate stat drags from part-time students.',links:[['Admissions','https://www.unr.edu/admissions'],['WUE info','https://www.unr.edu/financial-aid']]},
+{id:'uo',n:'University of Oregon',city:'Eugene',st:'OR',region:'West',type:'Public',size:'L',admit:.85,g25:3.3,g75:3.85,s25:1150,s75:1390,tb:false,coa:58000,merit:15000,meritName:'Summit Scholarship (auto at 3.6+)',dl:'Nov 1, 2026 EA (maximizes merit)',dlDate:'2026-11-01',premed:6,research:7,bio:7,med:5,grad4:59,honors:'Clark Honors College',wue:false,conf:'solid',
+note:'Summit/Apex merit is automatic by GPA. Solid biology; the gap is medical ecosystem — no med school in Eugene (OHSU is in Portland), so clinical exposure takes summers/planning.',medNote:'Fine premed outcomes but you assemble the pieces yourself.',links:[['Admissions','https://admissions.uoregon.edu']]},
+{id:'osu',n:'Oregon State University',city:'Corvallis',st:'OR',region:'West',type:'Public',size:'L',admit:.83,g25:3.2,g75:3.8,s25:1120,s75:1350,tb:false,coa:54000,merit:12000,meritName:'Nonresident scholar awards (auto-ish)',dl:'Nov 1, 2026 EA priority',dlDate:'2026-11-01',premed:6,research:7,bio:8,med:5,grad4:41,honors:'Honors College',wue:false,conf:'solid',
+note:'Stronger in bio/life-science research than its reputation suggests (marine bio, biochem). Same Oregon caveat: no on-site medical center.',medNote:'Good Plan B breadth (bioengineering, public health).',links:[['Admissions','https://admissions.oregonstate.edu']]},
+{id:'wsu',n:'Washington State University',city:'Pullman',st:'WA',region:'West',type:'Public',size:'L',admit:.83,g25:3.1,g75:3.7,s25:1050,s75:1280,tb:false,coa:47000,merit:11000,meritName:'Cougar Academic Award (auto)',dl:'Jan 31, 2027 (rolling before)',dlDate:'2027-01-31',premed:6,research:6,bio:7,med:6,grad4:43,honors:'Honors College',wue:false,conf:'solid',
+note:'Has its own MD school (Floyd College of Medicine) with a mission favoring WSU undergrads. Remote location limits off-campus clinical variety.',medNote:'Safety with a med-school pathway attached.',links:[['Admissions','https://admission.wsu.edu']]},
+{id:'uop',n:'University of the Pacific',city:'Stockton',st:'CA',region:'CA',type:'Private',size:'S',admit:.78,g25:3.3,g75:3.9,s25:1150,s75:1370,tb:false,coa:74000,merit:28000,meritName:'Regents/Presidents merit (auto-tiered)',dl:'Nov 15, 2026 EA (merit priority)',dlDate:'2026-11-15',premed:8,research:6,bio:7,med:7,grad4:60,honors:'Powell Scholars (full-ride, competitive)',wue:false,conf:'solid',
+note:'CA private that discounts hard — net lands near budget. Long health-professions tradition (accelerated dental/pharmacy pipelines), small classes, professors know premeds by name.',medNote:'Strong advising per-capita; Stockton location is the tradeoff. 90 min from home-ish if Bay Area.',links:[['Admissions','https://www.pacific.edu/admission']]},
+{id:'lmu',n:'Loyola Marymount',city:'Los Angeles',st:'CA',region:'CA',type:'Private',size:'M',admit:.47,g25:3.5,g75:3.95,s25:1250,s75:1430,tb:false,coa:85000,merit:23000,meritName:'Arrupe/Ignatian merit (auto-considered)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:7,research:5,bio:7,med:6,grad4:79,honors:'University Honors',wue:false,conf:'rep',
+note:'Your "full-pay-minus-merit" tier: net ~$62k. Supportive grading climate, LA hospital volunteering everywhere, strong 4-yr grad rate.',medNote:'Committee letter open to all applicants (rep.). Gentler weed-out than research flagships.',links:[['Admissions','https://admission.lmu.edu']]},
+{id:'usd',n:'University of San Diego',city:'San Diego',st:'CA',region:'CA',type:'Private',size:'M',admit:.53,g25:3.5,g75:3.95,s25:1240,s75:1410,tb:false,coa:83000,merit:21000,meritName:'Trustee/Presidential (auto-considered)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:7,research:5,bio:7,med:6,grad4:76,honors:'Honors Program',wue:false,conf:'rep',
+note:'Similar profile to LMU: beautiful, supportive, real merit, net ~$62k. Scripps/Sharp/Rady clinical scene is excellent for volunteering hours.',medNote:'Small-class science with lab access from year one.',links:[['Admissions','https://www.sandiego.edu/admissions']]},
+{id:'chap',n:'Chapman University',city:'Orange',st:'CA',region:'CA',type:'Private',size:'M',admit:.64,g25:3.4,g75:3.9,s25:1220,s75:1400,tb:false,coa:88000,merit:26000,meritName:'Chancellor/Presidential merit (auto)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:6,research:5,bio:6,med:5,grad4:70,honors:'University Honors',wue:false,conf:'rep',
+note:'Generous auto-merit for his band; growing health sciences (Rinker campus). Bio dept younger/smaller than the Jesuit pair above.',medNote:'OC hospital access good; premed track record still maturing.',links:[['Admissions','https://www.chapman.edu/admission']]},
+{id:'scu',n:'Santa Clara University',city:'Santa Clara',st:'CA',region:'CA',type:'Private',size:'M',admit:.41,g25:3.6,g75:3.95,s25:1330,s75:1470,tb:false,coa:86000,merit:14000,meritName:'Provost/Johannes merit (competitive)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:7,research:6,bio:7,med:6,grad4:86,honors:'University Honors',wue:false,conf:'rep',
+note:'Bay Area, superb grad rate, strong advising — but merit is thinner and his band sits at their 25th percentile, so treat as a reach with a ~$72k net if it lands.',medNote:'Include only if the Bay Area pull is strong; otherwise LMU/USD do the same job cheaper.',links:[['Admissions','https://www.scu.edu/admission']]},
+{id:'gonz',n:'Gonzaga University',city:'Spokane',st:'WA',region:'West',type:'Private',size:'M',admit:.76,g25:3.4,g75:3.9,s25:1220,s75:1390,tb:false,coa:70000,merit:24000,meritName:'Merit (auto-considered, tiered)',dl:'Nov 15, 2026 EA',dlDate:'2026-11-15',premed:8,research:5,bio:7,med:7,grad4:79,honors:'Honors Program',wue:false,conf:'solid',
+note:'Sleeper premed pick: UW School of Medicine runs its Spokane program ON Gonzaga’s campus — med students, faculty, and shadowing in walking distance. Strong advising culture, net ~$46k.',medNote:'Committee support inclusive (rep.); Jesuit teaching-first science.',links:[['Admissions','https://www.gonzaga.edu/admission']]},
+{id:'su',n:'Seattle University',city:'Seattle',st:'WA',region:'West',type:'Private',size:'M',admit:.84,g25:3.3,g75:3.85,s25:1180,s75:1370,tb:false,coa:68000,merit:26000,meritName:'Merit (auto with application)',dl:'Nov 15, 2026 EA',dlDate:'2026-11-15',premed:7,research:5,bio:7,med:6,grad4:64,honors:'University Honors',wue:false,conf:'rep',
+note:'Urban campus blocks from major hospital systems (Swedish, Harborview nearby) — clinical volunteering is genuinely easy. Net ~$42k after typical merit.',medNote:'Teaching-focused science, small labs.',links:[['Admissions','https://www.seattleu.edu/admissions']]},
+{id:'slu',n:'Saint Louis University',city:'St. Louis',st:'MO',region:'Other',type:'Private',size:'M',admit:.84,g25:3.5,g75:3.95,s25:1230,s75:1420,tb:false,coa:70000,merit:27000,meritName:'Vice President/University merit (auto)',dl:'Rolling; merit priority Dec 1, 2026',dlDate:'2026-12-01',premed:9,research:8,bio:8,med:9,grad4:70,honors:'University Honors',wue:false,conf:'solid',
+note:'Top premed value in the country for his band: own MD school, own hospital, and the Medical Scholars Program — qualifying undergrads get a guaranteed SLU med school interview. Net ~$43k.',medNote:'Health-professions advising is a machine here; huge premed peer group without flagship weed-out brutality.',links:[['Admissions','https://www.slu.edu/admission'],['Med Scholars','https://www.slu.edu/medicine']]},
+{id:'crei',n:'Creighton University',city:'Omaha',st:'NE',region:'Other',type:'Private',size:'M',admit:.74,g25:3.5,g75:3.95,s25:1220,s75:1400,tb:false,coa:68000,merit:28000,meritName:'Merit (auto, generous at his band)',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:9,research:7,bio:8,med:9,grad4:72,honors:'Honors Program',wue:false,conf:'solid',
+note:'Health-professions university in disguise: own MD school, ~40% of students on pre-health tracks, exceptional advising and committee support. Net ~$40k. Also has a Phoenix health campus.',medNote:'One of the highest med-school acceptance cultures for a school at this selectivity level.',links:[['Admissions','https://admissions.creighton.edu']]},
+{id:'luc',n:'Loyola University Chicago',city:'Chicago',st:'IL',region:'Other',type:'Private',size:'M',admit:.79,g25:3.4,g75:3.9,s25:1180,s75:1380,tb:false,coa:72000,merit:25000,meritName:'Damen/Presidential merit (auto)',dl:'Dec 1, 2026 priority',dlDate:'2026-12-01',premed:8,research:6,bio:7,med:8,grad4:64,honors:'Interdisciplinary Honors',wue:false,conf:'solid',
+note:'Own med school (Stritch) with early-assurance routes; lakefront Chicago campus with deep hospital volunteering options. Net ~$47k.',medNote:'Solid committee-letter support; big-city clinical hours are easy to accumulate.',links:[['Admissions','https://www.luc.edu/undergrad']]},
+{id:'marq',n:'Marquette University',city:'Milwaukee',st:'WI',region:'Other',type:'Private',size:'M',admit:.87,g25:3.4,g75:3.9,s25:1190,s75:1380,tb:false,coa:68000,merit:24000,meritName:'Merit (auto-considered)',dl:'Dec 1, 2026 priority',dlDate:'2026-12-01',premed:7,research:6,bio:7,med:7,grad4:71,honors:'University Honors',wue:false,conf:'rep',
+note:'Strong health-sciences identity, Medical College of Wisconsin across town for research/shadowing. Net ~$44k, forgiving admit rate = true private safety.',medNote:'Comparable play to Creighton/SLU, slightly less med-school-attached.',links:[['Admissions','https://www.marquette.edu/explore']]},
+{id:'pitt',n:'University of Pittsburgh',city:'Pittsburgh',st:'PA',region:'Other',type:'Public',size:'L',admit:.50,g25:3.75,g75:4.0,s25:1290,s75:1460,tb:false,coa:60000,merit:6000,meritName:'OOS merit (competitive, not auto)',dl:'Rolling — apply by mid-Sept for best odds/merit',dlDate:'2026-09-15',premed:9,research:9,bio:8,med:9,grad4:71,honors:'Frederick Honors College',wue:false,conf:'solid',
+note:'Premed powerhouse: UPMC (one of the largest hospital systems in the US) wrapped around campus, elite research access, guaranteed-admit med pathways for top students. His band is below their middle — keep as the quality reach and apply the first week it opens.',medNote:'Merit for OOS is scarce; net ~$54k. Worth it only if he’d pick it over every target.',links:[['Admissions','https://admissions.pitt.edu']]},
+{id:'msu',n:'Michigan State (Lyman Briggs)',city:'East Lansing',st:'MI',region:'Other',type:'Public',size:'L',admit:.90,g25:3.3,g75:3.85,s25:1130,s75:1350,tb:false,coa:63000,merit:16000,meritName:'OOS merit (auto-considered)',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:62,honors:'Lyman Briggs College',wue:false,conf:'solid',
+note:'Lyman Briggs is the feature: a residential science college inside a Big Ten flagship — small science classes, live-with-your-labmates model, built for premeds. Two med schools on campus (MD + DO).',medNote:'The structure solves the "lost in a big school" premed failure mode. Net ~$47k.',links:[['Admissions','https://admissions.msu.edu']]},
+{id:'iu',n:'Indiana University Bloomington',city:'Bloomington',st:'IN',region:'Other',type:'Public',size:'L',admit:.80,g25:3.4,g75:3.9,s25:1180,s75:1400,tb:false,coa:58000,merit:12000,meritName:'IU Achievement/auto-consider',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:71,honors:'Hutton Honors',wue:false,conf:'rep',
+note:'Classic solid-flagship play: good bio, IU School of Medicine pipeline (largest US med school by enrollment), reliable merit. Net ~$46k.',medNote:'Nothing flashy, few weaknesses.',links:[['Admissions','https://admissions.indiana.edu']]},
+{id:'uvm',n:'University of Vermont',city:'Burlington',st:'VT',region:'Other',type:'Public',size:'M',admit:.65,g25:3.4,g75:3.9,s25:1210,s75:1400,tb:false,coa:65000,merit:19000,meritName:'Presidential/Vermont merit (auto)',dl:'Nov 15, 2026 EA',dlDate:'2026-11-15',premed:8,research:7,bio:7,med:8,grad4:66,honors:'Honors College',wue:false,conf:'solid',
+note:'Larner College of Medicine and UVM Medical Center are on campus — mid-size school with big-school medical access. Generous OOS merit, net ~$46k.',medNote:'Strong early-exposure programs for undergrads; far from CA is the only knock.',links:[['Admissions','https://www.uvm.edu/admissions']]},
+{id:'bay',n:'Baylor University',city:'Waco',st:'TX',region:'Other',type:'Private',size:'M',admit:.51,g25:3.5,g75:3.95,s25:1250,s75:1430,tb:false,coa:78000,merit:22000,meritName:'Academic merit (auto-tiered)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:8,research:7,bio:8,med:8,grad4:70,honors:'Honors College',wue:false,conf:'rep',
+note:'Serious premed culture with strong med-school placement machinery. Caveat: pipeline advantages tilt toward Texas med schools, which favor TX residents. Net ~$56k.',medNote:'Grading is rigorous — mild deflation risk vs the Jesuit schools.',links:[['Admissions','https://www.baylor.edu/admissions']]},
+{id:'miami',n:'University of Miami',city:'Coral Gables',st:'FL',region:'Other',type:'Private',size:'M',admit:.19,g25:3.7,g75:4.0,s25:1370,s75:1490,tb:false,coa:90000,merit:25000,meritName:'Merit (competitive at admission)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:73,honors:'Foote Fellows',wue:false,conf:'solid',
+note:'The stretch reach: Miller School of Medicine + UHealth system, strong research. His band is below their middle 50 — apply only if the list has room and essays are strong.',medNote:'If admitted without merit, net ~$90k — outside your structure.',links:[['Admissions','https://admissions.miami.edu']]},
+{id:'jhu',n:'Johns Hopkins',city:'Baltimore',st:'MD',region:'Other',type:'Private',size:'M',admit:.06,g25:3.85,g75:4.0,s25:1520,s75:1560,tb:false,coa:92000,merit:2000,meritName:'Hodson Trust (rare); otherwise need-based only',dl:'ED1 Nov 1 / ED2 Jan 2 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:10,bio:10,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
+note:'The premed pinnacle — Hopkins Hospital, unmatched research. Included because you asked for it: at his numbers this is a ~2% lottery ticket, and Hopkins gives almost no merit (need-based aid only, which is excellent if you qualify).',medNote:'Intense premed competition internally; superb committee support for those who survive it.',links:[['Admissions','https://apply.jhu.edu']]},
+{id:'usc',n:'USC',city:'Los Angeles',st:'CA',region:'CA',type:'Private',size:'L',admit:.10,g25:3.75,g75:4.0,s25:1450,s75:1530,tb:false,coa:95000,merit:15000,meritName:'Presidential/Trustee (half–full tuition, competitive — must apply EA Nov 1)',dl:'Nov 1 EA (required for merit) / RD Jan 15',dlDate:'2026-11-01',premed:8,research:9,bio:8,med:8,grad4:79,honors:null,wue:false,conf:'solid',social:9,
+note:'The CA prestige reach: Keck medicine, huge alumni network, real (but competitive) merit that requires the Nov 1 EA application. His EC spike is exactly what USC responds to; the stats are the gate.',medNote:'Strong premed ecosystem; LA clinical access unlimited.',links:[['Admissions','https://admission.usc.edu']]},
+{id:'cwru',n:'Case Western Reserve',city:'Cleveland',st:'OH',region:'Other',type:'Private',size:'M',admit:.27,g25:3.7,g75:4.0,s25:1470,s75:1540,tb:false,coa:88000,merit:26000,meritName:'University/Bolton merit (generous, auto-considered)',dl:'Nov 1 EA / RD Jan 8; PPSP pre-professional app Dec 1',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:71,honors:null,wue:false,conf:'solid',social:5,
+note:'Premed heavyweight sandwiched between University Hospitals and the Cleveland Clinic; discounts generously. His band is below their middle 50 — a reach that becomes interesting if his SAT is at the top of the range.',medNote:'PPSP (their BS/MD) is among the most selective in the country.',links:[['Admissions','https://case.edu/admission']]},
+{id:'roch',n:'University of Rochester',city:'Rochester',st:'NY',region:'Other',type:'Private',size:'M',admit:.36,g25:3.7,g75:3.97,s25:1410,s75:1510,tb:false,coa:88000,merit:21000,meritName:'Merit scholarships (auto-considered, generous)',dl:'Nov 1 EA / RD Jan 5; REMS by Dec 1',dlDate:'2026-11-01',premed:8,research:9,bio:8,med:8,grad4:77,honors:null,wue:false,conf:'solid',social:5,
+note:'URMC teaching hospital on campus, flexible curriculum (no gen-eds), solid merit. Reach for his band but a rational one — Rochester reads holistically and his research story lands here.',medNote:'REMS (BS/MD) takes ~10 students — lottery tier.',links:[['Admissions','https://enrollment.rochester.edu/admissions']]},
+{id:'drex',n:'Drexel University',city:'Philadelphia',st:'PA',region:'Other',type:'Private',size:'L',admit:.80,g25:3.3,g75:3.85,s25:1200,s75:1400,tb:false,coa:82000,merit:30000,meritName:'Merit (auto, large discounts standard)',dl:'Nov 1 EA / RD Jan 15; BS/MD by Nov 1',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:52,honors:'Pennoni Honors',wue:false,conf:'solid',social:6,
+note:'High-admit private with its own med school, a formal BS/MD early-assurance program, and the co-op system (paid, résumé-building clinical/research placements built into the degree). Net ~$52k.',medNote:'BS/MD track wants ~3.75/1420+ — stretch, not fantasy. Philly hospital density is a premed asset.',links:[['Admissions','https://drexel.edu/admissions']]},
+{id:'utd',n:'UT Dallas',city:'Richardson',st:'TX',region:'Other',type:'Public',size:'L',admit:.85,g25:3.4,g75:3.95,s25:1240,s75:1470,tb:false,coa:54000,merit:14000,meritName:'Academic Excellence Scholarship (auto-tiered)',dl:'ApplyTexas/Common App; Dec 1 priority for merit',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:6,grad4:58,honors:'Collegium V Honors',wue:false,conf:'solid',social:4,
+note:'Value pick: big auto merit, UT Southwestern (a top med school) 20 minutes away for research/shadowing. Caveats: commuter-campus social life, and Texas med schools heavily favor Texas residents at application time.',medNote:'Great stats-driven safety with real science; weigh the resident-preference issue for med school later.',links:[['Admissions','https://enroll.utdallas.edu']]},
+{id:'ucm',n:'UC Merced',city:'Merced',st:'CA',region:'CA',type:'UC',size:'M',admit:.98,g25:2.95,g75:3.5,s25:0,s75:0,tb:true,coa:43000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:6,research:6,bio:6,med:6,grad4:47,honors:null,wue:false,conf:'solid',social:4,
+note:'The UC system safety. Small but growing fast, new medical-education pipeline aimed at the San Joaquin Valley (SJV PRIME) — being a bigger fish here can mean easier lab access.',medNote:'Advising thinner than older campuses; self-drive required.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucr',n:'UC Riverside',city:'Riverside',st:'CA',region:'CA',type:'UC',size:'L',admit:.87,g25:3.25,g75:3.7,s25:0,s75:0,tb:true,coa:44000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:7,research:7,bio:7,med:7,grad4:61,honors:'University Honors',wue:false,conf:'solid',social:5,
+note:'Underrated for premed: has its own School of Medicine with a mission favoring inland-CA students, and a Thomas Haider early-assurance program for UCR undergrads. The most realistic UC with a med school attached.',medNote:'Haider Program: guaranteed-consideration pathway to UCR SOM for qualifying UCR students.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucsc',n:'UC Santa Cruz',city:'Santa Cruz',st:'CA',region:'CA',type:'UC',size:'L',admit:.73,g25:3.35,g75:3.8,s25:0,s75:0,tb:true,coa:45000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:6,research:7,bio:7,med:5,grad4:64,honors:null,wue:false,conf:'solid',social:6,
+note:'Strong biology (esp. genomics/marine), beautiful setting. Weak medical ecosystem — no med school or major hospital nearby; clinical hours take planning.',medNote:'Fine premed outcomes for self-starters.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucd',n:'UC Davis',city:'Davis',st:'CA',region:'CA',type:'UC',size:'L',admit:.45,g25:3.55,g75:3.9,s25:0,s75:0,tb:true,coa:45000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:8,research:8,bio:9,med:8,grad4:64,honors:'University Honors',wue:false,conf:'solid',social:7,
+note:'The best premed UC he can realistically land: own med school (Sacramento), elite biology, classic college town. The target to build the UC hopes around.',medNote:'Big premed population but a collaborative reputation vs the southern campuses.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucsb',n:'UC Santa Barbara',city:'Santa Barbara',st:'CA',region:'CA',type:'UC',size:'L',admit:.38,g25:3.65,g75:3.95,s25:0,s75:0,tb:true,coa:45000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:6,research:8,bio:8,med:6,grad4:72,honors:'College of Creative Studies (separate app)',wue:false,conf:'solid',social:9,
+note:'Great research and the best social/campus life in the system — but no med school and thinner clinical access. A quality admit that premeds have to work harder to convert.',medNote:'Choose it for fit, not the premed machinery.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'uci',n:'UC Irvine',city:'Irvine',st:'CA',region:'CA',type:'UC',size:'L',admit:.29,g25:3.65,g75:3.95,s25:0,s75:0,tb:true,coa:44000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:8,research:8,bio:8,med:8,grad4:72,honors:'Campuswide Honors',wue:false,conf:'solid',social:6,
+note:'Own med school and UCI Health system, strong bio. Upper-target/reach at his band — his UCI Surgery summer program is a genuine tie-in to write about in PIQs.',medNote:'Competitive premed pool; real research access for those who push.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucsd',n:'UC San Diego',city:'La Jolla',st:'CA',region:'CA',type:'UC',size:'L',admit:.28,g25:3.7,g75:4.0,s25:0,s75:0,tb:true,coa:46000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:9,research:9,bio:9,med:8,grad4:74,honors:null,wue:false,conf:'solid',social:5,
+note:'Arguably the strongest premed UC — UCSD SOM, Scripps/Salk/biotech corridor next door, immense research. Reach at his band; grading runs tough and premed competition is intense.',medNote:'A grade-deflation risk for a mid-GPA admit: thriving here matters more than getting in.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucb',n:'UC Berkeley',city:'Berkeley',st:'CA',region:'CA',type:'UC',size:'L',admit:.11,g25:3.8,g75:4.0,s25:0,s75:0,tb:true,coa:47000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:7,research:9,bio:9,med:7,grad4:76,honors:null,wue:false,conf:'solid',social:8,
+note:'World-class science, brutal premed curves, no med school. For a mid-GPA premed the prestige can be a trap — a 3.2 from Berkeley loses to a 3.8 from Davis at med school screening time.',medNote:'Lottery ticket on the shared UC app; costs nothing extra to include.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'ucla',n:'UCLA',city:'Los Angeles',st:'CA',region:'CA',type:'UC',size:'L',admit:.09,g25:3.8,g75:4.0,s25:0,s75:0,tb:true,coa:46000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:8,research:9,bio:9,med:8,grad4:78,honors:null,wue:false,conf:'solid',social:9,
+note:'UCLA Health + Geffen SOM + the campus everyone wants. ~9% admit makes it a lottery ticket at any GPA; his UCLA Pre-Med Summer Scholar stint is PIQ material either way.',medNote:'Included on the shared app; zero marginal cost.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
+{id:'cnu',n:'California Northstate',city:'Elk Grove',st:'CA',region:'CA',type:'Private',size:'S',admit:.60,g25:3.5,g75:3.95,s25:1250,s75:1450,tb:false,coa:65000,merit:8000,meritName:'Program scholarships (limited)',dl:'BS-MD Early Assurance Honors Track — check current cycle deadline',dlDate:'2026-12-01',premed:7,research:5,bio:6,med:7,grad4:70,honors:null,wue:false,conf:'rep',social:3,
+note:'The only direct BS-MD physically in California: 3+4 and 4+4 Early Assurance Honors Tracks into CNU College of Medicine, with friendlier entry stats than classic BS/MDs. Eyes-open caveats: young school with a thin undergrad reputation, commuter campus near Sacramento, the med seat is conditional on progression benchmarks (not iron-clad), and total cost runs high.',medNote:'Estimate-heavy entry by design — verify every number and condition directly before applying.',links:[['BS-MD Track','https://www.cnsu.edu/bsmd/']]},
+{id:'csuf',n:'CSU Fullerton',city:'Fullerton',st:'CA',region:'CA',type:'CSU',size:'L',admit:.60,g25:3.0,g75:3.6,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:4,bio:6,med:5,grad4:36,honors:'University Honors',wue:false,conf:'solid',social:6,
+note:'Third CSU safety, OC location with LA/OC hospital volunteering in reach. Plan courses aggressively — 4-yr grad rate is low.',medNote:'Self-driven premed path; advising stretched.',links:[['Admissions','https://admissions.fullerton.edu']]},
+{id:'vcu',n:'Virginia Commonwealth (VCU)',city:'Richmond',st:'VA',region:'Other',type:'Public',size:'L',admit:.90,g25:3.2,g75:3.8,s25:1130,s75:1330,tb:false,coa:58000,merit:16000,meritName:'Presidential/Provost merit (auto-considered)',dl:'GAM medicine app due ~Nov 1 with admission app',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:8,grad4:47,honors:'Honors College',wue:false,conf:'solid',social:6,
+note:'The headline here is the Guaranteed Admission Program for Medicine — historically ~3.5 GPA / mid-1300s SAT entry, one of the most attainable true med-school guarantees in the country. VCU Health is on campus.',medNote:'Even without GAM, an honest premed school with real merit. Verify current GAM stats — they tighten some years.',links:[['Admissions','https://www.vcu.edu/admissions'],['GAM','https://honors.vcu.edu/gam']]},
+{id:'rpi',n:'RPI',city:'Troy',st:'NY',region:'Other',type:'Private',size:'M',admit:.58,g25:3.6,g75:3.95,s25:1330,s75:1500,tb:false,coa:85000,merit:26000,meritName:'Merit (large, auto-considered)',dl:'Physician-Scientist program app with admission',dlDate:'2026-11-01',premed:6,research:8,bio:6,med:7,grad4:63,honors:null,wue:false,conf:'solid',social:4,
+note:'Physician-Scientist BS/MD with Albany Medical College — built for research-spike applicants like him. RPI discounts heavily; techy, quiet campus.',medNote:'His computational-bio research story is exactly this program\u2019s type.',links:[['Admissions','https://admission.rpi.edu']]},
+{id:'union',n:'Union College',city:'Schenectady',st:'NY',region:'Other',type:'Private',size:'S',admit:.47,g25:3.5,g75:3.9,s25:1330,s75:1470,tb:false,coa:88000,merit:21000,meritName:'Merit (auto-considered)',dl:'Leadership in Medicine app with admission',dlDate:'2026-11-01',premed:7,research:6,bio:7,med:7,grad4:81,honors:null,wue:false,conf:'solid',social:6,
+note:'Leadership in Medicine (8-yr, with Albany Med + an MBA/MS folded in) reads holistically — ECs and interview matter as much as stats. Strong LAC premed advising.',medNote:'Small classes, professors write real letters.',links:[['Admissions','https://www.union.edu/admissions']]},
+{id:'siena',n:'Siena College',city:'Loudonville',st:'NY',region:'Other',type:'Private',size:'S',admit:.82,g25:3.4,g75:3.85,s25:1150,s75:1330,tb:false,coa:62000,merit:22000,meritName:'Merit (generous, auto)',dl:'Science, Humanities & Medicine app with admission',dlDate:'2026-11-01',premed:7,research:4,bio:6,med:7,grad4:74,honors:null,wue:false,conf:'solid',social:5,
+note:'Science, Humanities & Medicine (with Albany Med) has among the friendliest stat bars of any direct program, and Siena merit is real. Franciscan college, small pond.',medNote:'A legitimate attainable direct-med play at his band — the tradeoff is a small upstate-NY campus.',links:[['Admissions','https://www.siena.edu/admissions']]},
+{id:'sbu',n:'Stony Brook',city:'Stony Brook',st:'NY',region:'Other',type:'Public',size:'L',admit:.49,g25:3.6,g75:3.95,s25:1330,s75:1490,tb:false,coa:52000,merit:6000,meritName:'Limited OOS merit',dl:'Scholars for Medicine via WISE/Honors app',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:55,honors:'Honors College',wue:false,conf:'solid',social:4,
+note:'Scholars for Medicine (8-yr with Renaissance SOM) is a high reach; the base school is a strong-value public premed with a hospital on campus.',medNote:'SUNY pricing keeps OOS cost reasonable.',links:[['Admissions','https://www.stonybrook.edu/admissions']]},
+{id:'psu',n:'Penn State',city:'University Park',st:'PA',region:'Other',type:'Public',size:'L',admit:.55,g25:3.55,g75:3.95,s25:1270,s75:1450,tb:false,coa:60000,merit:5000,meritName:'Limited OOS merit',dl:'PMM (Jefferson) requires SAT 1470+ single sitting',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:71,honors:'Schreyer Honors',wue:false,conf:'solid',social:9,
+note:'Premedical-Medical (PMM) with Jefferson is gated at SAT 1470+ in one sitting — out of band unless his score says otherwise. The base school: big-time premed pipeline, famous social life, little OOS aid.',medNote:'Apply EA — Penn State fills fast.',links:[['Admissions','https://admissions.psu.edu']]},
+{id:'bu',n:'Boston University',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.11,g25:3.8,g75:4.0,s25:1450,s75:1530,tb:false,coa:92000,merit:12000,meritName:'Presidential (competitive)',dl:'SMED (7-yr) applies with admission',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:84,honors:'Kilachand Honors',wue:false,conf:'solid',social:8,
+note:'SMED (7-yr accelerated MD) is elite-tier selective; BU itself is now an 11%-admit reach. BU Medical Campus offers deep clinical access.',medNote:'Reach on both counts at his band.',links:[['Admissions','https://www.bu.edu/admissions']]},
+{id:'hof',n:'Hofstra University',city:'Hempstead',st:'NY',region:'Other',type:'Private',size:'M',admit:.69,g25:3.3,g75:3.8,s25:1200,s75:1400,tb:false,coa:78000,merit:26000,meritName:'Merit (large, auto)',dl:'4+4 BS-MD (Zucker) app due early with admission',dlDate:'2026-11-01',premed:6,research:5,bio:6,med:7,grad4:55,honors:'Honors College',wue:false,conf:'rep',social:5,
+note:'Easy admit with big merit; the 4+4 BS-MD with Zucker/Northwell is a separate, tiny, EC-weighted competition. Long Island location, Northwell hospital system access.',medNote:'The base school is a safety; the BS-MD is not.',links:[['Admissions','https://www.hofstra.edu/admission']]},
+{id:'rut',n:'Rutgers',city:'New Brunswick',st:'NJ',region:'Other',type:'Public',size:'L',admit:.65,g25:3.5,g75:3.9,s25:1270,s75:1450,tb:false,coa:55000,merit:8000,meritName:'Limited OOS merit',dl:'BA/MD routes verify — NJ-leaning',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:7,grad4:70,honors:'Honors College',wue:false,conf:'rep',social:7,
+note:'Solid public premed with NJMS/RWJ med schools in-system; the BA/MD pathways historically favor NJ residents — verify before counting on them.',medNote:'Fine target; pathway needs a residency check.',links:[['Admissions','https://admissions.rutgers.edu']]},
+{id:'uconn',n:'UConn',city:'Storrs',st:'CT',region:'Other',type:'Public',size:'L',admit:.54,g25:3.5,g75:3.9,s25:1250,s75:1440,tb:false,coa:62000,merit:13000,meritName:'OOS merit (auto-considered)',dl:'Special Program in Medicine app with admission',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:7,grad4:72,honors:'Honors Program',wue:false,conf:'solid',social:7,
+note:'Special Program in Medicine (8-yr with UConn SOM) is a moderate reach — more attainable than the coastal-elite programs. Decent OOS merit softens the cost.',medNote:'Sleeper combo: honors + SPiM app costs nothing extra.',links:[['Admissions','https://admissions.uconn.edu']]},
+{id:'cinci',n:'University of Cincinnati',city:'Cincinnati',st:'OH',region:'Other',type:'Public',size:'L',admit:.82,g25:3.3,g75:3.85,s25:1190,s75:1400,tb:false,coa:46000,merit:13000,meritName:'Global/Cincinnatus merit (auto)',dl:'Connections dual admission app with admission',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:7,grad4:55,honors:'University Honors',wue:false,conf:'solid',social:6,
+note:'Connections dual-admission (with UC College of Medicine) at a mid-selectivity, merit-friendly public — one of the better odds-per-dollar direct plays. Cincinnati Children\u2019s is a research powerhouse next door.',medNote:'Net lands near budget after auto merit.',links:[['Admissions','https://admissions.uc.edu']]},
+{id:'umkc',n:'UMKC',city:'Kansas City',st:'MO',region:'Other',type:'Public',size:'M',admit:.77,g25:3.2,g75:3.85,s25:1140,s75:1350,tb:false,coa:55000,merit:8000,meritName:'Some merit; BA/MD priced separately',dl:'6-yr BA/MD app due Nov 1',dlDate:'2026-11-01',premed:6,research:6,bio:6,med:8,grad4:50,honors:'Honors Program',wue:false,conf:'solid',social:4,
+note:'The 6-year BA/MD admits substantially on a formula (GPA/test/interview) — friendlier stats than classic BS/MDs. Costs of the MD years pile up for OOS, and the 6-year pace is relentless.',medNote:'A real direct option; go in understanding the grind and the total price.',links:[['Admissions','https://www.umkc.edu/admissions'],['BA/MD','https://med.umkc.edu/bamd']]},
+{id:'neu',n:'Northeastern',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.06,g25:3.85,g75:4.0,s25:1470,s75:1540,tb:false,coa:90000,merit:8000,meritName:'Merit (competitive)',dl:'EA Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:6,grad4:71,honors:'University Honors',wue:false,conf:'solid',social:7,
+note:'Now a single-digit-admit reach. Co-op gives paid clinical/research placements, but no med school and no BS/MD.',medNote:'Only worth a slot if the co-op model excites him specifically.',links:[['Admissions','https://admissions.northeastern.edu']]},
+{id:'uga',n:'University of Georgia',city:'Athens',st:'GA',region:'Other',type:'Public',size:'L',admit:.37,g25:3.7,g75:4.0,s25:1310,s75:1480,tb:false,coa:52000,merit:7000,meritName:'OOS merit (limited, competitive)',dl:'EA Oct 15 / RD Jan 1',dlDate:'2026-10-15',premed:7,research:7,bio:8,med:6,grad4:71,honors:'Morehead Honors',wue:false,conf:'solid',social:9,
+note:'Classic flagship experience, strong bio; new med school ramping in Athens. OOS merit is thin — cost usually lands above your band.',medNote:'Target-reach; EA Oct 15 comes fast.',links:[['Admissions','https://www.admissions.uga.edu']]},
+{id:'uw',n:'University of Washington',city:'Seattle',st:'WA',region:'West',type:'Public',size:'L',admit:.43,g25:3.65,g75:3.95,s25:1300,s75:1500,tb:false,coa:62000,merit:2000,meritName:'Almost no OOS merit',dl:'Own portal, due Nov 15',dlDate:'2026-11-15',premed:8,research:9,bio:9,med:8,grad4:66,honors:'Honors Program',wue:false,conf:'solid',social:7,
+note:'UW Medicine is world-class and undergrad research is abundant — but OOS pays full freight (~$62k) with near-zero aid, and OOS admission runs tougher than the headline rate.',medNote:'Quality is real; the value at OOS price is not.',links:[['Admissions','https://admit.washington.edu']]},
+{id:'uta',n:'UT Austin',city:'Austin',st:'TX',region:'Other',type:'Public',size:'L',admit:.29,g25:3.7,g75:4.0,s25:1350,s75:1520,tb:false,coa:62000,merit:2000,meritName:'Almost no OOS merit',dl:'ApplyTexas/Common App, priority Dec 1',dlDate:'2026-12-01',premed:7,research:8,bio:8,med:7,grad4:74,honors:'Plan II / CNS Honors',wue:false,conf:'solid',social:9,
+note:'Included per your list. Reality: ~90% of seats go to Texans by law, making OOS admits roughly single-digit; no BS/MD from high school; no OOS merit.',medNote:'Great school, bad odds-per-dollar for a CA premed.',links:[['Admissions','https://admissions.utexas.edu']]},
+{id:'mich',n:'University of Michigan',city:'Ann Arbor',st:'MI',region:'Other',type:'Public',size:'L',admit:.18,g25:3.8,g75:4.0,s25:1400,s75:1530,tb:false,coa:78000,merit:3000,meritName:'Rare OOS merit',dl:'EA Nov 1 / RD Feb 1',dlDate:'2026-11-01',premed:9,research:10,bio:9,med:9,grad4:82,honors:'LSA Honors',wue:false,conf:'solid',social:9,
+note:'Elite everything — Michigan Medicine, huge research, real school spirit. OOS sticker ~$78k with almost no merit: an expensive reach.',medNote:'His band sits below their middle 50; EC spike helps but stats gate.',links:[['Admissions','https://admissions.umich.edu']]},
+{id:'unc',n:'UNC Chapel Hill',city:'Chapel Hill',st:'NC',region:'Other',type:'Public',size:'L',admit:.19,g25:3.8,g75:4.0,s25:1350,s75:1500,tb:false,coa:60000,merit:2000,meritName:'Morehead-Cain (lottery)',dl:'EA Oct 15 / RD Jan 15',dlDate:'2026-10-15',premed:8,research:8,bio:8,med:8,grad4:84,honors:'Honors Carolina',wue:false,conf:'solid',social:9,
+note:'State law caps OOS enrollment at 18%, so OOS admits run near single digits. Superb premed if it lands; plan around it, not on it.',medNote:'EA Oct 15 deadline is the earliest on this list.',links:[['Admissions','https://admissions.unc.edu']]},
+{id:'cornell',n:'Cornell',city:'Ithaca',st:'NY',region:'Other',type:'Private',size:'L',admit:.08,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:0,meritName:'Need-based only',dl:'ED Nov 1 / RD Jan 2',dlDate:'2026-11-01',premed:8,research:9,bio:9,med:8,grad4:88,honors:null,wue:false,conf:'solid',social:7,
+note:'Elite bio (esp. Human Ecology/CALS angles). Famously intense premed grading. Need-based aid only.',medNote:'Lottery ticket; the grading culture is a real premed consideration.',links:[['Admissions','https://admissions.cornell.edu']]},
+{id:'nw',n:'Northwestern',city:'Evanston',st:'IL',region:'Other',type:'Private',size:'M',admit:.07,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:0,meritName:'Need-based only',dl:'ED Nov 1 / RD Jan 3',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:91,honors:null,wue:false,conf:'solid',social:7,
+note:'Its famous 7-yr HPME was discontinued in 2021 — Northwestern is now a plain (excellent) elite reach with Feinberg up the road.',medNote:'No direct pathway anymore; need-based aid only.',links:[['Admissions','https://admissions.northwestern.edu']]},
+{id:'emory',n:'Emory',city:'Atlanta',st:'GA',region:'Other',type:'Private',size:'M',admit:.11,g25:3.8,g75:4.0,s25:1470,s75:1540,tb:false,coa:92000,merit:8000,meritName:'Emory Scholars (rare, full-ride tier)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:8,bio:9,med:9,grad4:84,honors:null,wue:false,conf:'solid',social:6,
+note:'Premed powerhouse beside the CDC and Emory Healthcare; collaborative reputation for an elite. Scholars merit is a lottery within a lottery.',medNote:'One of the friendlier elite premed cultures.',links:[['Admissions','https://apply.emory.edu']]},
+{id:'washu',n:'WashU St. Louis',city:'St. Louis',st:'MO',region:'Other',type:'Private',size:'M',admit:.12,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:5000,meritName:'Named scholarships (rare)',dl:'ED1 Nov 1 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
+note:'Med-school-adjacent everything — WashU Med is a top-5 research school and undergrads feel it. Elite reach.',medNote:'Among the best pure premed environments in the country, if it lands.',links:[['Admissions','https://admissions.washu.edu']]},
+{id:'duke',n:'Duke',city:'Durham',st:'NC',region:'Other',type:'Private',size:'M',admit:.06,g25:3.9,g75:4.0,s25:1520,s75:1570,tb:false,coa:95000,merit:1000,meritName:'A.B. Duke etc. (lottery)',dl:'ED Nov 3 / RD Jan 2',dlDate:'2026-11-03',premed:9,research:9,bio:9,med:9,grad4:90,honors:null,wue:false,conf:'solid',social:8,
+note:'Duke Health on campus, elite outcomes, basketball religion. 6% admit.',medNote:'Lottery ticket.',links:[['Admissions','https://admissions.duke.edu']]},
+{id:'vandy',n:'Vanderbilt',city:'Nashville',st:'TN',region:'Other',type:'Private',size:'M',admit:.06,g25:3.9,g75:4.0,s25:1510,s75:1560,tb:false,coa:92000,merit:5000,meritName:'Cornelius Vanderbilt (rare full-tuition)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:88,honors:null,wue:false,conf:'solid',social:8,
+note:'VUMC adjacency, happy-student reputation, real (if rare) full-tuition merit. 6% admit.',medNote:'Lottery ticket with a merit lottery attached.',links:[['Admissions','https://admissions.vanderbilt.edu']]},
+{id:'brown',n:'Brown',city:'Providence',st:'RI',region:'Other',type:'Private',size:'M',admit:.05,g25:3.9,g75:4.0,s25:1510,s75:1570,tb:false,coa:93000,merit:0,meritName:'Need-based only',dl:'ED Nov 1 (PLME with admission) / RD Jan 3',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:86,honors:null,wue:false,conf:'solid',social:8,
+note:'PLME (8-yr, no-MCAT-pressure) is the most famous BS/MD and among the most selective (~2%). Open curriculum protects GPA.',medNote:'Consultant and Claude agree: lottery; not a merit play.',links:[['Admissions','https://admission.brown.edu']]},
+{id:'stan',n:'Stanford',city:'Stanford',st:'CA',region:'CA',type:'Private',size:'M',admit:.04,g25:3.9,g75:4.0,s25:1510,s75:1570,tb:false,coa:95000,merit:0,meritName:'Need-based only (generous if eligible)',dl:'REA Nov 1 / RD Jan 5',dlDate:'2026-11-01',premed:9,research:10,bio:10,med:9,grad4:76,honors:null,wue:false,conf:'solid',social:8,
+note:'On your consultant\u2019s list, so it\u2019s here: 4% admit, need-based only, world-best research. In-state emotional pull is real; the odds are the odds.',medNote:'One essay-heavy lottery ticket, if the list has room.',links:[['Admissions','https://admission.stanford.edu']]},
+{id:'sjsu',n:'San Jose State',city:'San Jose',st:'CA',region:'CA',type:'CSU',size:'L',admit:.77,g25:3.0,g75:3.6,s25:0,s75:0,tb:true,coa:32000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:6,research:5,bio:7,med:6,grad4:40,honors:'Humanities Honors',wue:false,conf:'solid',social:5,
+note:'The Bay Area CSU play — commutable, solid bio, and Santa Clara Valley Medical, Kaiser, and Stanford Health volunteering all within reach. Bio is impacted; getting the major matters.',medNote:'Being close to home cuts real cost below the sticker if he commutes.',links:[['Admissions','https://www.sjsu.edu/admissions']]},
+{id:'csueb',n:'CSU East Bay',city:'Hayward',st:'CA',region:'CA',type:'CSU',size:'M',admit:.90,g25:2.8,g75:3.5,s25:0,s75:0,tb:true,coa:30000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:3,bio:5,med:5,grad4:21,honors:null,wue:false,conf:'solid',social:3,
+note:'The closest campus to Livermore — the ultimate commute safety. Modest premed infrastructure; you build your own path.',medNote:'A true backstop, not a plan.',links:[['Admissions','https://www.csueastbay.edu/admissions']]},
+{id:'sac',n:'Sacramento State',city:'Sacramento',st:'CA',region:'CA',type:'CSU',size:'L',admit:.94,g25:2.9,g75:3.5,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:4,bio:6,med:5,grad4:26,honors:null,wue:false,conf:'solid',social:5,
+note:'Sleeper angle: UC Davis Health and its med school are in Sacramento — clinical volunteering access above its weight class.',medNote:'Easy admit; premed is self-driven.',links:[['Admissions','https://www.csus.edu/admissions']]},
+{id:'sfsu',n:'San Francisco State',city:'San Francisco',st:'CA',region:'CA',type:'CSU',size:'L',admit:.93,g25:2.9,g75:3.5,s25:0,s75:0,tb:true,coa:32000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:4,bio:6,med:5,grad4:30,honors:null,wue:false,conf:'solid',social:6,
+note:'UCSF is in the same city — SFSU premeds who hustle get into UCSF labs and hospital volunteering. City campus, easy admit.',medNote:'The UCSF adjacency is the whole pitch.',links:[['Admissions','https://www.sfsu.edu/admissions']]},
+{id:'cpp',n:'Cal Poly Pomona',city:'Pomona',st:'CA',region:'CA',type:'CSU',size:'L',admit:.55,g25:3.1,g75:3.7,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:4,bio:7,med:5,grad4:34,honors:null,wue:false,conf:'solid',social:5,
+note:'Learn-by-doing bio like SLO but easier admission. LA-county hospital volunteering in range.',medNote:'Solid mid-CSU option for the sciences.',links:[['Admissions','https://www.cpp.edu/admissions']]},
+{id:'csun',n:'CSU Northridge',city:'Northridge',st:'CA',region:'CA',type:'CSU',size:'L',admit:.90,g25:2.8,g75:3.5,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:4,bio:6,med:5,grad4:26,honors:null,wue:false,conf:'solid',social:5,
+note:'Big LA-valley campus, decent bio, easy admit, LA hospital systems reachable.',medNote:'Backstop tier.',links:[['Admissions','https://www.csun.edu/admissions']]},
+{id:'fresno',n:'Fresno State',city:'Fresno',st:'CA',region:'CA',type:'CSU',size:'L',admit:.96,g25:2.8,g75:3.5,s25:0,s75:0,tb:true,coa:30000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:5,research:3,bio:6,med:6,grad4:27,honors:'Smittcamp Honors (full ride, competitive)',wue:false,conf:'solid',social:5,
+note:'UCSF-Fresno runs a regional medical-education branch here, and the Smittcamp Honors College is a full ride if he wins it.',medNote:'SJV mission angle pairs with UC Merced PRIME thinking.',links:[['Admissions','https://admissions.fresnostate.edu']]},
+{id:'csusm',n:'CSU San Marcos',city:'San Marcos',st:'CA',region:'CA',type:'CSU',size:'M',admit:.89,g25:2.8,g75:3.4,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:4,research:3,bio:5,med:4,grad4:25,honors:null,wue:false,conf:'solid',social:4,
+note:'North San Diego county; newer campus, growing sciences. Included for completeness of the realistic CSU set.',medNote:'Backstop tier.',links:[['Admissions','https://www.csusm.edu/admissions']]},
+{id:'chico',n:'Chico State',city:'Chico',st:'CA',region:'CA',type:'CSU',size:'M',admit:.93,g25:2.9,g75:3.5,s25:0,s75:0,tb:true,coa:31000,merit:1000,meritName:'Limited merit',dl:'Nov 30, 2026 (Cal State Apply)',dlDate:'2026-11-30',premed:4,research:3,bio:5,med:4,grad4:35,honors:null,wue:false,conf:'solid',social:7,
+note:'Classic residential college-town CSU with the best campus-life feel of the northern group.',medNote:'Backstop tier with better social life.',links:[['Admissions','https://www.csuchico.edu/admissions']]},
+{id:'nyu',n:'NYU',city:'New York',st:'NY',region:'Other',type:'Private',size:'L',admit:.09,g25:3.8,g75:4.0,s25:1470,s75:1550,tb:false,coa:95000,merit:3000,meritName:'Limited merit',dl:'ED1 Nov 1 / RD Jan 5',dlDate:'2026-11-01',premed:8,research:9,bio:8,med:9,grad4:85,honors:null,wue:false,conf:'solid',social:9,
+note:'Elite reach with a unique twist: NYU Grossman School of Medicine is tuition-free for every admitted med student — an NYU undergrad who makes it to Grossman erases the biggest chunk of the 8-year bill.',medNote:'Langone system access is superb; undergrad merit is near-zero though.',links:[['Admissions','https://www.nyu.edu/admissions']]}
+];
+// v2 supplements: social life (1-10, reputational), religious affiliation, research ACCESSIBILITY re-scored per Method rubric
+const SOCIAL={sdsu:9,slo:7,lb:6,ua:8,asu:9,utah:7,unr:6,uo:8,osu:6,wsu:7,uop:4,lmu:7,usd:7,chap:7,scu:6,gonz:8,su:6,slu:6,crei:6,luc:7,marq:7,pitt:8,msu:9,iu:9,uvm:7,bay:8,miami:8};
+const RELIG=['lmu','usd','scu','gonz','su','slu','crei','luc','marq','bay','siena'];
+const RACCESS={sdsu:6,slo:5,lb:4,ua:8,asu:7,utah:9,unr:7,uo:6,osu:6,wsu:6,uop:6,lmu:5,usd:5,chap:4,scu:5,gonz:6,su:5,slu:8,crei:8,luc:7,marq:6,pitt:9,msu:8,iu:7,uvm:8,bay:6,miami:8};
+// pathway: 'ea' = early assurance route for its undergrads; 'bsmd' = formal direct BS/MD program
+const PATHTYPE={slu:'ea',unr:'ea',msu:'ea',luc:'ea',crei:'ea',ucr:'ea',ucm:'ea',pitt:'bsmd',drex:'bsmd',roch:'bsmd',cwru:'bsmd',utd:'bsmd',bay:'bsmd',cnu:'bsmd',vcu:'bsmd',rpi:'bsmd',union:'bsmd',siena:'bsmd',sbu:'bsmd',psu:'bsmd',bu:'bsmd',hof:'bsmd',rut:'bsmd',uconn:'bsmd',cinci:'bsmd',umkc:'bsmd',brown:'bsmd'};
+const RESTRICT={utd:'TX-only',unr:'NV pref \u2014 verify',psu:'1470+ SAT gate',rut:'NJ-leaning \u2014 verify',ucm:'SJV mission'};
+// application platform, early deadline, regular deadline, supplemental essays
+const APPINFO={
+sdsu:['Cal State Apply','—','Nov 30','None — no essays'],slo:['Cal State Apply','—','Nov 30','None — no essays'],lb:['Cal State Apply','—','Nov 30','None — no essays'],
+ucm:['UC App','—','Nov 30','4 PIQs (shared)'],ucr:['UC App','—','Nov 30','4 PIQs (shared)'],ucsc:['UC App','—','Nov 30','4 PIQs (shared)'],ucd:['UC App','—','Nov 30','4 PIQs (shared)'],ucsb:['UC App','—','Nov 30','4 PIQs (shared)'],uci:['UC App','—','Nov 30','4 PIQs (shared)'],ucsd:['UC App','—','Nov 30','4 PIQs (shared)'],ucb:['UC App','—','Nov 30','4 PIQs (shared)'],ucla:['UC App','—','Nov 30','4 PIQs (shared)'],
+ua:['Own portal','Rolling (apply Sept–Oct)','May 1 final','None'],asu:['Own or Common App','Rolling; Barrett Nov 1','Feb 1','Barrett essay only'],utah:['Common App','—','Dec 1 priority','Short answers'],unr:['Own or Common App','Rolling','Feb 1','None'],uo:['Common App','Nov 1 EA','Jan 15','Short answers'],osu:['Common App','Nov 1 EA','Feb 1','None'],wsu:['Common App','—','Jan 31','None'],
+uop:['Common App','Nov 15 EA','Jan 15','None'],lmu:['Common App','Nov 1 EA','Jan 15','1 supplement'],usd:['Common App','Nov 1 EA','Jan 15','Short supplement'],chap:['Common App','Nov 1 EA','Jan 15','1 supplement'],scu:['Common App','Nov 1 EA','Jan 7','Short supplement'],gonz:['Common App','Nov 15 EA','Feb 1','None'],su:['Common App','Nov 15 EA','Jan 15','None'],
+slu:['Common App','Rolling','Dec 1 (merit)','None; Med Scholars = extra app'],crei:['Common App','Nov 1 EA','Jan 15','None'],luc:['Common App','Rolling','Dec 1 priority','None'],marq:['Common App','Rolling','Dec 1 priority','None'],pitt:['Common App','Rolling — apply Sept','Rolling','Short answers'],msu:['Common App','Nov 1 EA','Rolling after','None'],iu:['Common App','Nov 1 EA','Feb 1','None'],uvm:['Common App','Nov 15 EA','Jan 15','None'],bay:['Common App','Nov 1 EA','Feb 1','Short answers'],miami:['Common App','Nov 1 EA','Jan 1','Short answers'],
+jhu:['Common App','ED1 Nov 1 / ED2 Jan 2','Jan 2','1 supplement'],usc:['Common App','Nov 1 EA (required for merit)','Jan 15','Several supplements'],cwru:['Common App','Nov 1 EA','Jan 8','None; PPSP = extra essays by Dec 1'],roch:['Common App','Nov 1 EA','Jan 5','1 supplement; REMS = extra app'],drex:['Common App','Nov 1 EA','Jan 15','None; BS/MD = extra essays Nov 1'],utd:['ApplyTexas or Common App','Rolling','Dec 1 priority (merit)','None'],cnu:['Own portal','\u2014','Check cycle (BS-MD applies early)','Program essays'],
+csuf:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],vcu:['Common App','EA Nov 1 (GAM with it)','Jan 15','None; GAM extra app'],rpi:['Common App','EA/ED Nov 1','Jan 15','None; program extra'],union:['Common App','EA/ED Nov 1','Jan 15','None; LIM extra'],siena:['Common App','EA Nov 1 / Rolling','Rolling','None; SHM extra'],sbu:['Common App','EA Nov 1','Jan 15','None; SFM extra'],psu:['Common App or Own','EA Nov 1','Rolling','None; PMM extra'],bu:['Common App','ED Nov 1 / ED2 Jan 6','Jan 6','Short; SMED extra'],hof:['Common App','EA Nov 1','Rolling','None; BS-MD extra'],rut:['Common App or Own','EA Nov 1','Dec 1','None; BA/MD extra'],uconn:['Common App','EA Nov 1','Jan 15','None; SPiM extra'],cinci:['Common App','EA Nov 1','Rolling','None; Connections extra'],umkc:['Own or Common App','\u2014','Nov 1 (BA/MD)','BA/MD app + interview'],neu:['Common App','EA/ED Nov 1','Jan 1','None'],uga:['Common App or Own','EA Oct 15','Jan 1','Short answers'],uw:['Own portal','\u2014','Nov 15','Own essays'],uta:['ApplyTexas or Common App','\u2014','Dec 1 priority','Short answers'],mich:['Common App','EA Nov 1','Feb 1','Supplements'],unc:['Common App','EA Oct 15','Jan 15','Short answers'],cornell:['Common App','ED Nov 1','Jan 2','1 supplement'],nw:['Common App','ED Nov 1','Jan 3','Supplement'],emory:['Common App','ED1 Nov 1','Jan 1','Supplements'],washu:['Common App','ED1 Nov 1','Jan 2','Short'],duke:['Common App','ED Nov 3','Jan 2','Supplements'],vandy:['Common App','ED1 Nov 1','Jan 1','Supplement'],brown:['Common App','ED Nov 1 (PLME)','Jan 3','Supplements; PLME extra'],stan:['Common App','REA Nov 1','Jan 5','Supplements'],
+sjsu:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],csueb:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],sac:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],sfsu:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],cpp:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],csun:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],fresno:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],csusm:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],chico:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],nyu:['Common App','ED1 Nov 1 / ED2 Jan 1','Jan 5','Supplement']};
+// program band (Claude's qualitative program difficulty) + program acceptance estimate (%, est.)
+const PBAND={slu:'attainable',vcu:'attainable',siena:'attainable',ucr:'attainable',msu:'attainable',cinci:'stretch',umkc:'stretch',uconn:'stretch',union:'stretch',rpi:'stretch',drex:'stretch',cnu:'stretch',luc:'stretch',crei:'stretch',unr:'stretch',ucm:'restricted',utd:'restricted',rut:'restricted',sbu:'out',hof:'out',psu:'out',bu:'out',bay:'out',pitt:'out',cwru:'out',roch:'out',brown:'out'};
+const PROGRATE={slu:12,vcu:8,siena:10,ucr:12,msu:20,cinci:10,umkc:15,uconn:8,union:8,rpi:8,drex:5,cnu:15,luc:10,crei:10,unr:10,ucm:10,utd:5,rut:5,sbu:3,hof:2,psu:3,bu:3,bay:3,pitt:2,cwru:3,roch:2,brown:2};
+SCHOOLS.forEach(s=>{s.social=s.social??(SOCIAL[s.id]??6);s.relig=RELIG.includes(s.id);s.research=RACCESS[s.id]??s.research;s.path=PATHTYPE[s.id]||null;s.app=APPINFO[s.id]||['Common App','—','—','—'];s.pband=PBAND[s.id]||null;s.prate=PROGRATE[s.id]||null});
+function rating(s){return ((s.premed+s.research+s.bio+s.med)/4)*0.8+(s.grad4/10)*0.2}
+// Direct pathways — rebuilt from the verified scan + your consultant's working list (bands: attainable / stretch / restricted / out)
+const PATHWAYS=[
+{sc:'Saint Louis University',name:'Medical Scholars Program',band:'attainable',type:'Early assurance \u2014 guaranteed med school interview',req:'Apply with freshman app; ~3.65+ college GPA; MCAT still required',note:'Still the strongest single application on the board: realistic admit, big merit, real assurance.'},
+{sc:'Virginia Commonwealth (VCU)',name:'Guaranteed Admission Program \u2014 Medicine',band:'attainable',type:'True guaranteed admission (with conditions) to VCU SOM',req:'Historically ~3.5 GPA / mid-1300s SAT + essays/interview \u2014 verify current cycle',note:'Consultant rates it Reach-with-strong-merit; our read: the most attainable true guarantee in the country at his band. Apply.'},
+{sc:'Siena College',name:'Science, Humanities & Medicine (Albany Med)',band:'attainable',type:'8-yr direct with Albany Medical College',req:'Among the friendliest stat bars of any direct program; interview-weighted',note:'Consultant: green/yellow with strong financial consideration \u2014 we agree. Small-campus tradeoff is the price.'},
+{sc:'UC Riverside',name:'Thomas Haider Program (UCR SOM)',band:'attainable',type:'Early assurance for UCR undergrads',req:'UCR student, GPA threshold, inland-CA mission fit',note:'Rides the shared UC app; UCR is now an ~87% admit.'},
+{sc:'Michigan State (Lyman Briggs)',name:'CHM Early Assurance Program',band:'attainable',type:'Early assurance (apply sophomore year)',req:'MSU undergrad, mission-fit essays, GPA threshold',note:'Coherent 8-year plan at a Big Ten school.'},
+{sc:'University of Cincinnati',name:'Connections Dual Admission',band:'stretch',type:'Dual admission with UC College of Medicine',req:'Competitive but mid-selectivity; apply with admission',note:'One of the better odds-per-dollar direct plays \u2014 merit-friendly public underneath it.'},
+{sc:'UMKC',name:'6-year BA/MD',band:'stretch',type:'Accelerated direct MD',req:'Formula-driven (GPA/test/interview) \u2014 friendlier stats than classic BS/MDs',note:'Real path, real caveats: relentless 6-yr pace and high OOS cost across the MD years.'},
+{sc:'UConn',name:'Special Program in Medicine',band:'stretch',type:'8-yr with UConn SOM',req:'Competitive; apply with admission',note:'Moderate reach with decent OOS merit under it.'},
+{sc:'Union College',name:'Leadership in Medicine (Albany Med)',band:'stretch',type:'8-yr direct + MBA/MS',req:'Holistic, EC- and interview-weighted',note:'Consultant: Reach with excellent merit potential \u2014 his EC spike is the right shape for it.'},
+{sc:'RPI',name:'Physician-Scientist Program (Albany Med)',band:'stretch',type:'Direct with research emphasis',req:'Research credentials weighted heavily',note:'Consultant: strong fit/reach \u2014 his computational-bio manuscript is exactly this program\u2019s type.'},
+{sc:'Drexel University',name:'BA/BS+MD Early Assurance',band:'stretch',type:'Formal BS/MD (apply with freshman app, Nov 1)',req:'~3.75 GPA / 1420+ SAT typically',note:'Reachable if his exact numbers land at the top of his band.'},
+{sc:'California Northstate',name:'BS-MD Early Assurance Honors Track (3+4 / 4+4)',band:'stretch',type:'Direct BS-MD \u2014 the only one physically in California',req:'Friendlier stats; med seat conditional on progression benchmarks',note:'Young school, conditional seat, high cost \u2014 one eyes-open application, never the plan.'},
+{sc:'Loyola University Chicago',name:'Stritch early assurance track',band:'stretch',type:'Early assurance (internal)',req:'Top Loyola undergrads; competitive internal selection',note:'Reputational \u2014 verify current terms.'},
+{sc:'Creighton University',name:'Pre-health early admission routes',band:'stretch',type:'Internal pipelines to Creighton SOM',req:'Creighton undergrads; competitive',note:'Reputational \u2014 formal guarantees vary by year.'},
+{sc:'University of Nevada, Reno',name:'UNR Med early assurance routes',band:'stretch',type:'Early assurance (apply as UNR undergrad)',req:'Strong NV-resident preference \u2014 VERIFY for CA students',note:'The WUE-price undergrad stands on its own; the assurance needs a direct check.'},
+{sc:'UC Merced',name:'SJV PRIME+ (BS-to-MD pathway)',band:'restricted',type:'Mission-based pathway (UCSF-linked)',req:'San Joaquin Valley mission fit weighs heavily',note:'Consultant: mission-dependent \u2014 agreed. Real for the right story, not a general-purpose route.'},
+{sc:'UT Dallas',name:'UT PACT (BA/MD, UT Southwestern)',band:'restricted',type:'Formal BA/MD \u2014 residency-gated',req:'Texas residents \u2014 UTSW is ~90% TX by law',note:'Effectively closed to a CA applicant; UTD stays on the list as a merit/value school.'},
+{sc:'Rutgers',name:'BA/MD routes (NJMS / RWJ)',band:'restricted',type:'Direct routes \u2014 residency-leaning',req:'Historically NJ-favored \u2014 verify current openness',note:'Check before spending essays on it.'},
+{sc:'Stony Brook',name:'Scholars for Medicine',band:'out',type:'8-yr with Renaissance SOM',req:'Very high bar via WISE/Honors',note:'Consultant: high reach \u2014 agreed; the base school is the value.'},
+{sc:'Hofstra University',name:'4+4 BS-MD (Zucker)',band:'out',type:'Direct with Zucker SOM / Northwell',req:'Tiny cohort, EC-weighted, very selective',note:'Base school is a big-merit safety; the BS-MD is its own lottery.'},
+{sc:'Penn State',name:'Premedical-Medical (Jefferson)',band:'out',type:'Accelerated 7-yr',req:'SAT 1470+ in a single sitting \u2014 hard gate',note:'Out of band unless his real score clears 1470; then it re-opens.'},
+{sc:'Boston University',name:'SMED (7-yr)',band:'out',type:'Accelerated direct MD',req:'Elite-tier stats and ECs',note:'Classic program, lottery odds.'},
+{sc:'Baylor University',name:'Baylor\u00b2Baylor Medical Program',band:'out',type:'Guaranteed admission to Baylor College of Medicine',req:'~1500+ tier, tiny cohort',note:'Verified real; Baylor stays for regular premed strength.'},
+{sc:'University of Pittsburgh',name:'Guaranteed Admit Program (Pitt Med)',band:'out',type:'BS/MD-class guarantee at admission',req:'~1490+ SAT, top 5% rank',note:'Only in play if test scores jump.'},
+{sc:'Case Western / Rochester',name:'PPSP &amp; REMS',band:'out',type:'Formal BS/MD programs',req:'~1500+/top decile; REMS takes ~10 students',note:'Both schools are worth applying to on merit + premed strength alone.'},
+{sc:'Brown University',name:'PLME (8-yr)',band:'out',type:'The most famous BS/MD',req:'~2% acceptance; need-based aid only',note:'Consultant: lottery, not a merit play \u2014 agreed on both counts.'},
+{sc:'The rest of the ~60 BS/MD universe',name:'Classic direct programs',band:'out',type:'Direct BS/MD',req:'Typically 3.85+ UW, 1490+/34+, top 5%',note:'His ECs clear these bars (USABO semifinalist, national HOSA award, manuscript under review) \u2014 stats are the sole gate. Note: Northwestern\u2019s HPME and Miami\u2019s HPME were discontinued; ignore stale lists that still cite them. Send exact GPA/SAT and the out-of-band cards above get re-sorted for real.'}];
+const UCS=[
+{n:'UC Merced',admit:.98,g:3.0},{n:'UC Riverside',admit:.87,g:3.3},{n:'UC Santa Cruz',admit:.73,g:3.45},
+{n:'UC Davis',admit:.45,g:3.65},{n:'UC Santa Barbara',admit:.38,g:3.75},{n:'UC Irvine',admit:.29,g:3.75},
+{n:'UC San Diego',admit:.28,g:3.8},{n:'UC Berkeley',admit:.11,g:3.9},{n:'UCLA',admit:.09,g:3.92}];
+const WDEFS=[
+ ['cost','Net cost vs budget',20],['premed','Premed environment',15],['med','Med-school placement',15],
+ ['research','Research & clinical access',12],['bio','Bio program quality',10],['geo','Geography (near CA)',10],
+ ['size','Campus size match',8],['merit','Merit generosity',6],['honors','Honors college',4],['social','Social life',5]];
+const PRESETS={bal:[20,15,15,12,10,10,8,6,4,5],cost:[34,12,10,8,8,10,6,10,2,4],out:[10,18,22,18,12,6,6,4,4,3]};
+// ---------------- STATE ----------------
+let S={gpa:3.55,sat:1330,bud:45000,to:false,over:true,region:'all',size:'all',sort:'fit',med:250000,
+ ec:'exceptional',ap:8,sci:true,ap5:0,ap4:0,hooks:['research'],track:'both',ecText:'',exRelig:false,reqHon:false,minSoc:0,minRes:0,
+ view:'cards',sortDir:'desc',typeF:'all',pathF:'all',q:'',maxNet:0,minRate:0,pbandF:'all',
+ pins:[],pinsOnly:false,bands:{Likely:true,Safety:true,Target:true,Reach:true},
+ w:Object.fromEntries(WDEFS.map(d=>[d[0],d[2]]))};
+try{const sv=localStorage.getItem('medtrack1');if(sv){const p=JSON.parse(sv);S={...S,...p,w:{...S.w,...(p.w||{})}}}}catch(e){}
+// v3 migration: EC tier re-graded to Exceptional from his activities file (Aug 2026)
+const EC_SUMMARY='Graded EXCEPTIONAL by Claude from his UC Activities List (Aug 2026):\n• USABO Semifinalist (top 10% national)\n• HOSA Nationals — 8th in US, Anatomy & Physiology\n• Science Olympiad regional/state/invitational medals; team event coordinator (hosted 200-competitor invitational)\n• Research: Parkinson’s biomarker ML manuscript under review (JEI); independent research; Rosetta Institute ×2; Rising Scholars; UCI Surgery; UCLA Pre-Med Summer Scholar\n• Clinical: 100+ hrs shadowing over 3 yrs; GI clinic rotation; medical clinic coordinator + scribe (50+ hrs)\n• Leadership/service: Bio Olympiad chapter president (300 students); Red Cross Club VP; Sewa International 100+ hrs; Learn To Be & Schoolhouse.world tutor\n• Varsity badminton (3 yrs); drummer; Stanford Neurosurgery Journal Club\n• Certs: CPR/AED, FEMA CERT, Stop the Bleed, concussion protocol\n\nEdit freely — saved in this browser.';
+if(!S.pv3){S.pv3=true;S.ec='exceptional';if(!Array.isArray(S.hooks))S.hooks=[];if(!S.hooks.includes('research'))S.hooks=[...S.hooks,'research'];if(!S.ecText)S.ecText=EC_SUMMARY;save()}
+function save(){try{localStorage.setItem('medtrack1',JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const fmt$=v=>'$'+Math.round(v/1000)+'k';
+const fmtK=v=>'$'+(v/1000).toFixed(0)+',000'.slice(0,0)+'k';
+// ---------------- MODEL ----------------
+function pbandPill(s){
+ if(!s.pband)return '';
+ const cls=s.pband==='attainable'?'Safety':s.pband==='stretch'?'Target':s.pband==='restricted'?'Target':'Reach';
+ const lbl=s.pband==='out'?'Prog: Out of band':'Prog: '+s.pband.charAt(0).toUpperCase()+s.pband.slice(1);
+ return `<span class="pill ${cls}" title="Claude's qualitative difficulty band for the direct-med PROGRAM (separate from school admit chance)">${lbl}</span>`;
+}
+function whyBand(s,p){
+ const pctl=S.gpa<s.g25?'below':S.gpa>s.g75?'above':'inside';
+ const satTxt=s.tb?'SAT ignored (test-blind school)':(S.to?'test-optional \u2014 SAT not submitted':`his ${S.sat} SAT vs their ${s.s25}\u2013${s.s75} admit band`);
+ const h=Math.max(.15,Math.min(.85,1-s.admit));
+ const adj=Math.round((holisticMult(s.admit)-1)*100);
+ return `${s.n} admits ${(s.admit*100).toFixed(0)}% of applicants overall. His ${S.gpa.toFixed(2)} GPA sits ${pctl} their typical ${s.g25.toFixed(2)}\u2013${s.g75.toFixed(2)} admitted range; ${satTxt}. ECs/rigor/hooks adjust ${adj>=0?'+':''}${adj}% \u2014 ${h>.5?'this school reads holistically, so that matters a lot':'this school admits mostly on stats, so that matters little'}. Result: ~${(p*100).toFixed(0)}% \u2192 ${band(p)}.`;
+}
+function pathBadge(s){
+ if(!s.path)return '';
+ const r=RESTRICT[s.id];
+ const base=s.path==='bsmd'?'<span class="pill Reach">BS/MD</span>':'<span class="pill Safety">Early Assur.</span>';
+ return base+(r?`<span class="pill Target" title="Restricted program">${r}</span>`:'');
+}
+function chance(s){
+ let pg=(S.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25));
+ pg=Math.max(0,Math.min(1.25,pg>1?1+Math.min(.25,(S.gpa-s.g75)*2):pg));
+ let pos=pg;
+ if(!s.tb && !S.to && s.s25>0){
+   let ps=(S.sat-s.s25)/Math.max(10,(s.s75-s.s25));
+   ps=Math.max(0,Math.min(1.25,ps>1?1+Math.min(.25,(S.sat-s.s75)/200):ps));
+   pos=(pg+ps)/2;
+ }
+ let p=s.admit*(0.35+1.3*pos);
+ return Math.max(.02,Math.min(.96,p*holisticMult(s.admit)));
+}
+// EC/rigor/hook adjustments matter at selective holistic schools, barely at auto-admit publics
+function holisticMult(admit){
+ const h=Math.max(.15,Math.min(.85,1-admit));
+ const ecAdj={minimal:-.15,average:0,strong:.12,exceptional:.26}[S.ec]||0;
+ let mult=1+ecAdj*h*1.8;
+ const apEff=S.ap+(S.sci?1:0);
+ mult*=1+Math.max(-1,Math.min(1,(apEff-7)/6))*.10*h*1.6;
+ // AP exam scores: small validation effect only — colleges weight course rigor, not exam scores
+ mult*=1+Math.min(1,(S.ap5*1.5+S.ap4)/8)*.05*h*1.6;
+ if(S.hooks.includes('firstgen'))mult*=1+.10*h*1.6;
+ if(S.hooks.includes('research'))mult*=1+.12*h*1.6;
+ if(S.hooks.includes('athlete'))mult*=1.06;
+ if(S.hooks.includes('legacy'))mult*=1+.06*h;
+ return mult;
+}
+function band(p){return p>=.75?'Safety':p>=.55?'Likely':p>=.30?'Target':'Reach'}
+function net(s){return Math.max(15000,s.coa-s.merit)}
+function subs(s){
+ const r=net(s)/S.bud;
+ const cost=r<=.75?10:r<=1?10-(r-.75)*8:r<=1.35?8-(r-1)*14:Math.max(1,3-(r-1.35)*4);
+ const geo=s.region==='CA'?10:s.region==='West'?8:4.5;
+ const size=S.size==='all'?7:(s.size===S.size?10:s.size==='M'?6:3);
+ const merit=Math.min(10,(s.merit/s.coa)*24);
+ return {cost,premed:s.premed,med:s.med,research:s.research,bio:s.bio,geo,size,merit,honors:s.honors?10:2,social:s.social};
+}
+function fit(s){
+ const sb=subs(s);let tw=0,t=0;
+ for(const[k]of WDEFS.map(d=>[d[0]])){const w=S.w[k]||0;tw+=w;t+=w*sb[k]}
+ return tw?Math.round(t/tw*10):0;
+}
+function matchQ(s,q){return [s.n,s.city,s.st,s.region,s.type,s.note,s.medNote,s.meritName,s.dl,(s.app||[]).join(' '),s.path==='bsmd'?'bs/md bsmd':s.path==='ea'?'early assurance':'',s.honors||''].join(' ').toLowerCase().includes(q)}
+function visible(o={}){
+ const q=(S.q||'').trim().toLowerCase();
+ return SCHOOLS.filter(s=>{
+  if(q&&!matchQ(s,q))return false;
+  if(S.region!=='all'){if(S.region==='Other'){if(s.region!=='Other')return false}else if(s.region!==S.region)return false}
+  if(S.size!=='all'&&s.size!==S.size)return false;
+  if(!o.ignoreType&&S.typeF!=='all'&&s.type!==S.typeF)return false;
+  if(S.pathF==='any'&&!s.path)return false;
+  if((S.pathF==='bsmd'||S.pathF==='ea')&&s.path!==S.pathF)return false;
+  if(S.track==='bsmd'&&!s.path)return false;
+  if(!S.over&&net(s)>S.bud*1.15)return false;
+  if(S.exRelig&&s.relig)return false;
+  if(S.reqHon&&!s.honors)return false;
+  if(s.social<S.minSoc)return false;
+  if(s.research<S.minRes)return false;
+  if(S.maxNet&&net(s)>S.maxNet)return false;
+  if(S.minRate&&rating(s)<S.minRate)return false;
+  if(S.pbandF!=='all'&&(s.pband||'')!==S.pbandF)return false;
+  if(S.pinsOnly&&!S.pins.includes(s.id))return false;
+  if(!S.bands[band(chance(s))])return false;
+  return true;
+ });
+}
+// ---------------- RENDER ----------------
+function renderSummary(list){
+ const c={Likely:0,Safety:0,Target:0,Reach:0};list.forEach(s=>c[band(chance(s))]++);
+ $('sumstrip').innerHTML=
+  `<div class="stat"><div class="lbl">Showing</div><div class="n">${list.length}</div></div>`+
+  `<div class="stat g"><div class="lbl g">Safety</div><div class="n">${c.Safety}</div></div>`+
+  `<div class="stat c"><div class="lbl c">Likely</div><div class="n">${c.Likely}</div></div>`+
+  `<div class="stat a"><div class="lbl a">Target</div><div class="n">${c.Target}</div></div>`+
+  `<div class="stat p"><div class="lbl p">Reach</div><div class="n">${c.Reach}</div></div>`+
+  `<div class="stat a"><div class="lbl a">&#9733; Shortlist</div><div class="n">${S.pins.length}</div></div>`;
+}
+const GETV={rating:x=>rating(x.s),fit:x=>x.f,chance:x=>x.p,net:x=>x.n,merit:x=>x.s.merit/x.s.coa,meritAbs:x=>x.s.merit,premed:x=>x.s.premed,research:x=>x.s.research,social:x=>x.s.social,admit:x=>x.s.admit,grad4:x=>x.s.grad4,name:x=>x.s.n,coa:x=>x.s.coa,dead:x=>x.s.dlDate,path:x=>x.s.path==='bsmd'?2:x.s.path==='ea'?1:0};
+function sortRows(list){
+ const g=GETV[S.sort]||GETV.fit,dir=S.sortDir==='asc'?1:-1;
+ list.sort((a,b)=>{const va=g(a),vb=g(b);return(typeof va==='string'?va.localeCompare(vb):va-vb)*dir});
+ return list;
+}
+function rows(schools){return schools.map(s=>({s,p:chance(s),f:fit(s),n:net(s)}))}
+function renderList(){
+ const list=sortRows(rows(visible()));
+ renderSummary(list.map(x=>x.s));
+ if(S.view==='table'){renderTable(list,'#listBox');return}
+ $('listBox').innerHTML=list.map(cardHTML).join('');
+ wireCards('#listBox');
+}
+function renderAllTab(){
+ const el=$('allBox');if(!el)return;
+ const q=(($('allq')||{}).value||'').trim().toLowerCase();
+ const list=sortRows(rows(SCHOOLS.filter(s=>!q||matchQ(s,q))));
+ renderTable(list,'#allBox');
+ $('allCount').textContent=list.length+' of '+SCHOOLS.length+' shown';
+}
+function renderViews(){renderList();renderUC();renderAllTab();renderCost();}
+function cardHTML({s,p,f,n}){
+  const b=band(p),ov=n>S.bud;
+  return `<div class="card ${b}" data-id="${s.id}" tabindex="0">
+   <div class="crow"><span class="cname">${s.n}</span><span class="cloc">${s.city}, ${s.st} &middot; ${s.type} &middot; ${s.size==='L'?'Large':s.size==='M'?'Mid-size':'Small'}</span>
+   <span class="pill ${b}">${b} &middot; ${(p*100).toFixed(0)}%</span>${pathBadge(s)}${pbandPill(s)}${(s.type==='UC'||s.type==='CSU')?'<span class="pill wue" title="COA shown is the California in-state price">CA in-state $</span>':''}${s.wue?'<span class="pill wue">WUE</span>':''}${s.honors?'<span class="pill wue">Honors</span>':''}${s.relig?'<span class="pill wue" title="Religiously affiliated">Relig.</span>':''}<button class="star ${S.pins.includes(s.id)?'on':''}" data-pin="${s.id}" aria-label="Toggle shortlist" title="Add to shortlist">&#9733;</button></div>
+   <div class="cnums">
+    <div><div class="lbl">Fit score</div><div class="v">${f}<small>/100</small></div></div>
+    <div><div class="lbl">Rating</div><div class="v">${rating(s).toFixed(1)}<small>/10</small></div></div>
+    <div><div class="lbl">Sticker COA</div><div class="v">${fmt$(s.coa)}<small>/yr</small></div></div>
+    <div><div class="lbl">Est. net / yr</div><div class="v ${ov?'over':''}">${fmt$(n)}${ov?' <small>over</small>':''}</div></div>
+    <div><div class="lbl">Merit est.</div><div class="v">${fmt$(s.merit)}<small>/yr</small></div></div>
+    <div><div class="lbl">Admit rate</div><div class="v">${(s.admit*100).toFixed(0)}%</div></div>
+    <div><div class="lbl">Premed env.</div><div class="v"><span class="dot ${s.conf}"></span>${s.premed}<small>/10</small></div></div>
+    <div><div class="lbl">Research acc.</div><div class="v">${s.research}<small>/10</small></div></div>
+    <div><div class="lbl">Social</div><div class="v"><span class="dot rep"></span>${s.social}<small>/10</small></div></div>
+    <div><div class="lbl">4-yr grad</div><div class="v">${s.grad4}%</div></div>
+   </div>
+   <div class="detail">
+    <p>${s.note}</p>
+    <p><b>Premed reality check:</b> ${s.medNote}</p>
+    <p><b>Merit:</b> ${s.meritName} &middot; est. ${fmt$(s.merit)}/yr for this profile &nbsp;&nbsp; <b>Apply by:</b> ${s.dl}</p>
+    <p><b>Application:</b> ${s.app[0]} &middot; Early: ${s.app[1]} &middot; Regular: ${s.app[2]} &middot; Supplemental: ${s.app[3]}${s.path?` &middot; <b>Pathway:</b> ${s.path==='bsmd'?'formal BS/MD program':'early-assurance route for its undergrads'} (see Direct Pathways tab)`:''}</p>
+    <p><b>Why ${b}:</b> ${whyBand(s,p)}</p>
+    <p><b>Rating ${rating(s).toFixed(1)}/10:</b> objective quality blend \u2014 premed environment ${s.premed}, research access ${s.research}, bio strength ${s.bio}, med placement ${s.med} (80%), plus 4-yr grad rate ${s.grad4}% (20%). Independent of your weight sliders; Fit is the personalized number.</p>
+    ${s.path?`<p><b>Program acceptance:</b> ~${s.prate}% (est.) for the ${s.path==='bsmd'?'BS/MD program':'early-assurance route'} \u2014 separate from and much lower than the ${(s.admit*100).toFixed(0)}% school admit rate.</p>`:''}
+    <p><b>Stats vs his:</b> admitted GPA mid-50 ~${s.g25.toFixed(2)}&ndash;${s.g75.toFixed(2)}${s.tb?' &middot; test-blind (SAT ignored)':s.s25?` &middot; SAT ${s.s25}&ndash;${s.s75}`:''}</p>
+    <p class="links">${s.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} &#8599;</a>`).join('')}</p>
+   </div></div>`;
+}
+function wireCards(root){
+ document.querySelectorAll(root+' .card').forEach(c=>{
+  const t=e=>{if(e.target.tagName!=='A'&&!e.target.dataset.pin)c.classList.toggle('open')};
+  c.addEventListener('click',t);
+  c.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.target.dataset.pin)t(e)});
+ });
+ wireStars(root);
+}
+function wireStars(root='#listBox'){
+ document.querySelectorAll(root+' .star').forEach(st=>st.addEventListener('click',e=>{
+  e.stopPropagation();const id=st.dataset.pin;
+  S.pins=S.pins.includes(id)?S.pins.filter(x=>x!==id):[...S.pins,id];
+  save();renderViews();
+ }));
+}
+const DIRDEF={net:'asc',name:'asc'};
+function renderTable(list,root='#listBox'){
+ const cols=[['name','School'],['chance','Chance'],['fit','Fit'],['rating','Rating'],['path','Pathway'],['coa','Sticker COA'],['net','Net/yr'],['meritAbs','Merit/yr'],['dead','Early / Regular'],['admit','Admit%'],['premed','Premed'],['research','Research'],['social','Social'],['grad4','4-yr grad']];
+ let h='<div class="tblwrap"><table class="tbl"><thead><tr><th></th>'+cols.map(([k,label])=>
+  `<th data-k="${k}" class="${S.sort===k?'sorted':''}">${label}${S.sort===k?(S.sortDir==='asc'?' &#9650;':' &#9660;'):''}</th>`).join('')+'</tr></thead><tbody>';
+ h+=list.map(({s,p,f,n})=>{const b=band(p),ov=n>S.bud;
+  return `<tr class="${b}">
+   <td><button class="star ${S.pins.includes(s.id)?'on':''}" data-pin="${s.id}" aria-label="Toggle shortlist">&#9733;</button></td>
+   <td class="nm">${s.n} <span class="cloc">${s.st} &middot; ${s.type}</span></td>
+   <td><span class="pill ${b}">${b} ${(p*100).toFixed(0)}%</span></td>
+   <td>${f}</td><td>${rating(s).toFixed(1)}</td><td>${pathBadge(s)||'—'}</td><td>${fmt$(s.coa)}</td><td class="${ov?'over':''}">${fmt$(n)}</td><td>${fmt$(s.merit)}</td><td style="white-space:normal;min-width:130px;font-size:11.5px">${s.app[1]} / ${s.app[2]}</td>
+   <td>${(s.admit*100).toFixed(0)}%</td><td>${s.premed}</td><td>${s.research}</td><td>${s.social}</td><td>${s.grad4}%</td></tr>`;
+ }).join('')+'</tbody></table></div>';
+ document.querySelector(root).innerHTML=h;
+ document.querySelectorAll(root+' .tbl th[data-k]').forEach(th=>th.addEventListener('click',()=>{
+  const k=th.dataset.k;
+  if(S.sort===k)S.sortDir=S.sortDir==='asc'?'desc':'asc';
+  else{S.sort=k;S.sortDir=DIRDEF[k]||'desc'}
+  save();syncFilters();renderViews();
+ }));
+ wireStars(root);
+}
+function renderPath(){
+ let h='';
+ if(S.track==='premed'){
+  h='<div class="note"><b>Track is set to traditional pre-med.</b> Switch to "Both" or "BS/MD focus" in the Profile tab to see direct BS/MD and early-assurance pathways.</div>';
+ }else{
+  if(S.track==='bsmd')h+='<div class="note"><b>Straight talk on BS/MD focus at his band:</b> classic BS/MD programs want 3.85+/1490+. The realistic version of "direct pathway" for a 3.4&ndash;3.7 / 1250&ndash;1400 profile is <b>early assurance from inside college</b> — green cards below. Build the main list first; treat purple as lottery tickets.</div>';
+  h+=PATHWAYS.map(p=>`<div class="pcard ${p.band}">
+   <div class="crow"><span class="cname" style="font-size:15px">${p.sc}</span>
+   <span class="pill ${p.band==='attainable'?'Safety':p.band==='stretch'?'Target':'Reach'}">${p.band==='out'?'Out of band':p.band}</span></div>
+   <div class="lbl" style="margin-top:6px">${p.type}</div>
+   <p><b>${p.name}</b> &mdash; ${p.note}</p>
+   <p><b>Requirements:</b> ${p.req}</p>
+   ${(SCHOOLS.find(x=>p.sc.startsWith(x.n)||x.n.startsWith(p.sc.split(' /')[0]))||{}).prate?`<p><b>Program acceptance:</b> ~${(SCHOOLS.find(x=>p.sc.startsWith(x.n)||x.n.startsWith(p.sc.split(' /')[0]))||{}).prate}% (est., program-level)</p>`:''}</div>`).join('');
+  h+='<div class="note"><b>Verify everything here.</b> Pathway terms change yearly and some are reputational — before counting on any of these, confirm current requirements on the school\'s pre-health advising page (links on each school\'s card in The List).</div>';
+ }
+ $('pathBox').innerHTML=h;
+}
+function renderWeights(){
+ $('wgrid').innerHTML=WDEFS.map(([k,label])=>`<div class="ctl"><div class="lbl">${label} <span class="val" id="wv_${k}">${S.w[k]}</span></div><input type="range" min="0" max="35" step="1" value="${S.w[k]}" data-w="${k}" aria-label="${label} weight"></div>`).join('');
+ document.querySelectorAll('#wgrid input').forEach(i=>i.addEventListener('input',e=>{
+  S.w[e.target.dataset.w]=+e.target.value;$('wv_'+e.target.dataset.w).textContent=e.target.value;save();renderList();renderCompare();
+ }));
+}
+function selOpts(sel,def){
+ sel.innerHTML=SCHOOLS.map(s=>`<option value="${s.id}">${s.n}</option>`).join('');sel.value=def;
+}
+function renderCompare(){
+ const ids=[$('cmpA').value,$('cmpB').value,$('cmpC').value];
+ const ss=ids.map(id=>SCHOOLS.find(s=>s.id===id));
+ const rows=[
+  ['Verdict',ss.map(s=>{const p=chance(s);return `<span class="pill ${band(p)}">${band(p)} ${(p*100).toFixed(0)}%</span>`}),null],
+  ['Fit score',ss.map(fit),'hi'],['Est. net/yr',ss.map(net),'lo'],['Merit est./yr',ss.map(s=>s.merit),'hi'],
+  ['Sticker COA',ss.map(s=>s.coa),'lo'],['Admit rate',ss.map(s=>(s.admit*100).toFixed(0)+'%'),null],
+  ['Premed env.',ss.map(s=>s.premed+'/10'),null],['Med placement',ss.map(s=>s.med+'/10'),null],
+  ['Research access',ss.map(s=>s.research+'/10'),null],['4-yr grad rate',ss.map(s=>s.grad4+'%'),null],
+  ['Honors',ss.map(s=>s.honors||'—'),null],['Deadline',ss.map(s=>s.dl),null]];
+ let h=`<div class="rl">&nbsp;</div>`+ss.map(s=>`<div class="hd">${s.n}</div>`).join('');
+ for(const[label,vals,dir]of rows){
+  let best=-1;
+  if(dir){const nums=vals.map(v=>typeof v==='number'?v:parseFloat(v));best=nums.indexOf(dir==='hi'?Math.max(...nums):Math.min(...nums))}
+  h+=`<div class="rl">${label}</div>`+vals.map((v,i)=>{
+   const disp=typeof v==='number'&&(label.includes('net')||label.includes('Merit')||label.includes('COA'))?fmt$(v):v;
+   return `<div class="${i===best?'best':''}">${disp}</div>`}).join('');
+ }
+ $('cmpBox').innerHTML=h;
+}
+function renderCost(){
+ const list=visible().map(s=>({s,n:net(s)})).sort((a,b)=>a.n-b.n);
+ const max=Math.max(...list.map(x=>x.n*4))+S.med;
+ $('costBox').innerHTML=list.map(({s,n})=>{
+  const ug=n*4,tot=ug+S.med;
+  return `<div class="bar-row"><div class="bar-head"><b>${s.n}</b><span>${fmt$(ug)} undergrad &nbsp;&middot;&nbsp; <b style="color:var(--white)">${fmt$(tot)}</b> 8-yr exposure</span></div>
+  <div class="bar"><div class="ug" style="width:${ug/max*100}%"></div><div class="md" style="width:${S.med/max*100}%"></div></div></div>`;
+ }).join('');
+}
+const UC_NOTE=`<div class="note"><b>UC strategy for his band (fall-2025 admit data):</b> Merced (~98%) and Riverside (~87%) are true in-system safeties now; Santa Cruz (~73%) is likely; Davis (~45%) and Santa Barbara (~38%) are the realistic targets; Irvine/San Diego are reaches and Berkeley/UCLA lottery tickets for a bio major. All 9 ride one application, so add them all &mdash; but plan the non-UC list assuming nothing above Riverside is guaranteed. <a style="color:var(--cyan)" href="https://admission.universityofcalifornia.edu" target="_blank" rel="noopener">UC Admissions &#8599;</a></div>`;
+function renderUC(){
+ const all=rows(SCHOOLS.filter(s=>s.type==='UC')).length;
+ const list=sortRows(rows(visible({ignoreType:true}).filter(s=>s.type==='UC')));
+ const hidden=9-list.length;
+ if(S.view==='table'){renderTable(list,'#ucBox')}
+ else{$('ucBox').innerHTML=list.map(cardHTML).join('');wireCards('#ucBox')}
+ $('ucBox').insertAdjacentHTML('beforeend',(hidden>0?`<div class="note">${hidden} campus${hidden>1?'es':''} hidden by the filters above (bands, search, social/research minimums&hellip;). The type filter is ignored on this tab.</div>`:'')+UC_NOTE);
+}
+function renderTimeline(){
+ const items=[
+  ['2026-09-01','Now &mdash; September','Submit rolling apps first: Pitt (merit + odds decay by October), Arizona, ASU, SLU. Draft UC PIQs.',1],
+  ['2026-10-01','Oct 1','UC + Cal State application filing opens. FAFSA/CSS opens — file early even if aid is unlikely; some merit requires it.',1],
+  ['2026-11-01','Nov 1','EA deadline wave: LMU, USD, Chapman, Santa Clara, Creighton, MSU, Indiana, Baylor, Miami, Oregon, Oregon State, ASU/Barrett priority. EA = merit priority at most of these.',1],
+  ['2026-11-15','Nov 15','EA deadline: Pacific, Gonzaga, Seattle U, Vermont.',0],
+  ['2026-11-30','Nov 30','UC + Cal State applications due. Non-negotiable.',1],
+  ['2026-12-01','Dec 1','Merit priority: SLU, Loyola Chicago, Marquette, Utah.',0],
+  ['2027-01-31','Late Jan','Final stragglers (WSU). By now the list should be fully submitted.',0],
+  ['2027-03-15','March','Decisions land. Re-open this app: switch to Cost-first weights, enter actual net prices from award letters, re-rank.',1],
+  ['2027-05-01','May 1','National decision day. Deposit at one school.',1]];
+ $('tlBox').innerHTML=items.map(([d,dd,w,c])=>`<div class="tl-item ${c?'crit':''}"><div class="d">${dd}</div><div class="w">${w}</div></div>`).join('');
+ const rows=[...SCHOOLS].sort((a,b)=>a.dlDate<b.dlDate?-1:a.dlDate>b.dlDate?1:a.n.localeCompare(b.n));
+ $('tlTable').innerHTML='<div class="tblwrap"><table class="tbl"><thead><tr><th>College</th><th>Platform</th><th>Early</th><th>Regular</th><th>Merit / apply-by</th><th>Supplemental essays</th><th>Pathway extra</th></tr></thead><tbody>'+
+  rows.map(s=>`<tr><td class="nm">${s.n}</td><td>${s.app[0]}</td><td>${s.app[1]}</td><td>${s.app[2]}</td><td style="white-space:normal;min-width:160px">${s.dl}</td><td style="white-space:normal">${s.app[3]}</td><td>${s.path==='bsmd'?'BS/MD app':s.path==='ea'?'EA route (in college)':'—'}</td></tr>`).join('')+
+  '</tbody></table></div>';
+}
+// ---------------- WIRING ----------------
+function renderAll(){renderViews();renderPath();}
+const FILTERBAR=`
+    <div class="filters">
+      <input class="qbox qsearch" type="search" placeholder="Search all columns&hellip;" aria-label="Search schools">
+      <span class="lbl" style="margin:0 4px 0 12px">Sort</span>
+      <select class="sortSel" aria-label="Sort schools">
+        <option value="fit">Fit score</option><option value="chance">Admit chance</option><option value="net">Est. net cost</option><option value="coa">Sticker COA</option><option value="premed">Premed environment</option><option value="merit">Merit generosity</option><option value="name">Name</option>
+      </select>
+    </div>
+    <div class="filters">
+      <span class="lbl" style="margin-right:4px">Region</span>
+      <button class="chip" data-f="region" data-v="all">All</button>
+      <button class="chip" data-f="region" data-v="CA">California</button>
+      <button class="chip" data-f="region" data-v="West">West</button>
+      <button class="chip" data-f="region" data-v="Other">Rest of US</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Size</span>
+      <button class="chip" data-f="size" data-v="all">Any</button>
+      <button class="chip" data-f="size" data-v="S">Small</button>
+      <button class="chip" data-f="size" data-v="M">Mid</button>
+      <button class="chip" data-f="size" data-v="L">Large</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Bands</span>
+      <button class="chip bchip" data-b="Safety" style="color:var(--green)">Safety</button>
+      <button class="chip bchip" data-b="Likely" style="color:var(--cyan)">Likely</button>
+      <button class="chip bchip" data-b="Target" style="color:var(--amber)">Target</button>
+      <button class="chip bchip" data-b="Reach" style="color:var(--purple)">Reach</button>
+    </div>
+    <div class="filters">
+      <span class="lbl" style="margin-right:4px">Type</span>
+      <button class="chip" data-f="typeF" data-v="all">All</button>
+      <button class="chip" data-f="typeF" data-v="UC">UC</button>
+      <button class="chip" data-f="typeF" data-v="CSU">CSU</button>
+      <button class="chip" data-f="typeF" data-v="Public">Public (non-CA)</button>
+      <button class="chip" data-f="typeF" data-v="Private">Private</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Pathway</span>
+      <button class="chip" data-f="pathF" data-v="all">All</button>
+      <button class="chip" data-f="pathF" data-v="any">Has pathway</button>
+      <button class="chip" data-f="pathF" data-v="bsmd">BS/MD</button>
+      <button class="chip" data-f="pathF" data-v="ea">Early assurance</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Program band</span>
+      <button class="chip" data-f="pbandF" data-v="all">All</button>
+      <button class="chip" data-f="pbandF" data-v="attainable">Attainable</button>
+      <button class="chip" data-f="pbandF" data-v="stretch">Stretch</button>
+      <button class="chip" data-f="pbandF" data-v="restricted">Restricted</button>
+      <button class="chip" data-f="pbandF" data-v="out">Out of band</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Track</span>
+      <button class="chip tchip" data-tr="premed">Pre-med</button>
+      <button class="chip tchip" data-tr="both">Both</button>
+      <button class="chip tchip" data-tr="bsmd">BS/MD</button>
+    </div>
+    <div class="filters">
+      <span class="lbl" style="margin-right:4px">Social life &ge;</span>
+      <select class="minSoc" aria-label="Minimum social life"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+      <span class="lbl" style="margin:0 4px 0 12px">Research access &ge;</span>
+      <select class="minRes" aria-label="Minimum research accessibility"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+      <span class="lbl" style="margin:0 4px 0 12px">Net cost &le;</span>
+      <select class="maxNet" aria-label="Maximum net cost"><option value="0">Any</option><option value="30000">$30k</option><option value="40000">$40k</option><option value="50000">$50k</option><option value="60000">$60k</option><option value="70000">$70k</option></select>
+      <span class="lbl" style="margin:0 4px 0 12px">Rating &ge;</span>
+      <select class="minRate" aria-label="Minimum rating"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+      <button class="chip pinchip" style="margin-left:12px">&#9733; Shortlist only</button>
+      <span class="lbl" style="margin:0 4px 0 12px">View</span>
+      <button class="chip" data-f="view" data-v="cards">Cards</button>
+      <button class="chip" data-f="view" data-v="table">Table (click columns to sort)</button>
+    </div>`;
+document.querySelectorAll('.filterbar').forEach(el=>el.innerHTML=FILTERBAR);
+function syncFilters(){
+ document.querySelectorAll('.chip[data-f]').forEach(c=>c.classList.toggle('on',String(S[c.dataset.f])===c.dataset.v));
+ document.querySelectorAll('.bchip').forEach(c=>c.classList.toggle('on',!!S.bands[c.dataset.b]));
+ document.querySelectorAll('.tchip').forEach(c=>c.classList.toggle('on',c.dataset.tr===S.track));
+ document.querySelectorAll('.pinchip').forEach(c=>c.classList.toggle('on',S.pinsOnly));
+ document.querySelectorAll('select.sortSel').forEach(x=>{if([...x.options].some(o=>o.value===S.sort))x.value=S.sort});
+ document.querySelectorAll('select.minSoc').forEach(x=>x.value=String(S.minSoc));
+ document.querySelectorAll('select.minRes').forEach(x=>x.value=String(S.minRes));
+ document.querySelectorAll('select.maxNet').forEach(x=>x.value=String(S.maxNet));
+ document.querySelectorAll('select.minRate').forEach(x=>x.value=String(S.minRate));
+ document.querySelectorAll('input.qsearch').forEach(x=>{if(x.value!==S.q)x.value=S.q});
+ const t=$('trackSel');if(t)t.value=S.track;
+}
+document.addEventListener('click',e=>{
+ const cf=e.target.closest('.chip[data-f]');
+ if(cf){S[cf.dataset.f]=cf.dataset.v;save();syncFilters();renderViews();return}
+ const cb=e.target.closest('.bchip');
+ if(cb){S.bands[cb.dataset.b]=!S.bands[cb.dataset.b];save();syncFilters();renderViews();return}
+ const ct=e.target.closest('.tchip');
+ if(ct){S.track=ct.dataset.tr;save();syncFilters();renderPath();renderViews();return}
+ const cp=e.target.closest('.pinchip');
+ if(cp){S.pinsOnly=!S.pinsOnly;save();syncFilters();renderViews();return}
+});
+document.addEventListener('change',e=>{
+ const cl=e.target.classList;
+ if(cl.contains('sortSel')){S.sort=e.target.value;S.sortDir=DIRDEF[S.sort]||'desc';save();syncFilters();renderViews()}
+ else if(cl.contains('minSoc')){S.minSoc=+e.target.value;save();syncFilters();renderViews()}
+ else if(cl.contains('minRes')){S.minRes=+e.target.value;save();syncFilters();renderViews()}
+ else if(cl.contains('maxNet')){S.maxNet=+e.target.value;save();syncFilters();renderViews()}
+ else if(cl.contains('minRate')){S.minRate=+e.target.value;save();syncFilters();renderViews()}
+});
+document.addEventListener('input',e=>{
+ if(e.target.classList.contains('qsearch')){S.q=e.target.value;save();syncFilters();renderViews()}
+ else if(e.target.id==='allq'){renderAllTab()}
+});
+$('inGpa').value=S.gpa;$('inSat').value=S.sat;$('inBud').value=S.bud;
+$('vGpa').textContent=S.gpa.toFixed(2);$('vSat').textContent=S.sat;$('vBud').textContent=fmt$(S.bud);
+$('inGpa').addEventListener('input',e=>{S.gpa=+e.target.value;$('vGpa').textContent=S.gpa.toFixed(2);save();renderAll();renderCompare()});
+$('inSat').addEventListener('input',e=>{S.sat=+e.target.value;$('vSat').textContent=S.sat;save();renderAll();renderCompare()});
+$('inBud').addEventListener('input',e=>{S.bud=+e.target.value;$('vBud').textContent=fmt$(S.bud);save();renderAll();renderCompare()});
+$('inMed').addEventListener('input',e=>{S.med=+e.target.value;$('vMed').textContent=fmt$(S.med);save();renderCost()});
+function wireToggle(id,key,fn){const el=$(id);
+ if(S[key])el.classList.add('on');else el.classList.remove('on');
+ el.setAttribute('aria-checked',String(!!S[key]));
+ const f=()=>{S[key]=!S[key];el.classList.toggle('on');el.setAttribute('aria-checked',String(S[key]));save();fn()};
+ el.addEventListener('click',f);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}});}
+wireToggle('tgTO','to',()=>{renderAll();renderCompare()});
+wireToggle('tgOver','over',renderAll);
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+ ['profile','list','all','weights','compare','cost','path','uc','time','method'].forEach(k=>$('s-'+k).hidden=(k!==t.dataset.t));
+}));
+// profile controls
+$('ecSel').value=S.ec;$('ecSel').addEventListener('change',e=>{S.ec=e.target.value;save();renderAll();renderCompare()});
+$('inAp').value=S.ap;$('vAp').textContent=S.ap;
+$('inAp').addEventListener('input',e=>{S.ap=+e.target.value;$('vAp').textContent=S.ap;save();renderAll();renderCompare()});
+$('inAp5').value=S.ap5;$('vAp5').textContent=S.ap5;
+$('inAp5').addEventListener('input',e=>{S.ap5=+e.target.value;$('vAp5').textContent=S.ap5;save();renderAll();renderCompare()});
+$('inAp4').value=S.ap4;$('vAp4').textContent=S.ap4;
+$('inAp4').addEventListener('input',e=>{S.ap4=+e.target.value;$('vAp4').textContent=S.ap4;save();renderAll();renderCompare()});
+$('trackSel').value=S.track;$('trackSel').addEventListener('change',e=>{S.track=e.target.value;syncFilters();save();renderPath();renderViews()});
+$('ecText').value=S.ecText||'';$('ecText').addEventListener('input',e=>{S.ecText=e.target.value;save()});
+wireToggle('tgSci','sci',()=>{renderAll();renderCompare()});
+wireToggle('tgRelig','exRelig',renderViews);
+wireToggle('tgHon','reqHon',renderViews);
+document.querySelectorAll('.chip[data-h]').forEach(c=>{
+ c.classList.toggle('on',S.hooks.includes(c.dataset.h));
+ c.addEventListener('click',()=>{const k=c.dataset.h;
+  S.hooks=S.hooks.includes(k)?S.hooks.filter(x=>x!==k):[...S.hooks,k];
+  c.classList.toggle('on');save();renderAll();renderCompare()});
+});
+syncFilters();
+document.querySelectorAll('.presets .act').forEach(b=>b.addEventListener('click',()=>{
+ PRESETS[b.dataset.p].forEach((v,i)=>S.w[WDEFS[i][0]]=v);save();renderWeights();renderList();renderCompare();
+}));
+selOpts($('cmpA'),'slu');selOpts($('cmpB'),'ua');selOpts($('cmpC'),'sdsu');
+['cmpA','cmpB','cmpC'].forEach(id=>$(id).addEventListener('change',renderCompare));
+$('vMed').textContent=fmt$(S.med);$('inMed').value=S.med;
+renderWeights();renderAll();renderCompare();renderTimeline();
+</script>
+
+</body>
+</html>

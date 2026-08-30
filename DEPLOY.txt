@@ -1,0 +1,11 @@
+PUBLISH MEDCOMPASS — copy/paste, ~3 minutes total
+
+1) Create empty repo: open https://github.com/new  → name: medcompass → Public → Create
+2) In the unzipped folder, run:
+   git init && git add . && git commit -m "MedCompass v8"
+   git branch -M main
+   git remote add origin https://github.com/geemboombaa/medcompass.git
+   git push -u origin main
+3) Vercel: open https://vercel.com/new → Import medcompass → Framework: Other → Deploy
+   → shareable at https://medcompass.vercel.app (or similar)
+   (Alternative, no Vercel: repo Settings → Pages → Deploy from branch → main / root)
