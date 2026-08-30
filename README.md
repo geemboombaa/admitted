@@ -1,4 +1,4 @@
-# MedCompass
+# admitted
 
 An interactive college-selection tool for premed and BS/MD applicants. Single-file, no build step, no backend — pure HTML/CSS/JS.
 

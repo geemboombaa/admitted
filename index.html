@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="MedCompass - an interactive premed and BS/MD college selection tool: 80 schools, live admit-chance modeling, fit scoring, merit and 8-year cost analysis, direct-pathway tracking.">
+<meta name="description" content="admitted - premed and BS/MD college selection: 80 schools, live admit-chance modeling, fit scoring, True Cost journey economics, direct-pathway tracking.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 <style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>MedCompass</title>
+<title>admitted</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 <style>
@@ -53,6 +53,7 @@ section[hidden]{display:none}
 .chip{background:var(--panel);border:1px solid var(--line);color:var(--body);font:inherit;font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:3px;cursor:pointer}
 .chip.on{border-color:var(--cyan);color:var(--cyan)}
 .bchip{opacity:.45}.bchip.on{opacity:1;border-color:currentColor}
+.pinchip.on{border-color:var(--amber);color:var(--amber)}
 .tblwrap{overflow-x:auto}
 .tbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
 .tbl th{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
@@ -143,7 +144,7 @@ textarea:focus{outline:none;border-color:var(--cyan)}
 
 <div class="wrap">
   <div class="lbl g">Premed College Selection &mdash; Class of 2027 Entry</div>
-  <h1>MedCompass</h1>
+  <h1>admitted<span style="color:var(--green)">.</span></h1>
   <p class="sub">Non-UC candidates for a California premed applicant. Move any input &mdash; the whole list re-scores and re-classifies live. UCs are handled separately (you're applying to all of them) under the UC Reference tab.</p>
   <div style="margin-top:10px"><span class="badge warn">Data: 2024&ndash;26 cycle estimates &mdash; verify via links before applying</span></div>
 </div>
@@ -244,11 +245,46 @@ textarea:focus{outline:none;border-color:var(--cyan)}
   </section>
 
   <section id="s-cost" hidden>
-    <h2>The 8-year picture</h2>
-    <p class="sub">Undergrad is only half the bill. Bars show estimated 4-year net cost at your merit level, stacked with a median med-school debt assumption you control. Sorted cheapest first.</p>
-    <div class="ctl" style="max-width:320px;margin-top:14px"><div class="lbl">Med school debt assumption <span class="val" id="vMed">$250k</span></div><input type="range" id="inMed" min="0" max="400000" step="10000" value="250000" aria-label="Med school debt assumption"></div>
-    <div class="legend"><span><i style="background:var(--cyan)"></i>Undergrad 4-yr net</span><span><i style="background:var(--purple);opacity:.75"></i>Med school debt</span></div>
+    <h2>True Cost &mdash; the whole journey, not just tuition</h2>
+    <p class="sub">One global Journey Profile (his situation) applied to every school’s own numbers (COA, merit, pathways). True Cost = 4-yr inflated net cost + med school + loan interest &minus; money he earns along the way. Filters from The List apply here too.</p>
+    <div class="lbl" style="margin:18px 0 8px">Journey profile &mdash; applies to all schools</div>
+    <div class="wgrid">
+      <div class="ctl"><div class="lbl">Campus job hrs/wk <span class="val" id="jv_jobHrs">8</span></div><input type="range" class="jinput" data-j="jobHrs" min="0" max="20" step="1" value="8"></div>
+      <div class="ctl"><div class="lbl">Wage $/hr <span class="val" id="jv_wage">17</span></div><input type="range" class="jinput" data-j="wage" min="12" max="30" step="1" value="17"></div>
+      <div class="ctl"><div class="lbl">Paid research summers <span class="val" id="jv_summers">2</span></div><input type="range" class="jinput" data-j="summers" min="0" max="4" step="1" value="2"></div>
+      <div class="ctl"><div class="lbl">Stipend $/summer <span class="val" id="jv_stipend">5000</span></div><input type="range" class="jinput" data-j="stipend" min="0" max="8000" step="500" value="5000"></div>
+      <div class="ctl"><div class="lbl">Gap years <span class="val" id="jv_gap">1</span></div><input type="range" class="jinput" data-j="gap" min="0" max="2" step="1" value="1"></div>
+      <div class="ctl"><div class="lbl">Gap salary $/yr <span class="val" id="jv_gapSal">48000</span></div><input type="range" class="jinput" data-j="gapSal" min="30000" max="70000" step="1000" value="48000"></div>
+      <div class="ctl"><div class="lbl">Merit renewal</div><select class="jinput" data-j="renew" style="width:100%"><option value="keep">Keeps merit all 4 years</option><option value="lose">Loses merit after year 2 (stress test)</option></select></div>
+      <div class="ctl"><div class="lbl">Med school scenario</div><select class="jinput" data-j="medScen" style="width:100%"><option value="capublic">CA public MD (~$260k)</option><option value="private">Private MD (~$350k)</option><option value="free">Free-tuition MD, lottery (~$70k living)</option><option value="mdphd">MD-PhD, funded (+8 yrs, net &minus;$140k)</option><option value="hpsp">Military HPSP (~$40k, service owed)</option></select></div>
+      <div class="ctl"><div class="lbl">Loan rate % <span class="val" id="jv_rate">8.1</span></div><input type="range" class="jinput" data-j="rate" min="4" max="12" step="0.1" value="8.1"></div>
+      <div class="ctl"><div class="lbl">Tuition inflation % <span class="val" id="jv_infl">3.5</span></div><input type="range" class="jinput" data-j="infl" min="0" max="6" step="0.5" value="3.5"></div>
+      <div class="ctl"><div class="lbl">529 savings <span class="val" id="jv_p529">200000</span></div><input type="range" class="jinput" data-j="p529" min="0" max="400000" step="10000" value="200000"></div>
+      <div class="ctl"><div class="lbl">Outside scholarships (total) <span class="val" id="jv_outSch">5000</span></div><input type="range" class="jinput" data-j="outSch" min="0" max="25000" step="1000" value="5000"></div>
+      <div class="ctl"><div class="lbl">AOTC tax credit</div><select class="jinput" data-j="aotc" style="width:100%"><option value="off" selected>Off (phases out above ~$180k joint income)</option><option value="on">On (+$2,500/yr &times; 4)</option></select></div>
+      <div class="ctl"><div class="lbl">Scenario band</div><select class="jinput" data-j="band" style="width:100%"><option value="conservative">Conservative (costs +15%, income &minus;15%)</option><option value="expected" selected>Expected</option><option value="optimistic">Optimistic (costs &minus;10%, income +15%)</option></select></div>
+    </div>
+    <div class="legend" style="margin-top:16px"><span><i style="background:var(--cyan)"></i>Undergrad net (4 yrs, inflated)</span><span><i style="background:var(--purple);opacity:.75"></i>Med school</span><span><i style="background:var(--amber)"></i>Loan interest</span><span style="color:var(--green)">&minus; earned income &amp; gap savings shown per row</span></div>
+    <div class="filters" style="margin-top:16px">
+      <span class="lbl" style="margin-right:4px">Scope</span>
+      <button class="chip scchip" data-sc="filtered" title="Every school passing your List-tab filters">Filtered schools</button>
+      <button class="chip scchip" data-sc="starred" title="Only your starred shortlist (falls back to Filtered when nothing is starred)">&#9733; Starred only</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Metric</span>
+      <button class="chip mtchip" data-mt="econ" title="Total economic cost of the whole journey, whoever pays">Economic cost</button>
+      <button class="chip mtchip" data-mt="oop" title="Economic cost minus the 529 you already saved — new money the journey takes">Out-of-pocket after 529</button>
+      <button class="chip mtchip" data-mt="borrow" title="Only what must be borrowed after income, budget and 529">Borrowed</button>
+    </div>
+    <div class="lbl" style="margin:22px 0 8px">Value map &mdash; cheap AND gettable is the top-left corner (click a dot to open that school)</div>
+    <div id="vmapBox"></div>
+    <div class="lbl" style="margin:22px 0 8px">Cost distribution &mdash; where the selected metric clusters</div>
+    <div id="histBox"></div>
+    <div class="lbl" style="margin:22px 0 8px">Per-school ledger (sorted cheapest first on the selected metric)</div>
     <div id="costBox"></div>
+    <h2 style="margin-top:30px">Shortlist deep-dive &mdash; star &#9733; schools to populate</h2>
+    <div class="lbl" style="margin:14px 0 8px">Where the money goes &mdash; waterfall per starred school</div>
+    <div id="cmp8Box"></div>
+    <div class="lbl" style="margin:22px 0 8px">Net position, age 18&ndash;35 &mdash; when each path pays off (dashed = via that school's accelerated BS/MD, if any; assumes 3-yr residency, 3&ndash;7 by specialty)</div>
+    <div id="crossBox"></div>
   </section>
 
   <section id="s-path" hidden>
@@ -262,7 +298,9 @@ textarea:focus{outline:none;border-color:var(--cyan)}
     <div class="note" style="border-left-color:var(--green)"><b>Fit score (0&ndash;100)</b> = weighted average of 10 sub-scores using your Weights-tab sliders: cost-vs-budget (net &le;75% of budget = 10/10, degrading past budget), premed environment, med-school placement, research accessibility, bio quality, geography (CA 10 / West 8 / rest 4.5), size match, merit generosity (merit &divide; sticker), honors college, social life. Admit chance is deliberately <b>not</b> part of fit &mdash; it's the separate color band, so a great-fit reach never hides behind a mediocre safety.</div>
     <div class="note"><b>Research accessibility (1&ndash;10), defined:</b> how easily a <b>median</b> premed &mdash; not a superstar &mdash; lands a real lab position or clinical role by sophomore year. Scored from: teaching hospital / med school physically on or adjacent to campus; undergrad-to-grad-student ratio (grad students absorb lab seats); formal undergrad research programs with guaranteed slots; and volume of clinical volunteering within transit reach. Utah, Pitt, SLU score high because the hospital is on campus; Cal Poly and Chapman score low because the medical ecosystem simply isn't there.</div>
     <div class="note"><b>Social life (1&ndash;10), defined:</b> campus energy (D1 sports, Greek/social scene), college-town or city quality, % of students living on/near campus, and weekend-emptiness risk. Entirely reputational data &mdash; treat &plusmn;2 as noise and verify with a visit.</div>
-    <div class="note" style="border-left-color:var(--purple)"><b>Data confidence:</b> <span class="dot solid"></span>solid = published institutional data (admit rates, costs, published merit tiers). <span class="dot rep"></span>reputational = student reports, forums, softer sources (premed climate, social life, committee-letter practices). All figures are 2024&ndash;26 cycle estimates; the links on each card are the ground truth.</div>
+    <div class="note"><b>True Cost formula:</b> 4-yr net (COA inflated yearly, minus merit &mdash; or minus merit for only 2 years in the lose-renewal stress test) + med school scenario + simple-interest estimate on borrowed amounts (undergrad borrowings carried ~7 yrs, med ~4.5 yrs at your chosen rate) &minus; earned income (campus job &times; 32 wks/yr &times; 4, paid summer stipends, +$40k lifetime co-op at Drexel/Northeastern) &minus; gap-year savings (40% of salary). Financing order: income + outside scholarships + family cash flow (budget &times;4) + 529 cover costs before anything is borrowed; interest accrues only on the borrowed remainder, which is why a $200k 529 cuts True Cost through the interest line even though the savings themselves aren't a "discount." AOTC adds $2,500/yr &times;4 when enabled (income-capped &mdash; phases out above ~$180k joint). Scenario band shifts costs/income &plusmn;10&ndash;15%. All figures are planning estimates, not financial advice.</div>
+<div class="note" style="border-left-color:var(--purple)"><b>True Cost metrics &amp; scope:</b> Economic cost = everything the journey consumes, whoever pays. Out-of-pocket = economic cost minus the 529 already saved (new money). Borrowed = what remains after income + outside scholarships + family budget + 529. Scope: Starred shows your shortlist regardless of filters; Filtered follows the List tab. <b>Clinical Access (1&ndash;10):</b> hospital volunteering + shadowing reach for a median premed &mdash; hospital density in transit reach, county/teaching hospitals, and slot competition; reputational. <b>Merit semantics:</b> figures are published automatic tiers at his band only &mdash; competitive scholarships are excluded, so real outcomes can only beat the app, never trail it.</div>
+<div class="note" style="border-left-color:var(--purple)"><b>Data confidence:</b> <span class="dot solid"></span>solid = published institutional data (admit rates, costs, published merit tiers). <span class="dot rep"></span>reputational = student reports, forums, softer sources (premed climate, social life, committee-letter practices). All figures are 2024&ndash;26 cycle estimates; the links on each card are the ground truth.</div>
   </section>
 
   <section id="s-uc" hidden>
@@ -283,10 +321,11 @@ textarea:focus{outline:none;border-color:var(--cyan)}
   </section>
 
   <div style="margin-top:34px;border-top:1px solid var(--line);padding-top:14px">
-    <span class="lbl">MedCompass &middot; figures are 2024&ndash;26 cycle estimates, always verify on official links &middot; ask Claude to update data or add schools</span>
+    <span class="lbl">admitted &middot; figures are 2024&ndash;26 cycle estimates, always verify on official links &middot; ask Claude to update data or add schools</span>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 // ---------------- DATA (2024-26 cycle estimates; verify via links) ----------------
 // g25/g75 = est. unweighted GPA middle 50% of admits; s25/s75 = SAT mid 50 (0 = test-blind)
@@ -306,11 +345,11 @@ note:'Barrett is the play here — arguably the strongest honors college in the 
 note:'University hospital and med school physically on campus — unusually easy clinical and research access for undergrads. WUE awards exist but are limited; merit stack still lands near budget.',medNote:'Health-sciences campus adjacency is the differentiator. 4-yr grad rate lags (many students work/serve missions) — not a quality signal.',links:[['Admissions','https://admissions.utah.edu']]},
 {id:'unr',n:'University of Nevada, Reno',city:'Reno',st:'NV',region:'West',type:'Public',size:'M',admit:.87,g25:3.1,g75:3.8,s25:1080,s75:1320,tb:false,coa:48000,merit:15000,meritName:'WUE rate (auto for CA residents)',dl:'Rolling; WUE/merit priority Feb 1, 2027',dlDate:'2026-12-15',premed:7,research:6,bio:7,med:7,grad4:36,honors:'Honors College',wue:true,conf:'solid',
 note:'WUE makes this one of the cheapest real options on the list (~$33k net), 3.5 hrs from Sacramento, and UNR has its own MD school with early-assurance pathways for its undergrads.',medNote:'Smaller pond = easier access to labs and physician shadowing. Grad-rate stat drags from part-time students.',links:[['Admissions','https://www.unr.edu/admissions'],['WUE info','https://www.unr.edu/financial-aid']]},
-{id:'uo',n:'University of Oregon',city:'Eugene',st:'OR',region:'West',type:'Public',size:'L',admit:.85,g25:3.3,g75:3.85,s25:1150,s75:1390,tb:false,coa:58000,merit:15000,meritName:'Summit Scholarship (auto at 3.6+)',dl:'Nov 1, 2026 EA (maximizes merit)',dlDate:'2026-11-01',premed:6,research:7,bio:7,med:5,grad4:59,honors:'Clark Honors College',wue:false,conf:'solid',
+{id:'uo',n:'University of Oregon',city:'Eugene',st:'OR',region:'West',type:'Public',size:'L',admit:.85,g25:3.3,g75:3.85,s25:1150,s75:1390,tb:false,coa:58000,merit:12000,meritName:'Summit needs 3.6+ GPA — Apex tier at his band',dl:'Nov 1, 2026 EA (maximizes merit)',dlDate:'2026-11-01',premed:6,research:7,bio:7,med:5,grad4:59,honors:'Clark Honors College',wue:false,conf:'solid',
 note:'Summit/Apex merit is automatic by GPA. Solid biology; the gap is medical ecosystem — no med school in Eugene (OHSU is in Portland), so clinical exposure takes summers/planning.',medNote:'Fine premed outcomes but you assemble the pieces yourself.',links:[['Admissions','https://admissions.uoregon.edu']]},
 {id:'osu',n:'Oregon State University',city:'Corvallis',st:'OR',region:'West',type:'Public',size:'L',admit:.83,g25:3.2,g75:3.8,s25:1120,s75:1350,tb:false,coa:54000,merit:12000,meritName:'Nonresident scholar awards (auto-ish)',dl:'Nov 1, 2026 EA priority',dlDate:'2026-11-01',premed:6,research:7,bio:8,med:5,grad4:41,honors:'Honors College',wue:false,conf:'solid',
 note:'Stronger in bio/life-science research than its reputation suggests (marine bio, biochem). Same Oregon caveat: no on-site medical center.',medNote:'Good Plan B breadth (bioengineering, public health).',links:[['Admissions','https://admissions.oregonstate.edu']]},
-{id:'wsu',n:'Washington State University',city:'Pullman',st:'WA',region:'West',type:'Public',size:'L',admit:.83,g25:3.1,g75:3.7,s25:1050,s75:1280,tb:false,coa:47000,merit:11000,meritName:'Cougar Academic Award (auto)',dl:'Jan 31, 2027 (rolling before)',dlDate:'2027-01-31',premed:6,research:6,bio:7,med:6,grad4:43,honors:'Honors College',wue:false,conf:'solid',
+{id:'wsu',n:'Washington State University',city:'Pullman',st:'WA',region:'West',type:'Public',size:'L',admit:.83,g25:3.1,g75:3.7,s25:1050,s75:1280,tb:false,coa:47000,merit:8000,meritName:'Cougar Academic Award (auto)',dl:'Jan 31, 2027 (rolling before)',dlDate:'2027-01-31',premed:6,research:6,bio:7,med:6,grad4:43,honors:'Honors College',wue:false,conf:'solid',
 note:'Has its own MD school (Floyd College of Medicine) with a mission favoring WSU undergrads. Remote location limits off-campus clinical variety.',medNote:'Safety with a med-school pathway attached.',links:[['Admissions','https://admission.wsu.edu']]},
 {id:'uop',n:'University of the Pacific',city:'Stockton',st:'CA',region:'CA',type:'Private',size:'S',admit:.78,g25:3.3,g75:3.9,s25:1150,s75:1370,tb:false,coa:74000,merit:28000,meritName:'Regents/Presidents merit (auto-tiered)',dl:'Nov 15, 2026 EA (merit priority)',dlDate:'2026-11-15',premed:8,research:6,bio:7,med:7,grad4:60,honors:'Powell Scholars (full-ride, competitive)',wue:false,conf:'solid',
 note:'CA private that discounts hard — net lands near budget. Long health-professions tradition (accelerated dental/pharmacy pipelines), small classes, professors know premeds by name.',medNote:'Strong advising per-capita; Stockton location is the tradeoff. 90 min from home-ish if Bay Area.',links:[['Admissions','https://www.pacific.edu/admission']]},
@@ -338,7 +377,7 @@ note:'Strong health-sciences identity, Medical College of Wisconsin across town 
 note:'Premed powerhouse: UPMC (one of the largest hospital systems in the US) wrapped around campus, elite research access, guaranteed-admit med pathways for top students. His band is below their middle — keep as the quality reach and apply the first week it opens.',medNote:'Merit for OOS is scarce; net ~$54k. Worth it only if he’d pick it over every target.',links:[['Admissions','https://admissions.pitt.edu']]},
 {id:'msu',n:'Michigan State (Lyman Briggs)',city:'East Lansing',st:'MI',region:'Other',type:'Public',size:'L',admit:.90,g25:3.3,g75:3.85,s25:1130,s75:1350,tb:false,coa:63000,merit:16000,meritName:'OOS merit (auto-considered)',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:62,honors:'Lyman Briggs College',wue:false,conf:'solid',
 note:'Lyman Briggs is the feature: a residential science college inside a Big Ten flagship — small science classes, live-with-your-labmates model, built for premeds. Two med schools on campus (MD + DO).',medNote:'The structure solves the "lost in a big school" premed failure mode. Net ~$47k.',links:[['Admissions','https://admissions.msu.edu']]},
-{id:'iu',n:'Indiana University Bloomington',city:'Bloomington',st:'IN',region:'Other',type:'Public',size:'L',admit:.80,g25:3.4,g75:3.9,s25:1180,s75:1400,tb:false,coa:58000,merit:12000,meritName:'IU Achievement/auto-consider',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:71,honors:'Hutton Honors',wue:false,conf:'rep',
+{id:'iu',n:'Indiana University Bloomington',city:'Bloomington',st:'IN',region:'Other',type:'Public',size:'L',admit:.80,g25:3.4,g75:3.9,s25:1180,s75:1400,tb:false,coa:58000,merit:9000,meritName:'IU auto tiers favor 3.8+ — lower tier at his band',dl:'Nov 1, 2026 EA (merit priority)',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:71,honors:'Hutton Honors',wue:false,conf:'rep',
 note:'Classic solid-flagship play: good bio, IU School of Medicine pipeline (largest US med school by enrollment), reliable merit. Net ~$46k.',medNote:'Nothing flashy, few weaknesses.',links:[['Admissions','https://admissions.indiana.edu']]},
 {id:'uvm',n:'University of Vermont',city:'Burlington',st:'VT',region:'Other',type:'Public',size:'M',admit:.65,g25:3.4,g75:3.9,s25:1210,s75:1400,tb:false,coa:65000,merit:19000,meritName:'Presidential/Vermont merit (auto)',dl:'Nov 15, 2026 EA',dlDate:'2026-11-15',premed:8,research:7,bio:7,med:8,grad4:66,honors:'Honors College',wue:false,conf:'solid',
 note:'Larner College of Medicine and UVM Medical Center are on campus — mid-size school with big-school medical access. Generous OOS merit, net ~$46k.',medNote:'Strong early-exposure programs for undergrads; far from CA is the only knock.',links:[['Admissions','https://www.uvm.edu/admissions']]},
@@ -346,9 +385,9 @@ note:'Larner College of Medicine and UVM Medical Center are on campus — mid-si
 note:'Serious premed culture with strong med-school placement machinery. Caveat: pipeline advantages tilt toward Texas med schools, which favor TX residents. Net ~$56k.',medNote:'Grading is rigorous — mild deflation risk vs the Jesuit schools.',links:[['Admissions','https://www.baylor.edu/admissions']]},
 {id:'miami',n:'University of Miami',city:'Coral Gables',st:'FL',region:'Other',type:'Private',size:'M',admit:.19,g25:3.7,g75:4.0,s25:1370,s75:1490,tb:false,coa:90000,merit:25000,meritName:'Merit (competitive at admission)',dl:'Nov 1, 2026 EA',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:73,honors:'Foote Fellows',wue:false,conf:'solid',
 note:'The stretch reach: Miller School of Medicine + UHealth system, strong research. His band is below their middle 50 — apply only if the list has room and essays are strong.',medNote:'If admitted without merit, net ~$90k — outside your structure.',links:[['Admissions','https://admissions.miami.edu']]},
-{id:'jhu',n:'Johns Hopkins',city:'Baltimore',st:'MD',region:'Other',type:'Private',size:'M',admit:.06,g25:3.85,g75:4.0,s25:1520,s75:1560,tb:false,coa:92000,merit:2000,meritName:'Hodson Trust (rare); otherwise need-based only',dl:'ED1 Nov 1 / ED2 Jan 2 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:10,bio:10,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
+{id:'jhu',n:'Johns Hopkins',city:'Baltimore',st:'MD',region:'Other',type:'Private',size:'M',admit:.06,g25:3.85,g75:4.0,s25:1520,s75:1560,tb:false,coa:92000,merit:1000,meritName:'Hodson Trust (rare, top-stats); otherwise need-based only',dl:'ED1 Nov 1 / ED2 Jan 2 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:10,bio:10,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
 note:'The premed pinnacle — Hopkins Hospital, unmatched research. Included because you asked for it: at his numbers this is a ~2% lottery ticket, and Hopkins gives almost no merit (need-based aid only, which is excellent if you qualify).',medNote:'Intense premed competition internally; superb committee support for those who survive it.',links:[['Admissions','https://apply.jhu.edu']]},
-{id:'usc',n:'USC',city:'Los Angeles',st:'CA',region:'CA',type:'Private',size:'L',admit:.10,g25:3.75,g75:4.0,s25:1450,s75:1530,tb:false,coa:95000,merit:15000,meritName:'Presidential/Trustee (half–full tuition, competitive — must apply EA Nov 1)',dl:'Nov 1 EA (required for merit) / RD Jan 15',dlDate:'2026-11-01',premed:8,research:9,bio:8,med:8,grad4:79,honors:null,wue:false,conf:'solid',social:9,
+{id:'usc',n:'USC',city:'Los Angeles',st:'CA',region:'CA',type:'Private',size:'L',admit:.10,g25:3.75,g75:4.0,s25:1450,s75:1530,tb:false,coa:95000,merit:3000,meritName:'Presidential/Trustee exist but go to top ~2% of admits — expect ~$0–3k at his band',dl:'Nov 1 EA (required for merit) / RD Jan 15',dlDate:'2026-11-01',premed:8,research:9,bio:8,med:8,grad4:79,honors:null,wue:false,conf:'solid',social:9,
 note:'The CA prestige reach: Keck medicine, huge alumni network, real (but competitive) merit that requires the Nov 1 EA application. His EC spike is exactly what USC responds to; the stats are the gate.',medNote:'Strong premed ecosystem; LA clinical access unlimited.',links:[['Admissions','https://admission.usc.edu']]},
 {id:'cwru',n:'Case Western Reserve',city:'Cleveland',st:'OH',region:'Other',type:'Private',size:'M',admit:.27,g25:3.7,g75:4.0,s25:1470,s75:1540,tb:false,coa:88000,merit:26000,meritName:'University/Bolton merit (generous, auto-considered)',dl:'Nov 1 EA / RD Jan 8; PPSP pre-professional app Dec 1',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:71,honors:null,wue:false,conf:'solid',social:5,
 note:'Premed heavyweight sandwiched between University Hospitals and the Cleveland Clinic; discounts generously. His band is below their middle 50 — a reach that becomes interesting if his SAT is at the top of the range.',medNote:'PPSP (their BS/MD) is among the most selective in the country.',links:[['Admissions','https://case.edu/admission']]},
@@ -356,7 +395,7 @@ note:'Premed heavyweight sandwiched between University Hospitals and the Clevela
 note:'URMC teaching hospital on campus, flexible curriculum (no gen-eds), solid merit. Reach for his band but a rational one — Rochester reads holistically and his research story lands here.',medNote:'REMS (BS/MD) takes ~10 students — lottery tier.',links:[['Admissions','https://enrollment.rochester.edu/admissions']]},
 {id:'drex',n:'Drexel University',city:'Philadelphia',st:'PA',region:'Other',type:'Private',size:'L',admit:.80,g25:3.3,g75:3.85,s25:1200,s75:1400,tb:false,coa:82000,merit:30000,meritName:'Merit (auto, large discounts standard)',dl:'Nov 1 EA / RD Jan 15; BS/MD by Nov 1',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:52,honors:'Pennoni Honors',wue:false,conf:'solid',social:6,
 note:'High-admit private with its own med school, a formal BS/MD early-assurance program, and the co-op system (paid, résumé-building clinical/research placements built into the degree). Net ~$52k.',medNote:'BS/MD track wants ~3.75/1420+ — stretch, not fantasy. Philly hospital density is a premed asset.',links:[['Admissions','https://drexel.edu/admissions']]},
-{id:'utd',n:'UT Dallas',city:'Richardson',st:'TX',region:'Other',type:'Public',size:'L',admit:.85,g25:3.4,g75:3.95,s25:1240,s75:1470,tb:false,coa:54000,merit:14000,meritName:'Academic Excellence Scholarship (auto-tiered)',dl:'ApplyTexas/Common App; Dec 1 priority for merit',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:6,grad4:58,honors:'Collegium V Honors',wue:false,conf:'solid',social:4,
+{id:'utd',n:'UT Dallas',city:'Richardson',st:'TX',region:'Other',type:'Public',size:'L',admit:.85,g25:3.4,g75:3.95,s25:1240,s75:1470,tb:false,coa:54000,merit:10000,meritName:'AES mid-tier at 1330 (auto-tiered)',dl:'ApplyTexas/Common App; Dec 1 priority for merit',dlDate:'2026-12-01',premed:7,research:7,bio:7,med:6,grad4:58,honors:'Collegium V Honors',wue:false,conf:'solid',social:4,
 note:'Value pick: big auto merit, UT Southwestern (a top med school) 20 minutes away for research/shadowing. Caveats: commuter-campus social life, and Texas med schools heavily favor Texas residents at application time.',medNote:'Great stats-driven safety with real science; weigh the resident-preference issue for med school later.',links:[['Admissions','https://enroll.utdallas.edu']]},
 {id:'ucm',n:'UC Merced',city:'Merced',st:'CA',region:'CA',type:'UC',size:'M',admit:.98,g25:2.95,g75:3.5,s25:0,s75:0,tb:true,coa:43000,merit:1000,meritName:'Regents (competitive)',dl:'Nov 30, 2026 (UC App)',dlDate:'2026-11-30',premed:6,research:6,bio:6,med:6,grad4:47,honors:null,wue:false,conf:'solid',social:4,
 note:'The UC system safety. Small but growing fast, new medical-education pipeline aimed at the San Joaquin Valley (SJV PRIME) — being a bigger fish here can mean easier lab access.',medNote:'Advising thinner than older campuses; self-drive required.',links:[['UC Admissions','https://admission.universityofcalifornia.edu']]},
@@ -392,7 +431,7 @@ note:'Science, Humanities & Medicine (with Albany Med) has among the friendliest
 note:'Scholars for Medicine (8-yr with Renaissance SOM) is a high reach; the base school is a strong-value public premed with a hospital on campus.',medNote:'SUNY pricing keeps OOS cost reasonable.',links:[['Admissions','https://www.stonybrook.edu/admissions']]},
 {id:'psu',n:'Penn State',city:'University Park',st:'PA',region:'Other',type:'Public',size:'L',admit:.55,g25:3.55,g75:3.95,s25:1270,s75:1450,tb:false,coa:60000,merit:5000,meritName:'Limited OOS merit',dl:'PMM (Jefferson) requires SAT 1470+ single sitting',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:7,grad4:71,honors:'Schreyer Honors',wue:false,conf:'solid',social:9,
 note:'Premedical-Medical (PMM) with Jefferson is gated at SAT 1470+ in one sitting — out of band unless his score says otherwise. The base school: big-time premed pipeline, famous social life, little OOS aid.',medNote:'Apply EA — Penn State fills fast.',links:[['Admissions','https://admissions.psu.edu']]},
-{id:'bu',n:'Boston University',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.11,g25:3.8,g75:4.0,s25:1450,s75:1530,tb:false,coa:92000,merit:12000,meritName:'Presidential (competitive)',dl:'SMED (7-yr) applies with admission',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:84,honors:'Kilachand Honors',wue:false,conf:'solid',social:8,
+{id:'bu',n:'Boston University',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.11,g25:3.8,g75:4.0,s25:1450,s75:1530,tb:false,coa:92000,merit:4000,meritName:'Presidential (few hundred elite admits)',dl:'SMED (7-yr) applies with admission',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:84,honors:'Kilachand Honors',wue:false,conf:'solid',social:8,
 note:'SMED (7-yr accelerated MD) is elite-tier selective; BU itself is now an 11%-admit reach. BU Medical Campus offers deep clinical access.',medNote:'Reach on both counts at his band.',links:[['Admissions','https://www.bu.edu/admissions']]},
 {id:'hof',n:'Hofstra University',city:'Hempstead',st:'NY',region:'Other',type:'Private',size:'M',admit:.69,g25:3.3,g75:3.8,s25:1200,s75:1400,tb:false,coa:78000,merit:26000,meritName:'Merit (large, auto)',dl:'4+4 BS-MD (Zucker) app due early with admission',dlDate:'2026-11-01',premed:6,research:5,bio:6,med:7,grad4:55,honors:'Honors College',wue:false,conf:'rep',social:5,
 note:'Easy admit with big merit; the 4+4 BS-MD with Zucker/Northwell is a separate, tiny, EC-weighted competition. Long Island location, Northwell hospital system access.',medNote:'The base school is a safety; the BS-MD is not.',links:[['Admissions','https://www.hofstra.edu/admission']]},
@@ -404,7 +443,7 @@ note:'Special Program in Medicine (8-yr with UConn SOM) is a moderate reach — 
 note:'Connections dual-admission (with UC College of Medicine) at a mid-selectivity, merit-friendly public — one of the better odds-per-dollar direct plays. Cincinnati Children\u2019s is a research powerhouse next door.',medNote:'Net lands near budget after auto merit.',links:[['Admissions','https://admissions.uc.edu']]},
 {id:'umkc',n:'UMKC',city:'Kansas City',st:'MO',region:'Other',type:'Public',size:'M',admit:.77,g25:3.2,g75:3.85,s25:1140,s75:1350,tb:false,coa:55000,merit:8000,meritName:'Some merit; BA/MD priced separately',dl:'6-yr BA/MD app due Nov 1',dlDate:'2026-11-01',premed:6,research:6,bio:6,med:8,grad4:50,honors:'Honors Program',wue:false,conf:'solid',social:4,
 note:'The 6-year BA/MD admits substantially on a formula (GPA/test/interview) — friendlier stats than classic BS/MDs. Costs of the MD years pile up for OOS, and the 6-year pace is relentless.',medNote:'A real direct option; go in understanding the grind and the total price.',links:[['Admissions','https://www.umkc.edu/admissions'],['BA/MD','https://med.umkc.edu/bamd']]},
-{id:'neu',n:'Northeastern',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.06,g25:3.85,g75:4.0,s25:1470,s75:1540,tb:false,coa:90000,merit:8000,meritName:'Merit (competitive)',dl:'EA Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:6,grad4:71,honors:'University Honors',wue:false,conf:'solid',social:7,
+{id:'neu',n:'Northeastern',city:'Boston',st:'MA',region:'Other',type:'Private',size:'L',admit:.06,g25:3.85,g75:4.0,s25:1470,s75:1540,tb:false,coa:90000,merit:3000,meritName:'Merit (nearly vanished as admits fell)',dl:'EA Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:7,research:7,bio:7,med:6,grad4:71,honors:'University Honors',wue:false,conf:'solid',social:7,
 note:'Now a single-digit-admit reach. Co-op gives paid clinical/research placements, but no med school and no BS/MD.',medNote:'Only worth a slot if the co-op model excites him specifically.',links:[['Admissions','https://admissions.northeastern.edu']]},
 {id:'uga',n:'University of Georgia',city:'Athens',st:'GA',region:'Other',type:'Public',size:'L',admit:.37,g25:3.7,g75:4.0,s25:1310,s75:1480,tb:false,coa:52000,merit:7000,meritName:'OOS merit (limited, competitive)',dl:'EA Oct 15 / RD Jan 1',dlDate:'2026-10-15',premed:7,research:7,bio:8,med:6,grad4:71,honors:'Morehead Honors',wue:false,conf:'solid',social:9,
 note:'Classic flagship experience, strong bio; new med school ramping in Athens. OOS merit is thin — cost usually lands above your band.',medNote:'Target-reach; EA Oct 15 comes fast.',links:[['Admissions','https://www.admissions.uga.edu']]},
@@ -420,13 +459,13 @@ note:'State law caps OOS enrollment at 18%, so OOS admits run near single digits
 note:'Elite bio (esp. Human Ecology/CALS angles). Famously intense premed grading. Need-based aid only.',medNote:'Lottery ticket; the grading culture is a real premed consideration.',links:[['Admissions','https://admissions.cornell.edu']]},
 {id:'nw',n:'Northwestern',city:'Evanston',st:'IL',region:'Other',type:'Private',size:'M',admit:.07,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:0,meritName:'Need-based only',dl:'ED Nov 1 / RD Jan 3',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:91,honors:null,wue:false,conf:'solid',social:7,
 note:'Its famous 7-yr HPME was discontinued in 2021 — Northwestern is now a plain (excellent) elite reach with Feinberg up the road.',medNote:'No direct pathway anymore; need-based aid only.',links:[['Admissions','https://admissions.northwestern.edu']]},
-{id:'emory',n:'Emory',city:'Atlanta',st:'GA',region:'Other',type:'Private',size:'M',admit:.11,g25:3.8,g75:4.0,s25:1470,s75:1540,tb:false,coa:92000,merit:8000,meritName:'Emory Scholars (rare, full-ride tier)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:8,bio:9,med:9,grad4:84,honors:null,wue:false,conf:'solid',social:6,
+{id:'emory',n:'Emory',city:'Atlanta',st:'GA',region:'Other',type:'Private',size:'M',admit:.11,g25:3.8,g75:4.0,s25:1470,s75:1540,tb:false,coa:92000,merit:2000,meritName:'Emory Scholars only (lottery within a lottery)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:8,bio:9,med:9,grad4:84,honors:null,wue:false,conf:'solid',social:6,
 note:'Premed powerhouse beside the CDC and Emory Healthcare; collaborative reputation for an elite. Scholars merit is a lottery within a lottery.',medNote:'One of the friendlier elite premed cultures.',links:[['Admissions','https://apply.emory.edu']]},
-{id:'washu',n:'WashU St. Louis',city:'St. Louis',st:'MO',region:'Other',type:'Private',size:'M',admit:.12,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:5000,meritName:'Named scholarships (rare)',dl:'ED1 Nov 1 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
+{id:'washu',n:'WashU St. Louis',city:'St. Louis',st:'MO',region:'Other',type:'Private',size:'M',admit:.12,g25:3.85,g75:4.0,s25:1500,s75:1560,tb:false,coa:95000,merit:3000,meritName:'Named scholarships (rare)',dl:'ED1 Nov 1 / RD Jan 2',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:10,grad4:88,honors:null,wue:false,conf:'solid',social:6,
 note:'Med-school-adjacent everything — WashU Med is a top-5 research school and undergrads feel it. Elite reach.',medNote:'Among the best pure premed environments in the country, if it lands.',links:[['Admissions','https://admissions.washu.edu']]},
 {id:'duke',n:'Duke',city:'Durham',st:'NC',region:'Other',type:'Private',size:'M',admit:.06,g25:3.9,g75:4.0,s25:1520,s75:1570,tb:false,coa:95000,merit:1000,meritName:'A.B. Duke etc. (lottery)',dl:'ED Nov 3 / RD Jan 2',dlDate:'2026-11-03',premed:9,research:9,bio:9,med:9,grad4:90,honors:null,wue:false,conf:'solid',social:8,
 note:'Duke Health on campus, elite outcomes, basketball religion. 6% admit.',medNote:'Lottery ticket.',links:[['Admissions','https://admissions.duke.edu']]},
-{id:'vandy',n:'Vanderbilt',city:'Nashville',st:'TN',region:'Other',type:'Private',size:'M',admit:.06,g25:3.9,g75:4.0,s25:1510,s75:1560,tb:false,coa:92000,merit:5000,meritName:'Cornelius Vanderbilt (rare full-tuition)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:88,honors:null,wue:false,conf:'solid',social:8,
+{id:'vandy',n:'Vanderbilt',city:'Nashville',st:'TN',region:'Other',type:'Private',size:'M',admit:.06,g25:3.9,g75:4.0,s25:1510,s75:1560,tb:false,coa:92000,merit:2000,meritName:'Cornelius Vanderbilt (<1% of class)',dl:'ED1 Nov 1 / RD Jan 1',dlDate:'2026-11-01',premed:9,research:9,bio:9,med:9,grad4:88,honors:null,wue:false,conf:'solid',social:8,
 note:'VUMC adjacency, happy-student reputation, real (if rare) full-tuition merit. 6% admit.',medNote:'Lottery ticket with a merit lottery attached.',links:[['Admissions','https://admissions.vanderbilt.edu']]},
 {id:'brown',n:'Brown',city:'Providence',st:'RI',region:'Other',type:'Private',size:'M',admit:.05,g25:3.9,g75:4.0,s25:1510,s75:1570,tb:false,coa:93000,merit:0,meritName:'Need-based only',dl:'ED Nov 1 (PLME with admission) / RD Jan 3',dlDate:'2026-11-01',premed:8,research:8,bio:8,med:8,grad4:86,honors:null,wue:false,conf:'solid',social:8,
 note:'PLME (8-yr, no-MCAT-pressure) is the most famous BS/MD and among the most selective (~2%). Open curriculum protects GPA.',medNote:'Consultant and Claude agree: lottery; not a merit play.',links:[['Admissions','https://admission.brown.edu']]},
@@ -473,7 +512,24 @@ sjsu:['Cal State Apply','\u2014','Nov 30','None \u2014 no essays'],csueb:['Cal S
 // program band (Claude's qualitative program difficulty) + program acceptance estimate (%, est.)
 const PBAND={slu:'attainable',vcu:'attainable',siena:'attainable',ucr:'attainable',msu:'attainable',cinci:'stretch',umkc:'stretch',uconn:'stretch',union:'stretch',rpi:'stretch',drex:'stretch',cnu:'stretch',luc:'stretch',crei:'stretch',unr:'stretch',ucm:'restricted',utd:'restricted',rut:'restricted',sbu:'out',hof:'out',psu:'out',bu:'out',bay:'out',pitt:'out',cwru:'out',roch:'out',brown:'out'};
 const PROGRATE={slu:12,vcu:8,siena:10,ucr:12,msu:20,cinci:10,umkc:15,uconn:8,union:8,rpi:8,drex:5,cnu:15,luc:10,crei:10,unr:10,ucm:10,utd:5,rut:5,sbu:3,hof:2,psu:3,bu:3,bay:3,pitt:2,cwru:3,roch:2,brown:2};
-SCHOOLS.forEach(s=>{s.social=s.social??(SOCIAL[s.id]??6);s.relig=RELIG.includes(s.id);s.research=RACCESS[s.id]??s.research;s.path=PATHTYPE[s.id]||null;s.app=APPINFO[s.id]||['Common App','—','—','—'];s.pband=PBAND[s.id]||null;s.prate=PROGRATE[s.id]||null});
+// clinical access (1-10): hospital volunteering + physician shadowing reach for a MEDIAN premed — reputational
+const CLINICAL={sjsu:8,csueb:5,sac:7,sfsu:7,cpp:5,csun:6,fresno:6,csusm:4,chico:3,sdsu:8,slo:2,lb:6,csuf:6,
+ucm:4,ucr:6,ucsc:3,ucd:7,ucsb:4,uci:7,ucsd:7,ucb:5,ucla:6,
+ua:8,asu:7,utah:8,unr:7,uo:4,osu:3,wsu:4,uw:7,uop:5,lmu:7,usd:7,chap:6,scu:6,usc:7,stan:7,cnu:5,gonz:7,su:8,
+slu:9,crei:8,luc:8,marq:7,pitt:9,msu:7,iu:6,uvm:7,bay:6,miami:8,cinci:8,uconn:6,umkc:7,utd:6,psu:5,rut:7,sbu:7,
+drex:8,hof:6,roch:7,cwru:9,jhu:9,bu:8,neu:8,nyu:8,cornell:3,nw:7,emory:8,washu:8,duke:8,vandy:8,brown:6,uga:5,mich:8,unc:7,uta:6,vcu:8,rpi:5,union:6,siena:5};
+const PATHNAME={slu:'Medical Scholars',vcu:'GAM-Medicine',ucr:'Haider EA',msu:'CHM EAP',luc:'Stritch EA',crei:'Pre-health EA',unr:'EA (verify)',ucm:'SJV PRIME+',pitt:'GAP',drex:'BA/BS+MD',roch:'REMS',cwru:'PPSP',utd:'UT PACT (TX)',bay:'Baylor\u00b2Baylor',cnu:'BS-MD EA',sbu:'Scholars for Med',hof:'4+4 Zucker',psu:'PMM (1470+ gate)',bu:'SMED',rut:'BA/MD (NJ)',uconn:'SPiM',cinci:'Connections',umkc:'6-yr BA/MD',brown:'PLME',union:'Leadership in Med',siena:'SHM (Albany)',rpi:'Physician-Scientist'};
+SCHOOLS.forEach(s=>{s.social=s.social??(SOCIAL[s.id]??6);s.relig=RELIG.includes(s.id);s.research=RACCESS[s.id]??s.research;s.path=PATHTYPE[s.id]||null;s.app=APPINFO[s.id]||['Common App','—','—','—'];s.pband=PBAND[s.id]||null;s.prate=PROGRATE[s.id]||null;s.clin=CLINICAL[s.id]??5;s.pname=PATHNAME[s.id]||null});
+// in-state reference COA for out-of-state publics (what that state's residents pay) — context only
+const INSTATE_REF={ua:34000,asu:33000,utah:30000,unr:25000,uo:36000,osu:34000,wsu:30000,pitt:40000,msu:34000,iu:30000,uvm:36000,utd:34000,uw:35000,uta:33000,mich:35000,unc:27000,uga:28000,rut:36000,uconn:40000,cinci:30000,umkc:33000,sbu:32000,psu:40000,vcu:30000};
+SCHOOLS.forEach(s=>{
+ if(s.type==='UC'){s.coaIn=s.coa;s.coaOut=s.coa+35000}
+ else if(s.type==='CSU'){s.coaIn=s.coa;s.coaOut=s.coa+12000}
+ else if(s.type==='Public'){s.coaOut=s.coa;s.coaIn=INSTATE_REF[s.id]||s.coa-24000}
+ else{s.coaIn=s.coa;s.coaOut=s.coa}
+});
+// accelerated program total years (for the crossover chart's dashed "via BS/MD" line)
+const PROGYRS={umkc:6,cnu:7,bu:7,psu:7};
 function rating(s){return ((s.premed+s.research+s.bio+s.med)/4)*0.8+(s.grad4/10)*0.2}
 // Direct pathways — rebuilt from the verified scan + your consultant's working list (bands: attainable / stretch / restricted / out)
 const PATHWAYS=[
@@ -516,10 +572,11 @@ const PRESETS={bal:[20,15,15,12,10,10,8,6,4,5],cost:[34,12,10,8,8,10,6,10,2,4],o
 // ---------------- STATE ----------------
 let S={gpa:3.55,sat:1330,bud:45000,to:false,over:true,region:'all',size:'all',sort:'fit',med:250000,
  ec:'exceptional',ap:8,sci:true,ap5:0,ap4:0,hooks:['research'],track:'both',ecText:'',exRelig:false,reqHon:false,minSoc:0,minRes:0,
- view:'cards',sortDir:'desc',typeF:'all',pathF:'all',q:'',maxNet:0,minRate:0,pbandF:'all',
- pins:[],pinsOnly:false,bands:{Likely:true,Safety:true,Target:true,Reach:true},
+ view:'cards',sortDir:'desc',typeF:'all',pathF:'all',q:'',maxNet:0,minRate:0,pbandF:'all',minClin:0,tcScope:'starred',tcMetric:'econ',
+ pins:[],pinsOnly:false,bands:{Likely:true,Safety:true,Target:true,Reach:true},notes:{},presets:{},
+ j:{jobHrs:8,wage:17,summers:2,stipend:5000,gap:1,gapSal:48000,renew:'keep',medScen:'capublic',rate:8.1,infl:3.5,band:'expected',p529:200000,outSch:5000,aotc:'off'},
  w:Object.fromEntries(WDEFS.map(d=>[d[0],d[2]]))};
-try{const sv=localStorage.getItem('medtrack1');if(sv){const p=JSON.parse(sv);S={...S,...p,w:{...S.w,...(p.w||{})}}}}catch(e){}
+try{const sv=localStorage.getItem('medtrack1');if(sv){const p=JSON.parse(sv);S={...S,...p,w:{...S.w,...(p.w||{})},j:{...S.j,...(p.j||{})},notes:p.notes||{},presets:p.presets||{}}}}catch(e){}
 // v3 migration: EC tier re-graded to Exceptional from his activities file (Aug 2026)
 const EC_SUMMARY='Graded EXCEPTIONAL by Claude from his UC Activities List (Aug 2026):\n• USABO Semifinalist (top 10% national)\n• HOSA Nationals — 8th in US, Anatomy & Physiology\n• Science Olympiad regional/state/invitational medals; team event coordinator (hosted 200-competitor invitational)\n• Research: Parkinson’s biomarker ML manuscript under review (JEI); independent research; Rosetta Institute ×2; Rising Scholars; UCI Surgery; UCLA Pre-Med Summer Scholar\n• Clinical: 100+ hrs shadowing over 3 yrs; GI clinic rotation; medical clinic coordinator + scribe (50+ hrs)\n• Leadership/service: Bio Olympiad chapter president (300 students); Red Cross Club VP; Sewa International 100+ hrs; Learn To Be & Schoolhouse.world tutor\n• Varsity badminton (3 yrs); drummer; Stanford Neurosurgery Journal Club\n• Certs: CPR/AED, FEMA CERT, Stop the Bleed, concussion protocol\n\nEdit freely — saved in this browser.';
 if(!S.pv3){S.pv3=true;S.ec='exceptional';if(!Array.isArray(S.hooks))S.hooks=[];if(!S.hooks.includes('research'))S.hooks=[...S.hooks,'research'];if(!S.ecText)S.ecText=EC_SUMMARY;save()}
@@ -528,6 +585,7 @@ const $=id=>document.getElementById(id);
 const fmt$=v=>'$'+Math.round(v/1000)+'k';
 const fmtK=v=>'$'+(v/1000).toFixed(0)+',000'.slice(0,0)+'k';
 // ---------------- MODEL ----------------
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function pbandPill(s){
  if(!s.pband)return '';
  const cls=s.pband==='attainable'?'Safety':s.pband==='stretch'?'Target':s.pband==='restricted'?'Target':'Reach';
@@ -589,7 +647,7 @@ function fit(s){
  for(const[k]of WDEFS.map(d=>[d[0]])){const w=S.w[k]||0;tw+=w;t+=w*sb[k]}
  return tw?Math.round(t/tw*10):0;
 }
-function matchQ(s,q){return [s.n,s.city,s.st,s.region,s.type,s.note,s.medNote,s.meritName,s.dl,(s.app||[]).join(' '),s.path==='bsmd'?'bs/md bsmd':s.path==='ea'?'early assurance':'',s.honors||''].join(' ').toLowerCase().includes(q)}
+function matchQ(s,q){return [s.n,s.city,s.st,s.region,s.type,s.note,s.medNote,s.meritName,s.dl,(S.notes[s.id]||''),(s.app||[]).join(' '),s.path==='bsmd'?'bs/md bsmd':s.path==='ea'?'early assurance':'',s.honors||''].join(' ').toLowerCase().includes(q)}
 function visible(o={}){
  const q=(S.q||'').trim().toLowerCase();
  return SCHOOLS.filter(s=>{
@@ -607,6 +665,7 @@ function visible(o={}){
   if(s.research<S.minRes)return false;
   if(S.maxNet&&net(s)>S.maxNet)return false;
   if(S.minRate&&rating(s)<S.minRate)return false;
+  if(s.clin<S.minClin)return false;
   if(S.pbandF!=='all'&&(s.pband||'')!==S.pbandF)return false;
   if(S.pinsOnly&&!S.pins.includes(s.id))return false;
   if(!S.bands[band(chance(s))])return false;
@@ -624,7 +683,7 @@ function renderSummary(list){
   `<div class="stat p"><div class="lbl p">Reach</div><div class="n">${c.Reach}</div></div>`+
   `<div class="stat a"><div class="lbl a">&#9733; Shortlist</div><div class="n">${S.pins.length}</div></div>`;
 }
-const GETV={rating:x=>rating(x.s),fit:x=>x.f,chance:x=>x.p,net:x=>x.n,merit:x=>x.s.merit/x.s.coa,meritAbs:x=>x.s.merit,premed:x=>x.s.premed,research:x=>x.s.research,social:x=>x.s.social,admit:x=>x.s.admit,grad4:x=>x.s.grad4,name:x=>x.s.n,coa:x=>x.s.coa,dead:x=>x.s.dlDate,path:x=>x.s.path==='bsmd'?2:x.s.path==='ea'?1:0};
+const GETV={rating:x=>rating(x.s),clin:x=>x.s.clin,fit:x=>x.f,chance:x=>x.p,net:x=>x.n,coaIn:x=>x.s.coaIn,coaOut:x=>x.s.coaOut,merit:x=>x.s.merit/x.s.coa,meritAbs:x=>x.s.merit,premed:x=>x.s.premed,research:x=>x.s.research,social:x=>x.s.social,admit:x=>x.s.admit,grad4:x=>x.s.grad4,name:x=>x.s.n,coa:x=>x.s.coa,dead:x=>x.s.dlDate,path:x=>x.s.path==='bsmd'?2:x.s.path==='ea'?1:0};
 function sortRows(list){
  const g=GETV[S.sort]||GETV.fit,dir=S.sortDir==='asc'?1:-1;
  list.sort((a,b)=>{const va=g(a),vb=g(b);return(typeof va==='string'?va.localeCompare(vb):va-vb)*dir});
@@ -650,18 +709,21 @@ function cardHTML({s,p,f,n}){
   const b=band(p),ov=n>S.bud;
   return `<div class="card ${b}" data-id="${s.id}" tabindex="0">
    <div class="crow"><span class="cname">${s.n}</span><span class="cloc">${s.city}, ${s.st} &middot; ${s.type} &middot; ${s.size==='L'?'Large':s.size==='M'?'Mid-size':'Small'}</span>
-   <span class="pill ${b}">${b} &middot; ${(p*100).toFixed(0)}%</span>${pathBadge(s)}${pbandPill(s)}${(s.type==='UC'||s.type==='CSU')?'<span class="pill wue" title="COA shown is the California in-state price">CA in-state $</span>':''}${s.wue?'<span class="pill wue">WUE</span>':''}${s.honors?'<span class="pill wue">Honors</span>':''}${s.relig?'<span class="pill wue" title="Religiously affiliated">Relig.</span>':''}<button class="star ${S.pins.includes(s.id)?'on':''}" data-pin="${s.id}" aria-label="Toggle shortlist" title="Add to shortlist">&#9733;</button></div>
+   <span class="pill ${b}">${b} &middot; ${(p*100).toFixed(0)}%</span>${pathBadge(s)}${pbandPill(s)}${(s.type==='UC'||s.type==='CSU')?'<span class="pill wue" title="COA shown is the California in-state price">CA in-state $</span>':''}${s.wue?'<span class="pill wue">WUE</span>':''}${s.honors?'<span class="pill wue">Honors</span>':''}${s.relig?'<span class="pill wue" title="Religiously affiliated">Relig.</span>':''}<button class="star notebtn ${S.notes[s.id]?'on':''}" data-nb="${s.id}" aria-label="Notes" title="Notes" style="margin-left:auto;font-size:14px">&#9998;</button><button class="star ${S.pins.includes(s.id)?'on':''}" style="margin-left:4px" data-pin="${s.id}" aria-label="Toggle shortlist" title="Add to shortlist">&#9733;</button></div>
    <div class="cnums">
-    <div><div class="lbl">Fit score</div><div class="v">${f}<small>/100</small></div></div>
-    <div><div class="lbl">Rating</div><div class="v">${rating(s).toFixed(1)}<small>/10</small></div></div>
-    <div><div class="lbl">Sticker COA</div><div class="v">${fmt$(s.coa)}<small>/yr</small></div></div>
-    <div><div class="lbl">Est. net / yr</div><div class="v ${ov?'over':''}">${fmt$(n)}${ov?' <small>over</small>':''}</div></div>
-    <div><div class="lbl">Merit est.</div><div class="v">${fmt$(s.merit)}<small>/yr</small></div></div>
-    <div><div class="lbl">Admit rate</div><div class="v">${(s.admit*100).toFixed(0)}%</div></div>
-    <div><div class="lbl">Premed env.</div><div class="v"><span class="dot ${s.conf}"></span>${s.premed}<small>/10</small></div></div>
-    <div><div class="lbl">Research acc.</div><div class="v">${s.research}<small>/10</small></div></div>
-    <div><div class="lbl">Social</div><div class="v"><span class="dot rep"></span>${s.social}<small>/10</small></div></div>
-    <div><div class="lbl">4-yr grad</div><div class="v">${s.grad4}%</div></div>
+    <div><div class="lbl" title="Your weighted priorities applied to this school (0\u2013100). Tune the weights in the Weights tab. Does NOT include admit chance.">Fit score</div><div class="v">${f}<small>/100</small></div></div>
+    <div><div class="lbl" title="Objective quality index: 80% \u00d7 average of premed environment, research access, bio strength, med placement + 20% \u00d7 4-yr grad rate. Independent of your sliders.">Rating</div><div class="v">${rating(s).toFixed(1)}<small>/10</small></div></div>
+    <div><div class="lbl" title="Hospital volunteering + physician shadowing reach for a MEDIAN premed: hospital density near campus, county/teaching hospitals, competition for slots. Reputational data.">Clinical</div><div class="v"><span class="dot rep"></span>${s.clin}<small>/10</small></div></div>
+    <div><div class="lbl" title="Application deadlines: Early / Regular. Full platform + supplemental info inside the card.">Deadlines</div><div class="v" style="font-size:11.5px;font-weight:600">${s.app[1]}<small> / ${s.app[2]}</small></div></div>
+    <div><div class="lbl" title="Full in-state cost of attendance: tuition + fees + housing + food + books/travel. 2025\u201326 estimates.">COA in-state</div><div class="v" style="${s.coa===s.coaIn?'':'color:var(--mut);font-weight:500'}">${s.coaIn===s.coaOut&&s.type==='Private'?'&mdash;':fmt$(s.coaIn)}<small>/yr</small></div></div>
+    <div><div class="lbl" title="Full nonresident cost of attendance. The white value is the one HE pays as a CA resident.">COA out-of-state</div><div class="v" style="${s.coa===s.coaOut&&s.coaIn!==s.coaOut?'':'color:var(--mut);font-weight:500'}">${fmt$(s.coaOut)}<small>/yr</small></div></div>
+    <div><div class="lbl" title="His sticker COA minus estimated automatic merit for his stat band. Excludes need-based aid and competitive scholarships \u2014 real outcomes can only beat this.">Est. net / yr</div><div class="v ${ov?'over':''}">${fmt$(n)}${ov?' <small>over</small>':''}</div></div>
+    <div><div class="lbl" title="Expected annual merit IF ADMITTED at ~3.55/1330, from published auto-tiers. Competitive scholarships not counted.">Merit est.</div><div class="v">${fmt$(s.merit)}<small>/yr</small></div></div>
+    <div><div class="lbl" title="The school\u2019s overall freshman acceptance rate (fall 2025 where available) \u2014 NOT his chance; that\u2019s the colored pill.">Admit rate</div><div class="v">${(s.admit*100).toFixed(0)}%</div></div>
+    <div><div class="lbl" title="Grading climate, advising quality, weed-out culture, committee-letter policy (1\u201310). Green dot = published data, amber = reputational.">Premed env.</div><div class="v"><span class="dot ${s.conf}"></span>${s.premed}<small>/10</small></div></div>
+    <div><div class="lbl" title="How easily a MEDIAN student lands a lab position by sophomore year (1\u201310): med center adjacency, undergrad:grad ratio, formal programs.">Research acc.</div><div class="v">${s.research}<small>/10</small></div></div>
+    <div><div class="lbl" title="Campus energy, college-town quality, % on campus (1\u201310). Reputational \u2014 treat \u00b12 as noise.">Social</div><div class="v"><span class="dot rep"></span>${s.social}<small>/10</small></div></div>
+    <div><div class="lbl" title="Percent of enrolled students who GRADUATE within 4 years \u2014 not an acceptance rate. Low = course bottlenecks, possible 5th year.">4-yr grad</div><div class="v">${s.grad4}%</div></div>
    </div>
    <div class="detail">
     <p>${s.note}</p>
@@ -673,18 +735,20 @@ function cardHTML({s,p,f,n}){
     ${s.path?`<p><b>Program acceptance:</b> ~${s.prate}% (est.) for the ${s.path==='bsmd'?'BS/MD program':'early-assurance route'} \u2014 separate from and much lower than the ${(s.admit*100).toFixed(0)}% school admit rate.</p>`:''}
     <p><b>Stats vs his:</b> admitted GPA mid-50 ~${s.g25.toFixed(2)}&ndash;${s.g75.toFixed(2)}${s.tb?' &middot; test-blind (SAT ignored)':s.s25?` &middot; SAT ${s.s25}&ndash;${s.s75}`:''}</p>
     <p class="links">${s.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} &#8599;</a>`).join('')}</p>
+    <div class="lbl" style="margin-top:8px">Your notes (saved in this browser)</div>
+    <textarea class="notearea" data-nid="${s.id}" rows="2" placeholder="Impressions, questions for the visit, scholarship to-dos&hellip;">${esc(S.notes[s.id]||'')}</textarea>
    </div></div>`;
 }
 function wireCards(root){
  document.querySelectorAll(root+' .card').forEach(c=>{
-  const t=e=>{if(e.target.tagName!=='A'&&!e.target.dataset.pin)c.classList.toggle('open')};
+  const t=e=>{if(e.target.tagName!=='A'&&e.target.tagName!=='TEXTAREA'&&!e.target.dataset.pin&&!e.target.dataset.nb)c.classList.toggle('open')};
   c.addEventListener('click',t);
   c.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.target.dataset.pin)t(e)});
  });
  wireStars(root);
 }
 function wireStars(root='#listBox'){
- document.querySelectorAll(root+' .star').forEach(st=>st.addEventListener('click',e=>{
+ document.querySelectorAll(root+' .star[data-pin]').forEach(st=>st.addEventListener('click',e=>{
   e.stopPropagation();const id=st.dataset.pin;
   S.pins=S.pins.includes(id)?S.pins.filter(x=>x!==id):[...S.pins,id];
   save();renderViews();
@@ -692,15 +756,15 @@ function wireStars(root='#listBox'){
 }
 const DIRDEF={net:'asc',name:'asc'};
 function renderTable(list,root='#listBox'){
- const cols=[['name','School'],['chance','Chance'],['fit','Fit'],['rating','Rating'],['path','Pathway'],['coa','Sticker COA'],['net','Net/yr'],['meritAbs','Merit/yr'],['dead','Early / Regular'],['admit','Admit%'],['premed','Premed'],['research','Research'],['social','Social'],['grad4','4-yr grad']];
- let h='<div class="tblwrap"><table class="tbl"><thead><tr><th></th>'+cols.map(([k,label])=>
-  `<th data-k="${k}" class="${S.sort===k?'sorted':''}">${label}${S.sort===k?(S.sortDir==='asc'?' &#9650;':' &#9660;'):''}</th>`).join('')+'</tr></thead><tbody>';
+ const cols=[['name','School','School name \u00b7 state \u00b7 type'],['chance','Chance','His estimated admit chance from GPA/SAT position + EC/rigor adjustments \u2014 NOT the school\u2019s admit rate'],['fit','Fit','Your weighted priorities, 0\u2013100 (Weights tab)'],['dead','Early / Regular','Application deadlines: Early action/decision / Regular'],['rating','Rating','Objective quality: 80% avg(premed, research, bio, placement) + 20% grad rate'],['path','Pathway','Named direct-med program (BS/MD or early assurance), if any'],['clin','Clinical','Hospital volunteering/shadowing access for a median premed, 1\u201310 (reputational)'],['coaIn','COA in-st.','In-state full cost of attendance \u2014 white if that\u2019s what HE pays'],['coaOut','COA OOS','Nonresident full cost of attendance'],['net','Net/yr','His COA minus estimated auto-merit at his band'],['meritAbs','Merit/yr','Expected annual merit if admitted, published auto-tiers only'],['admit','Admit%','School\u2019s overall freshman acceptance rate (fall 2025 where available)'],['premed','Premed','Premed environment 1\u201310'],['research','Research','Research accessibility 1\u201310'],['social','Social','Social life 1\u201310 (reputational)'],['grad4','4-yr grad','% who graduate within 4 years \u2014 not an acceptance rate']];
+ let h='<div class="tblwrap"><table class="tbl"><thead><tr><th></th>'+cols.map(([k,label,tip])=>
+  `<th data-k="${k}" class="${S.sort===k?'sorted':''}" title="${tip||''}">${label}${S.sort===k?(S.sortDir==='asc'?' &#9650;':' &#9660;'):''}</th>`).join('')+'</tr></thead><tbody>';
  h+=list.map(({s,p,f,n})=>{const b=band(p),ov=n>S.bud;
   return `<tr class="${b}">
    <td><button class="star ${S.pins.includes(s.id)?'on':''}" data-pin="${s.id}" aria-label="Toggle shortlist">&#9733;</button></td>
-   <td class="nm">${s.n} <span class="cloc">${s.st} &middot; ${s.type}</span></td>
+   <td class="nm">${s.n}${S.notes[s.id]?' <span class="dot solid" title="has note"></span>':''} <span class="cloc">${s.st} &middot; ${s.type}</span></td>
    <td><span class="pill ${b}">${b} ${(p*100).toFixed(0)}%</span></td>
-   <td>${f}</td><td>${rating(s).toFixed(1)}</td><td>${pathBadge(s)||'—'}</td><td>${fmt$(s.coa)}</td><td class="${ov?'over':''}">${fmt$(n)}</td><td>${fmt$(s.merit)}</td><td style="white-space:normal;min-width:130px;font-size:11.5px">${s.app[1]} / ${s.app[2]}</td>
+   <td>${f}</td><td style="white-space:normal;min-width:120px;font-size:11.5px">${s.app[1]} / ${s.app[2]}</td><td>${rating(s).toFixed(1)}</td><td style="white-space:normal;min-width:110px;font-size:11.5px">${s.pname||'—'}${s.pname?' '+pathBadge(s):''}</td><td>${s.clin}</td><td class="${s.coa===s.coaIn?'':'over'}" style="${s.coa===s.coaIn?'color:var(--white)':'color:var(--mut)'}">${s.type==='Private'?'&mdash;':fmt$(s.coaIn)}</td><td style="${s.coa===s.coaOut&&s.coaIn!==s.coaOut?'color:var(--white)':'color:var(--mut)'}">${fmt$(s.coaOut)}</td><td class="${ov?'over':''}">${fmt$(n)}</td><td>${fmt$(s.merit)}</td>
    <td>${(s.admit*100).toFixed(0)}%</td><td>${s.premed}</td><td>${s.research}</td><td>${s.social}</td><td>${s.grad4}%</td></tr>`;
  }).join('')+'</tbody></table></div>';
  document.querySelector(root).innerHTML=h;
@@ -758,14 +822,160 @@ function renderCompare(){
  }
  $('cmpBox').innerHTML=h;
 }
+const MED={capublic:{cost:260000,yrs:4,lbl:'CA public MD'},private:{cost:350000,yrs:4,lbl:'Private MD'},free:{cost:70000,yrs:4,lbl:'Free-tuition MD'},mdphd:{cost:-80000,yrs:8,lbl:'MD-PhD funded'},hpsp:{cost:40000,yrs:4,lbl:'HPSP'}};
+function bandMult(kind){const b=S.j.band;if(b==='conservative')return kind==='inc'?0.85:1.15;if(b==='optimistic')return kind==='inc'?1.15:0.9;return 1}
+function incomeUG(s){let inc=S.j.jobHrs*S.j.wage*32*4+S.j.summers*S.j.stipend;if(s.id==='drex'||s.id==='neu')inc+=40000;return inc*bandMult('inc')}
+function ugNet(s){let t=0;for(let y=0;y<4;y++){const coa=s.coa*Math.pow(1+S.j.infl/100,y);const m=(S.j.renew==='lose'&&y>=2)?0:s.merit;t+=coa-m}return t*bandMult('cost')}
+function gapSaved(){return S.j.gap*S.j.gapSal*0.4*bandMult('inc')}
+function trueCost(s){
+ const j=S.j,med=MED[j.medScen];
+ const ug=ugNet(s),gs=gapSaved(),sch=(j.outSch||0)*bandMult('inc');
+ let inc=incomeUG(s);
+ if(j.aotc==='on')inc+=10000;
+ const medCost=med.cost>0?med.cost*bandMult('cost'):med.cost;
+ // financing: income + scholarships + family cashflow + 529 cover costs before any borrowing
+ const needUG=Math.max(0,ug-inc-sch-S.bud*4);
+ const use529UG=Math.min(j.p529||0,needUG);
+ const borrowUG=needUG-use529UG;
+ const rem529=(j.p529||0)-use529UG;
+ const needMed=Math.max(0,medCost);
+ const use529Med=Math.min(rem529,needMed);
+ const borrowMed=needMed-use529Med;
+ const interest=(borrowUG*7+borrowMed*4.5)*(j.rate/100);
+ const total=ug+medCost+interest-inc-gs-sch;
+ return {ug,inc,gs,sch,medCost,interest,total,borrow:borrowUG+borrowMed,use529:use529UG+use529Med,age:18+4+j.gap+med.yrs+3,med};
+}
 function renderCost(){
- const list=visible().map(s=>({s,n:net(s)})).sort((a,b)=>a.n-b.n);
- const max=Math.max(...list.map(x=>x.n*4))+S.med;
- $('costBox').innerHTML=list.map(({s,n})=>{
-  const ug=n*4,tot=ug+S.med;
-  return `<div class="bar-row"><div class="bar-head"><b>${s.n}</b><span>${fmt$(ug)} undergrad &nbsp;&middot;&nbsp; <b style="color:var(--white)">${fmt$(tot)}</b> 8-yr exposure</span></div>
-  <div class="bar"><div class="ug" style="width:${ug/max*100}%"></div><div class="md" style="width:${S.med/max*100}%"></div></div></div>`;
+ const list=tcScopeList().sort((a,b)=>metricVal(a.tc)-metricVal(b.tc));
+ document.querySelectorAll('.scchip').forEach(c=>c.classList.toggle('on',c.dataset.sc===((S.tcScope==='starred'&&S.pins.length)?'starred':'filtered')));
+ document.querySelectorAll('.mtchip').forEach(c=>c.classList.toggle('on',c.dataset.mt===S.tcMetric));
+ if(!list.length){$('costBox').innerHTML='<div class="note">No schools in scope \u2014 loosen filters or star some schools.</div>';$('cmp8Box').innerHTML='';$('vmapBox').innerHTML='';$('crossBox').innerHTML='';$('histBox').innerHTML='';return}
+ const max=Math.max(...list.map(x=>x.tc.ug+Math.max(0,x.tc.medCost)+x.tc.interest));
+ $('costBox').innerHTML=list.map(({s,tc})=>{
+  const w=v=>Math.max(0,v)/max*100;
+  return `<div class="bar-row"><div class="bar-head"><b>${s.n}</b><span><span style="color:var(--green)">&minus;${fmt$(tc.inc+tc.gs+tc.sch)} earned</span> &middot; 529 used ${fmt$(tc.use529)} &middot; borrow ${fmt$(tc.borrow)} &middot; MD age ~${tc.age} &middot; <b style="color:var(--white)">${fmt$(metricVal(tc))}</b> ${METRIC_LBL[S.tcMetric]}</span></div>
+  <div class="bar" title="cyan = undergrad net ${fmt$(tc.ug)} \u00b7 purple = med school ${fmt$(tc.medCost)} \u00b7 amber = loan interest ${fmt$(tc.interest)}"><div class="ug" style="width:${w(tc.ug)}%"></div><div class="md" style="width:${w(tc.medCost)}%"></div><div style="background:var(--amber);height:100%;width:${w(tc.interest)}%"></div></div></div>`;
+ }).join('')+`<div class="note"><b>Reading it:</b> cyan = undergrad net (4 yrs, inflated, after merit) &middot; <b>purple = the med-school scenario cost</b> (change it in the Journey Profile) &middot; amber = loan interest on the borrowed remainder. The green figure is money he earns along the way, already subtracted. Hover any bar for exact numbers; the fully labeled per-school breakdown is in the Shortlist deep-dive below. NYU note: the free-tuition scenario is literally NYU Grossman\u2019s real policy.</div>`;
+ renderHist(list);
+ renderValueMap(list);
+ renderCmp8();
+}
+const BANDCOLOR={Safety:'#00ff88',Likely:'#00d4ff',Target:'#f5a623',Reach:'#a855f7'};
+function tcScopeList(){
+ const scope=(S.tcScope==='starred'&&S.pins.length)?'starred':'filtered';
+ const base=scope==='starred'?SCHOOLS.filter(x=>S.pins.includes(x.id)):visible();
+ return base.map(x=>({s:x,p:chance(x),f:fit(x),n:net(x),tc:trueCost(x)}));
+}
+function metricVal(tc){return S.tcMetric==='oop'?tc.total-tc.use529:S.tcMetric==='borrow'?tc.borrow:tc.total}
+const METRIC_LBL={econ:'true cost',oop:'out-of-pocket',borrow:'borrowed'};
+function renderHist(list){
+ const el=$('histBox');if(!el)return;
+ if(list.length<3){el.innerHTML='';return}
+ const vals=list.map(x=>metricVal(x.tc));const lo=Math.min(...vals),hi=Math.max(...vals);
+ const B=8,bins=Array(B).fill(0);
+ vals.forEach(v=>bins[Math.min(B-1,Math.floor((v-lo)/Math.max(1,hi-lo)*B))]++);
+ const mx=Math.max(...bins);
+ el.innerHTML='<div style="display:flex;align-items:flex-end;gap:4px;height:96px;background:var(--panel);border:1px solid var(--line);padding:10px 14px">'+
+  bins.map((b,i)=>`<div style="flex:1;text-align:center"><div style="height:${b/mx*58}px;background:var(--cyan);opacity:.85" title="${b} school${b!==1?'s':''}"></div><div class="lbl" style="font-size:9px;margin-top:4px">${fmt$(lo+(i+.5)*(hi-lo)/B)}</div></div>`).join('')+'</div>';
+}
+function renderValueMap(list){
+ const el=$('vmapBox');if(!el)return;
+ if(!list.length){el.innerHTML='';return}
+ const W=900,H=320,P=46;
+ const xs=list.map(x=>metricVal(x.tc)),lo=Math.min(...xs),hi=Math.max(...xs);
+ const X=v=>P+(v-lo)/Math.max(1,hi-lo)*(W-2*P);
+ const Y=p=>H-P-(p)*(H-2*P);
+ const few=list.length<=12;
+ let dots=list.map(x=>{
+  const p=chance(x.s),b=band(p),st=S.pins.includes(x.s.id);
+  const cx=X(metricVal(x.tc)).toFixed(1),cy=Y(p).toFixed(1);
+  return `<g style="cursor:pointer" data-sid="${x.s.id}"><circle cx="${cx}" cy="${cy}" r="${st?8:few?6:4.5}" fill="${BANDCOLOR[b]}" fill-opacity="${st?1:.8}" stroke="${st?'#fff':'none'}" stroke-width="1.5"><title>${x.s.n}\n${METRIC_LBL[S.tcMetric]} ${fmt$(metricVal(x.tc))} \u00b7 chance ${(p*100).toFixed(0)}% \u00b7 fit ${x.f}\n(click to open)</title></circle>${few?`<text x="${cx}" y="${(+cy-10).toFixed(1)}" fill="#cbd5e1" font-size="10" text-anchor="middle">${x.s.n}</text>`:''}</g>`;
  }).join('');
+ const ticks=[0,.25,.5,.75,1].map(t=>`<line x1="${P}" x2="${W-P}" y1="${Y(t)}" y2="${Y(t)}" stroke="#1e2a45" stroke-width="1"/><text x="${P-8}" y="${Y(t)+4}" fill="#64748b" font-size="10" text-anchor="end">${t*100}%</text>`).join('');
+ const xt=[0,.5,1].map(t=>{const v=lo+t*(hi-lo);return `<text x="${P+t*(W-2*P)}" y="${H-P+18}" fill="#64748b" font-size="10" text-anchor="middle">${fmt$(v)}</text>`}).join('');
+ el.innerHTML=`<div class="tblwrap"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:640px;background:var(--panel);border:1px solid var(--line)" role="img" aria-label="Value map scatter">
+ ${ticks}${xt}${dots}
+ <text x="${W/2}" y="${H-8}" fill="#64748b" font-size="11" text-anchor="middle">${METRIC_LBL[S.tcMetric].toUpperCase()} (whole journey) &rarr;</text>
+ <text x="14" y="${H/2}" fill="#64748b" font-size="11" text-anchor="middle" transform="rotate(-90 14 ${H/2})">ADMIT CHANCE &rarr;</text></svg></div>`;
+}
+function exportXLSX(){
+ const list=sortRows(rows(visible()));
+ const data=list.map(({s,p,f,n})=>({School:s.n,City:s.city,State:s.st,Type:s.type,Band:band(p),'His chance %':+(p*100).toFixed(0),Fit:f,Rating:+rating(s).toFixed(1),'Pathway program':s.pname||'','Program band':s.pband||'',Clinical:s.clin,'COA in-state':s.type==='Private'?'':s.coaIn,'COA out-of-state':s.coaOut,'Net/yr':n,'Merit/yr':s.merit,'Merit program':s.meritName,'School admit %':+(s.admit*100).toFixed(0),Premed:s.premed,Research:s.research,Social:s.social,'4-yr grad %':s.grad4,Platform:s.app[0],Early:s.app[1],Regular:s.app[2],Supplemental:s.app[3],'True cost (economic)':Math.round(trueCost(s).total),'Borrowed':Math.round(trueCost(s).borrow),Notes:S.notes[s.id]||''}));
+ const ws=XLSX.utils.json_to_sheet(data);
+ const wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,ws,'admitted');
+ XLSX.writeFile(wb,'admitted-college-list.xlsx');
+}
+function gotoSchool(id){
+ const sc=SCHOOLS.find(x=>x.id===id);if(!sc)return;
+ S.q=sc.n;save();syncFilters();renderViews();
+ const t=document.querySelector('.tab[data-t="list"]');if(t)t.click();
+ const c=document.querySelector(`#listBox .card[data-id="${id}"]`);if(c)c.classList.add('open');
+}
+function renderCross(pin){
+ const el=$('crossBox');if(!el)return;
+ if(!pin.length){el.innerHTML='<div class="note">Star schools to draw their 18-year money curves.</div>';return}
+ const cols=['#00ff88','#00d4ff','#f5a623','#a855f7'];
+ const series=(s,accel)=>{
+  const j=S.j,med=MED[j.medScen];let cum=0;const pts=[[18,0]];let age=18;
+  let ugY=4,gap=j.gap,medY=med.yrs;
+  if(accel){ugY=PROGYRS[s.id]-4;gap=0;medY=4}
+  const incY=incomeUG(s)/4+((j.outSch||0)/4)+(j.aotc==='on'?2500:0);
+  for(let y=0;y<ugY;y++){cum-=(s.coa*Math.pow(1+j.infl/100,y)-((j.renew==='lose'&&y>=2)?0:s.merit))-incY;age++;pts.push([age,cum])}
+  for(let y=0;y<gap;y++){cum+=j.gapSal*0.4;age++;pts.push([age,cum])}
+  const mc=MED[j.medScen].cost;
+  for(let y=0;y<medY;y++){cum-=mc/medY;age++;pts.push([age,cum])}
+  for(let y=0;y<3&&age<35;y++){cum+=10000;age++;pts.push([age,cum])}
+  while(age<35){cum+=130000;age++;pts.push([age,cum])}
+  return pts;
+ };
+ const all=[];pin.forEach((x,i)=>{all.push({s:x.s,pts:series(x.s,false),c:cols[i%4],dash:false});if(PROGYRS[x.s.id]&&x.s.path==='bsmd')all.push({s:x.s,pts:series(x.s,true),c:cols[i%4],dash:true})});
+ // gray reference: BS + MS -> tech/eng salary from ~24 (the "is MD worth it" line)
+ (()=>{let cum=0,age=18;const pts=[[18,0]];
+  for(let y=0;y<4;y++){cum-=30000;age++;pts.push([age,cum])}
+  for(let y=0;y<2;y++){cum-=15000;age++;pts.push([age,cum])}
+  while(age<35){cum+=75000;age++;pts.push([age,cum])}
+  all.push({s:{n:'MS/tech reference path'},pts,c:'#64748b',dash:true});
+ })();
+ const ys=all.flatMap(a=>a.pts.map(p=>p[1]));const ylo=Math.min(...ys),yhi=Math.max(...ys);
+ const W=900,H=340,P=50;
+ const X=a=>P+(a-18)/17*(W-2*P),Y=v=>H-P-(v-ylo)/Math.max(1,yhi-ylo)*(H-2*P);
+ const zero=`<line x1="${P}" x2="${W-P}" y1="${Y(0)}" y2="${Y(0)}" stroke="#64748b" stroke-dasharray="3 3"/>`;
+ const lines=all.map(a=>`<polyline points="${a.pts.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')}" fill="none" stroke="${a.c}" stroke-width="2" ${a.dash?'stroke-dasharray="6 4"':''} opacity="${a.dash?.8:1}"><title>${a.s.n}${a.dash?' — via accelerated program':''}</title></polyline>`).join('');
+ const ages=[18,22,26,30,35].map(a=>`<text x="${X(a)}" y="${H-P+16}" fill="#64748b" font-size="10" text-anchor="middle">${a}</text>`).join('');
+ const leg=pin.map((x,i)=>`<span style="color:${cols[i%4]};font-size:11.5px;margin-right:16px">&#9632; ${x.s.n}</span>`).join('')+`<span style="color:#64748b;font-size:11.5px">&#9632; MS/tech reference (dashed gray)</span>`;
+ el.innerHTML=`<div style="margin-bottom:6px">${leg}</div><div class="tblwrap"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:640px;background:var(--panel);border:1px solid var(--line)" role="img" aria-label="Net position by age">${zero}${lines}${ages}
+ <text x="${W/2}" y="${H-6}" fill="#64748b" font-size="11" text-anchor="middle">AGE</text>
+ <text x="${P-6}" y="${Y(0)-6}" fill="#64748b" font-size="10" text-anchor="end">$0</text></svg></div>`;
+}
+function renderCmp8(){
+ const pin=S.pins.map(id=>SCHOOLS.find(x=>x.id===id)).filter(Boolean).slice(0,4).map(x=>({s:x,tc:trueCost(x)}));
+ if(!pin.length){$('cmp8Box').innerHTML='<div class="note">Star (&#9733;) schools in The List to see fully labeled cost breakdowns here &mdash; starred schools always show, regardless of filters.</div>';renderCross([]);return}
+ $('cmp8Box').innerHTML=pin.map(({s,tc})=>{
+  const meritTot=(S.j.renew==='lose'?s.merit*2:s.merit*4);
+  const rowsB=[
+   ['Sticker \u00d74 yrs', s.coa*4, '#3a4663'],
+   ['\u2212 Merit (4 yrs)', -meritTot, '#00ff88'],
+   ['\u2212 Earned income', -tc.inc, '#00d4ff'],
+   ['\u2212 Gap-yr savings', -tc.gs, '#00d4ff'],
+   ['\u2212 Outside scholarships', -tc.sch, '#00d4ff'],
+   ['+ Med school \u00b7 '+tc.med.lbl, tc.medCost, '#a855f7'],
+   ['+ Loan interest', tc.interest, '#f5a623']];
+  const mx=Math.max(s.coa*4,Math.abs(tc.medCost),1);
+  const parts=[[Math.max(0,tc.ug),'#00d4ff'],[Math.max(0,tc.medCost),'#a855f7'],[Math.max(0,tc.interest),'#f5a623']];
+  const tot=parts.reduce((a,p)=>a+p[0],0)||1,R=34,C=2*Math.PI*R;let off=0;
+  const segs=parts.map(([v,c])=>{const len=v/tot*C;const e=`<circle r="${R}" cx="45" cy="45" fill="none" stroke="${c}" stroke-width="13" stroke-dasharray="${len.toFixed(1)} ${(C-len).toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" transform="rotate(-90 45 45)"/>`;off+=len;return e}).join('');
+  return `<div class="card" style="cursor:default"><div class="crow"><span class="cname">${s.n}</span>
+   <span class="cloc">${METRIC_LBL[S.tcMetric]} <b style="color:var(--white)">${fmt$(metricVal(tc))}</b> &middot; borrow ${fmt$(tc.borrow)} &middot; 529 used ${fmt$(tc.use529)} &middot; MD age ~${tc.age}</span></div>
+   <div style="display:flex;gap:20px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
+    <div title="Cost composition: cyan undergrad ${fmt$(tc.ug)} \u00b7 purple med ${fmt$(tc.medCost)} \u00b7 amber interest ${fmt$(tc.interest)}"><svg viewBox="0 0 90 90" width="92" height="92">${segs}<text x="45" y="49" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">${fmt$(tc.total)}</text></svg></div>
+    <div style="flex:1;min-width:300px">
+     ${rowsB.map(([lbl,v,c])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:190px;flex:none;font-size:11.5px;color:var(--mut)">${lbl}</span><div style="flex:1;height:10px;background:var(--panel2)"><div style="height:100%;width:${Math.min(100,Math.abs(v)/mx*100).toFixed(1)}%;background:${c}"></div></div><span style="font-variant-numeric:tabular-nums;font-size:12px;width:60px;text-align:right;color:${v<0?'var(--green)':'var(--body)'}">${v<0?'\u2212':''}${fmt$(Math.abs(v))}</span></div>`).join('')}
+     <div style="display:flex;align-items:center;gap:8px;margin-top:6px;border-top:1px solid var(--line);padding-top:6px"><span style="width:190px;flex:none;font-size:11.5px;color:var(--white);font-weight:700">= True cost (economic)</span><div style="flex:1"></div><b style="color:var(--white);font-variant-numeric:tabular-nums">${fmt$(tc.total)}</b></div>
+    </div>
+   </div></div>`;
+ }).join('');
+ renderCross(pin);
 }
 const UC_NOTE=`<div class="note"><b>UC strategy for his band (fall-2025 admit data):</b> Merced (~98%) and Riverside (~87%) are true in-system safeties now; Santa Cruz (~73%) is likely; Davis (~45%) and Santa Barbara (~38%) are the realistic targets; Irvine/San Diego are reaches and Berkeley/UCLA lottery tickets for a bio major. All 9 ride one application, so add them all &mdash; but plan the non-UC list assuming nothing above Riverside is guaranteed. <a style="color:var(--cyan)" href="https://admission.universityofcalifornia.edu" target="_blank" rel="noopener">UC Admissions &#8599;</a></div>`;
 function renderUC(){
@@ -819,6 +1029,7 @@ const FILTERBAR=`
       <button class="chip bchip" data-b="Likely" style="color:var(--cyan)">Likely</button>
       <button class="chip bchip" data-b="Target" style="color:var(--amber)">Target</button>
       <button class="chip bchip" data-b="Reach" style="color:var(--purple)">Reach</button>
+      <button class="chip pinchip" style="margin-left:12px">&#9733; Shortlist only</button>
     </div>
     <div class="filters">
       <span class="lbl" style="margin-right:4px">Type</span>
@@ -844,6 +1055,13 @@ const FILTERBAR=`
       <button class="chip tchip" data-tr="bsmd">BS/MD</button>
     </div>
     <div class="filters">
+      <button class="chip resetbtn" style="border-color:var(--amber);color:var(--amber)">&#8634; Reset all filters</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Presets</span>
+      <span class="presetChips"></span>
+      <input class="qbox pname" type="text" placeholder="Preset name" style="min-width:120px;max-width:150px">
+      <button class="chip savepreset">Save preset</button>
+    </div>
+    <div class="filters">
       <span class="lbl" style="margin-right:4px">Social life &ge;</span>
       <select class="minSoc" aria-label="Minimum social life"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
       <span class="lbl" style="margin:0 4px 0 12px">Research access &ge;</span>
@@ -852,7 +1070,9 @@ const FILTERBAR=`
       <select class="maxNet" aria-label="Maximum net cost"><option value="0">Any</option><option value="30000">$30k</option><option value="40000">$40k</option><option value="50000">$50k</option><option value="60000">$60k</option><option value="70000">$70k</option></select>
       <span class="lbl" style="margin:0 4px 0 12px">Rating &ge;</span>
       <select class="minRate" aria-label="Minimum rating"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
-      <button class="chip pinchip" style="margin-left:12px">&#9733; Shortlist only</button>
+      <span class="lbl" style="margin:0 4px 0 12px">Clinical &ge;</span>
+      <select class="minClin" aria-label="Minimum clinical access"><option value="0">Any</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>
+      <button class="chip xlsbtn" title="Downloads the current filtered + sorted table with all columns as .xlsx. Works on the Vercel site and normal browsers; the claude.ai artifact viewer blocks downloads.">&#8681; Export XLSX</button>
       <span class="lbl" style="margin:0 4px 0 12px">View</span>
       <button class="chip" data-f="view" data-v="cards">Cards</button>
       <button class="chip" data-f="view" data-v="table">Table (click columns to sort)</button>
@@ -868,6 +1088,7 @@ function syncFilters(){
  document.querySelectorAll('select.minRes').forEach(x=>x.value=String(S.minRes));
  document.querySelectorAll('select.maxNet').forEach(x=>x.value=String(S.maxNet));
  document.querySelectorAll('select.minRate').forEach(x=>x.value=String(S.minRate));
+ document.querySelectorAll('select.minClin').forEach(x=>x.value=String(S.minClin));
  document.querySelectorAll('input.qsearch').forEach(x=>{if(x.value!==S.q)x.value=S.q});
  const t=$('trackSel');if(t)t.value=S.track;
 }
@@ -878,6 +1099,14 @@ document.addEventListener('click',e=>{
  if(cb){S.bands[cb.dataset.b]=!S.bands[cb.dataset.b];save();syncFilters();renderViews();return}
  const ct=e.target.closest('.tchip');
  if(ct){S.track=ct.dataset.tr;save();syncFilters();renderPath();renderViews();return}
+ const g=e.target.closest('[data-sid]');
+ if(g){gotoSchool(g.dataset.sid);return}
+ const xb=e.target.closest('.xlsbtn');
+ if(xb){try{exportXLSX()}catch(err){xb.textContent='Export blocked here \u2014 use the Vercel site';xb.style.color='var(--amber)'}return}
+ const sc=e.target.closest('.scchip');
+ if(sc){S.tcScope=sc.dataset.sc;save();renderCost();return}
+ const mt=e.target.closest('.mtchip');
+ if(mt){S.tcMetric=mt.dataset.mt;save();renderCost();return}
  const cp=e.target.closest('.pinchip');
  if(cp){S.pinsOnly=!S.pinsOnly;save();syncFilters();renderViews();return}
 });
@@ -888,6 +1117,7 @@ document.addEventListener('change',e=>{
  else if(cl.contains('minRes')){S.minRes=+e.target.value;save();syncFilters();renderViews()}
  else if(cl.contains('maxNet')){S.maxNet=+e.target.value;save();syncFilters();renderViews()}
  else if(cl.contains('minRate')){S.minRate=+e.target.value;save();syncFilters();renderViews()}
+ else if(cl.contains('minClin')){S.minClin=+e.target.value;save();syncFilters();renderViews()}
 });
 document.addEventListener('input',e=>{
  if(e.target.classList.contains('qsearch')){S.q=e.target.value;save();syncFilters();renderViews()}
@@ -898,7 +1128,6 @@ $('vGpa').textContent=S.gpa.toFixed(2);$('vSat').textContent=S.sat;$('vBud').tex
 $('inGpa').addEventListener('input',e=>{S.gpa=+e.target.value;$('vGpa').textContent=S.gpa.toFixed(2);save();renderAll();renderCompare()});
 $('inSat').addEventListener('input',e=>{S.sat=+e.target.value;$('vSat').textContent=S.sat;save();renderAll();renderCompare()});
 $('inBud').addEventListener('input',e=>{S.bud=+e.target.value;$('vBud').textContent=fmt$(S.bud);save();renderAll();renderCompare()});
-$('inMed').addEventListener('input',e=>{S.med=+e.target.value;$('vMed').textContent=fmt$(S.med);save();renderCost()});
 function wireToggle(id,key,fn){const el=$(id);
  if(S[key])el.classList.add('on');else el.classList.remove('on');
  el.setAttribute('aria-checked',String(!!S[key]));
@@ -935,7 +1164,51 @@ document.querySelectorAll('.presets .act').forEach(b=>b.addEventListener('click'
 }));
 selOpts($('cmpA'),'slu');selOpts($('cmpB'),'ua');selOpts($('cmpC'),'sdsu');
 ['cmpA','cmpB','cmpC'].forEach(id=>$(id).addEventListener('change',renderCompare));
-$('vMed').textContent=fmt$(S.med);$('inMed').value=S.med;
+// journey profile wiring
+document.querySelectorAll('.jinput').forEach(el=>{
+ const k=el.dataset.j;
+ if(el.type==='range'){el.value=S.j[k];const v=$('jv_'+k);if(v)v.textContent=S.j[k]}
+ else el.value=S.j[k];
+});
+document.addEventListener('input',e=>{
+ if(e.target.classList.contains('jinput')&&e.target.type==='range'){
+  const k=e.target.dataset.j;S.j[k]=parseFloat(e.target.value);
+  const v=$('jv_'+k);if(v)v.textContent=S.j[k];save();renderCost();
+ }else if(e.target.classList.contains('notearea')){
+  const id=e.target.dataset.nid,val=e.target.value;
+  if(val.trim())S.notes[id]=val;else delete S.notes[id];
+  save();
+  document.querySelectorAll(`[data-nb="${id}"]`).forEach(b=>b.classList.toggle('on',!!S.notes[id]));
+ }
+});
+document.addEventListener('change',e=>{
+ if(e.target.classList.contains('jinput')&&e.target.tagName==='SELECT'){S.j[e.target.dataset.j]=e.target.value;save();renderCost()}
+});
+// filter presets + reset
+const FKEYS=['q','region','size','typeF','pathF','pbandF','minSoc','minRes','maxNet','minRate','pinsOnly','sort','sortDir','view','track'];
+function snapFilters(){const o={};FKEYS.forEach(k=>o[k]=S[k]);o.bands={...S.bands};return o}
+function applyFilters(o){FKEYS.forEach(k=>{if(o[k]!==undefined)S[k]=o[k]});if(o.bands)S.bands={...o.bands};save();syncFilters();renderPath();renderViews()}
+function renderPresetChips(){
+ const names=Object.keys(S.presets);
+ document.querySelectorAll('.presetChips').forEach(el=>{
+  el.innerHTML=names.length?names.map(n=>`<button class="chip pchip" data-preset="${esc(n)}">${esc(n)}<span class="pdel" data-preset="${esc(n)}" title="Delete preset" style="color:var(--mut);margin-left:6px">&times;</span></button>`).join(' '):'<span class="lbl" style="text-transform:none;letter-spacing:0">none saved yet</span>';
+ });
+}
+document.addEventListener('click',e=>{
+ const nb=e.target.closest('[data-nb]');
+ if(nb){const c=nb.closest('.card');if(c){c.classList.add('open');const ta=c.querySelector('.notearea');if(ta)ta.focus()}return}
+ if(e.target.closest('.resetbtn')){
+  applyFilters({q:'',region:'all',size:'all',typeF:'all',pathF:'all',pbandF:'all',minSoc:0,minRes:0,maxNet:0,minRate:0,pinsOnly:false,sort:'fit',sortDir:'desc',track:'both',bands:{Likely:true,Safety:true,Target:true,Reach:true}});return}
+ if(e.target.closest('.savepreset')){
+  const row=e.target.closest('.filters');const inp=row?row.querySelector('.pname'):null;
+  const name=(inp&&inp.value.trim())||('Preset '+(Object.keys(S.presets).length+1));
+  S.presets[name]=snapFilters();if(inp)inp.value='';save();renderPresetChips();return}
+ const pd=e.target.closest('.pdel');
+ if(pd){delete S.presets[pd.dataset.preset];save();renderPresetChips();e.stopPropagation();return}
+ const pc=e.target.closest('.pchip');
+ if(pc){const p=S.presets[pc.dataset.preset];if(p)applyFilters(p);return}
+});
+renderPresetChips();
 renderWeights();renderAll();renderCompare();renderTimeline();
 </script>
 
