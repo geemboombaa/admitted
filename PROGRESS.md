@@ -69,6 +69,12 @@ deploy this project — site was stuck on v14, now ships the verified dataset.
 - **Chance formula constants (steepness k, position shape):** user chose "derive from data first." Research verdict: **NOT feasible from public data** — Scorecard/IPEDS record only *enrolled* students; no public source has admit/deny by score band. Only user Naviance or biased Reddit self-reports do. → **k stays a flagged placeholder; no engine chance-math change.** Engine unification (porting log-odds form) parked until real outcome data exists.
 - **Actionable Stage-2 work = the sourcing pass** (web ON, official sources): close the 9 zero-VERD schools + add missing src URLs. Raises the computed data-quality score. Loop `--web` mode built.
 
+## Stage 2 progress (2026-09-06)
+- **Loop `--web` mode proven working.** Michigan + UNC sourced from official CDS/cost pages, verifiedFacts + per-field src; the Opus reviewer FETCHED the official PDFs and verified each number (even REJECTED a first UNC attempt over a discrepancy, forced a corrected retry). Real adversarial web-verification.
+- **Data-quality 7.6 → 7.8** (fully-clean 77→79, verifiedFacts 92→94).
+- **Live dashboard:** `node scripts/progress-server.js` → http://localhost:7654 (auto-refresh visual bar).
+- Stage-2 bugs found+fixed (all failed safe, no bad data committed): reviewer stuck on Stage-1 rule; builder scratch files; verdict parsed from wrong line. Loop now stable.
+- 6 loop commits of churn from my repeated `git reset --hard` wiping edits — resolved via rebase; lesson: commit before reset.
+
 ## Stage / Next step
-In **Stage 2 (sourcing).** Loop `--web` scoped-web mode wired + Stage-2 backlog written (Batch C: 9 schools; Batch D: 10 src-fills). Running first batch (`--web --batch=3`: mich, unc, uga). Checkpoint after with data-quality score.
-Loop upgrades live: dynamic model routing + progress bar + `--web` mode + pre-flight `bash -n`.
+**Stage 2 (sourcing), in progress: 2/9 Batch-C schools done (mich, unc).** Remaining Batch C: uga, auburn, syracuse, usc_sc, wayne, uta(blocked?), cuny(blocked?). Then Batch D (10 src-fills). Loop is stable; safe to run larger batches, watched live on the dashboard. Loop capabilities: dynamic model routing + progress bar + `--web` scoped sourcing + web-verifying reviewer + scratch cleanup + pre-flight.
