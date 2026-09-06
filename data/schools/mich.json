@@ -38,7 +38,25 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": ["admit", "s25", "s75", "coa", "tuitV", "housV", "grad4"],
+  "admit": 0.156,
+  "s25": 1360,
+  "s75": 1530,
+  "coa": 84164,
+  "tuitV": 63962,
+  "housV": 16246,
+  "grad4": 82,
+  "srcs": {
+   "admit": "https://obp.umich.edu/wp-content/uploads/pubdata/cds/CDS_2024-25_UMAA.pdf",
+   "s25": "https://obp.umich.edu/wp-content/uploads/pubdata/cds/CDS_2024-25_UMAA.pdf",
+   "s75": "https://obp.umich.edu/wp-content/uploads/pubdata/cds/CDS_2024-25_UMAA.pdf",
+   "coa": "https://obp.umich.edu/wp-content/uploads/pubdata/factsfigures/estimatedcost_umaa_2025-26.pdf",
+   "tuitV": "https://obp.umich.edu/wp-content/uploads/pubdata/factsfigures/estimatedcost_umaa_2025-26.pdf",
+   "housV": "https://obp.umich.edu/wp-content/uploads/pubdata/factsfigures/estimatedcost_umaa_2025-26.pdf",
+   "grad4": "https://obp.umich.edu/wp-content/uploads/pubdata/cds/CDS_2024-25_UMAA.pdf"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
