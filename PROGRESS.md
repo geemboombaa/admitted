@@ -20,7 +20,7 @@ Single source of truth for status. Updated at the end of every run.
 ## Stage 1 backlog
 | Batch | Items | Status |
 |---|---|---|
-| A | B4 BS/MD rates, ua/osu/asu WUE fixes (4) | IN PROGRESS - A1 DONE 2026-09-06, A2-A4 NOT STARTED |
+| A | B4 BS/MD rates, ua/osu/asu WUE fixes (4) | A1/A2/A3 DONE 2026-09-06; A4 (asu) NOT STARTED |
 | B | merge verify-batch into 10 zero-VERD schools | NOT STARTED |
 | GAPS | 5 no-local verifies + Auburn + 12 new schools | DEFERRED (needs web / user go) |
 
@@ -43,5 +43,11 @@ which says Brown PLME publishes nothing computable. All three DO have a src URL,
 rather than nulled - different field from PROGRATE, and deleting sourced data is outside this backlog item.
 The Brown source is a student newspaper, not an official page. Needs a user call.
 
+## Checkpoint 1 result (2026-09-06)
+Loop ran end-to-end. Self-score: 4 commits, 1 reject-then-fixed (osu). Independent reviewer caught a real
+COA contradiction on osu and forced a corrected retry — self-correction proven.
+Commits: 93b4b7b (A1 rates), 903e99f (A2 ua), 71693b4 (A3 osu). validate PASSED throughout.
+
 ## Next step
-Run **A2** (University of Arizona WUE fix, PENDING-RESEARCH B2) - still Stage 1, local-data-only, Batch A.
+Awaiting user go at Checkpoint 1. Options: (a) finish A4 (asu); (b) start Batch B (merge verify-batch
+into 10 zero-VERD schools); (c) resolve the brown/drex/hof source-quality decision in GAPS G4.
