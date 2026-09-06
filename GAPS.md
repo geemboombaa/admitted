@@ -10,8 +10,8 @@ These 5 have `verifiedFacts: null` AND no entry in verify-batch1-6. Their 5 core
 (admit rate, SAT 25-75, OOS COA + tuition/housing split, auto merit, 4-yr grad) are not local.
 - [ ] uga — University of Georgia
 - [ ] uta — UT Austin (prior research: CDS behind an unreadable Box viewer)
-- [ ] mich — University of Michigan
-- [ ] unc — UNC Chapel Hill
+- [x] mich — University of Michigan (sourced 2026-09-06: official OBP CDS + cost PDF, verifiedFacts w/ per-field src)
+- [x] unc — UNC Chapel Hill (sourced 2026-09-06: official UNC CDS, verifiedFacts w/ per-field src, reviewer web-verified)
 - [ ] cuny — CCNY / CUNY School of Medicine (SAT range, OOS housing/food, 4-yr grad were unverifiable)
 
 ## G2. Auburn verifiedFacts
