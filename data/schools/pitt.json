@@ -1,0 +1,107 @@
+{
+ "id": "pitt",
+ "order": 21,
+ "general": {
+  "id": "pitt",
+  "n": "University of Pittsburgh",
+  "city": "Pittsburgh",
+  "st": "PA",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.5,
+  "g25": 3.75,
+  "g75": 4,
+  "s25": 1290,
+  "s75": 1460,
+  "tb": false,
+  "coa": 60000,
+  "merit": 6000,
+  "meritName": "OOS merit (competitive, not auto)",
+  "dl": "Rolling — apply by mid-Sept for best odds/merit",
+  "dlDate": "2026-09-15",
+  "premed": 9,
+  "research": 9,
+  "bio": 8,
+  "med": 9,
+  "grad4": 71,
+  "honors": "Frederick Honors College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Premed powerhouse: UPMC (one of the largest hospital systems in the US) wrapped around campus, elite research access, guaranteed-admit med pathways for top students. His band is below their middle — keep as the quality reach and apply the first week it opens.",
+  "medNote": "Merit for OOS is scarce; net ~$54k. Worth it only if he’d pick it over every target.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.pitt.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.594,
+  "s25": 1200,
+  "s75": 1400,
+  "coa": 63648,
+  "tuitV": 45480,
+  "housV": 14720,
+  "grad4": 72
+ },
+ "social": 8,
+ "religAffiliated": false,
+ "researchAccess": 9,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Rolling — apply Sept",
+  "Rolling",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": "GAP",
+ "instateRef": 40000,
+ "tuition": 41000,
+ "cds7": {
+  "h": 0.474,
+  "t": 0.125,
+  "y": "2025-26",
+  "src": "https://www.ir.pitt.edu/sites/default/files/2026-02/CDS_2025-2026_PGH-UA_0.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Pitt Med",
+ "yieldProtection": false,
+ "program": {
+  "sc": "University of Pittsburgh",
+  "name": "Guaranteed Admit Program (Pitt Med)",
+  "pid": "pitt_prog",
+  "band": "out",
+  "type": "BS/MD-class guarantee at admission",
+  "req": "Verified minimum: SAT 1500/ACT 34; no numeric GPA published (site: “highest GPA available at their high school”)",
+  "note": "Interview required, holistic factors named (research, community service, leadership) alongside stats. Only in play if test scores jump.",
+  "bar": {
+   "sat": 1500
+  },
+  "hardGate": true
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": 1500,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://www.medadmissions.pitt.edu/upsom-programs/guaranteed-admission-program — ACT 34 min; no numeric GPA published (\"highest GPA available at their high school\"); interview required, holistic factors named"
+ }
+}

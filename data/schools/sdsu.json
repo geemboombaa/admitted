@@ -1,0 +1,83 @@
+{
+ "id": "sdsu",
+ "order": 0,
+ "general": {
+  "id": "sdsu",
+  "n": "San Diego State",
+  "city": "San Diego",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "L",
+  "admit": 0.39,
+  "g25": 3.45,
+  "g75": 3.85,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 34000,
+  "merit": 2000,
+  "meritName": "Limited campus merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 7,
+  "research": 7,
+  "bio": 8,
+  "med": 6,
+  "grad4": 57,
+  "honors": "Weber Honors College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Strong bio dept and health-career pipelines; biology is an impacted major so getting the major matters as much as getting in. Big premed clubs, decent clinical volunteering access via Sharp/Scripps systems.",
+  "medNote": "No committee letter gatekeeping; advising is adequate but you self-drive. Test-blind like all CSUs.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.sdsu.edu"
+   ],
+   [
+    "Costs & Aid",
+    "https://sdsu.edu/financial-aid"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa"
+  ],
+  "admit": 0.374,
+  "coa": 37324,
+  "tuitV": 9180,
+  "housV": 23736
+ },
+ "social": 9,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 8800,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,72 @@
+{
+ "id": "uop",
+ "order": 10,
+ "general": {
+  "id": "uop",
+  "n": "University of the Pacific",
+  "city": "Stockton",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "S",
+  "admit": 0.78,
+  "g25": 3.3,
+  "g75": 3.9,
+  "s25": 1150,
+  "s75": 1370,
+  "tb": false,
+  "coa": 74000,
+  "merit": 28000,
+  "meritName": "Regents/Presidents merit (auto-tiered)",
+  "dl": "Nov 15, 2026 EA (merit priority)",
+  "dlDate": "2026-11-15",
+  "premed": 8,
+  "research": 6,
+  "bio": 7,
+  "med": 7,
+  "grad4": 60,
+  "honors": "Powell Scholars (full-ride, competitive)",
+  "wue": false,
+  "conf": "solid",
+  "note": "CA private that discounts hard — net lands near budget. Long health-professions tradition (accelerated dental/pharmacy pipelines), small classes, professors know premeds by name.",
+  "medNote": "Strong advising per-capita; Stockton location is the tradeoff. 90 min from home-ish if Bay Area.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.pacific.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 84291,
+  "tuitV": 60760,
+  "housV": 17776
+ },
+ "social": 4,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 15 EA",
+  "Jan 15",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 58000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

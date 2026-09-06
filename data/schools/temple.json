@@ -1,0 +1,107 @@
+{
+ "id": "temple",
+ "order": 85,
+ "general": {
+  "id": "temple",
+  "n": "Temple University",
+  "city": "Philadelphia",
+  "st": "PA",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.8,
+  "g25": 3.3,
+  "g75": 3.9,
+  "s25": 1150,
+  "s75": 1350,
+  "tb": false,
+  "coa": 55000,
+  "merit": 12000,
+  "meritName": "OOS merit (auto tiers)",
+  "dl": "EA Nov 1 / RD Feb 1; 3+4 Katz app with admission",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 58,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Big urban public with Temple University Hospital on campus and a 3+4 accelerated track into the Lewis Katz School of Medicine (competitive; terms shift by cycle). Auto merit tiers keep OOS cost reasonable.",
+  "medNote": "Base school is a safety with real clinical access; the 3+4 is a stretch.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.temple.edu"
+   ],
+   [
+    "Katz SOM",
+    "https://medicine.temple.edu/education/md-program/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "EA Nov 1",
+  "Feb 1",
+  "None; 3+4 extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "3+4 Katz",
+ "instateRef": 40000,
+ "tuition": 36000,
+ "cds7": {
+  "h": 0.359,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://ira.temple.edu/sites/ira/files/media/document/CDS%202025-26_Temple%20University_0.pdf"
+ },
+ "accel": {
+  "id": "temple",
+  "sc": "Temple University",
+  "prog": "Pre-Med Health Scholar linkage (NOT a high-school program)",
+  "kind": "bsmd",
+  "ugYrs": 4,
+  "incollege": true,
+  "st": "PA",
+  "region": "Other",
+  "coa": 55000,
+  "merit": 12000,
+  "medYr": 90000,
+  "medName": "Lewis Katz SOM",
+  "bar": {
+   "gpa": 3.6,
+   "sat": 0
+  },
+  "mcat": "509 minimum, no section below 126",
+  "seats": "Small",
+  "resid": null,
+  "apply": "Applied for in FALL OF SOPHOMORE YEAR at Temple (Honors), 3.6 college GPA — there is no high-school entry (verified)",
+  "url": "https://undergraduate.temple.edu/healthadvising/specialprograms/premedscholars",
+  "note": "Corrected: Temple’s accelerated route is an in-college linkage decided by college performance, not a high-school BS/MD.",
+  "why": "Nothing to win or lose at application time — a Plan-B door he can earn once enrolled."
+ },
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 90000,
+ "affiliatedMedName": "Lewis Katz SOM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Temple / NJIT / GWU / USF / FAU",
+  "name": "7-year BS/MD programs",
+  "band": "out",
+  "type": "Accelerated 3+4 tracks",
+  "req": "Top-decile stats (1450–1500+, 4.0 weighted at USF/FAU)",
+  "note": "Out of band at his numbers; the base schools stay on the list on their own merits. Live fit on the Accelerated tab.",
+  "bar": null
+ },
+ "programVerified": null
+}

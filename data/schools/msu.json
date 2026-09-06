@@ -1,0 +1,92 @@
+{
+ "id": "msu",
+ "order": 22,
+ "general": {
+  "id": "msu",
+  "n": "Michigan State (Lyman Briggs)",
+  "city": "East Lansing",
+  "st": "MI",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.9,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1130,
+  "s75": 1350,
+  "tb": false,
+  "coa": 63000,
+  "merit": 16000,
+  "meritName": "OOS merit (auto-considered)",
+  "dl": "Nov 1, 2026 EA (merit priority)",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 62,
+  "honors": "Lyman Briggs College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Lyman Briggs is the feature: a residential science college inside a Big Ten flagship — small science classes, live-with-your-labmates model, built for premeds. Two med schools on campus (MD + DO).",
+  "medNote": "The structure solves the \"lost in a big school\" premed failure mode. Net ~$47k.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.msu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.848,
+  "s25": 1100,
+  "s75": 1310,
+  "coa": 65656,
+  "tuitV": 44758,
+  "housV": 12928,
+  "grad4": 63
+ },
+ "social": 9,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Rolling after",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "CHM EAP",
+ "instateRef": 34000,
+ "tuition": 45000,
+ "cds7": {
+  "h": 0.186,
+  "t": 0.286,
+  "y": "2024-25",
+  "src": "https://ir.msu.edu/-/media/project/msu/ir/docs/cds/cds-2024-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "Michigan State (Lyman Briggs)",
+  "name": "CHM Early Assurance Program",
+  "band": "attainable",
+  "type": "Early assurance (apply sophomore year)",
+  "req": "MSU undergrad, mission-fit essays, GPA threshold",
+  "note": "Coherent 8-year plan at a Big Ten school.",
+  "bar": null
+ },
+ "programVerified": null
+}

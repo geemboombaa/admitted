@@ -1,0 +1,96 @@
+{
+ "id": "cuny",
+ "order": 88,
+ "general": {
+  "id": "cuny",
+  "n": "CUNY City College",
+  "city": "New York",
+  "st": "NY",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.55,
+  "g25": 3.2,
+  "g75": 3.8,
+  "s25": 1100,
+  "s75": 1330,
+  "tb": false,
+  "coa": 45000,
+  "merit": 0,
+  "meritName": "None for out-of-state",
+  "dl": "Sophie Davis (7-yr BS/MD) app ~Dec; primarily NY residents",
+  "dlDate": "2026-12-01",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 7,
+  "grad4": 25,
+  "honors": "Macaulay Honors (NY residents)",
+  "wue": false,
+  "conf": "rep",
+  "social": 5,
+  "note": "Sophie Davis is a no-MCAT, low-cost 7-year BS/MD into CUNY School of Medicine with a primary-care mission — and it is effectively a New York residents’ program. Listed so the filter is complete, not as a plan.",
+  "medNote": "Restricted for a California applicant.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.ccny.cuny.edu/admissions"
+   ],
+   [
+    "CUNY SOM",
+    "https://www.ccny.cuny.edu/csom"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": "bsmd",
+ "restrictNote": "NY residents",
+ "appInfo": [
+  "CUNY App",
+  "—",
+  "Dec 1 (Sophie Davis)",
+  "Program essays"
+ ],
+ "progRateLegacy": {
+  "rate": 10.4,
+  "note": "2021 cohort figure from a one-time CCNY news release, not a recurring published rate (CUNY School of Medicine pathway)"
+ },
+ "clinicalAccess": 8,
+ "pathNameLegacy": "Sophie Davis 7-yr",
+ "instateRef": 28000,
+ "tuition": 20000,
+ "cds7": null,
+ "accel": {
+  "id": "cuny",
+  "sc": "CUNY City College",
+  "prog": "Sophie Davis 7-year BS/MD (CUNY SOM)",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "NY",
+  "region": "Other",
+  "coa": 45000,
+  "merit": 0,
+  "medYr": 50000,
+  "medName": "CUNY SOM",
+  "bar": {
+   "gpa": 3.7,
+   "sat": 1350
+  },
+  "mcat": "Not required",
+  "seats": "~70/yr",
+  "resid": "Primarily New York State residents",
+  "apply": "CUNY app + program app, ~Dec",
+  "url": "https://www.ccny.cuny.edu/csom",
+  "note": "No-MCAT, low-cost, mission-driven (primary care, underserved NYC) — and effectively New York only.",
+  "why": "Restricted: not a CA applicant’s program."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 50000,
+ "affiliatedMedName": "CUNY SOM",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

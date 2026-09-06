@@ -1,0 +1,106 @@
+{
+ "id": "nyit",
+ "order": 90,
+ "general": {
+  "id": "nyit",
+  "n": "NYIT",
+  "city": "Old Westbury",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.75,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1150,
+  "s75": 1350,
+  "tb": false,
+  "coa": 65000,
+  "merit": 15000,
+  "meritName": "Merit (auto tiers)",
+  "dl": "Rolling; 7-yr BS/DO app Dec 1",
+  "dlDate": "2026-12-01",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 7,
+  "grad4": 45,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "social": 4,
+  "note": "7-year BS/DO with NYIT College of Osteopathic Medicine on the same Long Island campus. Osteopathic (DO) — same license, different degree, competitive-specialty match a notch harder. The friendliest accelerated bar after Howard.",
+  "medNote": "Attainable; the DO-vs-MD question is the decision, not the odds.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.nyit.edu/admissions"
+   ],
+   [
+    "BS/DO",
+    "https://www.nyit.edu/medicine/bs_do_accelerated"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Rolling",
+  "Rolling",
+  "None; BS/DO extra Dec 1"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "7-yr BS/DO",
+ "instateRef": null,
+ "tuition": 46000,
+ "cds7": null,
+ "accel": {
+  "id": "nyit",
+  "sc": "NYIT",
+  "prog": "7-year BS/DO (NYITCOM)",
+  "kind": "bsdo",
+  "ugYrs": 3,
+  "st": "NY",
+  "region": "Other",
+  "coa": 65000,
+  "merit": 15000,
+  "medYr": 80000,
+  "medName": "NYITCOM (DO)",
+  "bar": {
+   "gpa": 3.6,
+   "sat": 1270
+  },
+  "easy": true,
+  "mcat": "Must match NYITCOM first-year class mean of entry year",
+  "seats": "~25/yr",
+  "resid": null,
+  "apply": "NYIT app + BS/DO app, Dec",
+  "url": "https://www.nyit.edu/medicine/bs_do_accelerated",
+  "note": "Osteopathic (DO), not MD — same license, different degree, residency match a notch harder in competitive specialties. Friendlier entry bar than any 7-year MD.",
+  "why": "Attainable on stats; the DO-vs-MD question is the decision, not the odds."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 80000,
+ "affiliatedMedName": "NYITCOM (DO)",
+ "yieldProtection": false,
+ "program": {
+  "sc": "NYIT",
+  "name": "7-year BS/DO (NYITCOM)",
+  "band": "attainable",
+  "type": "Accelerated 3+4 — osteopathic (DO)",
+  "req": "~3.6 / 1300; MCAT threshold in program",
+  "note": "Attainable on stats; DO-vs-MD is the real decision.",
+  "bar": {
+   "gpa": 3.6,
+   "sat": 1270
+  },
+  "easy": true
+ },
+ "programVerified": null
+}

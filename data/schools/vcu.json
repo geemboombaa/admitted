@@ -1,0 +1,101 @@
+{
+ "id": "vcu",
+ "order": 44,
+ "general": {
+  "id": "vcu",
+  "n": "Virginia Commonwealth (VCU)",
+  "city": "Richmond",
+  "st": "VA",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.9,
+  "g25": 3.2,
+  "g75": 3.8,
+  "s25": 1130,
+  "s75": 1330,
+  "tb": false,
+  "coa": 58000,
+  "merit": 16000,
+  "meritName": "Presidential/Provost merit (auto-considered)",
+  "dl": "GAM medicine app due ~Nov 1 with admission app",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 8,
+  "grad4": 47,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "The headline here is the Guaranteed Admission Program for Medicine — historically ~3.5 GPA / mid-1300s SAT entry, one of the most attainable true med-school guarantees in the country. VCU Health is on campus.",
+  "medNote": "Even without GAM, an honest premed school with real merit. Verify current GAM stats — they tighten some years.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.vcu.edu/admissions"
+   ],
+   [
+    "GAM",
+    "https://honors.vcu.edu/gam"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.837,
+  "s25": 1010,
+  "s75": 1260,
+  "coa": 57016,
+  "tuitV": 41127,
+  "housV": 15889,
+  "grad4": 46
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1 (GAM with it)",
+  "Jan 15",
+  "None; GAM extra app"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "GAM-Medicine",
+ "instateRef": 30000,
+ "tuition": 40000,
+ "cds7": {
+  "h": 0.324,
+  "t": 0.2,
+  "y": "2024-25",
+  "src": "https://irds.vcu.edu/media/decision-support/pdf/commondatasets/CommonDataSet2024-25.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 85000,
+ "affiliatedMedName": "VCU SOM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Virginia Commonwealth (VCU)",
+  "name": "Guaranteed Admission Program — Medicine",
+  "band": "attainable",
+  "type": "True guaranteed admission (with conditions) to VCU SOM",
+  "req": "Historically ~3.5 GPA / mid-1300s SAT + essays/interview — verify current cycle",
+  "note": "Consultant rates it Reach-with-strong-merit; our read: the most attainable true guarantee in the country at his band. Apply.",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1330
+  },
+  "easy": true
+ },
+ "programVerified": null
+}

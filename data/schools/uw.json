@@ -1,0 +1,80 @@
+{
+ "id": "uw",
+ "order": 58,
+ "general": {
+  "id": "uw",
+  "n": "University of Washington",
+  "city": "Seattle",
+  "st": "WA",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.43,
+  "g25": 3.65,
+  "g75": 3.95,
+  "s25": 1300,
+  "s75": 1500,
+  "tb": false,
+  "coa": 62000,
+  "merit": 2000,
+  "meritName": "Almost no OOS merit",
+  "dl": "Own portal, due Nov 15",
+  "dlDate": "2026-11-15",
+  "premed": 8,
+  "research": 9,
+  "bio": 9,
+  "med": 8,
+  "grad4": 66,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "UW Medicine is world-class and undergrad research is abundant — but OOS pays full freight (~$62k) with near-zero aid, and OOS admission runs tougher than the headline rate.",
+  "medNote": "Quality is real; the value at OOS price is not.",
+  "links": [
+   [
+    "Admissions",
+    "https://admit.washington.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa"
+  ],
+  "admit": 0.39,
+  "coa": 67800,
+  "tuitV": 44460,
+  "housV": 18858
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Own portal",
+  "—",
+  "Nov 15",
+  "Own essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": 35000,
+ "tuition": 43000,
+ "cds7": {
+  "h": 0.516,
+  "t": 0,
+  "y": "2025-2026",
+  "src": "https://uw-s3-cdn.s3.us-west-2.amazonaws.com/wp-content/uploads/sites/162/2026/02/27111247/CDS_2025-2026_Seattle.pdf (blocked by robots.txt for direct fetch; index page https://www.washington.edu/opb/uw-data/external-reporting/common-data-set/); ratings transcribed via https://www.collegedata.fyi/schools/uw/2025-26, cross-checked against https://nextgenadmit.com/university-of-washington-admission-statistics/"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

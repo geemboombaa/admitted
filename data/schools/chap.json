@@ -1,0 +1,84 @@
+{
+ "id": "chap",
+ "order": 13,
+ "general": {
+  "id": "chap",
+  "n": "Chapman University",
+  "city": "Orange",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.64,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1220,
+  "s75": 1400,
+  "tb": false,
+  "coa": 88000,
+  "merit": 26000,
+  "meritName": "Chancellor/Presidential merit (auto)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 5,
+  "grad4": 70,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Generous auto-merit for his band; growing health sciences (Rinker campus). Bio dept younger/smaller than the Jesuit pair above.",
+  "medNote": "OC hospital access good; premed track record still maturing.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.chapman.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.721,
+  "s25": 1255,
+  "s75": 1420,
+  "coa": 93996,
+  "tuitV": 67650,
+  "housV": 21170,
+  "grad4": 70
+ },
+ "social": 7,
+ "religAffiliated": false,
+ "researchAccess": 4,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "1 supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.49,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://www.chapman.edu/campus-services/institutional-research/_files/cds/cds_2024-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

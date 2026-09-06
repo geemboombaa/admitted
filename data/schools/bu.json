@@ -1,0 +1,87 @@
+{
+ "id": "bu",
+ "order": 50,
+ "general": {
+  "id": "bu",
+  "n": "Boston University",
+  "city": "Boston",
+  "st": "MA",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.11,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 1450,
+  "s75": 1530,
+  "tb": false,
+  "coa": 92000,
+  "merit": 4000,
+  "meritName": "Presidential (few hundred elite admits)",
+  "dl": "ED Nov 1 / ED2 Jan 6 (no BS/MD — SMED closed)",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 84,
+  "honors": "Kilachand Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "BU’s famous 7-year SMED stopped accepting applicants — the only pipeline left (EMSP) is for partner-college students, not BU freshmen. BU itself is an 11%-admit reach; the Medical Campus offers deep clinical access.",
+  "medNote": "Plain elite premed reach now; no direct pathway.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.bu.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.111,
+  "s25": 1430,
+  "s75": 1510,
+  "coa": 98419,
+  "tuitV": 74594,
+  "housV": 20740,
+  "merit": 0,
+  "grad4": 81
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 1 / ED2 Jan 6",
+  "Jan 6",
+  "Short"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 68000,
+ "cds7": {
+  "h": 0.486,
+  "t": 0.273,
+  "y": "2024-2025",
+  "src": "https://www.bu.edu/asir/files/2026/05/2024-2025-Common-Data-Set.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": true,
+ "program": null,
+ "programVerified": null
+}

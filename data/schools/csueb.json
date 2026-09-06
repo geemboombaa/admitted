@@ -1,0 +1,78 @@
+{
+ "id": "csueb",
+ "order": 71,
+ "general": {
+  "id": "csueb",
+  "n": "CSU East Bay",
+  "city": "Hayward",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "M",
+  "admit": 0.9,
+  "g25": 2.8,
+  "g75": 3.5,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 30000,
+  "merit": 1000,
+  "meritName": "Limited merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 5,
+  "research": 3,
+  "bio": 5,
+  "med": 5,
+  "grad4": 21,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 3,
+  "note": "The closest campus to Livermore — the ultimate commute safety. Modest premed infrastructure; you build your own path.",
+  "medNote": "A true backstop, not a plan.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.csueastbay.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 31555,
+  "tuitV": 7993,
+  "housV": 17714
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 7900,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

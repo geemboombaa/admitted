@@ -1,0 +1,108 @@
+{
+ "id": "roch",
+ "order": 30,
+ "general": {
+  "id": "roch",
+  "n": "University of Rochester",
+  "city": "Rochester",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.36,
+  "g25": 3.7,
+  "g75": 3.97,
+  "s25": 1410,
+  "s75": 1510,
+  "tb": false,
+  "coa": 88000,
+  "merit": 21000,
+  "meritName": "Merit scholarships (auto-considered, generous)",
+  "dl": "Nov 1 EA / RD Jan 5; REMS by Dec 1",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 9,
+  "bio": 8,
+  "med": 8,
+  "grad4": 77,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "URMC teaching hospital on campus, flexible curriculum (no gen-eds), solid merit. Reach for his band but a rational one — Rochester reads holistically and his research story lands here.",
+  "medNote": "REMS (BS/MD) takes ~10 students — lottery tier.",
+  "links": [
+   [
+    "Admissions",
+    "https://enrollment.rochester.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.419,
+  "s25": 1400,
+  "s75": 1510,
+  "coa": 96022,
+  "tuitV": 73372,
+  "housV": 21328,
+  "merit": 20000,
+  "grad4": 71
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 5",
+  "1 supplement; REMS = extra app"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "REMS",
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.545,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://www.rochester.edu/provost/wp-content/uploads/2026/06/CDS-2025-26-completed-for-web.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Rochester SMD",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Rochester",
+  "name": "REMS",
+  "pid": "roch_prog",
+  "band": "out",
+  "type": "Formal BS/MD (REMS)",
+  "req": "No minimum published; official page states strong applicants — typically— have a 3.95 unweighted GPA and rank top 3% (not a cutoff). Testing explicitly optional.",
+  "note": "Worth applying to on merit + premed strength alone regardless of REMS.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": 3.95,
+  "avgGpaType": "unweighted (stated as TYPICAL, not a minimum)",
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://admissions.rochester.edu/academics/rems/ — \"strong REMS applicants typically have a 3.95 unweighted GPA and rank in top 3%\"; testing explicitly optional; interview-based for finalists"
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "id": "auburn",
+ "order": 97,
+ "general": {
+  "id": "auburn",
+  "n": "Auburn University",
+  "city": "Auburn",
+  "st": "AL",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.469,
+  "g25": 3.5,
+  "g75": 4,
+  "s25": 1280,
+  "s75": 1370,
+  "tb": false,
+  "coa": 59020,
+  "merit": 7000,
+  "meritName": "Auburn Nonresident Merit Scale (auto, by ACT/SAT: $7,000-$17,000/yr)",
+  "dl": "Feb 1, 2027 (rolling before)",
+  "dlDate": "2027-02-01",
+  "premed": 6,
+  "research": 6,
+  "bio": 6,
+  "med": 6,
+  "grad4": 62,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Large public flagship with a strong general-premed track record, but no dedicated BS/MD pathway of its own — added as a general-premed gap-fill, not a guaranteed-pathway school. GPA band above is estimated from Auburn’s own Common Data Set distribution table (94.65% of freshmen report a 3.5+ HS GPA, many on a weighted/capped scale) since Auburn does not publish an exact 25th/75th percentile GPA figure.",
+  "medNote": "Solid general option; the 1–10 scores here are placeholders like the rest of the list, not a verified ranking.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.auburn.edu/"
+   ],
+   [
+    "Scholarships",
+    "https://auburn.edu/scholarship/undergraduate/firstyearstudents.php"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": null,
+ "progRateLegacy": null,
+ "clinicalAccess": null,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": null,
+ "cds7": {
+  "h": 0.5,
+  "t": 0.375,
+  "y": "2024-25",
+  "src": "https://ir.auburn.edu/common-data-set/2025/section-c.php"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

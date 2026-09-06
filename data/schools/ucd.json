@@ -1,0 +1,84 @@
+{
+ "id": "ucd",
+ "order": 36,
+ "general": {
+  "id": "ucd",
+  "n": "UC Davis",
+  "city": "Davis",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.45,
+  "g25": 3.55,
+  "g75": 3.9,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 45000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 8,
+  "research": 8,
+  "bio": 9,
+  "med": 8,
+  "grad4": 64,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "The best premed UC he can realistically land: own med school (Sacramento), elite biology, classic college town. The target to build the UC hopes around.",
+  "medNote": "Big premed population but a collaborative reputation vs the southern campuses.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.458,
+  "g25w": 4,
+  "g75w": 4.25,
+  "coa": 49009,
+  "tuitV": 18078,
+  "housV": 22157,
+  "ship": 3924
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 16500,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

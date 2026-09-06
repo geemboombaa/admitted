@@ -1,0 +1,85 @@
+{
+ "id": "neu",
+ "order": 56,
+ "general": {
+  "id": "neu",
+  "n": "Northeastern",
+  "city": "Boston",
+  "st": "MA",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.06,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1470,
+  "s75": 1540,
+  "tb": false,
+  "coa": 90000,
+  "merit": 3000,
+  "meritName": "Merit (nearly vanished as admits fell)",
+  "dl": "EA Nov 1 / RD Jan 1",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 6,
+  "grad4": 71,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Now a single-digit-admit reach. Co-op gives paid clinical/research placements, but no med school and no BS/MD.",
+  "medNote": "Only worth a slot if the co-op model excites him specifically.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.northeastern.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit"
+  ],
+  "admit": 0.12,
+  "s25": 1450,
+  "s75": 1520,
+  "coa": 98322,
+  "tuitV": 72700,
+  "housV": 22822,
+  "merit": 0
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA/ED Nov 1",
+  "Jan 1",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.396,
+  "t": 0.273,
+  "y": "2024-2025",
+  "src": "https://uds.northeastern.edu/wp-content/uploads/2026/03/CDS-2024-25.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": true,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,78 @@
+{
+ "id": "cub",
+ "order": 96,
+ "general": {
+  "id": "cub",
+  "n": "CU Boulder",
+  "city": "Boulder",
+  "st": "CO",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.76,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1150,
+  "s75": 1360,
+  "tb": false,
+  "coa": 66500,
+  "merit": 5000,
+  "meritName": "Chancellor’s/Presidential (auto-considered, competitive, test-blind review)",
+  "dl": "EA Nov 15 / RD Jan 15 (Jan 15 = scholarship cutoff)",
+  "dlDate": "2026-11-15",
+  "premed": 6,
+  "research": 7,
+  "bio": 7,
+  "med": 5,
+  "grad4": 62,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "social": 9,
+  "note": "West-region option with strong sciences — but CU’s med school is at the Anschutz campus in Aurora (45 min away), so day-to-day clinical access from Boulder is thin. Merit is modest and competitive.",
+  "medNote": "Lifestyle pick more than a premed pick; the money and the hospital access are both middling.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.colorado.edu/admissions"
+   ],
+   [
+    "Scholarships",
+    "https://www.colorado.edu/scholarships/auto-consider/first-years"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa",
+   "grad4"
+  ],
+  "tuitV": 46058,
+  "housV": 19242
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 15",
+  "Jan 15",
+  "1 supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": null,
+ "instateRef": 46058,
+ "tuition": null,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

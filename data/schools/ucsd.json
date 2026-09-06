@@ -1,0 +1,84 @@
+{
+ "id": "ucsd",
+ "order": 39,
+ "general": {
+  "id": "ucsd",
+  "n": "UC San Diego",
+  "city": "La Jolla",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.28,
+  "g25": 3.7,
+  "g75": 4,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 46000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 8,
+  "grad4": 74,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "Arguably the strongest premed UC — UCSD SOM, Scripps/Salk/biotech corridor next door, immense research. Reach at his band; grading runs tough and premed competition is intense.",
+  "medNote": "A grade-deflation risk for a mid-GPA admit: thriving here matters more than getting in.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.272,
+  "g25w": 4.12,
+  "g75w": 4.28,
+  "coa": 44229,
+  "tuitV": 19824,
+  "housV": 19629,
+  "ship": 2961
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 17100,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

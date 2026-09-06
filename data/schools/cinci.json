@@ -1,0 +1,96 @@
+{
+ "id": "cinci",
+ "order": 54,
+ "general": {
+  "id": "cinci",
+  "n": "University of Cincinnati",
+  "city": "Cincinnati",
+  "st": "OH",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.82,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1190,
+  "s75": 1400,
+  "tb": false,
+  "coa": 46000,
+  "merit": 13000,
+  "meritName": "Global/Cincinnatus merit (auto)",
+  "dl": "Connections dual admission app with admission",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 55,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Connections dual-admission (with UC College of Medicine) at a mid-selectivity, merit-friendly public — one of the better odds-per-dollar direct plays. Cincinnati Children’s is a research powerhouse next door.",
+  "medNote": "Net lands near budget after auto merit.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.uc.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.877,
+  "s25": 1160,
+  "s75": 1340,
+  "coa": 58408,
+  "tuitV": 30158,
+  "housV": 16511,
+  "ship": 2521,
+  "merit": 6750,
+  "grad4": 30
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Rolling",
+  "None; Connections extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "Connections",
+ "instateRef": 30000,
+ "tuition": 30000,
+ "cds7": {
+  "h": 0.444,
+  "t": 0.143,
+  "y": "2023-2024",
+  "src": "https://www.uc.edu/content/dam/refresh/provost-62/offices/ir/2023%202024%20uc%20common%20data%20set.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 75000,
+ "affiliatedMedName": "UC College of Medicine",
+ "yieldProtection": false,
+ "program": {
+  "sc": "University of Cincinnati",
+  "name": "Connections Dual Admission",
+  "band": "stretch",
+  "type": "Dual admission with UC College of Medicine",
+  "req": "Competitive but mid-selectivity; apply with admission",
+  "note": "One of the better odds-per-dollar direct plays — merit-friendly public underneath it.",
+  "bar": null
+ },
+ "programVerified": null
+}

@@ -1,0 +1,107 @@
+{
+ "id": "rut",
+ "order": 52,
+ "general": {
+  "id": "rut",
+  "n": "Rutgers",
+  "city": "New Brunswick",
+  "st": "NJ",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.65,
+  "g25": 3.5,
+  "g75": 3.9,
+  "s25": 1270,
+  "s75": 1450,
+  "tb": false,
+  "coa": 55000,
+  "merit": 8000,
+  "meritName": "Limited OOS merit",
+  "dl": "BA/MD routes verify — NJ-leaning",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 70,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 7,
+  "note": "Solid public premed with NJMS/RWJ med schools in-system; the BA/MD pathways historically favor NJ residents — verify before counting on them.",
+  "medNote": "Fine target; pathway needs a residency check.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.rutgers.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.654,
+  "s25": 1270,
+  "s75": 1480,
+  "coa": 62782,
+  "tuitV": 40839,
+  "housV": 21943,
+  "grad4": 71
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": "NJ-leaning — verify",
+ "appInfo": [
+  "Common App or Own",
+  "EA Nov 1",
+  "Dec 1",
+  "None; BA/MD extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "BA/MD (NJ)",
+ "instateRef": 36000,
+ "tuition": 36000,
+ "cds7": {
+  "h": 0.286,
+  "t": 0.2,
+  "y": "2023-2024",
+  "src": "https://oirap.rutgers.edu/CDS/2023/New%20Brunswick%20CDS_2023-2024_final_V1.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 90000,
+ "affiliatedMedName": "Rutgers NJMS",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Rutgers",
+  "name": "NJMS 7-year BA/MD",
+  "pid": "rut_njms_prog",
+  "band": "stretch",
+  "type": "Direct high-school-entry route via partner schools",
+  "req": "SAT 1400+/ACT 32+ verified; top-10%-class-rank expected instead of a numeric GPA",
+  "note": "CORRECTED: no confirmed NJ-residency requirement found — citizenship requirement instead.",
+  "bar": {
+   "sat": 1400
+  }
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": 1400,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://njms.rutgers.edu/admissions/programs_7_8_year.php — NJMS 7-yr track (high-school entry); uses class rank not a published GPA number; requires US citizen/permanent resident — no confirmed NJ-residency preference found despite common assumption"
+ }
+}

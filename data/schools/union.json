@@ -1,0 +1,110 @@
+{
+ "id": "union",
+ "order": 46,
+ "general": {
+  "id": "union",
+  "n": "Union College",
+  "city": "Schenectady",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "S",
+  "admit": 0.47,
+  "g25": 3.5,
+  "g75": 3.9,
+  "s25": 1330,
+  "s75": 1470,
+  "tb": false,
+  "coa": 88000,
+  "merit": 21000,
+  "meritName": "Merit (auto-considered)",
+  "dl": "Leadership in Medicine app with admission",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 6,
+  "bio": 7,
+  "med": 7,
+  "grad4": 81,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Leadership in Medicine (8-yr, with Albany Med + an MBA/MS folded in) reads holistically — ECs and interview matter as much as stats. Strong LAC premed advising.",
+  "medNote": "Small classes, professors write real letters.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.union.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.295,
+  "s25": 1370,
+  "s75": 1520,
+  "coa": 89316,
+  "tuitV": 74646,
+  "housV": 14670,
+  "ship": 2164,
+  "merit": 10766,
+  "grad4": 73
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA/ED Nov 1",
+  "Jan 15",
+  "None; LIM extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "Leadership in Med",
+ "instateRef": null,
+ "tuition": 70000,
+ "cds7": {
+  "h": 0.522,
+  "t": 0.273,
+  "y": "2024-2025",
+  "src": "https://www.union.edu/sites/default/files/institutional-research/202505/common-data-set-2024-2025-final-website-march-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Albany Med",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Union College",
+  "name": "Leadership in Medicine (Albany Med)",
+  "pid": "union_prog",
+  "band": "stretch",
+  "type": "8-yr direct + MBA/MS",
+  "req": "SAT 1410+/ACT 30+ verified minimum; no published minimum GPA (site says only “excellent grades, top of class”)",
+  "note": "~80 applicants get interviewed each cycle (total applicant/admit count not published). His EC spike is the right shape for it.",
+  "bar": {
+   "sat": 1410
+  }
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": 1410,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://www.union.edu/leadership-medicine/admissions-and-requirements — ~80 interviewed, no published minimum GPA"
+ }
+}

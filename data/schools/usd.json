@@ -1,0 +1,78 @@
+{
+ "id": "usd",
+ "order": 12,
+ "general": {
+  "id": "usd",
+  "n": "University of San Diego",
+  "city": "San Diego",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.53,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1240,
+  "s75": 1410,
+  "tb": false,
+  "coa": 83000,
+  "merit": 21000,
+  "meritName": "Trustee/Presidential (auto-considered)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 5,
+  "bio": 7,
+  "med": 6,
+  "grad4": 76,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "note": "Similar profile to LMU: beautiful, supportive, real merit, net ~$62k. Scripps/Sharp/Rady clinical scene is excellent for volunteering hours.",
+  "medNote": "Small-class science with lab access from year one.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.sandiego.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 88397,
+  "tuitV": 65199,
+  "housV": 19200,
+  "ship": 4158
+ },
+ "social": 7,
+ "religAffiliated": true,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "Short supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 60000,
+ "cds7": {
+  "h": 0.49,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://www.sandiego.edu/facts/documents/cds/cds_2024-25.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

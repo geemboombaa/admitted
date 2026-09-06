@@ -1,0 +1,95 @@
+{
+ "id": "rice",
+ "order": 91,
+ "general": {
+  "id": "rice",
+  "n": "Rice University",
+  "city": "Houston",
+  "st": "TX",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.08,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1510,
+  "s75": 1560,
+  "tb": false,
+  "coa": 97309,
+  "merit": 2000,
+  "meritName": "~20% of admits get merit; no tiers published",
+  "dl": "ED1 Nov 1 / RD Jan 4; Rice/Baylor MSP with application",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 9,
+  "grad4": 86,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "Elite premed with the Texas Medical Center (the largest medical complex in the world) next door. Rice/Baylor Medical Scholars guarantees a Baylor College of Medicine seat to ~6 students a year — the hardest BS/MD-class door in the country. Need aid is generous below $200k income; above it, full pay.",
+  "medNote": "Reach on admission; MSP is a lottery on top. Full pay at your income unless rare merit lands.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.rice.edu"
+   ],
+   [
+    "Rice/Baylor MSP",
+    "https://admission.rice.edu/apply/special-programs/rice-baylor"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa"
+  ],
+  "tuitV": 72124,
+  "housV": 20530
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1",
+  "Jan 4",
+  "Supplements; MSP extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": "Rice/Baylor MSP",
+ "instateRef": null,
+ "tuition": null,
+ "cds7": {
+  "h": 0.571,
+  "t": 0.333,
+  "y": "2024-25",
+  "src": "https://ideas.rice.edu/wp-content/uploads/2025/10/CDS_2024-25_WEBSITE.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "Rice University",
+  "name": "Rice/Baylor Medical Scholars (8-yr)",
+  "pid": "rice_prog",
+  "band": "out",
+  "type": "DISCONTINUED as of Fall 2022 admissions cycle",
+  "req": "Rice ended its participation in this program starting the Fall 2022 cycle — not an available option for this application cycle",
+  "note": "Removed from consideration. Apply to Rice itself, if at all, on its own merits via the regular premed track.",
+  "bar": null
+ },
+ "programVerified": {
+  "discontinued": true,
+  "src": "Rice ended its participation in the Rice/Baylor Medical Scholars program starting the Fall 2022 application cycle — not a live option for this cycle"
+ }
+}

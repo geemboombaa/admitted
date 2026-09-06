@@ -1,0 +1,79 @@
+{
+ "id": "slo",
+ "order": 1,
+ "general": {
+  "id": "slo",
+  "n": "Cal Poly San Luis Obispo",
+  "city": "San Luis Obispo",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "L",
+  "admit": 0.3,
+  "g25": 3.6,
+  "g75": 3.95,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 33000,
+  "merit": 1500,
+  "meritName": "Limited merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 6,
+  "research": 6,
+  "bio": 8,
+  "med": 5,
+  "grad4": 62,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "note": "Excellent hands-on bio program, best 4-yr grad rate in the CSU. Weaker premed ecosystem: no nearby med school or major hospital system, so clinical hours take planning.",
+  "medNote": "Learn-by-doing culture suits research; premed advising thinner than SDSU. Bio admission is selective for his band.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.calpoly.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa"
+  ],
+  "admit": 0.288,
+  "coa": 43106,
+  "tuitV": 14682,
+  "housV": 20338
+ },
+ "social": 7,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 2,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 11000,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

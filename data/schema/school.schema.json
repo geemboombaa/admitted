@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "One school's complete record (general admission + program track + shared lookups)",
+  "type": "object",
+  "required": ["id", "general"],
+  "properties": {
+    "id": { "type": "string", "description": "Must match the filename (data/schools/<id>.json) and be referenced consistently everywhere else (CDS7 keys, PROGVERIFIED's <id>_prog convention where applicable, etc.)" },
+    "general": {
+      "type": "object",
+      "required": ["id", "n", "city", "st", "type", "coa", "admit", "g25", "g75"],
+      "description": "Everything the old inline SCHOOLS[] entry held: name, location, admit stats, cost, deadlines, judgment-call scores, links, etc."
+    },
+    "program": {
+      "type": ["object", "null"],
+      "description": "The old PATHWAYS[] entry for this school's formal BS/MD or early-assurance program, if one exists. null = no formal program.",
+      "properties": {
+        "pid": { "type": "string" },
+        "name": { "type": "string" },
+        "req": { "type": "string" },
+        "bar": { "type": ["object", "null"] }
+      }
+    },
+    "programVerified": {
+      "type": ["object", "null"],
+      "description": "Real sourced program stats consumed by progChance(): minGpa/minSat (published floor), avgGpa/avgSat (published average of admits), admitRatePct (real rate when published), src (source URL). NEVER fabricate a value here — leave the field null and let progChance() fall back to 'no data / see general admission' rather than inventing a number.",
+      "properties": {
+        "minGpa": { "type": ["number", "null"] },
+        "minGpaType": { "type": ["string", "null"], "enum": ["weighted", "unweighted", null] },
+        "minSat": { "type": ["number", "null"] },
+        "avgGpa": { "type": ["number", "null"] },
+        "avgSat": { "type": ["number", "null"] },
+        "applicantCount": { "type": ["number", "null"] },
+        "admitCount": { "type": ["number", "null"] },
+        "admitRatePct": { "type": ["number", "null"] },
+        "statsOnly": { "type": "boolean" },
+        "discontinued": { "type": "boolean" },
+        "src": { "type": "string", "description": "Required whenever any numeric field above is non-null." }
+      }
+    },
+    "cds7": { "type": ["object", "null"], "description": "Common Data Set Section C7 factor-weighting for this school, if a readable CDS was found." },
+    "accel": { "type": ["object", "null"], "description": "Old ACCEL[] entry: combined 6-7yr accelerated BS/MD (different concept from early-assurance program above)." }
+  }
+}

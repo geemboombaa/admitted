@@ -1,0 +1,121 @@
+{
+ "id": "psu",
+ "order": 49,
+ "general": {
+  "id": "psu",
+  "n": "Penn State",
+  "city": "University Park",
+  "st": "PA",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.55,
+  "g25": 3.55,
+  "g75": 3.95,
+  "s25": 1270,
+  "s75": 1450,
+  "tb": false,
+  "coa": 60000,
+  "merit": 5000,
+  "meritName": "Limited OOS merit",
+  "dl": "PMM (Jefferson) requires SAT 1470+ single sitting",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 71,
+  "honors": "Schreyer Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Premedical-Medical (PMM) with Jefferson is gated at SAT 1470+ in one sitting — out of band unless his score says otherwise. The base school: big-time premed pipeline, famous social life, little OOS aid.",
+  "medNote": "Apply EA — Penn State fills fast.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.psu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.579,
+  "s25": 1250,
+  "s75": 1410,
+  "coa": 64124,
+  "tuitV": 42860,
+  "housV": 15044,
+  "grad4": 71
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": "1470+ SAT gate",
+ "appInfo": [
+  "Common App or Own",
+  "EA Nov 1",
+  "Rolling",
+  "None; PMM extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": "PMM (1470+ gate)",
+ "instateRef": 40000,
+ "tuition": 42000,
+ "cds7": {
+  "h": 0.118,
+  "t": 0.167,
+  "y": "2024-2025",
+  "src": "https://bpb-us-e1.wpmucdn.com/sites.psu.edu/dist/d/114442/files/2025/06/CDS_2024_2025_UniversityPark_v2.pdf"
+ },
+ "accel": {
+  "id": "psu",
+  "sc": "Penn State",
+  "prog": "Premedical-Medical (PMM) 3+4 with Jefferson",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "PA",
+  "region": "Other",
+  "coa": 60000,
+  "merit": 5000,
+  "medYr": 95000,
+  "medName": "Sidney Kimmel (Jefferson)",
+  "bar": {
+   "gpa": 3.8,
+   "sat": 1470
+  },
+  "gate": "SAT 1470+ / ACT 32+ in one sitting (average admit ~1570)",
+  "mcat": "Required (threshold set by program)",
+  "seats": "~30/yr",
+  "resid": null,
+  "apply": "Penn State app + PMM application — due Oct 13, 2026 (verified; earliest deadline on the board)",
+  "url": "https://www.jefferson.edu/academics/colleges-schools-institutes/skmc/programs/penn-state-accelerated.html",
+  "note": "The classic 7-year program since 1963. A hard test gate, not a holistic read.",
+  "why": "Out of band unless his real SAT clears 1470 — then it re-opens (the fit column flips live)."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Sidney Kimmel (Jefferson)",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Penn State",
+  "name": "Premedical-Medical (Jefferson)",
+  "band": "out",
+  "type": "Accelerated 3+4 (7-yr)",
+  "req": "SAT 1470+ in a single sitting — hard gate",
+  "note": "Out of band unless his real score clears 1470; then it re-opens.",
+  "bar": {
+   "gpa": 3.8,
+   "sat": 1470
+  },
+  "hardGate": true
+ },
+ "programVerified": null
+}

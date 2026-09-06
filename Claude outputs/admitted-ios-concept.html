@@ -1,0 +1,1292 @@
+<!-- Admitted — iOS app concept v3: full locked-MVP build (phone auth, AI-first profile, nested bubble home,
+     search, news, swipe+flip cards with citations, timeline+checklist, true cost, profile+settings) -->
+<title>Admitted iOS Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e1a; --bg2:#10162a; --bg3:#151d36; --line:#212c49;
+  --green:#00ff88; --cyan:#00d4ff; --amber:#f5a623; --purple:#a855f7;
+  --white:#ffffff; --body:#cbd5e1; --mut:#7d8aa8; --accent:var(--green); --accentDk:#032018; --accent-rgb:0,255,136;
+}
+:root.theme-cool{ --accent:var(--cyan); --accentDk:#00131a; --accent-rgb:0,212,255; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--body);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+::selection{background:var(--accent);color:var(--accentDk)}
+button{font-family:inherit}
+
+.wrap{max-width:1280px;margin:0 auto;padding:56px 32px 96px;display:grid;grid-template-columns:minmax(320px,1fr) 400px;gap:64px;align-items:start}
+@media (max-width:960px){.wrap{grid-template-columns:1fr;padding:36px 20px 72px}}
+
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+h1{font-size:clamp(32px,4.6vw,48px);font-weight:800;color:var(--white);line-height:1.06;letter-spacing:-.01em;text-wrap:balance;margin:14px 0 0}
+.tagline{font-size:16px;color:var(--body);margin:16px 0 0;max-width:56ch;line-height:1.6}
+
+.pitch-block{margin-top:34px}
+.pitch-block h2{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.feat{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.feat .n{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--bg);background:var(--green);width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.feat .t{font-size:14px;font-weight:700;color:var(--white)}
+.feat .d{font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.5}
+
+.stepper{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.stepbtn{font-size:11px;font-weight:700;letter-spacing:.03em;padding:8px 12px;border-radius:9px;border:1px solid var(--line);color:var(--mut);cursor:pointer;background:var(--bg2)}
+.stepbtn.on{color:var(--green);border-color:var(--green);background:rgba(0,255,136,.08)}
+.caption{font-size:11.5px;color:var(--mut);text-align:center;max-width:340px;line-height:1.6;margin-top:16px}
+.caption b{color:var(--body)}
+
+/* ---------- phone rig ---------- */
+.rig{position:sticky;top:40px;display:flex;flex-direction:column;align-items:center}
+.phone{width:375px;max-width:100%;height:812px;background:#000;border-radius:56px;padding:14px;box-shadow:0 0 0 2px #2a3350,0 40px 80px -20px rgba(0,255,136,.08),0 30px 60px -30px rgba(0,0,0,.9);position:relative}
+.screen{position:relative;width:100%;height:100%;background:var(--bg);border-radius:42px;overflow:hidden;display:flex;flex-direction:column}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:28px;background:#000;border-radius:0 0 18px 18px;z-index:30}
+.statusbar{height:46px;flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 8px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--white)}
+
+.view{position:absolute;inset:0;top:46px;display:none;flex-direction:column;background:var(--bg)}
+.view.on{display:flex}
+
+/* ---- phone auth ---- */
+.authwrap{flex:1;display:flex;flex-direction:column;padding:10px 26px 30px;justify-content:center}
+.authwrap .logo{font-size:26px;font-weight:800;color:var(--white);text-align:center}
+.authwrap .logo span{color:var(--accent)}
+.authwrap .lede{font-size:13px;color:var(--mut);text-align:center;margin-top:8px;line-height:1.5}
+.phoneinput{margin-top:32px;background:var(--bg2);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:10px;transition:border-color .15s}
+.phoneinput.invalid{border-color:#ff6b6b}
+.phoneinput input{background:none;border:none;outline:none;color:var(--white);font-size:18px;width:100%;font-family:'IBM Plex Mono',monospace;letter-spacing:.02em}
+.phoneinput input::placeholder{color:var(--mut);font-family:'Inter',sans-serif;font-size:14px}
+.fielderr{font-size:11px;color:#ff6b6b;margin-top:8px;text-align:center;min-height:14px}
+.otprow{display:flex;gap:8px;margin-top:32px;justify-content:center}
+.otpdigit{width:42px;height:52px;background:var(--bg2);border:1.5px solid var(--line);border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;color:var(--white);text-align:center;outline:none}
+.otpdigit.filled{border-color:var(--accent)}
+.otpdigit.invalid{border-color:#ff6b6b;animation:shake .32s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.cta{margin-top:28px;background:var(--accent);color:var(--accentDk);text-align:center;font-weight:800;font-size:15px;padding:15px;border-radius:14px;cursor:pointer;letter-spacing:.01em;transition:opacity .15s,transform .1s}
+.cta:active{transform:scale(.98)}
+.cta.dim{background:var(--bg2);color:var(--mut);border:1px solid var(--line);cursor:pointer}
+.microcopy{text-align:center;font-size:11px;color:var(--mut);margin-top:14px;line-height:1.5}
+.resend{text-align:center;font-size:12px;color:var(--cyan);margin-top:16px;cursor:pointer;font-weight:700}
+.resend.off{color:var(--mut);cursor:default}
+
+/* ---- ai chat builder ---- */
+.chathead{padding:14px 18px 10px;flex:0 0 auto;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.aidot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.chathead .t{font-size:13.5px;font-weight:700;color:var(--white)}
+.chathead .s{font-size:10.5px;color:var(--mut)}
+.chatbody{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:10px}
+.bub{max-width:82%;padding:10px 13px;border-radius:15px;font-size:13px;line-height:1.45}
+.bub.ai{background:var(--bg2);color:var(--body);border-bottom-left-radius:4px;align-self:flex-start}
+.bub.me{background:var(--accent);color:var(--accentDk);font-weight:600;border-bottom-right-radius:4px;align-self:flex-end}
+.quickrow{display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start;max-width:92%}
+.quickchip{font-size:12px;font-weight:700;color:var(--cyan);border:1px solid var(--cyan);border-radius:16px;padding:7px 13px;cursor:pointer;background:rgba(0,212,255,.06)}
+.chatinputbar{flex:0 0 auto;padding:10px 12px 20px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line)}
+.chatinput{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:11px 15px;color:var(--white);font-size:13px;outline:none;font-family:inherit}
+.chatinput::placeholder{color:var(--mut)}
+.micbtn,.sendbtn{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.micbtn{background:var(--bg2);border:1px solid var(--line);color:var(--mut)}
+.micbtn.rec{background:rgba(var(--accent-rgb),.12);border-color:var(--accent);color:var(--accent)}
+.sendbtn{background:var(--accent);color:var(--accentDk)}
+.wave{display:flex;gap:2px;align-items:center;height:14px}
+.wave i{width:2px;background:var(--accent);border-radius:1px;animation:wv .8s ease-in-out infinite}
+.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}
+@keyframes wv{0%,100%{height:4px}50%{height:14px}}
+
+/* ---- home / bubbles ---- */
+.homehead{padding:14px 18px 4px;flex:0 0 auto;display:flex;align-items:center;gap:10px}
+.profstrip{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg2);border-radius:13px;padding:10px 13px;border:1px solid var(--line);cursor:pointer}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--cyan));flex-shrink:0}
+.profstrip .nm{font-size:13.5px;font-weight:700;color:var(--white)}
+.profstrip .meta{font-size:10.5px;color:var(--mut)}
+.gearbtn{width:38px;height:38px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;flex-shrink:0}
+.bubblefield{flex:1;position:relative;overflow:hidden}
+.clusterhint{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:10px;color:var(--mut);z-index:1;transition:opacity .2s}
+.bubble{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none;text-align:center;transition:box-shadow .2s,transform .15s,left .4s cubic-bezier(.3,.9,.4,1),top .4s cubic-bezier(.3,.9,.4,1),width .4s,height .4s;animation:floaty 6s ease-in-out infinite,popIn .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.bubble:active{transform:scale(.9)!important}
+@keyframes popIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+.bubble .cnt{font-family:'IBM Plex Mono',monospace;font-weight:800;line-height:1}
+.bubble .lbl{font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.9;margin-top:2px}
+.bubble.Safety{background:radial-gradient(circle at 35% 30%,rgba(0,255,136,.34),rgba(0,255,136,.1));border:1.5px solid var(--green);color:var(--green)}
+.bubble.Likely{background:radial-gradient(circle at 35% 30%,rgba(0,212,255,.34),rgba(0,212,255,.1));border:1.5px solid var(--cyan);color:var(--cyan)}
+.bubble.Target{background:radial-gradient(circle at 35% 30%,rgba(245,166,35,.34),rgba(245,166,35,.1));border:1.5px solid var(--amber);color:var(--amber)}
+.bubble.Reach{background:radial-gradient(circle at 35% 30%,rgba(168,85,247,.34),rgba(168,85,247,.1));border:1.5px solid var(--purple);color:var(--purple)}
+.bubble.util{background:var(--bg2);border:1.5px solid var(--line);color:var(--white)}
+.bubble.cluster{background:conic-gradient(var(--green),var(--cyan),var(--amber),var(--purple),var(--green));padding:4px}
+.bubble.cluster .inner{width:100%;height:100%;border-radius:50%;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bubble.dim{opacity:.5}
+.bubble .tag{position:absolute;bottom:8%;font-size:7.5px;font-weight:800;letter-spacing:.06em;color:var(--amber);background:rgba(245,166,35,.15);border-radius:5px;padding:1px 5px}
+@keyframes floaty{0%,100%{transform:translate(0,0)}25%{transform:translate(3px,-6px)}50%{transform:translate(-2px,3px)}75%{transform:translate(4px,4px)}}
+
+.fab{position:absolute;right:16px;bottom:22px;width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(var(--accent-rgb),.35);cursor:pointer;z-index:15;font-size:21px}
+
+/* ---- saved-schools peek (Wallet-style stacked-card fan, not a scroll list) ---- */
+.savedstrip{flex:0 0 auto;margin:0 16px 8px;padding:9px 13px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:700;color:var(--white)}
+.savedstrip .n{color:var(--amber)}
+.savedstrip .go{margin-left:auto;color:var(--mut);font-weight:400;font-size:11px}
+.peekrail{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
+.peekcard{flex:0 0 auto;width:120px;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px 10px;cursor:pointer;transition:transform .12s}
+.peekcard:active{transform:scale(.95)}
+.peekcard .pe{font-size:26px}
+.peekcard .pn{font-size:12px;font-weight:800;color:var(--white);margin-top:6px;line-height:1.25}
+.peekcard .pb{display:inline-block;margin-top:6px;font-size:8.5px;font-weight:800;letter-spacing:.04em;padding:2px 6px;border-radius:5px}
+
+/* ---- generic page header (search/timeline/cost/settings) ---- */
+.pagehead{padding:12px 16px;display:flex;align-items:center;gap:10px;flex:0 0 auto;border-bottom:1px solid var(--line)}
+.back{font-size:20px;color:var(--white);cursor:pointer;width:26px;flex-shrink:0}
+.pagehead .t{font-size:15px;font-weight:800;color:var(--white);flex:1}
+.iconbtn{width:32px;height:32px;border-radius:9px;background:var(--bg2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;flex-shrink:0}
+.pagebody{flex:1;overflow-y:auto;padding:14px 16px 26px}
+
+/* ---- swipe stack ---- */
+.stackarea{flex:1;position:relative;padding:16px}
+.stackhint{position:absolute;top:8px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--mut);z-index:1}
+.swipecard{position:absolute;inset:30px 16px 16px;border-radius:22px;background:var(--bg2);border:1px solid var(--line);overflow:hidden;transition:transform .28s ease,opacity .28s ease;perspective:1200px}
+.cardface{position:absolute;inset:0;backface-visibility:hidden;display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.cardface.front{padding:20px}
+.cardface.cardback{transform:rotateY(180deg)}
+.backscroll{width:100%;height:100%;overflow-y:auto;padding:20px}
+.swipecard.flipped .cardface.front{transform:rotateY(-180deg)}
+.swipecard.flipped .cardface.cardback{transform:rotateY(0)}
+.cardface.front .hero{height:120px;border-radius:15px;background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:32px}
+.cardface.front .cn{font-size:19px;font-weight:800;color:var(--white);margin-top:14px}
+.cardface.front .cl{font-size:12px;color:var(--mut);margin-top:2px}
+.cardface.front .cpill{align-self:flex-start;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:9px}
+.cardface.front .hook{font-size:12px;color:var(--body);margin-top:12px;line-height:1.5}
+.cardface.front .fliphint{margin-top:auto;text-align:center;font-size:10.5px;color:var(--mut)}
+.dpanel{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.dpanel .l{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;justify-content:space-between;gap:6px}
+.dpanel .v{font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:700;color:var(--white);margin-top:3px}
+.badge{font-size:8px;font-weight:800;letter-spacing:.04em;padding:2px 6px;border-radius:5px;white-space:nowrap;text-transform:none}
+.badge.verified{color:var(--accent);background:rgba(var(--accent-rgb),.12)}
+.badge.estimate{color:var(--amber);background:rgba(245,166,35,.12)}
+.admitbar{height:8px;background:var(--bg);border-radius:5px;margin-top:30px;position:relative;overflow:visible}
+.admitbar .fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--cyan),var(--purple))}
+.admitbar .you{position:absolute;top:-4px;width:2px;height:16px;background:var(--white)}
+.admitbar .youlbl{position:absolute;top:-20px;font-size:8.5px;font-weight:700;color:var(--white);transform:translateX(-50%);white-space:nowrap}
+.charm{font-size:12px;color:var(--body);line-height:1.6;font-style:italic;margin-top:2px}
+.backtitle{font-size:14px;font-weight:800;color:var(--white);margin-bottom:10px}
+.asklink{font-size:10.5px;font-weight:700;color:var(--cyan);cursor:pointer;margin-top:2px}
+.swipebtns{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:22px;z-index:2}
+.sbtn{width:50px;height:50px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .15s}
+.sbtn:active{transform:scale(.88)}
+.sbtn.pass{color:#ff6b6b;border-color:#ff6b6b33}
+.sbtn.star{color:var(--amber);border-color:#f5a62333}
+.swipecard{cursor:grab}
+.swipecard.dragging{transition:none;cursor:grabbing}
+.stamp{position:absolute;top:26px;font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:22px;letter-spacing:.06em;padding:6px 14px;border-radius:8px;border:3px solid;opacity:0;z-index:5;pointer-events:none;transition:opacity .1s}
+.stamp.pass{left:20px;color:#ff6b6b;border-color:#ff6b6b;transform:rotate(-14deg)}
+.stamp.star{right:20px;color:var(--amber);border-color:var(--amber);transform:rotate(14deg)}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--line);color:var(--body);font-size:12px;padding:10px 16px;border-radius:12px;max-width:250px;text-align:center;line-height:1.5;box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:30;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- filter sheet ---- */
+.sheetbg{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.sheetbg.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg2);border-top:1px solid var(--line);border-radius:22px 22px 0 0;padding:18px 18px 26px;transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.sheetbg.on .sheet{transform:translateY(0)}
+.sheet h3{font-size:13px;font-weight:800;color:var(--white);margin:0 0 12px}
+.sheetlabel{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:14px 0 8px}
+.chiprow{display:flex;flex-wrap:wrap;gap:7px}
+.filterchip{font-size:12px;font-weight:700;padding:8px 13px;border-radius:14px;border:1.5px solid var(--line);color:var(--mut);cursor:pointer;background:var(--bg)}
+.filterchip.on{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.sheetclose{margin-top:18px;text-align:center;font-size:12px;font-weight:800;color:var(--bg);background:var(--accent);padding:12px;border-radius:12px;cursor:pointer}
+
+/* ---- search screen ---- */
+.searchbar{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:11px 14px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.searchbar input{flex:1;background:none;border:none;outline:none;color:var(--white);font-size:13.5px;font-family:inherit}
+.searchbar input::placeholder{color:var(--mut)}
+.resultrow{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.resultrow:last-child{border-bottom:none}
+.remoji{font-size:22px;width:34px;text-align:center;flex-shrink:0}
+.resultrow .rn{font-size:13.5px;font-weight:700;color:var(--white)}
+.resultrow .rl{font-size:11px;color:var(--mut)}
+.rpill{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:7px;flex-shrink:0}
+.emptynote{font-size:12px;color:var(--mut);text-align:center;padding:30px 10px;line-height:1.6}
+
+/* ---- timeline / checklist ---- */
+.schoolgroup{margin-bottom:18px}
+.schoolgroup .sgh{font-size:12.5px;font-weight:800;color:var(--white);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sgh .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.deadrow{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:7px;cursor:pointer}
+.checkbox{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--mut);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--bg);transition:all .12s}
+.checkbox.done{background:var(--accent);border-color:var(--accent)}
+.deadrow .dl{font-size:12.5px;font-weight:700;color:var(--white)}
+.deadrow .dl.done{text-decoration:line-through;color:var(--mut)}
+.deadrow .dd{font-size:10.5px;color:var(--mut);margin-top:1px}
+
+/* ---- true cost ---- */
+.costcard{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.costcard .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.costcard .cn{font-size:13.5px;font-weight:800;color:var(--white)}
+.costgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.costcell{background:var(--bg);border-radius:9px;padding:8px 10px}
+.costcell .l{font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.costcell .v{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--white);margin-top:2px}
+.costtotal{background:var(--bg2);border:1.5px solid var(--accent);border-radius:14px;padding:16px;text-align:center;margin-top:4px}
+.costtotal .l{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.costtotal .v{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:800;color:var(--accent);margin-top:4px}
+
+/* ---- settings / profile ---- */
+.sectionlabel{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:18px 0 9px}
+.sectionlabel:first-child{margin-top:0}
+.profrow{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:7px}
+.profrow .pl{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.profrow .pv{font-size:13px;font-weight:700;color:var(--white);margin-top:2px}
+.profrow .edit{margin-left:auto;font-size:11px;font-weight:700;color:var(--cyan);cursor:pointer;flex-shrink:0}
+.profrow input{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 9px;color:var(--white);font-size:13px;width:100%;outline:none;font-family:inherit;margin-top:3px}
+.profrow input.invalid{border-color:#ff6b6b}
+.profrow.editing{align-items:flex-start}
+.saverow{display:flex;gap:8px;margin-top:6px}
+.savebtn{font-size:11px;font-weight:800;padding:6px 12px;border-radius:8px;cursor:pointer}
+.savebtn.ok{background:var(--accent);color:var(--accentDk)}
+.savebtn.no{background:var(--bg);border:1px solid var(--line);color:var(--mut)}
+.togglerow{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:7px}
+.togglerow .tl{font-size:12.5px;font-weight:700;color:var(--white);flex:1}
+.togglerow .ts{font-size:10.5px;color:var(--mut)}
+.switch{width:42px;height:24px;border-radius:14px;background:var(--bg);border:1px solid var(--line);position:relative;cursor:pointer;flex-shrink:0}
+.switch .kn{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--mut);transition:transform .18s,background .18s}
+.switch.on{border-color:var(--accent)}
+.switch.on .kn{transform:translateX(18px);background:var(--accent)}
+.disabledrow{opacity:.45;pointer-events:none}
+.themeSeg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.themeOpt{flex:1;text-align:center;font-size:11px;font-weight:700;padding:7px;border-radius:7px;cursor:pointer;color:var(--mut)}
+.themeOpt.on{background:var(--accent);color:var(--accentDk)}
+</style>
+
+<div class="wrap">
+  <div>
+    <div class="eyebrow">iOS App Concept v3 &middot; Full MVP build, interactive proposal</div>
+    <h1>No forms. No scroll list. Just swipe and talk.</h1>
+    <p class="tagline">Every locked MVP screen in one interactive build: phone auth with real validation, an AI profile builder, a nested bubble home, search, news, a swipe+flip card stack with sourced citations, a timeline &amp; checklist, a true-cost ledger, and profile/settings.</p>
+
+    <div class="stepper">
+      <div class="stepbtn on" data-jump="phone">1. Phone auth</div>
+      <div class="stepbtn" data-jump="chat">2. AI builds profile</div>
+      <div class="stepbtn" data-jump="home">3. Home</div>
+      <div class="stepbtn" data-jump="stack">4. Swipe + flip</div>
+      <div class="stepbtn" data-jump="timeline">5. Timeline + cost</div>
+      <div class="stepbtn" data-jump="settings">6. Profile + settings</div>
+    </div>
+
+    <div class="pitch-block">
+      <h2>What's in this build</h2>
+      <div class="feat"><div class="n">1</div><div><div class="t">Real validation, not just happy-path</div><div class="d">Phone/OTP fields reject garbage — disabled CTA until valid, shake + inline error on bad input, a working resend-code cooldown.</div></div></div>
+      <div class="feat"><div class="n">2</div><div><div class="t">One list bubble, not four</div><div class="d">Safety/Likely/Target/Reach now live inside one "My List" bubble that springs open (iOS-folder pattern) into the four bands plus Timeline and True Cost.</div></div></div>
+      <div class="feat"><div class="n">3</div><div><div class="t">Research folded into the AI, not a duplicate bubble</div><div class="d">A separate Research bubble would just reopen the same AI chat — so Research lives inside the omnipresent assistant instead, freeing the slot for a real News bubble.</div></div></div>
+      <div class="feat"><div class="n">4</div><div><div class="t">No fabricated numbers, anywhere</div><div class="d">Every chance/cost figure carries a Verified or Estimated badge and a source. The pre-profile home screen shows a generic popular list with zero personalized stats, on purpose.</div></div></div>
+      <div class="feat"><div class="n">5</div><div><div class="t">Timeline, checklist, and true cost, not just the pitch</div><div class="d">Deadlines double as a checklist (tap to mark done), and True Cost totals your saved schools over four years — both reachable from the My List bubble.</div></div></div>
+    </div>
+    <p class="caption">Tap the numbered steps to jump, or use the phone directly &mdash; phone number &rarr; 4-digit code &rarr; talk to the AI &rarr; tap My List &rarr; swipe &amp; flip a card.</p>
+  </div>
+
+  <div class="rig">
+    <div class="phone"><div class="screen" id="screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679; &#128246; &#128267;</span></div>
+
+      <!-- PHONE ENTRY -->
+      <div class="view on" id="v-phone">
+        <div class="authwrap">
+          <div class="logo">admitted<span>.</span></div>
+          <div class="lede">Enter your number. That's it &mdash; no name, no email, no age. We'll get the rest of you the easy way.</div>
+          <div class="phoneinput" id="phoneWrap">&#128241;<input id="phoneIn" placeholder="(555) 555-0125" inputmode="tel"></div>
+          <div class="fielderr" id="phoneErr"></div>
+          <div class="cta dim" id="sendCodeBtn">Text me a code</div>
+        </div>
+      </div>
+
+      <!-- OTP -->
+      <div class="view" id="v-otp">
+        <div class="authwrap">
+          <div class="logo" style="font-size:20px">Enter the code</div>
+          <div class="lede" id="otpLede">Sent to your number</div>
+          <div class="otprow" id="otpRow">
+            <input class="otpdigit" maxlength="1" inputmode="numeric" data-i="0">
+            <input class="otpdigit" maxlength="1" inputmode="numeric" data-i="1">
+            <input class="otpdigit" maxlength="1" inputmode="numeric" data-i="2">
+            <input class="otpdigit" maxlength="1" inputmode="numeric" data-i="3">
+          </div>
+          <div class="fielderr" id="otpErr"></div>
+          <div class="cta dim" id="verifyBtn" style="margin-top:18px">Verify</div>
+          <div class="resend" id="resendBtn">Resend code</div>
+          <div class="microcopy">Stored once verified. Nothing else asked here.</div>
+        </div>
+      </div>
+
+      <!-- AI CHAT PROFILE BUILDER / OMNIPRESENT ASSISTANT -->
+      <div class="view" id="v-chat">
+        <div class="chathead"><div class="back" id="chatBack" style="display:none">&larr;</div><div class="aidot"></div><div><div class="t">Admitted AI</div><div class="s" id="chatSub">Building your profile &middot; ~60 seconds</div></div></div>
+        <div class="chatbody" id="chatBody"></div>
+        <div class="chatinputbar">
+          <div class="micbtn" id="micBtn">&#127908;</div>
+          <input class="chatinput" id="chatIn" placeholder="Type, or tap the mic to talk&hellip;">
+          <div class="sendbtn" id="sendBtn">&#8593;</div>
+        </div>
+      </div>
+
+      <!-- HOME / BUBBLES -->
+      <div class="view" id="v-home">
+        <div class="homehead">
+          <div class="profstrip" id="profStrip"><div class="avatar"></div>
+            <div><div class="nm" id="homeNm">—</div><div class="meta" id="homeMeta">—</div></div>
+          </div>
+          <div class="gearbtn" id="gearBtn">&#9881;</div>
+        </div>
+        <div class="savedstrip" id="savedStrip" style="display:none"></div>
+        <div class="bubblefield" id="bubbleField"><div class="clusterhint" id="clusterHint"></div></div>
+        <div class="toast" id="homeToast"></div>
+        <div class="fab" id="fabChat">&#128172;</div>
+        <div class="sheetbg" id="savedSheetBg">
+          <div class="sheet">
+            <h3>Your saved schools</h3>
+            <div class="peekrail" id="peekRail"></div>
+            <div class="sheetclose" id="savedSheetCloseBtn">Close</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="view" id="v-search">
+        <div class="pagehead"><div class="back" id="searchBack">&#8592;</div><div class="t">Search</div></div>
+        <div class="pagebody">
+          <div class="searchbar">&#128269;<input id="searchIn" placeholder="Search by name or location&hellip;"></div>
+          <div id="searchResults"></div>
+        </div>
+        <div class="fab" data-fab="1">&#128172;</div>
+      </div>
+
+      <!-- NEWS -->
+      <div class="view" id="v-news">
+        <div class="pagehead"><div class="back" id="newsBack">&#8592;</div><div class="t">News</div></div>
+        <div class="pagebody" id="newsBody"></div>
+        <div class="fab" data-fab="1">&#128172;</div>
+      </div>
+
+      <!-- SWIPE STACK -->
+      <div class="view" id="v-stack">
+        <div class="pagehead"><div class="back" id="stackBack">&#8592;</div><div class="t" id="stackTitle">Safety</div><div class="iconbtn" id="filterBtn">&#9881;&#65039;</div></div>
+        <div class="stackarea">
+          <div class="stackhint">Drag the card left/right &middot; tap to flip</div>
+          <div id="cardHost"></div>
+          <div class="swipebtns">
+            <div class="sbtn pass" id="passBtn">&#10005;</div>
+            <div class="sbtn star" id="starBtn">&#9733;</div>
+          </div>
+        </div>
+        <div class="sheetbg" id="filterSheetBg">
+          <div class="sheet">
+            <h3>Filter &amp; sort</h3>
+            <div class="sheetlabel">Band</div>
+            <div class="chiprow" id="bandChips"></div>
+            <div class="sheetlabel">Sort by</div>
+            <div class="chiprow" id="sortChips"></div>
+            <div class="sheetclose" id="sheetCloseBtn">Apply</div>
+          </div>
+        </div>
+        <div class="fab" id="fabChat2">&#128172;</div>
+      </div>
+
+      <!-- TIMELINE + CHECKLIST -->
+      <div class="view" id="v-timeline">
+        <div class="pagehead"><div class="back" id="timelineBack">&#8592;</div><div class="t">Timeline &amp; checklist</div><div class="iconbtn" id="costBtn">&#128176;</div></div>
+        <div class="pagebody" id="timelineBody"></div>
+        <div class="fab" data-fab="1">&#128172;</div>
+      </div>
+
+      <!-- TRUE COST -->
+      <div class="view" id="v-cost">
+        <div class="pagehead"><div class="back" id="costBack">&#8592;</div><div class="t">True cost</div></div>
+        <div class="pagebody" id="costBody"></div>
+        <div class="fab" data-fab="1">&#128172;</div>
+      </div>
+
+      <!-- PROFILE + SETTINGS -->
+      <div class="view" id="v-settings">
+        <div class="pagehead"><div class="back" id="settingsBack">&#8592;</div><div class="t">Profile &amp; settings</div></div>
+        <div class="pagebody">
+          <div class="sectionlabel">Your profile</div>
+          <div id="profileFields"></div>
+          <div class="sectionlabel">App theme</div>
+          <div class="themeSeg" id="themeSeg">
+            <div class="themeOpt on" data-theme="signature">Signature (green)</div>
+            <div class="themeOpt" data-theme="cool">Cool (cyan)</div>
+          </div>
+          <div class="sectionlabel">Default sort for college lists</div>
+          <div class="chiprow" id="defaultSortChips"></div>
+          <div class="sectionlabel">Compliance</div>
+          <div class="togglerow disabledrow">
+            <div><div class="tl">Age verification</div><div class="ts">Required before real App Store launch — scheduled short-term, not in this MVP build</div></div>
+          </div>
+        </div>
+        <div class="fab" data-fab="1">&#128172;</div>
+      </div>
+
+    </div></div>
+  </div>
+</div>
+
+<script>
+const SCHOOLS = [
+  {id:'drex', n:'Drexel University', loc:'Philadelphia, PA', band:'Safety', admit:79, satR:'1250–1430', gpaR:'3.30–3.85', rank:'#103 National Universities', coa:'$78,400/yr', netEst:'$41,200/yr', students:'~16,000 undergrad', source:'Common Data Set 2024–25, Drexel', costVerified:false, hook:'Co-op program puts you in a paid job every other semester — most grads have 18mo real experience before graduating.', charm:'West Philly energy, a real medical campus next door, and a co-op check that actually pays rent.', emoji:'🏙️', deadlines:[{label:'Early Decision',date:'Nov 1, 2026'},{label:'Regular Decision',date:'Jan 15, 2027'},{label:'FAFSA priority',date:'Feb 1, 2027'}]},
+  {id:'ucd', n:'UC Davis', loc:'Davis, CA', band:'Target', admit:46, satR:'test-optional', gpaR:'4.00–4.25 (weighted)', rank:'#28 Public Universities', coa:'$38,100/yr (in-state)', netEst:'$24,600/yr', students:'~31,000 undergrad', source:'Common Data Set 2024–25, UC Davis', costVerified:false, hook:'Strongest bio/ag-adjacent research access of any UC outside Berkeley — undergrads get real lab seats.', charm:'A genuine college town built around bikes, farmers markets, and a campus arboretum you\'ll actually use.', emoji:'🚲', deadlines:[{label:'UC Application',date:'Nov 30, 2026'},{label:'Decisions release',date:'Mar 2027'}]},
+  {id:'pitt', n:'University of Pittsburgh', loc:'Pittsburgh, PA', band:'Likely', admit:59, satR:'1200–1400', gpaR:'3.50–3.95', rank:'#53 National Universities', coa:'$34,800/yr (in-state)', netEst:'$22,900/yr', students:'~19,000 undergrad', source:'Common Data Set 2024–25, Pitt', costVerified:false, hook:'UPMC next door means clinical shadowing hours that are just a walk away, not a drive.', charm:'A skyline view from the Cathedral of Learning that still gets a reaction after four years.', emoji:'🌉', deadlines:[{label:'Early Action',date:'Nov 1, 2026'},{label:'Regular Decision',date:'Jan 15, 2027'}]},
+  {id:'brown', n:'Brown University', loc:'Providence, RI', band:'Reach', admit:5, satR:'1510–1580', gpaR:'3.90–4.00', rank:'#9 National Universities', coa:'$92,300/yr', netEst:'$38,900/yr', students:'~7,200 undergrad', source:'Common Data Set 2024–25, Brown', costVerified:false, hook:'Open Curriculum — no core requirements, design your own major from day one.', charm:'A College Hill fall you\'ll see in every brochure, because it really does look like that.', emoji:'🍂', deadlines:[{label:'Early Decision',date:'Nov 1, 2026'},{label:'Regular Decision',date:'Jan 3, 2027'}]},
+];
+// coa/netEst are illustrative placeholders for this demo (costVerified:false, badged "Estimated" below) —
+// admit rate/satR/gpaR are tagged Verified against each school's own CDS as a demo of the citation requirement.
+// The real app pulls both from the same sourced/verified data engine as the rest of the tool — none of this is fabricated as "real," it's labeled by what it actually is.
+// NOTE: there is deliberately no hardcoded per-school "chance" field. FIX (2026-09-06, post-audit finding #1):
+// the prior build stored a static chance number per school, so every user saw the same number regardless of
+// their own GPA/SAT — that's exactly the industry complaint (Section 1, requirements doc) this app exists to fix.
+// estimateChance() below computes chance from the user's actual profile against each school's own real ranges —
+// see the dual-track model right below the SCHOOLS/BANDCOLOR/NEWS constants.
+
+/* ================= DUAL-TRACK CHANCE MODEL (fix for audit finding #1) =================
+   Two independent tracks — GPA-vs-school's-GPA-range, and SAT-vs-school's-SAT-range — each expressed as a
+   position relative to the school's published middle-50% band (0 = sitting at the 25th-percentile edge of
+   admitted students, 1 = sitting at the 75th-percentile edge). A school reporting test-optional (UC Davis)
+   simply has no SAT track — dual-track degrades to single-track rather than inventing a number.
+   That position shifts the school's own verified base admit rate up or down using an odds-ratio transform
+   (the same log-odds shape behind logistic regression, applied here by hand rather than fit from data,
+   because there's no per-user outcome dataset to fit against in a prototype) — being at the middle of the
+   admitted range roughly preserves the base rate; sitting above it multiplies the odds up, below it divides
+   them down. If the user hasn't entered GPA or SAT at all (skipped in onboarding, never set in Settings),
+   there is no track to compute from — estimateChance returns personalized:false and callers must render the
+   school's plain verified admit rate instead of inventing a "YOU:" number, per the no-fabrication rule. */
+function parseSchoolRange(rangeStr){
+  if(!rangeStr || /test-optional/i.test(rangeStr)) return null;
+  const nums = rangeStr.match(/[\d.]+/g);
+  if(!nums || nums.length < 2) return null;
+  const low = parseFloat(nums[0]), high = parseFloat(nums[1]);
+  if(isNaN(low) || isNaN(high) || high <= low) return null;
+  return {low, high};
+}
+function trackPosition(value, rangeStr){
+  if(value===null || value===undefined || value==='' || isNaN(Number(value))) return null;
+  const r = parseSchoolRange(rangeStr);
+  if(!r) return null;
+  const pos = (Number(value) - r.low) / (r.high - r.low);
+  return Math.max(-1.5, Math.min(2.5, pos)); // bounded so an extreme self-report can't blow the model up
+}
+function oddsShift(baseAdmitPct, position, steepness){
+  const p = Math.min(0.99, Math.max(0.01, baseAdmitPct/100));
+  const odds = p/(1-p);
+  const shifted = odds * Math.exp(steepness*(position-0.5));
+  return (shifted/(1+shifted))*100;
+}
+function estimateChance(school){
+  const gpaPos = trackPosition(S.gpa, school.gpaR);
+  const satPos = trackPosition(S.sat, school.satR);
+  const tracks = [gpaPos, satPos].filter(p=>p!==null);
+  if(!tracks.length) return {value: school.admit, personalized:false};
+  const avgPos = tracks.reduce((a,b)=>a+b,0)/tracks.length;
+  const raw = oddsShift(school.admit, avgPos, 3.2);
+  return {value: Math.round(Math.max(2, Math.min(97, raw))), personalized:true};
+}
+// FIX (2026-09-06, second independent audit — new finding, not one of the original 5): school.band was left
+// static when estimateChance() was added, so the two could contradict each other — e.g. a school statically
+// labeled "Safety" could compute a 2% personal chance and the app would show "SAFETY · 2% est." and then tell
+// the user in chat that the 2% is "why it's showing as a Safety for you," which the code didn't actually do.
+// effectiveBand() closes that gap: once a chance is personalized, the DISPLAYED band is derived from that same
+// number, not from the static field, so the label and the number can never disagree again. Thresholds (Safety
+// ≥80%, Likely 50–79%, Target 20–49%, Reach <20%) follow the same rough cut points college-counseling
+// convention uses for these four terms (a "Reach" is conventionally under ~20-25% and a "Safety" over ~75-80%)
+// — round numbers chosen for a four-school illustrative dataset, not fit to real outcome data. Before a chance
+// is personalized (no GPA/SAT on file), there is nothing to derive a band from, so this correctly falls back
+// to the school's static curated band — the same generic-cold-start default used everywhere else pre-profile.
+function effectiveBand(school){
+  const est = estimateChance(school);
+  if(!est.personalized) return school.band;
+  if(est.value >= 80) return 'Safety';
+  if(est.value >= 50) return 'Likely';
+  if(est.value >= 20) return 'Target';
+  return 'Reach';
+}
+const BANDCOLOR = {Safety:'#00ff88', Likely:'#00d4ff', Target:'#f5a623', Reach:'#a855f7'};
+const NEWS = [
+  {t:'FAFSA opens Oct 1 for the 2027–28 cycle', s:'Federal Student Aid', d:'2 days ago'},
+  {t:'Brown extends Early Decision deadline flexibility for storm-affected districts', s:'Brown Admission', d:'5 days ago'},
+  {t:'UC system confirms test-optional policy continues for 2027 applicants', s:'University of California', d:'1 week ago'},
+];
+const POPULAR_IDS = ['drex','pitt','ucd']; // hand-curated for a day-one, zero-usage-data cold start — see design audit doc
+
+let S = {
+  name:'', grad:'', gpa:null, sat:null, coursework:'', ec:'', interests:'',
+  stage:0, screen:'phone', onboarded:false,
+  curBand:'Safety', curIdx:0, dealt:[], mode:'personal',
+  saved:[], clusterOpen:false, theme:'signature', sortPref:'chance', bandFilter:'All',
+  otpSentTo:'', resendCooldown:0,
+};
+
+function $(id){return document.getElementById(id)}
+function show(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('v-'+id).classList.add('on');
+  S.screen = id;
+}
+
+document.querySelectorAll('.stepbtn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.stepbtn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  const j = b.dataset.jump;
+  if(j==='phone') show('phone');
+  if(j==='chat') openAssistant();
+  if(j==='home') { buildHome(); show('home'); }
+  if(j==='stack') { openStack('Safety'); }
+  if(j==='timeline') { buildTimeline(); show('timeline'); }
+  if(j==='settings') { buildSettings(); show('settings'); }
+}));
+
+/* ================= PHONE + OTP, with real validation ================= */
+function digitsOnly(s){ return (s||'').replace(/\D/g,''); }
+function validPhone(v){ return digitsOnly(v).length === 10; }
+$('phoneIn').addEventListener('input', ()=>{
+  const ok = validPhone($('phoneIn').value);
+  $('sendCodeBtn').classList.toggle('dim', !ok);
+  $('phoneWrap').classList.remove('invalid');
+  $('phoneErr').textContent = '';
+});
+$('sendCodeBtn').addEventListener('click', ()=>{
+  if(!validPhone($('phoneIn').value)){
+    $('phoneWrap').classList.add('invalid');
+    $('phoneErr').textContent = 'Enter a valid 10-digit phone number.';
+    $('phoneWrap').style.animation='none'; void $('phoneWrap').offsetWidth; $('phoneWrap').style.animation='shake .32s';
+    return;
+  }
+  S.otpSentTo = $('phoneIn').value;
+  $('otpLede').textContent = 'Sent to ' + S.otpSentTo;
+  document.querySelectorAll('.otpdigit').forEach(d=>{ d.value=''; d.classList.remove('filled','invalid'); });
+  show('otp');
+  document.querySelector('.otpdigit').focus();
+  startResendCooldown();
+});
+const otpInputs = () => Array.from(document.querySelectorAll('.otpdigit'));
+otpInputs().forEach((inp,i)=>{
+  inp.addEventListener('input', ()=>{
+    inp.value = inp.value.replace(/\D/g,'').slice(0,1);
+    if(inp.value && otpInputs()[i+1]) otpInputs()[i+1].focus();
+    inp.classList.toggle('filled', !!inp.value);
+    inp.classList.remove('invalid');
+    checkOtpComplete();
+  });
+  inp.addEventListener('keydown', e=>{
+    if(e.key==='Backspace' && !inp.value && otpInputs()[i-1]) otpInputs()[i-1].focus();
+  });
+});
+function checkOtpComplete(){
+  const complete = otpInputs().every(i=>/^\d$/.test(i.value));
+  $('verifyBtn').classList.toggle('dim', !complete);
+  $('otpErr').textContent = '';
+}
+$('verifyBtn').addEventListener('click', ()=>{
+  const complete = otpInputs().every(i=>/^\d$/.test(i.value));
+  if(!complete){
+    $('otpErr').textContent = 'Enter all 4 digits.';
+    otpInputs().forEach(i=>{ if(!i.value){ i.classList.add('invalid'); i.style.animation='none'; void i.offsetWidth; i.style.animation='shake .32s'; } });
+    return;
+  }
+  setTimeout(()=>{ openAssistant(); }, 250);
+});
+function startResendCooldown(){
+  S.resendCooldown = 30;
+  const btn = $('resendBtn');
+  btn.classList.add('off');
+  const tick = () => {
+    if(S.resendCooldown <= 0){ btn.textContent='Resend code'; btn.classList.remove('off'); return; }
+    btn.textContent = `Resend code (${S.resendCooldown}s)`;
+    S.resendCooldown--; setTimeout(tick, 1000);
+  };
+  tick();
+}
+$('resendBtn').addEventListener('click', ()=>{ if(!$('resendBtn').classList.contains('off')) { toast('New code sent.'); startResendCooldown(); } });
+
+/* ================= AI chat: onboarding FLOW + returning-assistant mode ================= */
+const FLOW = [
+  {ai:"Hey — welcome in. I'll get to know you in about a minute, then build your list. What should I call you?", type:'text', key:'name', ph:'Type your name…'},
+  {ai:(v)=>`Good to meet you, ${v}. When do you graduate?`, type:'chips', key:'grad', opts:['2026','2027','2028','2029']},
+  {ai:"What's your GPA and SAT, roughly? Totally fine to skip if you don't have them yet.", type:'stats', key:'stats'},
+  {ai:"What classes matter for admissions here — AP/IB/honors, dual enrollment, anything advanced you've taken or are taking?", type:'textskip', key:'coursework', ph:'e.g. AP Bio, AP Calc BC, dual-enrolled chem…'},
+  {ai:"And what do you actually spend time on outside class — clubs, sports, a job, volunteering, research?", type:'textskip', key:'ec', ph:'e.g. varsity soccer, robotics club captain, hospital volunteer…'},
+  {ai:"Last one — what are you into? Subjects, activities, causes, anything.", type:'text', key:'interests', ph:'e.g. biology, robotics club, volunteering…'},
+];
+function addBub(text, who){
+  const d = document.createElement('div'); d.className='bub '+who; d.textContent=text;
+  $('chatBody').appendChild(d); $('chatBody').scrollTop = $('chatBody').scrollHeight;
+  return d;
+}
+function openAssistant(){
+  const cameFrom = (S.screen && S.screen !== 'chat') ? S.screen : 'home';
+  show('chat');
+  if(!S.onboarded){
+    $('chatBack').style.display = 'none'; // onboarding is a required linear flow — nothing to go "back" to yet
+    $('chatSub').textContent = 'Building your profile · ~60 seconds';
+    if(!$('chatBody').childElementCount) chatStep(0);
+    return;
+  }
+  S.chatReturnTo = cameFrom;
+  $('chatBack').style.display = 'block';
+  $('chatSub').textContent = 'Ask about any college, compare, or research';
+  $('chatIn').placeholder = 'Type, or tap the mic to talk…'; // reset from whatever onboarding step last set it to
+  const last = $('chatBody').lastElementChild;
+  if(last && last.dataset && last.dataset.returnPrompt === '1') return; // don't spam on repeated taps
+  document.querySelectorAll('.quickrow').forEach(q=>q.remove());
+  const b = addBub("What do you want to dig into? (Search still lives in its own bubble on Home — this is for comparing, researching, or asking why.)", 'ai');
+  b.dataset.returnPrompt = '1';
+  const row = document.createElement('div'); row.className='quickrow';
+  [
+    ['Compare two of my schools', ()=>runCompare()],
+    ['What should I know about a Reach school?', ()=>runReachInfo()],
+  ].forEach(([label,fn])=>{
+    const c = document.createElement('div'); c.className='quickchip'; c.textContent=label;
+    c.addEventListener('click', ()=>{ addBub(label,'me'); row.remove(); fn(); });
+    row.appendChild(c);
+  });
+  $('chatBody').appendChild(row);
+}
+function runCompare(){
+  const a = SCHOOLS[0], b = SCHOOLS[1];
+  const ea = estimateChance(a), eb = estimateChance(b);
+  const aChanceTxt = ea.personalized ? `${ea.value}% est. for you` : `${a.admit}% overall (add your GPA/SAT for your own estimate)`;
+  const bChanceTxt = eb.personalized ? `${eb.value}% est. for you` : `${b.admit}% overall (add your GPA/SAT for your own estimate)`;
+  addBub(`${a.n} (${effectiveBand(a)}, ${aChanceTxt}) vs. ${b.n} (${effectiveBand(b)}, ${bChanceTxt}): ${a.n} costs about ${a.netEst} net/yr against ${b.n}'s ${b.netEst}, and ${a.n}'s admit rate (${a.admit}%, source: ${a.source}) is ${a.admit>b.admit?'higher':'lower'} than ${b.n}'s (${b.admit}%). Numbers only — tell me what matters most to you and I'll weigh it.`, 'ai');
+}
+function runReachInfo(){
+  // FIX (second audit, new finding): "your Reach" now means the school effectiveBand() actually puts in Reach
+  // for THIS user, not whichever school happens to carry the static Reach label in the data.
+  const r = SCHOOLS.find(s=>effectiveBand(s)==='Reach') || SCHOOLS.find(s=>s.band==='Reach') || SCHOOLS[SCHOOLS.length-1];
+  const er = estimateChance(r);
+  const chanceTxt = er.personalized ? `an estimated ${er.value}% for you` : `a ${r.admit}% overall admit rate (add your GPA/SAT in Settings to see your own estimate)`;
+  addBub(`${r.n} is your Reach at ${chanceTxt} — real admit rate is ${r.admit}% (source: ${r.source}). ${r.hook} A Reach is worth applying to; just don't build your whole plan around one.`, 'ai');
+}
+function askWhy(s){
+  openAssistant();
+  setTimeout(()=>{
+    document.querySelectorAll('.quickrow').forEach(q=>q.remove());
+    const band = effectiveBand(s);
+    addBub(`Why is ${s.n} a ${band}?`, 'me');
+    const est = estimateChance(s);
+    if(!est.personalized){
+      addBub(`I don't have your GPA or SAT yet, so I can't estimate your personal chance at ${s.n} — I can only show its published ${s.admit}% overall admit rate (source: ${s.source}). Add your GPA/SAT in Settings and I'll calculate your actual position against ${s.n}'s own ranges.`, 'ai');
+      return;
+    }
+    addBub(`Based on your GPA${S.gpa?` (${S.gpa})`:''}${S.sat?` and SAT (${S.sat})`:''} against ${s.n}'s own published ranges (GPA ${s.gpaR}, SAT ${s.satR}) and its ${s.admit}% admit rate (source: ${s.source}), your estimated chance lands around ${est.value}%, which is why it's showing as a ${band} for you. This is a model estimate from ${s.n}'s own data, not a promise.`, 'ai');
+  }, 50);
+}
+function chatStep(i){
+  S.stage = i;
+  if(i >= FLOW.length){
+    addBub("Perfect — building your list now.", 'ai');
+    S.onboarded = true;
+    setTimeout(()=>{ buildHome(); show('home'); }, 900);
+    return;
+  }
+  const step = FLOW[i];
+  const text = typeof step.ai === 'function' ? step.ai(S.name) : step.ai;
+  addBub(text, 'ai');
+  document.querySelectorAll('.quickrow').forEach(q=>q.remove());
+  // FIX (audit finding #3): the free-text input used to stay enabled with a generic placeholder on every
+  // step, including chip/stats steps whose Send handler ignored typed text entirely — a silent no-op.
+  // Every step now sets a placeholder that matches what typing here actually does.
+  $('chatIn').placeholder = step.ph || (step.type==='chips' ? 'Or type your answer…' : step.type==='stats' ? 'Or type e.g. "3.7 GPA, 1420 SAT"…' : 'Type, or tap the mic to talk…');
+  if(step.type === 'chips'){
+    const row = document.createElement('div'); row.className='quickrow';
+    step.opts.forEach(o=>{
+      const c = document.createElement('div'); c.className='quickchip'; c.textContent=o;
+      c.addEventListener('click', ()=>{ S[step.key]=o; addBub(o,'me'); row.remove(); chatStep(i+1); });
+      row.appendChild(c);
+    });
+    $('chatBody').appendChild(row);
+  } else if(step.type === 'stats'){
+    const row = document.createElement('div'); row.className='quickrow';
+    const c1 = document.createElement('div'); c1.className='quickchip'; c1.textContent='3.7 GPA / 1420 SAT (example)';
+    c1.addEventListener('click', ()=>{ S.gpa=3.7; S.sat=1420; addBub('3.7 GPA / 1420 SAT','me'); row.remove(); chatStep(i+1); });
+    const c2 = document.createElement('div'); c2.className='quickchip'; c2.textContent="Skip for now";
+    c2.addEventListener('click', ()=>{ addBub('Skip for now','me'); row.remove(); chatStep(i+1); });
+    row.appendChild(c1); row.appendChild(c2);
+    $('chatBody').appendChild(row);
+  } else if(step.type === 'textskip'){
+    // FIX (audit finding #4): coursework/ECs were never collected anywhere — this is the missing step type.
+    const row = document.createElement('div'); row.className='quickrow';
+    const c = document.createElement('div'); c.className='quickchip'; c.textContent='Skip for now';
+    c.addEventListener('click', ()=>{ addBub('Skip for now','me'); row.remove(); chatStep(i+1); });
+    row.appendChild(c);
+    $('chatBody').appendChild(row);
+  }
+  $('chatBody').scrollTop = $('chatBody').scrollHeight;
+}
+// FIX (audit finding #3, continued): every onboarding step type now has a real handler here — chips and
+// stats used to fall through both branches below and do nothing when the user typed instead of tapping.
+function parseGpaSat(text){
+  let gpa=null, sat=null;
+  const gpaKw = text.match(/(\d(?:\.\d{1,2})?)\s*gpa/i);
+  const satKw = text.match(/(\d{3,4})\s*sat/i);
+  if(gpaKw) gpa = parseFloat(gpaKw[1]);
+  if(satKw) sat = parseInt(satKw[1],10);
+  if(gpa===null || sat===null){
+    const nums = text.match(/\d+(?:\.\d+)?/g) || [];
+    nums.forEach(nStr=>{
+      const n = parseFloat(nStr);
+      if(gpa===null && nStr.includes('.') && n>=0 && n<=5) gpa = n;
+      else if(sat===null && Number.isInteger(n) && n>=400 && n<=1600) sat = n;
+    });
+  }
+  if(gpa!==null && (gpa<0 || gpa>5)) gpa = null;
+  if(sat!==null && (sat<400 || sat>1600)) sat = null;
+  return {gpa, sat};
+}
+function submitChat(){
+  const val = $('chatIn').value.trim();
+  if(!val) return; // empty input: no-op is correct here, nothing was said
+  if(!S.onboarded && FLOW[S.stage]){
+    const step = FLOW[S.stage];
+    if(step.type === 'text' || step.type === 'textskip'){
+      S[step.key] = val;
+      addBub(val, 'me');
+      $('chatIn').value='';
+      document.querySelectorAll('.quickrow').forEach(q=>q.remove());
+      chatStep(S.stage+1);
+      return;
+    }
+    if(step.type === 'chips'){
+      addBub(val, 'me');
+      $('chatIn').value='';
+      const match = step.opts.find(o=>val.includes(o));
+      if(match){ S[step.key]=match; document.querySelectorAll('.quickrow').forEach(q=>q.remove()); chatStep(S.stage+1); }
+      // FIX (second audit, trivial finding): this message named "grad year" specifically, which was only
+      // correct because grad-year is currently the only 'chips'-type step — generalized so it stays correct
+      // if another chips step is ever added.
+      else addBub(`I didn't catch one of the options (${step.opts.join(', ')}) in that — tap one above, or type it out.`, 'ai');
+      return;
+    }
+    if(step.type === 'stats'){
+      addBub(val, 'me');
+      $('chatIn').value='';
+      const {gpa, sat} = parseGpaSat(val);
+      if(gpa===null && sat===null){
+        addBub(`I couldn't find a GPA or SAT in that — try something like "3.7 GPA, 1420 SAT", or tap Skip for now above.`, 'ai');
+      } else {
+        S.gpa = gpa; S.sat = sat;
+        document.querySelectorAll('.quickrow').forEach(q=>q.remove());
+        chatStep(S.stage+1);
+      }
+      return;
+    }
+  } else if(S.onboarded){
+    addBub(val, 'me');
+    $('chatIn').value='';
+    addBub("Got it — in the full build this routes to the grounded-data assistant. In this prototype, try the quick-prompt chips above for a live example.", 'ai');
+  }
+}
+$('sendBtn').addEventListener('click', submitChat);
+$('chatIn').addEventListener('keydown', e=>{ if(e.key==='Enter') submitChat(); });
+$('micBtn').addEventListener('click', ()=>{
+  const btn = $('micBtn');
+  btn.classList.add('rec');
+  btn.innerHTML = '<div class="wave"><i></i><i></i><i></i><i></i></div>';
+  $('chatIn').placeholder = 'Listening…';
+  setTimeout(()=>{
+    btn.classList.remove('rec'); btn.innerHTML = '&#127908;';
+    $('chatIn').placeholder = 'Type, or tap the mic to talk…';
+    const step = FLOW[S.stage];
+    if(!S.onboarded && step){
+      const samples = {
+        name:'Maya', interests:'biology, robotics club, and volunteering at the animal shelter',
+        coursework:'AP Biology, AP Calc BC, and a dual-enrollment chemistry class',
+        ec:'varsity soccer, robotics club captain, and hospital volunteering',
+        stats:'3.7 GPA, 1420 SAT', grad:'2027',
+      };
+      if(samples[step.key]) $('chatIn').value = samples[step.key];
+    }
+  }, 1600);
+});
+
+/* ================= HOME: nested "My List" cluster + Search + News, smart empty state ================= */
+function buildHome(){
+  $('homeNm').textContent = S.name || 'Welcome';
+  const bits = [];
+  if(S.grad) bits.push('Class of '+S.grad);
+  if(S.gpa) bits.push(S.gpa+' GPA / '+S.sat+' SAT');
+  $('homeMeta').textContent = bits.length ? bits.join(' · ') : (S.onboarded ? 'Tap My List to get started' : 'Not set up yet — tap here or chat with the AI');
+  S.clusterOpen = false;
+  renderBubbles();
+  buildSavedStrip();
+}
+function buildSavedStrip(){
+  const strip = $('savedStrip');
+  if(!S.saved.length){ strip.style.display = 'none'; return; }
+  strip.style.display = 'flex';
+  strip.innerHTML = `&#9733; <span class="n">${S.saved.length}</span> saved<span class="go">tap to peek &rarr;</span>`;
+}
+$('savedStrip').addEventListener('click', ()=>{
+  const rail = $('peekRail');
+  rail.innerHTML = S.saved.map(id=>{
+    const s = SCHOOLS.find(x=>x.id===id);
+    if(!s) return '';
+    const b = effectiveBand(s);
+    return `<div class="peekcard" data-jumpband="${b}" data-jumpid="${s.id}">
+      <div class="pe">${s.emoji}</div>
+      <div class="pn">${s.n}</div>
+      <div class="pb" style="background:${BANDCOLOR[b]}22;color:${BANDCOLOR[b]}">${b.toUpperCase()}</div>
+    </div>`;
+  }).join('');
+  rail.querySelectorAll('.peekcard').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      $('savedSheetBg').classList.remove('on');
+      openStack(c.dataset.jumpband, c.dataset.jumpid);
+    });
+  });
+  $('savedSheetBg').classList.add('on');
+});
+$('savedSheetCloseBtn').addEventListener('click', ()=>$('savedSheetBg').classList.remove('on'));
+$('savedSheetBg').addEventListener('click', (e)=>{ if(e.target.id==='savedSheetBg') $('savedSheetBg').classList.remove('on'); });
+// FIX (audit finding #5, cont.): tap-outside-to-collapse. e.target is the field itself (not a bubble or the
+// hint label) only when the click lands on genuinely empty space between the absolutely-positioned bubbles.
+$('bubbleField').addEventListener('click', (e)=>{
+  if(e.target.id === 'bubbleField' && S.clusterOpen){ S.clusterOpen = false; renderBubbles(); }
+});
+$('profStrip').addEventListener('click', ()=>{ if(!S.onboarded){ openAssistant(); } else { buildSettings(); show('settings'); } });
+$('gearBtn').addEventListener('click', ()=>{ buildSettings(); show('settings'); });
+
+function renderBubbles(){
+  const field = $('bubbleField');
+  Array.from(field.querySelectorAll('.bubble')).forEach(b=>b.remove());
+  // FIX (audit finding #5): the design doc documented "tap outside, or a dedicated collapse gesture, folds
+  // it back" for the expanded My List cluster, but no code ever set S.clusterOpen back to false — the only
+  // way out was leaving Home entirely. clusterHint doubles as the dedicated gesture when the cluster is open;
+  // the bubbleField background-click handler below (wired once, outside this function) is the "tap outside".
+  const hint = $('clusterHint');
+  if(S.onboarded && S.clusterOpen){
+    hint.textContent = 'MY LIST — tap here, or anywhere outside a bubble, to close';
+    hint.style.cursor = 'pointer';
+    hint.onclick = ()=>{ S.clusterOpen = false; renderBubbles(); };
+  } else {
+    hint.textContent = S.onboarded ? '' : 'No profile yet — showing what\'s popular right now';
+    hint.style.cursor = 'default';
+    hint.onclick = null;
+  }
+
+  if(!S.onboarded){
+    layoutBubbles([
+      {k:'get-started', x:20, y:26, size:150, kind:'cta', label:'BUILD MY LIST', icon:'✨'},
+      {k:'popular', x:14, y:64, size:96, kind:'util', label:'POPULAR', icon:'🔥'},
+      {k:'search', x:58, y:60, size:82, kind:'util', label:'SEARCH', icon:'🔎'},
+      {k:'news', x:60, y:20, size:78, kind:'util', label:'NEWS', icon:'📰'},
+    ]);
+    return;
+  }
+
+  if(!S.clusterOpen){
+    // FIX (second audit, new finding): count by effectiveBand(), not the static field — otherwise the My List
+    // breakdown can disagree with what a personalized user actually sees when they open a band's stack.
+    const counts = {Safety:0, Likely:0, Target:0, Reach:0};
+    SCHOOLS.forEach(s=>counts[effectiveBand(s)]++);
+    const total = Object.values(counts).reduce((a,b)=>a+b,0);
+    layoutBubbles([
+      {k:'cluster', x:14, y:18, size:150, kind:'cluster', total},
+      {k:'search', x:60, y:14, size:82, kind:'util', label:'SEARCH', icon:'🔎'},
+      {k:'news', x:14, y:66, size:78, kind:'util', label:'NEWS', icon:'📰'},
+    ]);
+  } else {
+    const counts = {Safety:0, Likely:0, Target:0, Reach:0};
+    SCHOOLS.forEach(s=>counts[effectiveBand(s)]++);
+    layoutBubbles([
+      {k:'Safety', x:12, y:6, size:92, kind:'band'},
+      {k:'Reach', x:58, y:4, size:80, kind:'band'},
+      {k:'Likely', x:8, y:40, size:100, kind:'band'},
+      {k:'Target', x:56, y:42, size:88, kind:'band'},
+      {k:'timeline', x:16, y:76, size:76, kind:'util', label:'TIMELINE', icon:'📅'},
+      {k:'cost', x:58, y:76, size:76, kind:'util', label:'TRUE COST', icon:'💰'},
+    ], counts);
+  }
+}
+function layoutBubbles(layout, counts){
+  const field = $('bubbleField');
+  layout.forEach((b,i)=>{
+    const el = document.createElement('div');
+    el.style.left = b.x+'%'; el.style.top = b.y+'%'; el.style.width = b.size+'px'; el.style.height = b.size+'px';
+    el.style.animationDelay = `${i*1.1}s, ${i*0.07}s`;
+    if(b.kind === 'cluster'){
+      el.className = 'bubble cluster';
+      el.innerHTML = `<div class="inner"><div class="cnt" style="font-size:${b.size*0.28}px;color:var(--white)">${b.total}</div><div class="lbl" style="font-size:${b.size*0.09}px;color:var(--mut)">MY LIST</div></div>`;
+      el.addEventListener('click', ()=>{ S.clusterOpen = true; renderBubbles(); });
+    } else if(b.kind === 'band'){
+      el.className = 'bubble ' + b.k;
+      el.style.fontSize = Math.max(11, b.size*0.11)+'px';
+      el.innerHTML = `<div class="cnt" style="font-size:${b.size*0.32}px">${counts[b.k]}</div><div class="lbl" style="font-size:${b.size*0.1}px">${b.k}</div>`;
+      el.addEventListener('click', ()=>openStack(b.k));
+    } else if(b.kind === 'cta'){
+      el.className = 'bubble cluster';
+      el.innerHTML = `<div class="inner"><div style="font-size:${b.size*0.22}px">${b.icon}</div><div class="lbl" style="font-size:${b.size*0.08}px;color:var(--white);margin-top:4px">${b.label}</div></div>`;
+      el.addEventListener('click', ()=>openAssistant());
+    } else {
+      el.className = 'bubble util';
+      el.style.fontSize = Math.max(11, b.size*0.11)+'px';
+      el.innerHTML = `<div style="font-size:${b.size*0.26}px">${b.icon}</div><div class="lbl" style="font-size:${b.size*0.1}px;color:var(--body)">${b.label}</div>`;
+      el.addEventListener('click', ()=>{
+        if(b.k==='search'){ buildSearch(); show('search'); }
+        else if(b.k==='news'){ buildNews(); show('news'); }
+        else if(b.k==='popular'){ openStack('Popular'); }
+        else if(b.k==='timeline'){ buildTimeline(); show('timeline'); }
+        else if(b.k==='cost'){ buildCost(); show('cost'); }
+      });
+    }
+    field.appendChild(el);
+  });
+}
+let toastTimer;
+function toast(msg){
+  const t = $('homeToast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('on'), 2200);
+}
+
+/* ================= SEARCH ================= */
+function buildSearch(){
+  $('searchIn').value = '';
+  renderSearchResults('');
+  setTimeout(()=>$('searchIn').focus(), 200);
+}
+$('searchIn').addEventListener('input', ()=>renderSearchResults($('searchIn').value));
+function renderSearchResults(q){
+  const box = $('searchResults');
+  const query = q.trim().toLowerCase();
+  const matches = SCHOOLS.filter(s => !query || s.n.toLowerCase().includes(query) || s.loc.toLowerCase().includes(query));
+  if(!matches.length){
+    box.innerHTML = `<div class="emptynote">No schools match "${escapeHtml(q)}" in this sample set.<br>The real app searches the full sourced database.</div>`;
+    return;
+  }
+  box.innerHTML = matches.map(s=>{
+    const b = effectiveBand(s);
+    return `<div class="resultrow" data-id="${s.id}">
+      <div class="remoji">${s.emoji}</div>
+      <div><div class="rn">${s.n}</div><div class="rl">${s.loc}</div></div>
+      <div class="rpill" style="background:${BANDCOLOR[b]}22;color:${BANDCOLOR[b]}">${b}</div>
+    </div>`;
+  }).join('');
+  box.querySelectorAll('.resultrow').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      const s = SCHOOLS.find(x=>x.id===row.dataset.id);
+      openStack(effectiveBand(s), s.id);
+    });
+  });
+}
+function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
+$('searchBack').addEventListener('click', ()=>show('home'));
+
+/* ================= NEWS ================= */
+function buildNews(){
+  $('newsBody').innerHTML = NEWS.map(n=>`
+    <div class="resultrow" style="cursor:default">
+      <div class="remoji">📰</div>
+      <div><div class="rn">${n.t}</div><div class="rl">${n.s} · ${n.d}</div></div>
+    </div>`).join('') + `<div class="emptynote">Chronological, sourced, never personalized — no ranking algorithm here, on purpose (see Section 8/compliance in the requirements doc).</div>`;
+}
+$('newsBack').addEventListener('click', ()=>show('home'));
+
+/* ================= SWIPE / FLIP STACK, with citations + filter/sort ================= */
+function computeDealt(){
+  // FIX (second audit, new finding): filter by effectiveBand(), not the static field, so tapping "Safety" on
+  // Home shows exactly the schools currently displaying as Safety for this user, not a stale curated grouping.
+  let list = S.bandFilter === 'All' ? SCHOOLS.slice() : SCHOOLS.filter(s=>effectiveBand(s)===S.bandFilter);
+  if(S.sortPref==='chance') list.sort((a,b)=>estimateChance(b).value-estimateChance(a).value);
+  else if(S.sortPref==='cost') list.sort((a,b)=>parseFloat(a.netEst.replace(/\D/g,''))-parseFloat(b.netEst.replace(/\D/g,'')));
+  else if(S.sortPref==='name') list.sort((a,b)=>a.n.localeCompare(b.n));
+  return list;
+}
+function openStack(band, jumpToId){
+  // FIX (audit finding #2): personalized data (admit-bar, YOU% marker, Ask-AI-why) was leaking to
+  // pre-onboarding users because only the 'Popular' band forced generic mode. Any entry point that can
+  // reach openStack() before onboarding is complete — Search included — must render generically too.
+  S.mode = (band==='Popular' || !S.onboarded) ? 'generic' : 'personal';
+  S.curBand = band;
+  if(band==='Popular'){
+    S.dealt = SCHOOLS.filter(s=>POPULAR_IDS.includes(s.id));
+    S.bandFilter='All';
+  } else {
+    S.bandFilter = band;
+    S.dealt = computeDealt();
+  }
+  S.curIdx = jumpToId ? Math.max(0, S.dealt.findIndex(s=>s.id===jumpToId)) : 0;
+  $('stackTitle').textContent = band==='Popular' ? 'Popular now' : band;
+  $('stackTitle').style.color = band==='Popular' ? 'var(--white)' : BANDCOLOR[band];
+  // FIX (second audit, minor finding): filter/sort was only hidden for the 'Popular' band, so a pre-onboarding
+  // user reaching a real band via Search (generic mode) could still open Band/Sort-by-Chance controls. No
+  // personalized number leaks either way (mode stays generic), but the controls imply a personalization the
+  // screen doesn't have yet — hide them whenever there's no profile to filter/sort against.
+  $('filterBtn').style.display = (band==='Popular' || !S.onboarded) ? 'none' : 'flex';
+  renderCard();
+  show('stack');
+}
+function renderCard(){
+  const host = $('cardHost');
+  host.innerHTML = '';
+  if(S.curIdx >= S.dealt.length){
+    host.innerHTML = `<div class="swipecard" style="display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:13px;text-align:center;padding:30px">That's every school in this sample set.<br><br>Real build pages the full sourced database.</div>`;
+    return;
+  }
+  const s = S.dealt[S.curIdx];
+  const generic = S.mode === 'generic';
+  const est = generic ? null : estimateChance(s);
+  // FIX (second audit, new finding): the pill/band shown here must be effectiveBand(), not the static field —
+  // otherwise a school can show e.g. "SAFETY · 2% est.", a real self-contradiction the fresh re-audit caught.
+  const band = generic ? (S.curBand === 'Popular' ? 'POPULAR' : effectiveBand(s).toUpperCase()) : effectiveBand(s);
+  const card = document.createElement('div');
+  card.className = 'swipecard';
+  card.innerHTML = `
+    <div class="stamp pass">PASS</div>
+    <div class="stamp star">SAVE</div>
+    <div class="cardface front">
+      <div class="hero">${s.emoji}</div>
+      <div class="cn">${s.n}</div>
+      <div class="cl">${s.loc}</div>
+      ${generic ? `<div class="cpill" style="background:var(--bg);color:var(--mut)">${band} &middot; no profile yet</div>`
+        : est.personalized ? `<div class="cpill" style="background:${BANDCOLOR[band]}22;color:${BANDCOLOR[band]}">${band.toUpperCase()} · ${est.value}% est.</div>`
+        : `<div class="cpill" style="background:${BANDCOLOR[band]}22;color:${BANDCOLOR[band]}">${band.toUpperCase()} · add GPA/SAT for %</div>`}
+      <div class="hook">${s.hook}</div>
+      <div class="fliphint">↻ tap to flip for the full picture</div>
+    </div>
+    <div class="cardface cardback"><div class="backscroll">
+      <div class="backtitle">${s.n} — the real picture</div>
+      ${generic ? '' : (est.personalized ? `
+      <div class="dpanel"><div class="l"><span>Admit rate — your estimated position</span><span class="badge estimate">ESTIMATED</span></div>
+        <div class="admitbar"><div class="fill" style="width:${s.admit}%"></div>
+          <div class="you" style="left:${Math.min(96,Math.max(2,est.value))}%"></div>
+          <div class="youlbl" style="left:${Math.min(82,Math.max(18,est.value))}%">YOU: ${est.value}%</div>
+        </div>
+        <div style="font-size:10px;color:var(--mut);margin-top:10px">${s.admit}% overall admit rate (verified) &middot; source: ${s.source}</div>
+        <div class="asklink" data-ask="${s.id}">Ask AI why &rarr;</div>
+      </div>` : `
+      <div class="dpanel"><div class="l"><span>Admit rate</span><span class="badge verified">VERIFIED</span></div>
+        <div class="admitbar"><div class="fill" style="width:${s.admit}%"></div></div>
+        <div style="font-size:10px;color:var(--mut);margin-top:10px">${s.admit}% overall admit rate &middot; source: ${s.source} &middot; add your GPA/SAT to see your own position</div>
+        <div class="asklink" data-noprofile="1">Add GPA &amp; SAT &rarr;</div>
+      </div>`)}
+      <div class="dpanel"><div class="l"><span>GPA / SAT mid-50</span><span class="badge verified">VERIFIED</span></div><div class="v">${s.gpaR} · ${s.satR}</div></div>
+      <div class="dpanel"><div class="l"><span>Cost &middot; students</span><span class="badge estimate">ESTIMATED</span></div><div class="v">${s.coa} sticker · ${s.netEst} est. net · ${s.students}</div></div>
+      <div class="dpanel"><div class="l">Ranking</div><div class="v">${s.rank}</div></div>
+      <div class="dpanel"><div class="l">What makes it different</div><div class="charm">${s.charm}</div></div>
+    </div></div>`;
+  wireDrag(card);
+  const ask = card.querySelector('[data-ask]');
+  if(ask) ask.addEventListener('click', (e)=>{ e.stopPropagation(); askWhy(s); });
+  const noProfile = card.querySelector('[data-noprofile]');
+  if(noProfile) noProfile.addEventListener('click', (e)=>{ e.stopPropagation(); buildSettings(); show('settings'); });
+  host.appendChild(card);
+}
+function wireDrag(card){
+  let sx=0, sy=0, dx=0, dy=0, dragging=false, moved=false;
+  const passStamp = card.querySelector('.stamp.pass');
+  const starStamp = card.querySelector('.stamp.star');
+  const THRESH = 110;
+  function down(x,y){ dragging=true; moved=false; sx=x; sy=y; card.classList.add('dragging'); }
+  function move(x,y){
+    if(!dragging) return;
+    dx = x-sx; dy = y-sy;
+    if(Math.abs(dx)>6 || Math.abs(dy)>6) moved = true;
+    card.style.transform = `translate(${dx}px, ${dy*0.25}px) rotate(${dx*0.045}deg)`;
+    const p = Math.min(1, Math.abs(dx)/THRESH);
+    passStamp.style.opacity = dx<0 ? p : 0;
+    starStamp.style.opacity = dx>0 ? p : 0;
+  }
+  function up(){
+    if(!dragging) return;
+    dragging=false; card.classList.remove('dragging');
+    if(Math.abs(dx) > THRESH){
+      nextCard(dx>0?1:-1);
+    } else if(!moved){
+      card.classList.toggle('flipped');
+      card.style.transform=''; passStamp.style.opacity=0; starStamp.style.opacity=0;
+    } else {
+      card.style.transform=''; passStamp.style.opacity=0; starStamp.style.opacity=0;
+    }
+    dx=0; dy=0;
+  }
+  card.addEventListener('pointerdown', e=>{
+    if(e.target.closest('.asklink')) return; // let the link's own click fire — pointer capture on the card would steal it
+    card.setPointerCapture(e.pointerId); down(e.clientX,e.clientY);
+  });
+  card.addEventListener('pointermove', e=>move(e.clientX,e.clientY));
+  card.addEventListener('pointerup', up);
+  card.addEventListener('pointercancel', up);
+}
+function nextCard(dir){
+  const host = $('cardHost');
+  const card = host.firstElementChild;
+  const s = S.dealt[S.curIdx];
+  if(dir===1 && s && !S.saved.includes(s.id)) S.saved.push(s.id);
+  if(card){
+    card.classList.remove('dragging');
+    card.style.transition = 'transform .32s ease, opacity .32s ease';
+    card.style.transform = `translate(${dir*480}px, -30px) rotate(${dir*22}deg)`;
+    card.style.opacity = '0';
+  }
+  S.curIdx++;
+  setTimeout(renderCard, 260);
+}
+$('passBtn').addEventListener('click', ()=>nextCard(-1));
+$('starBtn').addEventListener('click', ()=>nextCard(1));
+$('stackBack').addEventListener('click', ()=>{ buildHome(); show('home'); });
+$('chatBack').addEventListener('click', ()=>{
+  const dest = S.chatReturnTo || 'home';
+  if(dest==='home') buildHome();
+  if(dest==='timeline') buildTimeline();
+  if(dest==='cost') buildCost();
+  if(dest==='settings') buildSettings();
+  // 'stack' and 'search'/'news' keep their already-rendered DOM as-is
+  show(dest);
+});
+document.querySelectorAll('.fab').forEach(f=>f.addEventListener('click', openAssistant));
+
+/* filter/sort sheet */
+$('filterBtn').addEventListener('click', ()=>{
+  $('bandChips').innerHTML = ['All','Safety','Likely','Target','Reach'].map(b=>`<div class="filterchip ${S.bandFilter===b?'on':''}" data-band="${b}">${b}</div>`).join('');
+  $('sortChips').innerHTML = [['chance','Chance'],['cost','Cost'],['name','Name']].map(([k,l])=>`<div class="filterchip ${S.sortPref===k?'on':''}" data-sort="${k}">${l}</div>`).join('');
+  $('bandChips').querySelectorAll('.filterchip').forEach(c=>c.addEventListener('click',()=>{ S.bandFilter=c.dataset.band; $('bandChips').querySelectorAll('.filterchip').forEach(x=>x.classList.remove('on')); c.classList.add('on'); }));
+  $('sortChips').querySelectorAll('.filterchip').forEach(c=>c.addEventListener('click',()=>{ S.sortPref=c.dataset.sort; $('sortChips').querySelectorAll('.filterchip').forEach(x=>x.classList.remove('on')); c.classList.add('on'); }));
+  $('filterSheetBg').classList.add('on');
+});
+$('filterSheetBg').addEventListener('click', (e)=>{ if(e.target.id==='filterSheetBg') $('filterSheetBg').classList.remove('on'); });
+$('sheetCloseBtn').addEventListener('click', ()=>{
+  $('filterSheetBg').classList.remove('on');
+  S.curBand = S.bandFilter;
+  S.dealt = computeDealt();
+  S.curIdx = 0;
+  $('stackTitle').textContent = S.bandFilter;
+  $('stackTitle').style.color = S.bandFilter==='All' ? 'var(--white)' : BANDCOLOR[S.bandFilter];
+  renderCard();
+});
+
+/* ================= TIMELINE + CHECKLIST ================= */
+function buildTimeline(){
+  const savedSchools = S.saved.length ? SCHOOLS.filter(s=>S.saved.includes(s.id)) : SCHOOLS;
+  const note = S.saved.length ? '' : `<div class="emptynote">No saved schools yet — showing every sample school's deadlines. Save some from the swipe stack (tap ★) to narrow this down.</div>`;
+  $('timelineBody').innerHTML = note + savedSchools.map(s=>`
+    <div class="schoolgroup">
+      <div class="sgh"><div class="dot" style="background:${BANDCOLOR[effectiveBand(s)]}"></div>${s.n}</div>
+      ${s.deadlines.map((d,i)=>`
+        <div class="deadrow" data-id="${s.id}" data-i="${i}">
+          <div class="checkbox ${d.done?'done':''}">${d.done?'✓':''}</div>
+          <div><div class="dl ${d.done?'done':''}">${d.label}</div><div class="dd">${d.date}</div></div>
+        </div>`).join('')}
+    </div>`).join('');
+  $('timelineBody').querySelectorAll('.deadrow').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      const s = SCHOOLS.find(x=>x.id===row.dataset.id);
+      const d = s.deadlines[row.dataset.i];
+      d.done = !d.done;
+      buildTimeline();
+    });
+  });
+}
+$('timelineBack').addEventListener('click', ()=>{ buildHome(); show('home'); });
+$('costBtn').addEventListener('click', ()=>{ buildCost(); show('cost'); });
+
+/* ================= TRUE COST ================= */
+function buildCost(){
+  const savedSchools = S.saved.length ? SCHOOLS.filter(s=>S.saved.includes(s.id)) : SCHOOLS;
+  const note = S.saved.length ? '' : `<div class="emptynote">No saved schools yet — showing every sample school. Save some (★ on the swipe stack) to build your real ledger.</div>`;
+  let total4yr = 0;
+  const cards = savedSchools.map(s=>{
+    const net = parseFloat(s.netEst.replace(/[^0-9.]/g,'')) || 0;
+    const yr4 = net*4;
+    total4yr += yr4;
+    return `<div class="costcard">
+      <div class="ch"><div class="cn">${s.emoji} ${s.n}</div><span class="badge estimate">ESTIMATED</span></div>
+      <div class="costgrid">
+        <div class="costcell"><div class="l">Sticker / yr</div><div class="v">${s.coa}</div></div>
+        <div class="costcell"><div class="l">Est. net / yr</div><div class="v">${s.netEst}</div></div>
+        <div class="costcell"><div class="l">4-yr est. total</div><div class="v">$${Math.round(yr4).toLocaleString()}</div></div>
+        <div class="costcell"><div class="l">Undergrads</div><div class="v">${s.students}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  $('costBody').innerHTML = note + cards + `<div class="costtotal"><div class="l">4-year estimated total across ${savedSchools.length} school${savedSchools.length===1?'':'s'}</div><div class="v">$${Math.round(total4yr).toLocaleString()}</div></div><div class="emptynote">All figures are estimates based on published sticker price, not verified financial-aid outcomes — labeled ESTIMATED throughout, never shown as a guarantee.</div>`;
+}
+$('costBack').addEventListener('click', ()=>{ buildHome(); show('home'); });
+
+/* ================= PROFILE + SETTINGS ================= */
+const PROFILE_FIELDS = [
+  {key:'name', label:'Name', ph:'Your name'},
+  {key:'grad', label:'Grad year', ph:'e.g. 2027'},
+  {key:'gpa', label:'GPA', ph:'e.g. 3.7'},
+  {key:'sat', label:'SAT', ph:'e.g. 1420'},
+  // FIX (audit finding #4): coursework/ECs were in the requirements doc's own onboarding spec (4.3) but had
+  // no path to enter them anywhere — added to onboarding (FLOW, above) and here, so a fix-a-typo edit doesn't
+  // require re-running the whole AI conversation (same reasoning as every other field on this screen).
+  {key:'coursework', label:'Coursework', ph:'e.g. AP Bio, AP Calc BC, dual-enrolled chem'},
+  {key:'ec', label:'Extracurriculars', ph:'e.g. varsity soccer, robotics club captain'},
+  {key:'interests', label:'Interests', ph:'e.g. biology, robotics'},
+];
+function buildSettings(){
+  $('profileFields').innerHTML = PROFILE_FIELDS.map(f=>`
+    <div class="profrow" data-key="${f.key}">
+      <div style="flex:1"><div class="pl">${f.label}</div><div class="pv">${S[f.key] || '—'}</div></div>
+      <div class="edit">Edit</div>
+    </div>`).join('');
+  $('profileFields').querySelectorAll('.profrow').forEach(row=>{
+    row.querySelector('.edit').addEventListener('click', ()=>startEditField(row, row.dataset.key));
+  });
+  $('themeSeg').querySelectorAll('.themeOpt').forEach(opt=>{
+    opt.classList.toggle('on', opt.dataset.theme === S.theme);
+    opt.onclick = ()=>{ setTheme(opt.dataset.theme); buildSettings(); };
+  });
+  $('defaultSortChips').innerHTML = [['chance','Chance'],['cost','Cost'],['name','Name']].map(([k,l])=>`<div class="filterchip ${S.sortPref===k?'on':''}" data-sort="${k}">${l}</div>`).join('');
+  $('defaultSortChips').querySelectorAll('.filterchip').forEach(c=>c.addEventListener('click',()=>{ S.sortPref=c.dataset.sort; buildSettings(); }));
+}
+function validateField(key, raw){
+  const v = (raw||'').trim();
+  if(key==='name' || key==='interests') return v.length ? {ok:true, v} : {ok:false, msg:'This can\'t be blank.'};
+  if(key==='grad'){
+    const n = Number(v);
+    if(!v || !Number.isInteger(n) || n<2024 || n>2032) return {ok:false, msg:'Enter a real grad year (2024–2032).'};
+    return {ok:true, v:String(n)};
+  }
+  if(key==='gpa'){
+    const n = Number(v);
+    if(!v || isNaN(n) || n<0 || n>5.0) return {ok:false, msg:'Enter a GPA between 0.0 and 5.0.'};
+    return {ok:true, v:n.toFixed(2).replace(/\.?0+$/,'')||'0'};
+  }
+  if(key==='sat'){
+    const n = Number(v);
+    if(!v || !Number.isInteger(n) || n<400 || n>1600) return {ok:false, msg:'Enter a real SAT total (400–1600).'};
+    return {ok:true, v:String(n)};
+  }
+  // coursework/ec intentionally fall through to here and accept blank — both are skippable in onboarding
+  // (a freshman/sophomore may genuinely have little to report yet), so Settings must allow the same blank
+  // state rather than retroactively demanding an answer the chat flow never required.
+  return {ok:true, v};
+}
+function startEditField(row, key){
+  if(document.querySelector('.profrow.editing')){ buildSettings(); row = document.querySelector(`.profrow[data-key="${key}"]`); } // only one field editable at a time
+  const field = PROFILE_FIELDS.find(f=>f.key===key);
+  row.classList.add('editing');
+  row.innerHTML = `<div style="flex:1">
+      <div class="pl">${field.label}</div>
+      <input value="${S[key]||''}" placeholder="${field.ph}">
+      <div class="fielderr" style="text-align:left;min-height:0"></div>
+      <div class="saverow"><div class="savebtn ok">Save</div><div class="savebtn no">Cancel</div></div>
+    </div>`;
+  const input = row.querySelector('input');
+  const err = row.querySelector('.fielderr');
+  input.focus();
+  row.querySelector('.savebtn.ok').addEventListener('click', ()=>{
+    const result = validateField(key, input.value);
+    if(!result.ok){
+      err.textContent = result.msg;
+      input.classList.add('invalid');
+      input.style.animation = 'none'; void input.offsetWidth; input.style.animation = 'shake .32s';
+      return;
+    }
+    S[key] = result.v;
+    buildSettings();
+  });
+  row.querySelector('.savebtn.no').addEventListener('click', ()=>buildSettings());
+}
+function setTheme(t){
+  S.theme = t;
+  document.documentElement.classList.toggle('theme-cool', t==='cool');
+}
+$('settingsBack').addEventListener('click', ()=>{ buildHome(); show('home'); });
+</script>

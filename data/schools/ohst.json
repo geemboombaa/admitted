@@ -1,0 +1,84 @@
+{
+ "id": "ohst",
+ "order": 95,
+ "general": {
+  "id": "ohst",
+  "n": "Ohio State",
+  "city": "Columbus",
+  "st": "OH",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.452,
+  "g25": 3.6,
+  "g75": 3.95,
+  "s25": 1280,
+  "s75": 1470,
+  "tb": false,
+  "coa": 59009,
+  "merit": 8000,
+  "meritName": "National Buckeye up to $13.5k/yr (auto-considered with EA, competitive)",
+  "dl": "EA Nov 1 (required for merit/honors) / RD Jan 15",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 7,
+  "med": 8,
+  "grad4": 71,
+  "honors": "Honors & Scholars",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Own College of Medicine + Wexner Medical Center on campus, big research volume, real school spirit. No early assurance for undergrads; merit is auto-considered but competitive.",
+  "medNote": "Solid target with genuine on-campus clinical access; EA Nov 1 is the whole ballgame for money.",
+  "links": [
+   [
+    "Admissions",
+    "https://undergrad.osu.edu"
+   ],
+   [
+    "Merit",
+    "https://undergrad.osu.edu/cost-and-aid/merit-based-scholarships"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "tuitV": 44271,
+  "housV": 15738
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Jan 15",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": 44271,
+ "tuition": null,
+ "cds7": {
+  "h": 0.375,
+  "t": 0.25,
+  "y": "2023-24",
+  "src": "https://irp.osu.edu/sites/default/files/documents/2025/07/CDS-2023-2024-The%20Ohio%20State%20University-Columbus.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

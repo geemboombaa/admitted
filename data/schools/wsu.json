@@ -1,0 +1,86 @@
+{
+ "id": "wsu",
+ "order": 9,
+ "general": {
+  "id": "wsu",
+  "n": "Washington State University",
+  "city": "Pullman",
+  "st": "WA",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.83,
+  "g25": 3.1,
+  "g75": 3.7,
+  "s25": 1050,
+  "s75": 1280,
+  "tb": false,
+  "coa": 47000,
+  "merit": 8000,
+  "meritName": "Cougar Academic Award (auto) + WUE (Cougar Award, auto-applied to WUE-eligible states)",
+  "dl": "Jan 31, 2027 (rolling before)",
+  "dlDate": "2027-01-31",
+  "premed": 6,
+  "research": 6,
+  "bio": 7,
+  "med": 6,
+  "grad4": 43,
+  "honors": "Honors College",
+  "wue": true,
+  "conf": "solid",
+  "note": "Has its own MD school (Floyd College of Medicine) with a mission favoring WSU undergrads. Remote location limits off-campus clinical variety.",
+  "medNote": "Safety with a med-school pathway attached.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.wsu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.866,
+  "s25": 1010,
+  "s75": 1280,
+  "coa": 53860,
+  "tuitV": 32030,
+  "housV": 17246,
+  "merit": 12000,
+  "grad4": 41
+ },
+ "social": 7,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "—",
+  "Jan 31",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": null,
+ "instateRef": 30000,
+ "tuition": 30000,
+ "cds7": {
+  "h": 0.324,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://wpcdn.web.wsu.edu/wsuwp/uploads/sites/3447/2025/09/CDS-2024-2025-For-Website.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

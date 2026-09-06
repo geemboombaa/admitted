@@ -1,0 +1,90 @@
+{
+ "id": "siena",
+ "order": 47,
+ "general": {
+  "id": "siena",
+  "n": "Siena College",
+  "city": "Loudonville",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "S",
+  "admit": 0.82,
+  "g25": 3.4,
+  "g75": 3.85,
+  "s25": 1150,
+  "s75": 1330,
+  "tb": false,
+  "coa": 62000,
+  "merit": 22000,
+  "meritName": "Merit (generous, auto)",
+  "dl": "Science, Humanities & Medicine app with admission",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 4,
+  "bio": 6,
+  "med": 7,
+  "grad4": 74,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "Science, Humanities & Medicine (with Albany Med) has among the friendliest stat bars of any direct program, and Siena merit is real. Franciscan college, small pond.",
+  "medNote": "A legitimate attainable direct-med play at his band — the tradeoff is a small upstate-NY campus.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.siena.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.69,
+  "s25": 1110,
+  "s75": 1360,
+  "coa": 65250,
+  "tuitV": 47990,
+  "housV": 17260,
+  "merit": 16000,
+  "grad4": 73
+ },
+ "social": null,
+ "religAffiliated": true,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1 / Rolling",
+  "Rolling",
+  "None; SHM extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": "SHM (Albany)",
+ "instateRef": null,
+ "tuition": 44000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Albany Med",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Siena College",
+  "name": "Science, Humanities & Medicine (Albany Med)",
+  "band": "attainable",
+  "type": "8-yr direct with Albany Medical College",
+  "req": "Among the friendliest stat bars of any direct program; interview-weighted",
+  "note": "Consultant: green/yellow with strong financial consideration — we agree. Small-campus tradeoff is the price.",
+  "bar": null
+ },
+ "programVerified": null
+}

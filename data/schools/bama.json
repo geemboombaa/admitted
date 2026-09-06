@@ -1,0 +1,85 @@
+{
+ "id": "bama",
+ "order": 94,
+ "general": {
+  "id": "bama",
+  "n": "University of Alabama",
+  "city": "Tuscaloosa",
+  "st": "AL",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.766,
+  "g25": 3.4,
+  "g75": 3.95,
+  "s25": 1110,
+  "s75": 1360,
+  "tb": false,
+  "coa": 60400,
+  "merit": 28000,
+  "meritName": "UA Presidential — AUTOMATIC tier: 3.5+ GPA and 1420+ SAT (he qualifies)",
+  "dl": "Priority + scholarship deadline Dec 4",
+  "dlDate": "2026-12-04",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 5,
+  "grad4": 58,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 10,
+  "note": "The merit-buyer flagship: an automatic $28,000/yr Presidential scholarship at his stats takes the verified $60k sticker to ~$32k/yr. Big-time SEC campus life; premed infrastructure is thinner (no MD school on the Tuscaloosa campus).",
+  "medNote": "A verified-cheap, high-GPA-friendly path — the med-school door then depends entirely on his college GPA/MCAT.",
+  "links": [
+   [
+    "Admissions",
+    "https://gobama.ua.edu"
+   ],
+   [
+    "OOS scholarships",
+    "https://afford.ua.edu/scholarships/oos-international-freshman/"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "tuitV": 36724,
+  "housV": 15478
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "Rolling",
+  "Dec 4 (scholarship)",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": null,
+ "instateRef": 32000,
+ "tuition": null,
+ "cds7": {
+  "h": 0.304,
+  "t": 0.273,
+  "y": "2024-25",
+  "src": "https://oira.ua.edu/d/sites/all/files/reports25/CDS%202024-25%20FINAL.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

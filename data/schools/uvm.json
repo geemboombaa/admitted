@@ -1,0 +1,84 @@
+{
+ "id": "uvm",
+ "order": 24,
+ "general": {
+  "id": "uvm",
+  "n": "University of Vermont",
+  "city": "Burlington",
+  "st": "VT",
+  "region": "Other",
+  "type": "Public",
+  "size": "M",
+  "admit": 0.65,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1210,
+  "s75": 1400,
+  "tb": false,
+  "coa": 65000,
+  "merit": 19000,
+  "meritName": "Presidential/Vermont merit (auto)",
+  "dl": "Nov 15, 2026 EA",
+  "dlDate": "2026-11-15",
+  "premed": 8,
+  "research": 7,
+  "bio": 7,
+  "med": 8,
+  "grad4": 66,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Larner College of Medicine and UVM Medical Center are on campus — mid-size school with big-school medical access. Generous OOS merit, net ~$46k.",
+  "medNote": "Strong early-exposure programs for undergrads; far from CA is the only knock.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.uvm.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.73,
+  "s25": 1300,
+  "s75": 1430,
+  "coa": 68878,
+  "tuitV": 49713,
+  "housV": 14654,
+  "grad4": 72
+ },
+ "social": 7,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 15 EA",
+  "Jan 15",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": 36000,
+ "tuition": 46000,
+ "cds7": {
+  "h": 0.468,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://www.uvm.edu/d10-files/documents/2026-06/CDS_2025-2026_C.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,87 @@
+{
+ "id": "duke",
+ "order": 66,
+ "general": {
+  "id": "duke",
+  "n": "Duke",
+  "city": "Durham",
+  "st": "NC",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.06,
+  "g25": 3.9,
+  "g75": 4,
+  "s25": 1520,
+  "s75": 1570,
+  "tb": false,
+  "coa": 95000,
+  "merit": 1000,
+  "meritName": "A.B. Duke etc. (lottery)",
+  "dl": "ED Nov 3 / RD Jan 2",
+  "dlDate": "2026-11-03",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 9,
+  "grad4": 90,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "Duke Health on campus, elite outcomes, basketball religion. 6% admit.",
+  "medNote": "Lottery ticket.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.duke.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.06,
+  "s25": 1500,
+  "s75": 1570,
+  "coa": 98549,
+  "tuitV": 73172,
+  "housV": 20985,
+  "merit": 0,
+  "grad4": 87
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 3",
+  "Jan 2",
+  "Supplements"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 68000,
+ "cds7": {
+  "h": 0.522,
+  "t": 0.273,
+  "y": "2024-25",
+  "src": "https://ir.provost.duke.edu/sites/default/files/CDS-2024-25-Final-2.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

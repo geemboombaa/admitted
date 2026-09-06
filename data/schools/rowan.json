@@ -1,0 +1,109 @@
+{
+ "id": "rowan",
+ "order": 84,
+ "general": {
+  "id": "rowan",
+  "n": "Rowan University",
+  "city": "Glassboro",
+  "st": "NJ",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.8,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1120,
+  "s75": 1310,
+  "tb": false,
+  "coa": 50000,
+  "merit": 10000,
+  "meritName": "OOS merit (auto)",
+  "dl": "Rolling; EA Dec 1; 3+4 decided inside college (junior year)",
+  "dlDate": "2026-12-01",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 7,
+  "grad4": 55,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 6,
+  "note": "The only school with TWO in-college 3+4 routes — Cooper Medical School (MD) and Rowan-Virtua SOM (DO) — earned with college grades, not a high-school lottery. Easy admit, decent OOS merit.",
+  "medNote": "A Plan-B accelerated route he controls from the inside; the base school is a safety.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.rowan.edu/admissions"
+   ],
+   [
+    "3+4 programs",
+    "https://sites.rowan.edu/academic-affairs/office-of-pre-health/affiliations-and-partnerships/3-4-medical-degree-program.html"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "EA Dec 1",
+  "Rolling",
+  "None; 3+4 in college"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "3+4 Cooper MD / DO",
+ "instateRef": 35000,
+ "tuition": 30000,
+ "cds7": {
+  "h": 0.267,
+  "t": 0.273,
+  "y": "2025-26",
+  "src": "https://sites.rowan.edu/academic-affairs/ida/_docs/rowan_university_cds.pdf"
+ },
+ "accel": {
+  "id": "rowan",
+  "sc": "Rowan University",
+  "prog": "3+4 BS/MD with Cooper Medical School",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "NJ",
+  "region": "Other",
+  "coa": 50000,
+  "merit": 10000,
+  "medYr": 87000,
+  "medName": "Cooper MSRU",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1350
+  },
+  "mcat": "Required by Jan of junior year (med schools set the minimum)",
+  "seats": "Small",
+  "resid": null,
+  "apply": "FROM HIGH SCHOOL: Nov 1 primary + Dec 1 supplemental; verified minimum 3.5 GPA + SAT 1350 superscored",
+  "url": "https://sites.rowan.edu/academic-affairs/office-of-pre-health/affiliations-and-partnerships/3-4-medical-degree-program.html",
+  "note": "An in-college 3+4: no high-school lottery, decided on college performance. Rowan also runs a 3+4 BS/DO with RowanSOM.",
+  "why": "He QUALIFIES to apply from high school (verified 3.5/1350 minimum, superscored) — one of only two accelerated MD doors actually open at his numbers."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 87000,
+ "affiliatedMedName": "Cooper MSRU",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Rowan University",
+  "name": "3+4 Cooper MD / Rowan-Virtua DO",
+  "band": "stretch",
+  "type": "In-college accelerated 3+4 (apply junior year)",
+  "req": "Earned with college grades + MCAT benchmark — no high-school gate",
+  "note": "A Plan-B accelerated route he controls from inside a merit-friendly public.",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1350
+  }
+ },
+ "programVerified": null
+}

@@ -1,0 +1,81 @@
+{
+ "id": "uab",
+ "order": 93,
+ "general": {
+  "id": "uab",
+  "n": "UAB (Alabama-Birmingham)",
+  "city": "Birmingham",
+  "st": "AL",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.942,
+  "g25": 3.5,
+  "g75": 4,
+  "s25": 1250,
+  "s75": 1420,
+  "tb": false,
+  "coa": 54541,
+  "merit": 22500,
+  "meritName": "Presidential — AUTOMATIC tier: 3.5+ GPA and 1420+ SAT (he qualifies)",
+  "dl": "Rolling; out-of-state scholarship by May 1",
+  "dlDate": "2026-12-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 7,
+  "med": 9,
+  "grad4": 49,
+  "honors": "UAB Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "A top-tier academic medical center IS the campus — UAB Heersink School of Medicine and its hospital system surround the undergrad. With the automatic $22,500/yr Presidential scholarship his verified net lands near $32k/yr: elite clinical access at CSU-like prices. EMSAP early assurance is Alabama + border states only.",
+  "medNote": "The best verified odds-per-dollar premed play on the board for him. Birmingham is the tradeoff.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.uab.edu/admissions"
+   ],
+   [
+    "OOS scholarships",
+    "https://www.uab.edu/admissions/cost/scholarships/out-of-state-students"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "tuitV": 29820,
+  "housV": 14210,
+  "ship": 3146
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 9,
+ "pathType": "ea",
+ "restrictNote": "EMSAP: AL + border states",
+ "appInfo": [
+  "Common App or Own",
+  "Rolling",
+  "Rolling",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": "EMSAP (AL region)",
+ "instateRef": 26000,
+ "tuition": null,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

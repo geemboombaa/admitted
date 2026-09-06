@@ -1,0 +1,93 @@
+{
+ "id": "slu",
+ "order": 17,
+ "general": {
+  "id": "slu",
+  "n": "Saint Louis University",
+  "city": "St. Louis",
+  "st": "MO",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.84,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1230,
+  "s75": 1420,
+  "tb": false,
+  "coa": 70000,
+  "merit": 27000,
+  "meritName": "Vice President/University merit (auto)",
+  "dl": "Rolling; merit priority Dec 1, 2026",
+  "dlDate": "2026-12-01",
+  "premed": 9,
+  "research": 8,
+  "bio": 8,
+  "med": 9,
+  "grad4": 70,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "note": "Top premed value in the country for his band: own MD school, own hospital, and the Medical Scholars Program — qualifying undergrads get a guaranteed SLU med school interview. Net ~$43k.",
+  "medNote": "Health-professions advising is a machine here; huge premed peer group without flagship weed-out brutality.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.slu.edu/admission"
+   ],
+   [
+    "Med Scholars",
+    "https://www.slu.edu/medicine"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa",
+   "merit"
+  ],
+  "admit": 0.7,
+  "coa": 81002,
+  "tuitV": 57960,
+  "housV": 15820,
+  "merit": 17500
+ },
+ "social": 6,
+ "religAffiliated": true,
+ "researchAccess": 8,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Rolling",
+  "Dec 1 (merit)",
+  "None; Med Scholars = extra app"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": "Medical Scholars",
+ "instateRef": null,
+ "tuition": 55000,
+ "cds7": {
+  "h": 0.545,
+  "t": 0.167,
+  "y": "2021-2022",
+  "src": "https://www.slu.edu/provost/office-of-institutional-research/institutional-data/2122cds.php"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "Saint Louis University",
+  "name": "Medical Scholars Program",
+  "band": "attainable",
+  "type": "Early assurance — guaranteed med school interview",
+  "req": "Apply with freshman app; ~3.65+ college GPA; MCAT still required",
+  "note": "Still the strongest single application on the board: realistic admit, big merit, real assurance.",
+  "bar": null
+ },
+ "programVerified": null
+}

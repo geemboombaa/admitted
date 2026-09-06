@@ -1,0 +1,86 @@
+{
+ "id": "nw",
+ "order": 63,
+ "general": {
+  "id": "nw",
+  "n": "Northwestern",
+  "city": "Evanston",
+  "st": "IL",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.07,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1500,
+  "s75": 1560,
+  "tb": false,
+  "coa": 95000,
+  "merit": 0,
+  "meritName": "Need-based only",
+  "dl": "ED Nov 1 / RD Jan 3",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 9,
+  "grad4": 91,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Its famous 7-yr HPME was discontinued in 2021 — Northwestern is now a plain (excellent) elite reach with Feinberg up the road.",
+  "medNote": "No direct pathway anymore; need-based aid only.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.northwestern.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.077,
+  "s25": 1510,
+  "s75": 1560,
+  "coa": 96236,
+  "tuitV": 69375,
+  "merit": 0,
+  "grad4": 83
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 1",
+  "Jan 3",
+  "Supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 70000,
+ "cds7": {
+  "h": 0.545,
+  "t": 0.1,
+  "y": "2024-25",
+  "src": "https://enrollment.northwestern.edu/data/2024-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,84 @@
+{
+ "id": "ucsc",
+ "order": 35,
+ "general": {
+  "id": "ucsc",
+  "n": "UC Santa Cruz",
+  "city": "Santa Cruz",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.73,
+  "g25": 3.35,
+  "g75": 3.8,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 45000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 6,
+  "research": 7,
+  "bio": 7,
+  "med": 5,
+  "grad4": 64,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Strong biology (esp. genomics/marine), beautiful setting. Weak medical ecosystem — no med school or major hospital nearby; clinical hours take planning.",
+  "medNote": "Fine premed outcomes for self-starters.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.821,
+  "g25w": 3.79,
+  "g75w": 4.2,
+  "coa": 48537,
+  "tuitV": 17439,
+  "housV": 22757,
+  "ship": 4209
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 3,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 16500,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

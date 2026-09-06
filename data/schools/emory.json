@@ -1,0 +1,88 @@
+{
+ "id": "emory",
+ "order": 64,
+ "general": {
+  "id": "emory",
+  "n": "Emory",
+  "city": "Atlanta",
+  "st": "GA",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.11,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 1470,
+  "s75": 1540,
+  "tb": false,
+  "coa": 92000,
+  "merit": 2000,
+  "meritName": "Emory Scholars only (lottery within a lottery)",
+  "dl": "ED1 Nov 1 / RD Jan 1",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 8,
+  "bio": 9,
+  "med": 9,
+  "grad4": 84,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Premed powerhouse beside the CDC and Emory Healthcare; collaborative reputation for an elite. Scholars merit is a lottery within a lottery.",
+  "medNote": "One of the friendlier elite premed cultures.",
+  "links": [
+   [
+    "Admissions",
+    "https://apply.emory.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.11,
+  "s25": 1470,
+  "s75": 1550,
+  "coa": 97948,
+  "tuitV": 71448,
+  "housV": 22406,
+  "ship": 5592,
+  "merit": 0,
+  "grad4": 83
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1",
+  "Jan 1",
+  "Supplements"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.468,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://provost.emory.edu/planning-administration/_includes/documents/sections/institutional-data/emory-common-date-set-2025-2026.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

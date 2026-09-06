@@ -1,0 +1,98 @@
+{
+ "id": "tulane",
+ "order": 92,
+ "general": {
+  "id": "tulane",
+  "n": "Tulane University",
+  "city": "New Orleans",
+  "st": "LA",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.147,
+  "g25": 3.5,
+  "g75": 3.9,
+  "s25": 1430,
+  "s75": 1500,
+  "tb": false,
+  "coa": 98710,
+  "merit": 15000,
+  "meritName": "Partial merit up to $32k/yr (auto-considered); full-tuition tiers need ~1500/3.7+",
+  "dl": "ED1 Nov 1 / EA Nov 10 / RD Jan 15",
+  "dlDate": "2026-11-10",
+  "premed": 8,
+  "research": 7,
+  "bio": 7,
+  "med": 8,
+  "grad4": 76,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "social": 9,
+  "note": "Own School of Medicine downtown plus the Creative Premedical Scholars early-assurance: a guaranteed Tulane med seat, NO MCAT, applied for in spring of sophomore year (3.6+ college GPA, School of Liberal Arts majors). Famous for demonstrated-interest/yield-protection reads — apply EA and show interest.",
+  "medNote": "His 1440 sits inside their 1430–1500 admit band; a real target with a no-MCAT back door.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.tulane.edu"
+   ],
+   [
+    "Creative Premed Scholars",
+    "https://medicine.tulane.edu/education/admissions/creative-premedical-scholars-program"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa"
+  ],
+  "tuitV": 75136,
+  "housV": 20538
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1 / EA Nov 10",
+  "Jan 15",
+  "1 supplement; EAP in college"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "Creative Premed EAP",
+ "instateRef": null,
+ "tuition": null,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": true,
+ "program": {
+  "sc": "Tulane University",
+  "name": "Creative Premedical Scholars (early assurance)",
+  "pid": "tulane_prog",
+  "band": "stretch",
+  "type": "Guaranteed Tulane med seat, NO MCAT, applied in SOPHOMORE YEAR OF COLLEGE (not a high-school-entry program)",
+  "req": "Enroll at Tulane first (his 1440 is inside their 1430–1500 admitted band), then earn a 3.6+ COLLEGE GPA to apply — his HS stats do not directly apply to this program’s own criteria",
+  "note": "A real, verified no-MCAT back door earned with college grades, not something his current HS numbers can be scored against yet.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": 3.6,
+  "minGpaType": "college GPA (applied for in spring of sophomore year AT Tulane — not a high-school-entry program; his HS SAT/GPA do not apply to this program’s own criteria)",
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://liberalarts.tulane.edu/academics/undergraduate-studies/accelerated-programs-professional-degrees/creative-premedical-scholars"
+ }
+}

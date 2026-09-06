@@ -1,0 +1,107 @@
+{
+ "id": "luc",
+ "order": 19,
+ "general": {
+  "id": "luc",
+  "n": "Loyola University Chicago",
+  "city": "Chicago",
+  "st": "IL",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.79,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1180,
+  "s75": 1380,
+  "tb": false,
+  "coa": 72000,
+  "merit": 25000,
+  "meritName": "Damen/Presidential merit (auto)",
+  "dl": "Dec 1, 2026 priority",
+  "dlDate": "2026-12-01",
+  "premed": 8,
+  "research": 6,
+  "bio": 7,
+  "med": 8,
+  "grad4": 64,
+  "honors": "Interdisciplinary Honors",
+  "wue": false,
+  "conf": "solid",
+  "note": "Own med school (Stritch) with early-assurance routes; lakefront Chicago campus with deep hospital volunteering options. Net ~$47k.",
+  "medNote": "Solid committee-letter support; big-city clinical hours are easy to accumulate.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.luc.edu/undergrad"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.751,
+  "s25": 1220,
+  "s75": 1390,
+  "coa": 80240,
+  "tuitV": 58510,
+  "housV": 17980,
+  "ship": 3684,
+  "merit": 27000,
+  "grad4": 66
+ },
+ "social": 7,
+ "religAffiliated": true,
+ "researchAccess": 7,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Rolling",
+  "Dec 1 priority",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "Stritch EA",
+ "instateRef": null,
+ "tuition": 55000,
+ "cds7": {
+  "h": 0.474,
+  "t": 0.125,
+  "y": "2025-26",
+  "src": "https://www.luc.edu/media/lucedu/oie/CDS%202025-26%20-%20Loyola%20University%20Chicago%20-%20Final_af.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "Loyola University Chicago",
+  "name": "Stritch early assurance track",
+  "pid": "luc_prog",
+  "band": "stretch",
+  "type": "Early assurance (internal, apply fall of junior year)",
+  "req": "No GPA/MCAT/SAT minimum published on any official Loyola page",
+  "note": "Real program (conditional acceptance to Stritch), but no numeric bar to check him against. Regular Biology major exists independent of this.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://www.luc.edu/career/pre-professional/pre-healthprograms/programming/earlyassuranceprogrameap/ — no numeric criteria published on official pages"
+ }
+}

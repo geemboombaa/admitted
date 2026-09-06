@@ -1,0 +1,129 @@
+{
+ "id": "umkc",
+ "order": 55,
+ "general": {
+  "id": "umkc",
+  "n": "UMKC",
+  "city": "Kansas City",
+  "st": "MO",
+  "region": "Other",
+  "type": "Public",
+  "size": "M",
+  "admit": 0.77,
+  "g25": 3.2,
+  "g75": 3.85,
+  "s25": 1140,
+  "s75": 1350,
+  "tb": false,
+  "coa": 55000,
+  "merit": 8000,
+  "meritName": "Some merit; BA/MD priced separately",
+  "dl": "6-yr BA/MD app due Nov 1",
+  "dlDate": "2026-11-01",
+  "premed": 6,
+  "research": 6,
+  "bio": 6,
+  "med": 8,
+  "grad4": 50,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "social": 4,
+  "note": "The 6-year BA/MD admits substantially on a formula (GPA/test/interview) — friendlier stats than classic BS/MDs. Costs of the MD years pile up for OOS, and the 6-year pace is relentless.",
+  "medNote": "A real direct option; go in understanding the grind and the total price.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.umkc.edu/admissions"
+   ],
+   [
+    "BA/MD",
+    "https://med.umkc.edu/bamd"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.722,
+  "s25": 1290,
+  "s75": 1540,
+  "coa": 53484,
+  "tuitV": 31738,
+  "housV": 15622,
+  "merit": 18522,
+  "grad4": 35
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Own or Common App",
+  "—",
+  "Nov 1 (BA/MD)",
+  "BA/MD app + interview"
+ ],
+ "progRateLegacy": {
+  "rate": "7-11",
+  "note": "self-computed range depending on applications-vs-completions denominator; UMKC does not publish one single rate (6-yr BA/MD)"
+ },
+ "clinicalAccess": 7,
+ "pathNameLegacy": "6-yr BA/MD",
+ "instateRef": 33000,
+ "tuition": 28000,
+ "cds7": {
+  "h": 0.286,
+  "t": 0.25,
+  "y": "2024-2025",
+  "src": "https://www.umkc.edu/data/docs/cds_2024-2025.pdf"
+ },
+ "accel": {
+  "id": "umkc",
+  "sc": "UMKC",
+  "prog": "6-year BA/MD",
+  "kind": "bsmd",
+  "ugYrs": 2,
+  "st": "MO",
+  "region": "Other",
+  "coa": 55000,
+  "merit": 8000,
+  "medYr": 88000,
+  "medName": "UMKC SOM",
+  "bar": {
+   "gpa": 3.4,
+   "sat": 1250
+  },
+  "formula": true,
+  "mcat": "Not required",
+  "seats": "~105–110/yr; only ~10–15 out-of-region (verified)",
+  "resid": "Most seats reserved for Missouri + regional states",
+  "apply": "Own BA/MD application due Nov 1 + interview",
+  "url": "https://med.umkc.edu/bamd",
+  "note": "The only true 6-year MD still admitting nationally. Formula-driven (GPA, test, interview) with entry stats friendlier than any classic BS/MD — but the OOS seat count is small and the MD years are priced at nonresident rates.",
+  "why": "Published minimum is 3.0/1160 but ADMITTED AVERAGE is ~3.9/1420 (verified) and only ~10–15 seats go out-of-region — a stretch at 3.67/1440, not a safety."
+ },
+ "ugYearsOverride": 2,
+ "affiliatedMedCost": 88000,
+ "affiliatedMedName": "UMKC SOM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "UMKC",
+  "name": "6-year BA/MD",
+  "band": "stretch",
+  "type": "Accelerated 2+4 (6-yr) direct MD",
+  "req": "Formula-driven (GPA/test/interview) — friendlier stats than classic BS/MDs",
+  "note": "Real path, real caveats: relentless 6-yr pace and high OOS cost across the MD years.",
+  "bar": {
+   "gpa": 3.4,
+   "sat": 1250
+  }
+ },
+ "programVerified": null
+}

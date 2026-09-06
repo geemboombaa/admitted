@@ -1,0 +1,85 @@
+{
+ "id": "miami",
+ "order": 26,
+ "general": {
+  "id": "miami",
+  "n": "University of Miami",
+  "city": "Coral Gables",
+  "st": "FL",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.19,
+  "g25": 3.7,
+  "g75": 4,
+  "s25": 1370,
+  "s75": 1490,
+  "tb": false,
+  "coa": 90000,
+  "merit": 25000,
+  "meritName": "Merit (competitive at admission)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 73,
+  "honors": "Foote Fellows",
+  "wue": false,
+  "conf": "solid",
+  "note": "The stretch reach: Miller School of Medicine + UHealth system, strong research. His band is below their middle 50 — apply only if the list has room and essays are strong.",
+  "medNote": "If admitted without merit, net ~$90k — outside your structure.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.miami.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.22,
+  "s25": 1350,
+  "s75": 1480,
+  "coa": 98872,
+  "tuitV": 68342,
+  "housV": 26358,
+  "ship": 4483,
+  "grad4": 74
+ },
+ "social": 8,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 1",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 64000,
+ "cds7": {
+  "h": 0.419,
+  "t": 0.3,
+  "y": "2025-26",
+  "src": "https://www.irsa.miami.edu/facts-and-information/common-data-set/cds2526.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": true,
+ "program": null,
+ "programVerified": null
+}

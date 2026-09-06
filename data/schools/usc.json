@@ -1,0 +1,85 @@
+{
+ "id": "usc",
+ "order": 28,
+ "general": {
+  "id": "usc",
+  "n": "USC",
+  "city": "Los Angeles",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.1,
+  "g25": 3.75,
+  "g75": 4,
+  "s25": 1450,
+  "s75": 1530,
+  "tb": false,
+  "coa": 95000,
+  "merit": 3000,
+  "meritName": "Presidential/Trustee exist but go to top ~2% of admits — expect ~$0–3k at his band",
+  "dl": "Nov 1 EA (required for merit) / RD Jan 15",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 9,
+  "bio": 8,
+  "med": 8,
+  "grad4": 79,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "The CA prestige reach: Keck medicine, huge alumni network, real (but competitive) merit that requires the Nov 1 EA application. His EC spike is exactly what USC responds to; the stats are the gate.",
+  "medNote": "Strong premed ecosystem; LA clinical access unlimited.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.usc.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.112,
+  "s25": 1470,
+  "s75": 1540,
+  "coa": 99139,
+  "tuitV": 75162,
+  "housV": 20907,
+  "grad4": 71
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA (required for merit)",
+  "Jan 15",
+  "Several supplements"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 72000,
+ "cds7": {
+  "h": 0.522,
+  "t": 0.273,
+  "y": "2025-26",
+  "src": "https://oir.usc.edu/wp-content/uploads/sites/3/2026/10/CDS_2025-26_FINAL.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,86 @@
+{
+ "id": "utah",
+ "order": 5,
+ "general": {
+  "id": "utah",
+  "n": "University of Utah",
+  "city": "Salt Lake City",
+  "st": "UT",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.87,
+  "g25": 3.3,
+  "g75": 3.9,
+  "s25": 1130,
+  "s75": 1390,
+  "tb": false,
+  "coa": 52000,
+  "merit": 14000,
+  "meritName": "Nonresident merit + WUE (limited)",
+  "dl": "Dec 1, 2026 priority (merit auto-considered)",
+  "dlDate": "2026-12-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 7,
+  "med": 7,
+  "grad4": 41,
+  "honors": "Honors College",
+  "wue": true,
+  "conf": "solid",
+  "note": "University hospital and med school physically on campus — unusually easy clinical and research access for undergrads. WUE awards exist but are limited; merit stack still lands near budget.",
+  "medNote": "Health-sciences campus adjacency is the differentiator. 4-yr grad rate lags (many students work/serve missions) — not a quality signal.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.utah.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.86,
+  "s25": 1200,
+  "s75": 1370,
+  "coa": 62590,
+  "tuitV": 31748,
+  "housV": 17442,
+  "merit": 15500,
+  "grad4": 37
+ },
+ "social": 7,
+ "religAffiliated": false,
+ "researchAccess": 9,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "—",
+  "Dec 1 priority",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": 30000,
+ "tuition": 32000,
+ "cds7": {
+  "h": 0.444,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://data.utah.edu/wp-content/uploads/sites/61/2025/01/CDS-C.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

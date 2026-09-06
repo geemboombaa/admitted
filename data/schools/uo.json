@@ -1,0 +1,74 @@
+{
+ "id": "uo",
+ "order": 7,
+ "general": {
+  "id": "uo",
+  "n": "University of Oregon",
+  "city": "Eugene",
+  "st": "OR",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.85,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1150,
+  "s75": 1390,
+  "tb": false,
+  "coa": 58000,
+  "merit": 12000,
+  "meritName": "Summit needs 3.6+ GPA — Apex tier at his band",
+  "dl": "Nov 1, 2026 EA (maximizes merit)",
+  "dlDate": "2026-11-01",
+  "premed": 6,
+  "research": 7,
+  "bio": 7,
+  "med": 5,
+  "grad4": 59,
+  "honors": "Clark Honors College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Summit/Apex merit is automatic by GPA. Solid biology; the gap is medical ecosystem — no med school in Eugene (OHSU is in Portland), so clinical exposure takes summers/planning.",
+  "medNote": "Fine premed outcomes but you assemble the pieces yourself.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.uoregon.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa",
+   "merit"
+  ],
+  "coa": 68931,
+  "tuitV": 46077,
+  "housV": 17400,
+  "merit": 0
+ },
+ "social": 8,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": null,
+ "instateRef": 36000,
+ "tuition": 42000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

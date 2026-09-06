@@ -1,0 +1,82 @@
+{
+ "id": "vandy",
+ "order": 67,
+ "general": {
+  "id": "vandy",
+  "n": "Vanderbilt",
+  "city": "Nashville",
+  "st": "TN",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.06,
+  "g25": 3.9,
+  "g75": 4,
+  "s25": 1510,
+  "s75": 1560,
+  "tb": false,
+  "coa": 92000,
+  "merit": 2000,
+  "meritName": "Cornelius Vanderbilt (<1% of class)",
+  "dl": "ED1 Nov 1 / RD Jan 1",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 9,
+  "grad4": 88,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "VUMC adjacency, happy-student reputation, real (if rare) full-tuition merit. 6% admit.",
+  "medNote": "Lottery ticket with a merit lottery attached.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.vanderbilt.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.053,
+  "s25": 1510,
+  "s75": 1560,
+  "coa": 99994,
+  "tuitV": 73206,
+  "housV": 23690,
+  "merit": 0,
+  "grad4": 89
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1",
+  "Jan 1",
+  "Supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

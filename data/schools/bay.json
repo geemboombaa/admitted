@@ -1,0 +1,108 @@
+{
+ "id": "bay",
+ "order": 25,
+ "general": {
+  "id": "bay",
+  "n": "Baylor University",
+  "city": "Waco",
+  "st": "TX",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.51,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1250,
+  "s75": 1430,
+  "tb": false,
+  "coa": 78000,
+  "merit": 22000,
+  "meritName": "Academic merit (auto-tiered)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 7,
+  "bio": 8,
+  "med": 8,
+  "grad4": 70,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "rep",
+  "note": "Serious premed culture with strong med-school placement machinery. Caveat: pipeline advantages tilt toward Texas med schools, which favor TX residents. Net ~$56k.",
+  "medNote": "Grading is rigorous — mild deflation risk vs the Jesuit schools.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.baylor.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.522,
+  "s25": 1190,
+  "s75": 1370,
+  "coa": 90564,
+  "tuitV": 67756,
+  "housV": 17222,
+  "grad4": 71
+ },
+ "social": 8,
+ "religAffiliated": true,
+ "researchAccess": 6,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Feb 1",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "Baylor²Baylor",
+ "instateRef": null,
+ "tuition": 60000,
+ "cds7": {
+  "h": 0.444,
+  "t": 0.273,
+  "y": "2025-26",
+  "src": "https://ir.web.baylor.edu/sites/g/files/ecbvkj1621/files/2026-04/cds-pdf-2025-2026-final.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 65000,
+ "affiliatedMedName": "Baylor COM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Baylor University",
+  "name": "Baylor²Baylor Medical Program",
+  "pid": "bay_prog",
+  "band": "out",
+  "type": "Guaranteed admission to Baylor College of Medicine",
+  "req": "Verified minimum: 3.7 unweighted GPA (or top 5% class) / SAT 1430; admits 6/yr (applicant count not published)",
+  "note": "Essay + interview based, not a pure cutoff. Baylor stays worthwhile for regular premed strength regardless.",
+  "bar": {
+   "gpa": 3.7,
+   "sat": 1430
+  },
+  "hardGate": true
+ },
+ "programVerified": {
+  "minGpa": 3.7,
+  "minGpaType": "unweighted (or top 5% of HS class)",
+  "minSat": 1430,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": 6,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://admissions.web.baylor.edu/costs-aid/scholarship-programs/baylor2baylor-medical-program-0 — admits 6/yr; applicant count not published (a third-party ~1,000/yr claim was rejected as unsourced)"
+ }
+}

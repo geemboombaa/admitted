@@ -1,0 +1,110 @@
+{
+ "id": "unr",
+ "order": 6,
+ "general": {
+  "id": "unr",
+  "n": "University of Nevada, Reno",
+  "city": "Reno",
+  "st": "NV",
+  "region": "West",
+  "type": "Public",
+  "size": "M",
+  "admit": 0.87,
+  "g25": 3.1,
+  "g75": 3.8,
+  "s25": 1080,
+  "s75": 1320,
+  "tb": false,
+  "coa": 48000,
+  "merit": 15000,
+  "meritName": "WUE rate (auto for CA residents)",
+  "dl": "Rolling; WUE/merit priority Feb 1, 2027",
+  "dlDate": "2026-12-15",
+  "premed": 7,
+  "research": 6,
+  "bio": 7,
+  "med": 7,
+  "grad4": 36,
+  "honors": "Honors College",
+  "wue": true,
+  "conf": "solid",
+  "note": "WUE makes this one of the cheapest real options on the list (~$33k net), 3.5 hrs from Sacramento, and UNR has its own MD school with early-assurance pathways for its undergrads.",
+  "medNote": "Smaller pond = easier access to labs and physician shadowing. Grad-rate stat drags from part-time students.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.unr.edu/admissions"
+   ],
+   [
+    "WUE info",
+    "https://www.unr.edu/financial-aid"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.831,
+  "s25": 1060,
+  "s75": 1280,
+  "coa": 51478,
+  "tuitV": 31270,
+  "housV": 15952,
+  "merit": 15498,
+  "grad4": 41
+ },
+ "social": 6,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "ea",
+ "restrictNote": "NV pref — verify",
+ "appInfo": [
+  "Own or Common App",
+  "Rolling",
+  "Feb 1",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "EA (verify)",
+ "instateRef": 25000,
+ "tuition": 27000,
+ "cds7": {
+  "h": 0.324,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://dataden.unr.edu/Resources/CDS/CDS_2024-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "University of Nevada, Reno",
+  "name": "Professions in Medicine (PiM) + Assured Seat",
+  "pid": "unr_prog",
+  "band": "stretch",
+  "type": "Early assurance (Honors College, sophomore-year entry)",
+  "req": "CORRECTED: no numeric criteria published anywhere official. (UNR’s separate “Post-Baccalaureate Pathway” is for people who already hold a degree — not this program.)",
+  "note": "The WUE-price undergrad stands on its own regardless.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://med.unr.edu/education/medical-education/pim-certificate — CORRECTION: the real undergrad route is the Honors \"PiM + Assured Seat\" track (sophomore entry, interview-based); UNR’s \"Post-Baccalaureate Pathway\" is for people who already hold a degree and is not this. No numbers published for either."
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "id": "usc_sc",
+ "order": 100,
+ "general": {
+  "id": "usc_sc",
+  "n": "University of South Carolina",
+  "city": "Columbia",
+  "st": "SC",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.6,
+  "g25": 3.6,
+  "g75": 4,
+  "s25": 1180,
+  "s75": 1360,
+  "tb": false,
+  "coa": 60412,
+  "merit": 0,
+  "meritName": "No automatic tier found; competitive holistic scholarships only",
+  "dl": "Nov 15, 2026 priority (Honors College); accelerated-MD app due Jan 15, 2027",
+  "dlDate": "2026-11-15",
+  "premed": 6,
+  "research": 6,
+  "bio": 6,
+  "med": 7,
+  "grad4": 79,
+  "honors": "South Carolina Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 7,
+  "note": "“Accelerated Undergraduate to M.D. Program” (BARSC-M.D.), confirmed active for 2026-27 with fewer than 10 students selected per cohort. Invitation-only within the Honors College: students must first be admitted to USC AND the Honors College (deadline Nov 15, 2026), and only the most competitive of those are invited (~late Dec 2026) to apply to the accelerated track (closes Jan 15, 2027). No residency restriction found, unlike several similar programs at other schools.",
+  "medNote": "Not a program you apply to directly — being a strong Honors College admit is the real gatekeeper here.",
+  "links": [
+   [
+    "Admissions",
+    "https://sc.edu/admissions-at-sc/tuition-aid/index.php"
+   ],
+   [
+    "BARSC-M.D. program",
+    "https://sc.edu/study/colleges_schools/honors_college/study_explore/opportunities/pre-med/barscmd/index.php"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": null,
+ "progRateLegacy": null,
+ "clinicalAccess": null,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": null,
+ "cds7": {
+  "h": 0.5,
+  "t": 0.125,
+  "y": "2024-25",
+  "src": "http://oiraa.dw.sc.edu/cds/cds2024/cds_2024-2025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

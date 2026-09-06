@@ -1,0 +1,87 @@
+{
+ "id": "nyu",
+ "order": 79,
+ "general": {
+  "id": "nyu",
+  "n": "NYU",
+  "city": "New York",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.09,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 1470,
+  "s75": 1550,
+  "tb": false,
+  "coa": 95000,
+  "merit": 3000,
+  "meritName": "Limited merit",
+  "dl": "ED1 Nov 1 / RD Jan 5",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 9,
+  "bio": 8,
+  "med": 9,
+  "grad4": 85,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Elite reach with a unique twist: NYU Grossman School of Medicine is tuition-free for every admitted med student — an NYU undergrad who makes it to Grossman erases the biggest chunk of the 8-year bill.",
+  "medNote": "Langone system access is superb; undergrad merit is near-zero though.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.nyu.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.09,
+  "s25": 1480,
+  "s75": 1560,
+  "coa": 100998,
+  "tuitV": 68576,
+  "housV": 26438,
+  "merit": 0,
+  "grad4": 78
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1 / ED2 Jan 1",
+  "Jan 5",
+  "Supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 64000,
+ "cds7": {
+  "h": 0.524,
+  "t": 0.25,
+  "y": "2024-25",
+  "src": "https://www.nyu.edu/employees/resources-and-services/administrative-services/institutional-research/self-service-reporting-resources/factbook.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

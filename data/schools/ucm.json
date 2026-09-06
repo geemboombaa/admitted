@@ -1,0 +1,104 @@
+{
+ "id": "ucm",
+ "order": 33,
+ "general": {
+  "id": "ucm",
+  "n": "UC Merced",
+  "city": "Merced",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "M",
+  "admit": 0.98,
+  "g25": 2.95,
+  "g75": 3.5,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 43000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 6,
+  "research": 6,
+  "bio": 6,
+  "med": 6,
+  "grad4": 47,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 4,
+  "note": "The UC system safety. Small but growing fast, new medical-education pipeline aimed at the San Joaquin Valley (SJV PRIME) — being a bigger fish here can mean easier lab access.",
+  "medNote": "Advising thinner than older campuses; self-drive required.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.947,
+  "g25w": 3.57,
+  "g75w": 4.16,
+  "coa": 48654,
+  "tuitV": 17024,
+  "housV": 23180,
+  "ship": 2996
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "ea",
+ "restrictNote": "SJV mission",
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": "SJV PRIME+",
+ "instateRef": null,
+ "tuition": 15800,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "UC Merced",
+  "name": "SJV PRIME+ (BS-to-MD pathway)",
+  "pid": "ucm_prog",
+  "band": "restricted",
+  "type": "Mission-based pathway (UCSF-linked)",
+  "req": "Restricted to San Joaquin Valley residents/deep ties (9 named counties) — 12 students admitted/yr",
+  "note": "Mission-dependent and geographically restricted.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": 3.6,
+  "minGpaType": "unweighted (UC-recalculated, rising to 3.7 for Fall 2026+ entrants; this is the retention/progression floor, not confirmed as the entry bar)",
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": 12,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://admissions.ucmerced.edu/bs-md/admissions-criteria-and-application-process — SJV PRIME+; holistic; restricted to San Joaquin Valley residents/deep ties (9 counties)"
+ }
+}

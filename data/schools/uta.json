@@ -1,0 +1,71 @@
+{
+ "id": "uta",
+ "order": 59,
+ "general": {
+  "id": "uta",
+  "n": "UT Austin",
+  "city": "Austin",
+  "st": "TX",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.29,
+  "g25": 3.7,
+  "g75": 4,
+  "s25": 1350,
+  "s75": 1520,
+  "tb": false,
+  "coa": 62000,
+  "merit": 2000,
+  "meritName": "Almost no OOS merit",
+  "dl": "ApplyTexas/Common App, priority Dec 1",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 8,
+  "bio": 8,
+  "med": 7,
+  "grad4": 74,
+  "honors": "Plan II / CNS Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Included per your list. Reality: ~90% of seats go to Texans by law, making OOS admits roughly single-digit; no BS/MD from high school; no OOS merit.",
+  "medNote": "Great school, bad odds-per-dollar for a CA premed.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.utexas.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "ApplyTexas or Common App",
+  "—",
+  "Dec 1 priority",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": null,
+ "instateRef": 33000,
+ "tuition": 43000,
+ "cds7": {
+  "h": 0.5,
+  "t": 0.25,
+  "y": "2024-25",
+  "src": "https://reports.utexas.edu/common-data-set/pdf leads to a Box-hosted viewer (https://utexas.app.box.com/s/d9izqb6s8dw2xxg5h5sunxyhrnef2ay6) that could not be read directly; ratings transcribed via https://www.collegedata.fyi/schools/ut-austin/2024-25, which cites 'SOURCE: COMMON DATA SET 2024-25'"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

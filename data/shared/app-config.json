@@ -1,0 +1,334 @@
+{
+ "weightDefs": [
+  [
+   "cost",
+   "Net cost vs budget",
+   20
+  ],
+  [
+   "premed",
+   "Premed environment",
+   15
+  ],
+  [
+   "med",
+   "Med-school placement",
+   15
+  ],
+  [
+   "research",
+   "Research & clinical access",
+   12
+  ],
+  [
+   "bio",
+   "Bio program quality",
+   10
+  ],
+  [
+   "geo",
+   "Geography (near CA)",
+   10
+  ],
+  [
+   "size",
+   "Campus size match",
+   8
+  ],
+  [
+   "merit",
+   "Merit generosity",
+   6
+  ],
+  [
+   "honors",
+   "Honors college",
+   4
+  ],
+  [
+   "social",
+   "Social life",
+   5
+  ]
+ ],
+ "presets": {
+  "bal": [
+   20,
+   15,
+   15,
+   12,
+   10,
+   10,
+   8,
+   6,
+   4,
+   5
+  ],
+  "cost": [
+   34,
+   12,
+   10,
+   8,
+   8,
+   10,
+   6,
+   10,
+   2,
+   4
+  ],
+  "out": [
+   10,
+   18,
+   22,
+   18,
+   12,
+   6,
+   6,
+   4,
+   4,
+   3
+  ]
+ },
+ "bandColor": {
+  "Safety": "#00ff88",
+  "Likely": "#00d4ff",
+  "Target": "#f5a623",
+  "Reach": "#a855f7"
+ },
+ "verifiedDate": "Sep 2026",
+ "ecSummary": "Graded EXCEPTIONAL by Claude from his UC Activities List (Aug 2026):\n• USABO Semifinalist (top 10% national)\n• HOSA Nationals — 8th in US, Anatomy & Physiology\n• Science Olympiad regional/state/invitational medals; team event coordinator (hosted 200-competitor invitational)\n• Research: Parkinson’s biomarker ML manuscript under review (JEI); independent research; Rosetta Institute ×2; Rising Scholars; UCI Surgery; UCLA Pre-Med Summer Scholar\n• Clinical: 100+ hrs shadowing over 3 yrs; GI clinic rotation; medical clinic coordinator + scribe (50+ hrs)\n• Leadership/service: Bio Olympiad chapter president (300 students); Red Cross Club VP; Sewa International 100+ hrs; Learn To Be & Schoolhouse.world tutor\n• Varsity badminton (3 yrs); drummer; Stanford Neurosurgery Journal Club\n• Certs: CPR/AED, FEMA CERT, Stop the Bleed, concussion protocol\n\nEdit freely — saved in this browser.",
+ "ucNote": "<div class=\"note\"><b>UC reality (verified fall-2026 admit data):</b> UCs judge the UC weighted-capped GPA — set his real one on the top slider. Merced (~95%) and Riverside (~88%) are the safeties; Santa Cruz (~82%) likely; Davis (~46%, admitted weighted 4.00–4.25) and Santa Barbara (~44%, 4.05–4.27) targets; Irvine (~30%) and San Diego (~27%, 4.12–4.28) reaches; Berkeley (~11%) and UCLA (~11%; Life Sciences division also ~11%) lottery tickets. Biology runs tougher than the campus average at the mid UCs; UCSD’s biology major is NOT capped (verified). Waivable UC health insurance ($2.8–5.1k/yr, verified per campus) is inside every UC cost figure — the Realistic-cost toggle removes it. All 9 ride one application, so add them all &mdash; but plan the non-UC list assuming nothing above Riverside is guaranteed. <a style=\"color:var(--cyan)\" href=\"https://admission.universityofcalifornia.edu\" target=\"_blank\" rel=\"noopener\">UC Admissions &#8599;</a></div>",
+ "freeMdHtml": "\n<div class=\"sumstrip\" style=\"margin-top:14px\"><div class=\"stat g\"><div class=\"lbl g\">Tuition-free MD schools</div><div class=\"n\">4+</div></div><div class=\"stat c\"><div class=\"lbl c\">Typical admit rate</div><div class=\"n\">~2&ndash;4%</div></div><div class=\"stat a\"><div class=\"lbl a\">Median MCAT there</div><div class=\"n\">519&ndash;522</div></div><div class=\"stat p\"><div class=\"lbl p\">Median GPA there</div><div class=\"n\">3.9+</div></div></div>\n<div class=\"pcard attainable\"><div class=\"crow\"><span class=\"cname\" style=\"font-size:15px\">Free-tuition &amp; funded med schools &mdash; the endgame that erases the biggest bill</span><span class=\"pill Safety\">Plan for it</span></div>\n <p><b>NYU Grossman</b> (New York) &mdash; full tuition for every MD student since 2018; also runs a 3-year MD. <b>NYU Grossman Long Island</b> &mdash; tuition-free, 3-year, primary-care focused. <b>Albert Einstein</b> (Bronx) &mdash; tuition-free for all since 2024 ($1B Gottesman gift). <b>Johns Hopkins</b> &mdash; free tuition for families under ~$300k income, plus living costs under ~$175k (Bloomberg gift, 2024). <b>Cleveland Clinic Lerner</b> (CWRU) &mdash; full-tuition scholarship, 5-year research MD. <b>Kaiser Permanente Bernard J. Tyson</b> (Pasadena, CA) &mdash; waived tuition for its first five classes only; verify what applies to a 2031 entrant. <b>Debt-free by need</b> at Columbia, Harvard (families under ~$100k), WashU (free tuition for roughly half the class), and others. <b>MD-PhD / MSTP</b> anywhere &mdash; tuition paid + ~$45k/yr stipend, at the price of 4 extra years (the True Cost tab has a toggle for it).</p>\n <p><b>Selectivity reality:</b> these are the hardest med schools in the country to enter &mdash; NYU admits ~2% with a median MCAT ~522 and GPA ~3.95; Einstein’s applications roughly doubled after going free. They are a target to aim at, never a plan to count on. Set the med-school slider on the True Cost tab to ~$17k/yr (living only) to see what landing one does to the ledger.</p></div>\n<div class=\"pcard stretch\"><div class=\"crow\"><span class=\"cname\" style=\"font-size:15px\">The plan that gets there (or to any strong MD program)</span><span class=\"pill Target\">4-year checklist</span></div>\n <p><b>1. GPA 3.8+ in college</b> &mdash; the single biggest lever. Choose an undergrad where a high GPA is <i>achievable</i> for him, not the most prestigious one that will grade him down (a 3.9 from SDSU or UC Davis beats a 3.4 from Berkeley at every med-school screen). Grade-deflation notes are on each card in The List.</p>\n <p><b>2. MCAT 518+</b> &mdash; plan a dedicated 4&ndash;6 month prep block (summer after junior year) and take it once, well prepared. Free-tuition schools sit at 519&ndash;522.</p>\n <p><b>3. Keep the research thread alive</b> &mdash; his Parkinson’s-biomarker manuscript is a rare asset for a high-schooler; a 4-year lab home with a second paper or poster is what those committees look for. Pick a campus where a median premed gets a lab by sophomore year (Research access column).</p>\n <p><b>4. Clinical continuity</b> &mdash; 100+ hours is already there; add depth (one long-term role: scribe, EMT, hospice) over breadth. Clinical column tells you where that is easy.</p>\n <p><b>5. Apply broadly and early</b> &mdash; the free-tuition schools are lottery tickets on top of a real list: CA publics first (UC Davis / Irvine / Riverside / UCSD are the cheapest MD seats a Californian can get), then 3-year MD pathways as a cost cut, then the MSTP route if the research love is real.</p>\n <p><b>6. Early assurance from inside college</b> &mdash; FlexMed (any college, no MCAT, sophomore year) and the school-specific EAPs on the green cards below are the realistic version of a \"direct pathway\" at his band.</p></div>\n<div class=\"note\" style=\"border-left-color:var(--cyan)\"><b>Accelerated 6- and 7-year programs</b> (UMKC, Howard, California Northstate 3+4, Penn State&ndash;Jefferson, RPI&ndash;Albany and the rest) now have their own tab &mdash; <b>Accelerated</b> &mdash; with entry bars, restrictions, and full cost through the ledger. Boston University’s SMED has closed and was removed from the roster below.</div>",
+ "accelLike": [
+  {
+   "t": "Early assurance from inside college (no high-school lottery)",
+   "c": "green",
+   "items": [
+    [
+     "Mount Sinai FlexMed",
+     "Apply sophomore year from ANY college; no MCAT; ~4% accept; GPA 3.5 floor, 3.8+ competitive. The one open-to-everyone door.",
+     "https://icahn.mssm.edu/education/admissions/md-program/early-assurance"
+    ],
+    [
+     "UC Riverside – Thomas Haider EAP",
+     "UCR undergrads; ~24 seats; inland-CA mission. Rides the shared UC app; UCR is an ~87% admit.",
+     "https://medschool.ucr.edu/haider-program"
+    ],
+    [
+     "University of Toledo MedStart",
+     "Open to many undergrads (not just Toledo); apply as a college freshman/sophomore.",
+     "https://www.utoledo.edu/med/md/admissions/medstart.html"
+    ],
+    [
+     "Tufts / Georgetown / Northwestern / Dartmouth EAPs",
+     "Their own undergrads only, ~3.8+ college GPA; MCAT policies vary by year.",
+     ""
+    ],
+    [
+     "BU Early Medical School Selection (EMSP)",
+     "What replaced BU’s SMED: partner-college students only, apply sophomore year.",
+     "https://www.bu.edu/academics/camed/programs/early-medical-school-selection-program/"
+    ]
+   ]
+  },
+  {
+   "t": "3-year MD programs (cut a year off medical school itself, entered at normal med-application time)",
+   "c": "cyan",
+   "items": [
+    [
+     "NYU Grossman 3-Year MD",
+     "Tuition-free AND a year shorter, with a conditional residency at NYU; 20+ specialty tracks. ~2% admit.",
+     "https://med.nyu.edu/education/md-degree/md-degree-programs/three-year-md-degree-pathway"
+    ],
+    [
+     "UC Davis ACE-PC",
+     "California’s 3-year primary-care MD (Kaiser-linked); applied to like any UC Davis MD seat.",
+     "https://health.ucdavis.edu/mdprogram/ACE-PC/"
+    ],
+    [
+     "NYU Long Island 3-Year MD",
+     "Tuition-free, primary-care focused, directed residency pathway.",
+     "https://medli.nyu.edu"
+    ],
+    [
+     "Penn State, Texas Tech FMAT, Mercer, Stony Brook 3YMD, Rutgers NJMS, Wayne State, Hackensack, Duke (ortho), MUSC, Colorado …",
+     "28 member schools in the Consortium of Accelerated Medical Pathway Programs; most tie to a specialty and a residency slot at the same institution.",
+     "https://www.acceleratedmdpathways.org/member-schools-1"
+    ]
+   ]
+  },
+  {
+   "t": "Closed or changed — ignore stale lists that still cite these",
+   "c": "amber",
+   "items": [
+    [
+     "Boston University SMED (7-yr)",
+     "Stopped accepting applicants; BU now only runs EMSP for partner colleges. Removed from this app’s BS/MD roster.",
+     ""
+    ],
+    [
+     "Northwestern HPME (7-yr)",
+     "Discontinued 2021.",
+     ""
+    ],
+    [
+     "Miami HPME",
+     "Discontinued.",
+     ""
+    ],
+    [
+     "California Northstate 6-year",
+     "Gone — CNU now offers 3+4 and 4+4 only.",
+     ""
+    ],
+    [
+     "Drexel BA/BS+MD",
+     "Now a standard 8-year early assurance, no longer 7.",
+     ""
+    ]
+   ]
+  }
+ ],
+ "lines": [
+  [
+   "tcost",
+   "True cost (journey)",
+   "#ffffff",
+   "right"
+  ],
+  [
+   "coa",
+   "COA / yr",
+   "#00d4ff",
+   "left"
+  ],
+  [
+   "tuit",
+   "Tuition & fees / yr",
+   "#a855f7",
+   "left"
+  ],
+  [
+   "hous",
+   "Housing & food / yr",
+   "#f5a623",
+   "left"
+  ],
+  [
+   "merit",
+   "Merit / yr",
+   "#00ff88",
+   "left"
+  ],
+  [
+   "net",
+   "Net / yr",
+   "#ef4444",
+   "left"
+  ],
+  [
+   "medt",
+   "Med school $ / yr",
+   "#cbd5e1",
+   "left"
+  ]
+ ],
+ "ucs": [
+  {
+   "n": "UC Merced",
+   "admit": 0.98,
+   "g": 3
+  },
+  {
+   "n": "UC Riverside",
+   "admit": 0.87,
+   "g": 3.3
+  },
+  {
+   "n": "UC Santa Cruz",
+   "admit": 0.73,
+   "g": 3.45
+  },
+  {
+   "n": "UC Davis",
+   "admit": 0.45,
+   "g": 3.65
+  },
+  {
+   "n": "UC Santa Barbara",
+   "admit": 0.38,
+   "g": 3.75
+  },
+  {
+   "n": "UC Irvine",
+   "admit": 0.29,
+   "g": 3.75
+  },
+  {
+   "n": "UC San Diego",
+   "admit": 0.28,
+   "g": 3.8
+  },
+  {
+   "n": "UC Berkeley",
+   "admit": 0.11,
+   "g": 3.9
+  },
+  {
+   "n": "UCLA",
+   "admit": 0.09,
+   "g": 3.92
+  }
+ ],
+ "standalonePathways": [
+  {
+   "sc": "Augusta (MCG) / CUNY Sophie Davis",
+   "name": "7-year BS/MD programs",
+   "band": "restricted",
+   "type": "Residency-gated accelerated tracks",
+   "req": "Georgia-leaning / New York residents",
+   "note": "Verify eligibility before spending essays.",
+   "bar": null
+  },
+  {
+   "sc": "The rest of the ~60 BS/MD universe",
+   "name": "Classic direct programs",
+   "band": "out",
+   "type": "Direct BS/MD",
+   "req": "Typically 3.85+ UW, 1490+/34+, top 5%",
+   "note": "His ECs clear these bars (USABO semifinalist, national HOSA award, manuscript under review) — stats are the sole gate. Note: Northwestern’s HPME, Miami’s HPME and Boston University’s SMED were discontinued; ignore stale lists that still cite them. Send exact GPA/SAT and the out-of-band cards above get re-sorted for real.",
+   "bar": {
+    "gpa": 3.85,
+    "sat": 1490
+   }
+  }
+ ],
+ "orphanAccel": [
+  {
+   "id": "rowando",
+   "school": "rowan",
+   "sc": "Rowan University",
+   "prog": "3+4 BS/DO (Rowan-Virtua SOM)",
+   "kind": "bsdo",
+   "ugYrs": 3,
+   "st": "NJ",
+   "region": "Other",
+   "coa": 50000,
+   "merit": 10000,
+   "medYr": 75000,
+   "medName": "Rowan-Virtua SOM (DO)",
+   "bar": {
+    "gpa": 3.6,
+    "sat": 1300
+   },
+   "incollege": true,
+   "mcat": "Required (benchmark)",
+   "seats": "Small",
+   "resid": null,
+   "apply": "Apply during junior year at Rowan",
+   "url": "https://csm.rowan.edu/departments/bbs/academic-programs/accelerated-degrees/3+4-mcb-bs-mddo.html",
+   "note": "Same in-college 3+4 model as the Cooper MD track, DO side.",
+   "why": "Plan-B route earned inside college."
+  }
+ ]
+}

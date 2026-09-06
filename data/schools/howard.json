@@ -1,0 +1,111 @@
+{
+ "id": "howard",
+ "order": 80,
+ "general": {
+  "id": "howard",
+  "n": "Howard University",
+  "city": "Washington",
+  "st": "DC",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.35,
+  "g25": 3.5,
+  "g75": 3.9,
+  "s25": 1150,
+  "s75": 1350,
+  "tb": false,
+  "coa": 58000,
+  "merit": 10000,
+  "meritName": "Capstone/Founders merit (auto for ~3.5+/1300+)",
+  "dl": "EA Nov 1 / RD Feb 15; 6-yr BS/MD by invitation after admission",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 6,
+  "bio": 7,
+  "med": 8,
+  "grad4": 50,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "social": 7,
+  "note": "One of only two active 6-year BS/MD programs in the country, with the friendliest published bar of any accelerated route (3.5 / 1300). Howard University Hospital and the College of Medicine sit on campus; the HBCU mission shapes the culture. Entry to the BS/MD is by invitation to admitted freshmen, and an MCAT 504 checkpoint gates the MD years.",
+  "medNote": "At his stats the invitation is realistic; the question is whether DC and the mission fit are right for him.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.howard.edu"
+   ],
+   [
+    "BS/MD",
+    "https://medicine.howard.edu/admission-aid"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Feb 15",
+  "None; BS/MD by invitation"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "6-yr BS/MD",
+ "instateRef": null,
+ "tuition": 38000,
+ "cds7": {
+  "h": 0.324,
+  "t": 0.3,
+  "y": "2025-26",
+  "src": "https://ira.howard.edu/institutional-research/common-data-set"
+ },
+ "accel": {
+  "id": "howard",
+  "sc": "Howard University",
+  "prog": "6-year BS/MD",
+  "kind": "bsmd",
+  "ugYrs": 2,
+  "st": "DC",
+  "region": "Other",
+  "coa": 58000,
+  "merit": 10000,
+  "medYr": 78000,
+  "medName": "Howard COM",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1300
+  },
+  "easy": true,
+  "mcat": "MCAT 504+ required inside the program (Phase II)",
+  "seats": "12–15 scholars per cohort",
+  "resid": null,
+  "apply": "Admit to Howard via Common App; qualifying freshmen are INVITED in spring/summer before enrolling",
+  "url": "https://medicine.howard.edu/admission-aid",
+  "note": "One of only two active 6-year programs. Entry bar (3.5 / 1300, 650 per section preferred) is the friendliest of all accelerated routes; the catch is invitation-only entry and an MCAT 504 checkpoint to advance. HBCU mission-driven; small cohort.",
+  "why": "At 3.67/1440 he clears the published 3.5/1300 bar comfortably — the most attainable accelerated MD on the board if he is open to DC and the invitation lands."
+ },
+ "ugYearsOverride": 2,
+ "affiliatedMedCost": 78000,
+ "affiliatedMedName": "Howard COM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Howard University",
+  "name": "6-year BS/MD",
+  "band": "attainable",
+  "type": "Accelerated 2+4 (6-yr) — by invitation after admission",
+  "req": "3.5 GPA / 1300 SAT (650 per section preferred); MCAT 504 checkpoint inside the program",
+  "note": "The friendliest accelerated bar in the country; HBCU mission, DC location, 12–15 seats.",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1300
+  },
+  "easy": true
+ },
+ "programVerified": null
+}

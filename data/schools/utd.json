@@ -1,0 +1,94 @@
+{
+ "id": "utd",
+ "order": 32,
+ "general": {
+  "id": "utd",
+  "n": "UT Dallas",
+  "city": "Richardson",
+  "st": "TX",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.85,
+  "g25": 3.4,
+  "g75": 3.95,
+  "s25": 1240,
+  "s75": 1470,
+  "tb": false,
+  "coa": 54000,
+  "merit": 10000,
+  "meritName": "AES mid-tier at 1330 (auto-tiered)",
+  "dl": "ApplyTexas/Common App; Dec 1 priority for merit",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 6,
+  "grad4": 58,
+  "honors": "Collegium V Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 4,
+  "note": "Value pick: big auto merit, UT Southwestern (a top med school) 20 minutes away for research/shadowing. Caveats: commuter-campus social life, and Texas med schools heavily favor Texas residents at application time.",
+  "medNote": "Great stats-driven safety with real science; weigh the resident-preference issue for med school later.",
+  "links": [
+   [
+    "Admissions",
+    "https://enroll.utdallas.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.651,
+  "s25": 1170,
+  "s75": 1390,
+  "coa": 60403,
+  "tuitV": 40164,
+  "housV": 15125,
+  "grad4": 60
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": "TX-only",
+ "appInfo": [
+  "ApplyTexas or Common App",
+  "Rolling",
+  "Dec 1 priority (merit)",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "UT PACT (TX)",
+ "instateRef": 34000,
+ "tuition": 42000,
+ "cds7": {
+  "h": 0.337,
+  "t": 0.273,
+  "y": "2025-26",
+  "src": "https://dox.utdallas.edu/report49426"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 45000,
+ "affiliatedMedName": "UT Southwestern (TX rate)",
+ "yieldProtection": false,
+ "program": {
+  "sc": "UT Dallas",
+  "name": "UT PACT (BA/MD, UT Southwestern)",
+  "band": "restricted",
+  "type": "Formal BA/MD — residency-gated",
+  "req": "Texas residents — UTSW is ~90% TX by law",
+  "note": "Effectively closed to a CA applicant; UTD stays on the list as a merit/value school.",
+  "bar": null,
+  "hardElig": "Texas residents only — UT Southwestern is ~90% Texas-resident seats by law"
+ },
+ "programVerified": null
+}

@@ -1,0 +1,83 @@
+{
+ "id": "ua",
+ "order": 3,
+ "general": {
+  "id": "ua",
+  "n": "University of Arizona",
+  "city": "Tucson",
+  "st": "AZ",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.87,
+  "g25": 3.2,
+  "g75": 3.85,
+  "s25": 1120,
+  "s75": 1360,
+  "tb": false,
+  "coa": 59000,
+  "merit": 24000,
+  "meritName": "Arizona Excellence (auto, GPA-tiered)",
+  "dl": "Rolling — apply Sept/Oct; merit auto with admission",
+  "dlDate": "2026-10-15",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 7,
+  "grad4": 53,
+  "honors": "W.A. Franke Honors",
+  "wue": true,
+  "conf": "solid",
+  "note": "The value anchor of this list: automatic merit by GPA tier drops net cost near in-state levels, own MD school + Banner University Medical Center on campus for clinical/research hours.",
+  "medNote": "Guaranteed-tier merit means no scholarship lottery. Franke Honors adds small classes at flagship scale.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.arizona.edu"
+   ],
+   [
+    "Merit tiers",
+    "https://financialaid.arizona.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.861,
+  "s25": 1150,
+  "s75": 1420,
+  "coa": 67770,
+  "tuitV": 44400,
+  "housV": 17770,
+  "grad4": 50
+ },
+ "social": 8,
+ "religAffiliated": false,
+ "researchAccess": 8,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Own portal",
+  "Rolling (apply Sept–Oct)",
+  "May 1 final",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": 34000,
+ "tuition": 41000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

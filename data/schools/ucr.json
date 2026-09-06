@@ -1,0 +1,92 @@
+{
+ "id": "ucr",
+ "order": 34,
+ "general": {
+  "id": "ucr",
+  "n": "UC Riverside",
+  "city": "Riverside",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.87,
+  "g25": 3.25,
+  "g75": 3.7,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 44000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 61,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "Underrated for premed: has its own School of Medicine with a mission favoring inland-CA students, and a Thomas Haider early-assurance program for UCR undergrads. The most realistic UC with a med school attached.",
+  "medNote": "Haider Program: guaranteed-consideration pathway to UCR SOM for qualifying UCR students.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.882,
+  "g25w": 3.66,
+  "g75w": 4.17,
+  "coa": 46539,
+  "tuitV": 16790,
+  "housV": 21075,
+  "ship": 2824
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "Haider EA",
+ "instateRef": null,
+ "tuition": 16200,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "UC Riverside",
+  "name": "Thomas Haider Program (UCR SOM)",
+  "band": "attainable",
+  "type": "Early assurance for UCR undergrads",
+  "req": "UCR student, GPA threshold, inland-CA mission fit",
+  "note": "Rides the shared UC app; UCR is now an ~87% admit.",
+  "bar": null
+ },
+ "programVerified": null
+}

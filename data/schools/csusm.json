@@ -1,0 +1,78 @@
+{
+ "id": "csusm",
+ "order": 77,
+ "general": {
+  "id": "csusm",
+  "n": "CSU San Marcos",
+  "city": "San Marcos",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "M",
+  "admit": 0.89,
+  "g25": 2.8,
+  "g75": 3.4,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 31000,
+  "merit": 1000,
+  "meritName": "Limited merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 4,
+  "research": 3,
+  "bio": 5,
+  "med": 4,
+  "grad4": 25,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 4,
+  "note": "North San Diego county; newer campus, growing sciences. Included for completeness of the realistic CSU set.",
+  "medNote": "Backstop tier.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.csusm.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 30866,
+  "tuitV": 9334,
+  "housV": 15388
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 8000,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

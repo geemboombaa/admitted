@@ -1,0 +1,109 @@
+{
+ "id": "uconn",
+ "order": 53,
+ "general": {
+  "id": "uconn",
+  "n": "UConn",
+  "city": "Storrs",
+  "st": "CT",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.54,
+  "g25": 3.5,
+  "g75": 3.9,
+  "s25": 1250,
+  "s75": 1440,
+  "tb": false,
+  "coa": 62000,
+  "merit": 13000,
+  "meritName": "OOS merit (auto-considered)",
+  "dl": "Special Program in Medicine app with admission",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 72,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Special Program in Medicine (8-yr with UConn SOM) is a moderate reach — more attainable than the coastal-elite programs. Decent OOS merit softens the cost.",
+  "medNote": "Sleeper combo: honors + SPiM app costs nothing extra.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.uconn.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.544,
+  "s25": 1260,
+  "s75": 1420,
+  "coa": 67108,
+  "tuitV": 44242,
+  "housV": 15184,
+  "ship": 3214,
+  "grad4": 73
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Jan 15",
+  "None; SPiM extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "SPiM",
+ "instateRef": 40000,
+ "tuition": 45000,
+ "cds7": {
+  "h": 0.483,
+  "t": 0,
+  "y": "2023-2024",
+  "src": "https://bpir.media.uconn.edu/wp-content/uploads/sites/3452/2024/08/UConn_CDS_2023_2024.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 100000,
+ "affiliatedMedName": "UConn SOM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "UConn",
+  "name": "Special Program in Medicine",
+  "pid": "uconn_prog",
+  "band": "stretch",
+  "type": "8-yr with UConn SOM",
+  "req": "3.5 unweighted HS GPA minimum (verified); no SAT/ACT floor published",
+  "note": "Interview by invitation only; extracurriculars and commitment to medicine weighed. 125+ other majors also lead to medicine at UConn without this program.",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 0
+  }
+ },
+ "programVerified": {
+  "minGpa": 3.5,
+  "minGpaType": "unweighted",
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://admissions.uconn.edu/apply/first-year/special-programs/medicine/ — interview required, essays on motivation/leadership considered"
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "id": "sac",
+ "order": 72,
+ "general": {
+  "id": "sac",
+  "n": "Sacramento State",
+  "city": "Sacramento",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "L",
+  "admit": 0.94,
+  "g25": 2.9,
+  "g75": 3.5,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 31000,
+  "merit": 1000,
+  "meritName": "Limited merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 5,
+  "research": 4,
+  "bio": 6,
+  "med": 5,
+  "grad4": 26,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "Sleeper angle: UC Davis Health and its med school are in Sacramento — clinical volunteering access above its weight class.",
+  "medNote": "Easy admit; premed is self-driven.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.csus.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 36444,
+  "tuitV": 9656,
+  "housV": 20212
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 8000,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

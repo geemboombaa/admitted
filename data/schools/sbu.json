@@ -1,0 +1,100 @@
+{
+ "id": "sbu",
+ "order": 48,
+ "general": {
+  "id": "sbu",
+  "n": "Stony Brook",
+  "city": "Stony Brook",
+  "st": "NY",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.49,
+  "g25": 3.6,
+  "g75": 3.95,
+  "s25": 1330,
+  "s75": 1490,
+  "tb": false,
+  "coa": 52000,
+  "merit": 6000,
+  "meritName": "Limited OOS merit",
+  "dl": "Scholars for Medicine via WISE/Honors app",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 55,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 4,
+  "note": "Scholars for Medicine (8-yr with Renaissance SOM) is a high reach; the base school is a strong-value public premed with a hospital on campus.",
+  "medNote": "SUNY pricing keeps OOS cost reasonable.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.stonybrook.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa"
+  ],
+  "admit": 0.49,
+  "coa": 58799,
+  "tuitV": 34910,
+  "housV": 19741
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Jan 15",
+  "None; SFM extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": "Scholars for Med",
+ "instateRef": 32000,
+ "tuition": 32000,
+ "cds7": {
+  "h": 0.39,
+  "t": 0.3,
+  "y": "2024-25",
+  "src": "https://www.collegedata.fyi/schools/stony-brook-university/2024-25 (fallback; official CDS is https://www.stonybrook.edu/irpe/_media/Common_data_sets/CDS_2024-2025.xlsx, published only as an .xlsx workbook with no PDF equivalent, which could not be parsed with available tools)"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 90000,
+ "affiliatedMedName": "Renaissance SOM (SUNY)",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Stony Brook",
+  "name": "Scholars for Medicine",
+  "pid": "sbu_prog",
+  "band": "out",
+  "type": "8-yr with Renaissance SOM",
+  "req": "Stony Brook’s own page explicitly withholds numeric GPA/SAT cutoffs",
+  "note": "Interview-based; the base school is the value regardless of this program.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://renaissance.stonybrookmedicine.edu/admissions/scholars — official page explicitly withholds numeric GPA/SAT cutoffs; a third-party site’s claimed numbers were rejected as unverified (self-contradictory)"
+ }
+}

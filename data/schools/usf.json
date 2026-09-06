@@ -1,0 +1,99 @@
+{
+ "id": "usf",
+ "order": 82,
+ "general": {
+  "id": "usf",
+  "n": "University of South Florida",
+  "city": "Tampa",
+  "st": "FL",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.44,
+  "g25": 3.65,
+  "g75": 3.95,
+  "s25": 1240,
+  "s75": 1400,
+  "tb": false,
+  "coa": 45000,
+  "merit": 6000,
+  "meritName": "OOS merit (competitive, limited)",
+  "dl": "Priority Nov 1; 7-yr BS/MD via Honors College admission",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 62,
+  "honors": "Judy Genshaft Honors College",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Cheap, fast-rising public with USF Health, Moffitt Cancer Center and Tampa General in reach. The 7-year BS/MD has a hard 4.0-weighted / 1500 bar — out of band — but the base school is a real value premed option.",
+  "medNote": "Apply for the school, not the program; OOS cost stays near budget.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.usf.edu/admissions"
+   ],
+   [
+    "7-yr BS/MD",
+    "https://www.usf.edu/honors/prospective-students/7-year-med.aspx"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "Priority Nov 1",
+  "Mar 1",
+  "None; Honors app"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "7-yr BS/MD",
+ "instateRef": 26000,
+ "tuition": 18000,
+ "cds7": {
+  "h": 0.074,
+  "t": 0.3,
+  "y": "2022-23 (most recent year this agent could extract; USF has since published 2024-25 and 2025-26 CDS PDFs that could not be read -- see note)",
+  "src": "https://www.usf.edu/ods/documents/cds/cds-2022-2023-revised-final-v2.pdf"
+ },
+ "accel": {
+  "id": "usf",
+  "sc": "University of South Florida",
+  "prog": "7-year BS/MD (Judy Genshaft Honors)",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "FL",
+  "region": "Other",
+  "coa": 45000,
+  "merit": 6000,
+  "medYr": 85000,
+  "medName": "Morsani COM",
+  "bar": {
+   "gpa": 3.9,
+   "sat": 1500
+  },
+  "gate": "4.0 WEIGHTED (USF recalc) + SAT 1500/ACT 34 superscored",
+  "mcat": "518 benchmark, no subscore under 125 (verified)",
+  "seats": "Small",
+  "resid": null,
+  "apply": "No separate app — qualify via Honors College FTIC admission",
+  "url": "https://www.usf.edu/honors/prospective-students/7-year-med.aspx",
+  "note": "Cheap public underneath it, but the entry bar is a hard 1500.",
+  "why": "Out of band on SAT."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 85000,
+ "affiliatedMedName": "Morsani COM",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

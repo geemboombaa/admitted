@@ -1,0 +1,84 @@
+{
+ "id": "marq",
+ "order": 20,
+ "general": {
+  "id": "marq",
+  "n": "Marquette University",
+  "city": "Milwaukee",
+  "st": "WI",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.87,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1190,
+  "s75": 1380,
+  "tb": false,
+  "coa": 68000,
+  "merit": 24000,
+  "meritName": "Merit (auto-considered)",
+  "dl": "Dec 1, 2026 priority",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 6,
+  "bio": 7,
+  "med": 7,
+  "grad4": 71,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Strong health-sciences identity, Medical College of Wisconsin across town for research/shadowing. Net ~$44k, forgiving admit rate = true private safety.",
+  "medNote": "Comparable play to Creighton/SLU, slightly less med-school-attached.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.marquette.edu/explore"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.813,
+  "s25": 1220,
+  "s75": 1350,
+  "coa": 71000,
+  "tuitV": 55090,
+  "housV": 16580,
+  "grad4": 68
+ },
+ "social": 7,
+ "religAffiliated": true,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Rolling",
+  "Dec 1 priority",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 52000,
+ "cds7": {
+  "h": 0.516,
+  "t": 0.222,
+  "y": "2024-25",
+  "src": "https://www.marquette.edu/academic-effectiveness/institutional-research-analysis/documents/cds-2024-2025_final.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

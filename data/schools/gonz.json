@@ -1,0 +1,78 @@
+{
+ "id": "gonz",
+ "order": 15,
+ "general": {
+  "id": "gonz",
+  "n": "Gonzaga University",
+  "city": "Spokane",
+  "st": "WA",
+  "region": "West",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.76,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1220,
+  "s75": 1390,
+  "tb": false,
+  "coa": 70000,
+  "merit": 24000,
+  "meritName": "Merit (auto-considered, tiered)",
+  "dl": "Nov 15, 2026 EA",
+  "dlDate": "2026-11-15",
+  "premed": 8,
+  "research": 5,
+  "bio": 7,
+  "med": 7,
+  "grad4": 79,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "note": "Sleeper premed pick: UW School of Medicine runs its Spokane program ON Gonzaga’s campus — med students, faculty, and shadowing in walking distance. Strong advising culture, net ~$46k.",
+  "medNote": "Committee support inclusive (rep.); Jesuit teaching-first science.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.gonzaga.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.603,
+  "coa": 82689,
+  "tuitV": 59510,
+  "housV": 17160,
+  "merit": 23500,
+  "grad4": 75
+ },
+ "social": 8,
+ "religAffiliated": true,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 15 EA",
+  "Feb 1",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 55000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,109 @@
+{
+ "id": "drex",
+ "order": 31,
+ "general": {
+  "id": "drex",
+  "n": "Drexel University",
+  "city": "Philadelphia",
+  "st": "PA",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.8,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1200,
+  "s75": 1400,
+  "tb": false,
+  "coa": 82000,
+  "merit": 30000,
+  "meritName": "Merit (auto, large discounts standard)",
+  "dl": "Nov 1 EA / RD Jan 15; BS/MD by Nov 1",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 52,
+  "honors": "Pennoni Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "High-admit private with its own med school, a formal BS/MD early-assurance program, and the co-op system (paid, résumé-building clinical/research placements built into the degree). Net ~$52k.",
+  "medNote": "General Drexel admission (the pill above) is a separate, much easier process than the formal BS/MD Early Assurance program, which requires its own Nov 15 application and admits ~2.7% of applicants (66 of 2,406; avg admitted: 4.22 weighted GPA/1523 SAT). See the Program-specific chance line below for his real odds there. Philly hospital density is a premed asset regardless of which path.",
+  "links": [
+   [
+    "Admissions",
+    "https://drexel.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit"
+  ],
+  "admit": 0.794,
+  "s25": 1250,
+  "s75": 1430,
+  "coa": 86353,
+  "tuitV": 64212,
+  "housV": 18831,
+  "merit": 23607
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "None; BS/MD = extra essays Nov 1"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "BA/BS+MD",
+ "instateRef": null,
+ "tuition": 62000,
+ "cds7": {
+  "h": 0.348,
+  "t": 0.25,
+  "y": "2025-26",
+  "src": "https://drexel.edu/institutionalresearch/~/media/Drexel/Provost-Group/InstitutionalResearch/Documents/Factbook/CDS_2025-2026.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "Drexel COM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Drexel University",
+  "name": "BA/BS+MD Early Assurance",
+  "pid": "drex_prog",
+  "band": "stretch",
+  "type": "Formal BS/MD — separate application beyond general Drexel admission, due Nov 15",
+  "req": "Verified minimum: 3.5 WEIGHTED GPA / 1420 SAT. Average of actually admitted/enrolled: 4.22 weighted GPA / 1523 SAT (66 admitted of 2,406 applicants, ~2.7%).",
+  "note": "Clears the minimum but sits well below the average admit. Separate from general Drexel admission (a Safety on its own) and separate from just majoring in Biology (no extra gate) — this is a bonus, much harder application on top of both.",
+  "bar": {
+   "gpa": 3.5,
+   "sat": 1420
+  }
+ },
+ "programVerified": {
+  "minGpa": 3.5,
+  "minGpaType": "weighted",
+  "minSat": 1420,
+  "avgGpa": 4.22,
+  "avgGpaType": "weighted",
+  "avgSat": 1523,
+  "applicantCount": 2406,
+  "admitCount": 66,
+  "admitRatePct": 2.7,
+  "statsOnly": false,
+  "src": "https://drexel.edu/admissions/apply/undergrad-instructions/first-year-instructions/accelerated (Fall 2026 cycle)"
+ }
+}

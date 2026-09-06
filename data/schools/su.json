@@ -1,0 +1,74 @@
+{
+ "id": "su",
+ "order": 16,
+ "general": {
+  "id": "su",
+  "n": "Seattle University",
+  "city": "Seattle",
+  "st": "WA",
+  "region": "West",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.84,
+  "g25": 3.3,
+  "g75": 3.85,
+  "s25": 1180,
+  "s75": 1370,
+  "tb": false,
+  "coa": 68000,
+  "merit": 26000,
+  "meritName": "Merit (auto with application)",
+  "dl": "Nov 15, 2026 EA",
+  "dlDate": "2026-11-15",
+  "premed": 7,
+  "research": 5,
+  "bio": 7,
+  "med": 6,
+  "grad4": 64,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Urban campus blocks from major hospital systems (Swedish, Harborview nearby) — clinical volunteering is genuinely easy. Net ~$42k after typical merit.",
+  "medNote": "Teaching-focused science, small labs.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.seattleu.edu/admissions"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa",
+   "merit"
+  ],
+  "coa": 82726,
+  "tuitV": 60828,
+  "housV": 17628,
+  "merit": 8000
+ },
+ "social": 6,
+ "religAffiliated": true,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 15 EA",
+  "Jan 15",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 55000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

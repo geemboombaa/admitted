@@ -1,0 +1,84 @@
+{
+ "id": "ucb",
+ "order": 40,
+ "general": {
+  "id": "ucb",
+  "n": "UC Berkeley",
+  "city": "Berkeley",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.11,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 47000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 7,
+  "research": 9,
+  "bio": 9,
+  "med": 7,
+  "grad4": 76,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "World-class science, brutal premed curves, no med school. For a mid-GPA premed the prestige can be a trap — a 3.2 from Berkeley loses to a 3.8 from Davis at med school screening time.",
+  "medNote": "Lottery ticket on the shared UC app; costs nothing extra to include.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.105,
+  "g25w": 4.16,
+  "g75w": 4.28,
+  "coa": 54674,
+  "tuitV": 18214,
+  "housV": 23640,
+  "ship": 5066
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 17500,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

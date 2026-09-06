@@ -1,0 +1,110 @@
+{
+ "id": "gram",
+ "order": 89,
+ "general": {
+  "id": "gram",
+  "n": "Grambling State",
+  "city": "Grambling",
+  "st": "LA",
+  "region": "Other",
+  "type": "Public",
+  "size": "S",
+  "admit": 0.9,
+  "g25": 2.8,
+  "g75": 3.5,
+  "s25": 1000,
+  "s75": 1150,
+  "tb": false,
+  "coa": 30000,
+  "merit": 5000,
+  "meritName": "OOS merit (auto)",
+  "dl": "Rolling; 7-yr BS/MD (Meharry) app with admission",
+  "dlDate": "2026-12-01",
+  "premed": 4,
+  "research": 3,
+  "bio": 5,
+  "med": 5,
+  "grad4": 20,
+  "honors": "Earl Lester Cole Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 6,
+  "note": "HBCU pipeline: a 7-year BS/MD into Meharry Medical College with a friendly bar and a strong mission lens. Small, rural Louisiana campus with limited premed infrastructure.",
+  "medNote": "Attainable on stats; the mission fit and the setting are the honest questions.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.gram.edu/admissions/"
+   ],
+   [
+    "Meharry",
+    "https://home.mmc.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 3,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "Rolling",
+  "Rolling",
+  "None; program extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": "7-yr Meharry",
+ "instateRef": 22000,
+ "tuition": 15000,
+ "cds7": {
+  "h": 0.25,
+  "t": 0.25,
+  "y": "2019-20",
+  "src": "https://www.gram.edu/offices/pair/docs/Final%20Common%20Data%20Set%20CDS_2019-2020.pdf"
+ },
+ "accel": {
+  "id": "gram",
+  "sc": "Grambling State",
+  "prog": "7-year BS/MD with Meharry Medical College",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "LA",
+  "region": "Other",
+  "coa": 30000,
+  "merit": 5000,
+  "medYr": 85000,
+  "medName": "Meharry",
+  "bar": {
+   "gpa": 3.25,
+   "sat": 1100
+  },
+  "mcat": "Required at application, no section below 122",
+  "seats": "Small",
+  "resid": "Restricted: Black/African American applicants + economically/educationally disadvantaged (verified)",
+  "apply": "Grambling app + program app",
+  "url": "https://www.gram.edu",
+  "note": "HBCU pipeline into Meharry; friendly bar, mission fit weighs heavily.",
+  "why": "Stats fit; the mission fit and location are the honest questions."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 85000,
+ "affiliatedMedName": "Meharry",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Grambling State",
+  "name": "7-year BS/MD (Meharry)",
+  "band": "attainable",
+  "type": "Accelerated 3+4 — HBCU pipeline",
+  "req": "~3.5 / 1200; mission fit weighs heavily",
+  "note": "Stats fit; setting and mission fit are the honest questions.",
+  "bar": {
+   "gpa": 3.25,
+   "sat": 1100
+  },
+  "hardElig": "Restricted to Black/African American applicants and economically/educationally disadvantaged students (Meharry partnership, verified)"
+ },
+ "programVerified": null
+}

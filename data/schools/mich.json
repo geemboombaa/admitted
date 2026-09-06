@@ -1,0 +1,71 @@
+{
+ "id": "mich",
+ "order": 60,
+ "general": {
+  "id": "mich",
+  "n": "University of Michigan",
+  "city": "Ann Arbor",
+  "st": "MI",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.18,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 1400,
+  "s75": 1530,
+  "tb": false,
+  "coa": 78000,
+  "merit": 3000,
+  "meritName": "Rare OOS merit",
+  "dl": "EA Nov 1 / RD Feb 1",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 10,
+  "bio": 9,
+  "med": 9,
+  "grad4": 82,
+  "honors": "LSA Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Elite everything — Michigan Medicine, huge research, real school spirit. OOS sticker ~$78k with almost no merit: an expensive reach.",
+  "medNote": "His band sits below their middle 50; EC spike helps but stats gate.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.umich.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Feb 1",
+  "Supplements"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": 35000,
+ "tuition": 60000,
+ "cds7": {
+  "h": 0.444,
+  "t": 0.25,
+  "y": "2024-25",
+  "src": "https://obp.umich.edu/wp-content/uploads/pubdata/cds/CDS_2024-25_UMAA.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

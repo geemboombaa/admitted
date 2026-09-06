@@ -1,0 +1,87 @@
+{
+ "id": "cornell",
+ "order": 62,
+ "general": {
+  "id": "cornell",
+  "n": "Cornell",
+  "city": "Ithaca",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.08,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1500,
+  "s75": 1560,
+  "tb": false,
+  "coa": 95000,
+  "merit": 0,
+  "meritName": "Need-based only",
+  "dl": "ED Nov 1 / RD Jan 2",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 9,
+  "bio": 9,
+  "med": 8,
+  "grad4": 88,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "Elite bio (esp. Human Ecology/CALS angles). Famously intense premed grading. Need-based aid only.",
+  "medNote": "Lottery ticket; the grading culture is a real premed consideration.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.cornell.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.079,
+  "s25": 1480,
+  "s75": 1550,
+  "coa": 99734,
+  "tuitV": 74970,
+  "housV": 21348,
+  "merit": 0,
+  "grad4": 87
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 1",
+  "Jan 2",
+  "1 supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 3,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 70000,
+ "cds7": {
+  "h": 0.6,
+  "t": 0.125,
+  "y": "2024-25",
+  "src": "https://irp.dpb.cornell.edu/wp-content/uploads/2025/07/CDS-2024-2025-v6-print.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

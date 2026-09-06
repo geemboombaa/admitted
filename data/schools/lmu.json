@@ -1,0 +1,84 @@
+{
+ "id": "lmu",
+ "order": 11,
+ "general": {
+  "id": "lmu",
+  "n": "Loyola Marymount",
+  "city": "Los Angeles",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.47,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1250,
+  "s75": 1430,
+  "tb": false,
+  "coa": 85000,
+  "merit": 23000,
+  "meritName": "Arrupe/Ignatian merit (auto-considered)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 5,
+  "bio": 7,
+  "med": 6,
+  "grad4": 79,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Your \"full-pay-minus-merit\" tier: net ~$62k. Supportive grading climate, LA hospital volunteering everywhere, strong 4-yr grad rate.",
+  "medNote": "Committee letter open to all applicants (rep.). Gentler weed-out than research flagships.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.lmu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.482,
+  "s25": 1265,
+  "s75": 1410,
+  "coa": 94598,
+  "tuitV": 65367,
+  "housV": 23520,
+  "grad4": 66
+ },
+ "social": 7,
+ "religAffiliated": true,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "1 supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 62000,
+ "cds7": {
+  "h": 0.51,
+  "t": 0.2,
+  "y": "2024-2025",
+  "src": "https://academics.lmu.edu/media/lmuacademics/strategicplanningacademiceffectiveness/officeofinstitutionalresearch/documents/Legacy-CDS_2024-2025_06112025.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

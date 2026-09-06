@@ -1,0 +1,115 @@
+{
+ "id": "cnu",
+ "order": 42,
+ "general": {
+  "id": "cnu",
+  "n": "California Northstate",
+  "city": "Elk Grove",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "S",
+  "admit": 0.6,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1250,
+  "s75": 1450,
+  "tb": false,
+  "coa": 65000,
+  "merit": 8000,
+  "meritName": "Program scholarships (limited)",
+  "dl": "BS-MD Early Assurance Honors Track — check current cycle deadline",
+  "dlDate": "2026-12-01",
+  "premed": 7,
+  "research": 5,
+  "bio": 6,
+  "med": 7,
+  "grad4": 70,
+  "honors": null,
+  "wue": false,
+  "conf": "rep",
+  "social": 3,
+  "note": "The only direct BS-MD physically in California: 3+4 and 4+4 Early Assurance Honors Tracks into CNU College of Medicine, with friendlier entry stats than classic BS/MDs. Eyes-open caveats: young school with a thin undergrad reputation, commuter campus near Sacramento, the med seat is conditional on progression benchmarks (not iron-clad), and total cost runs high.",
+  "medNote": "Estimate-heavy entry by design — verify every number and condition directly before applying.",
+  "links": [
+   [
+    "BS-MD Track",
+    "https://www.cnsu.edu/bsmd/"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": []
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Own portal",
+  "—",
+  "Check cycle (BS-MD applies early)",
+  "Program essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 5,
+ "pathNameLegacy": "BS-MD EA",
+ "instateRef": null,
+ "tuition": 45000,
+ "cds7": null,
+ "accel": {
+  "id": "cnu",
+  "sc": "California Northstate",
+  "prog": "BS-MD Accelerated Honors Track (3+4)",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "CA",
+  "region": "CA",
+  "coa": 65000,
+  "merit": 8000,
+  "medYr": 95000,
+  "medName": "CNU COM",
+  "bar": {
+   "gpa": 3.9,
+   "sat": 1450
+  },
+  "gate": "3.9 UNWEIGHTED + SAT 1450/ACT 32 + five AP exams scored 4+ (verified Sep 2026)",
+  "mcat": "Program benchmarks",
+  "seats": "Small, rolling",
+  "resid": null,
+  "apply": "Own portal; Nov 30, 2026 (rolling)",
+  "url": "https://www.cnsu.edu/bsmd/",
+  "note": "The only accelerated route physically in California. The 6-year option is gone — it is now 3+4 (accelerated) or 4+4. Conditional seat (progression benchmarks), young school, high total price.",
+  "why": "OUT at 3.67 — the verified bar is 3.9 unweighted + 1450 + five 4+ AP scores. The 4+4 Early Assurance track has softer terms; ask CNU directly if California matters enough."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 95000,
+ "affiliatedMedName": "CNU COM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "California Northstate",
+  "name": "BS-MD Accelerated Honors Track (3+4 / 4+4)",
+  "pid": "cnu_prog",
+  "band": "out",
+  "type": "Direct BS-MD — the only one physically in California",
+  "req": "Verified for the 3+4 track: 3.9 unweighted GPA / SAT 1450 or ACT 32 minimum",
+  "note": "Young school, conditional seat (progression benchmarks), high cost. Screened by CNU Committee, then finalists interview with the College of Medicine Committee.",
+  "bar": {
+   "gpa": 3.9,
+   "sat": 1450
+  }
+ },
+ "programVerified": {
+  "minGpa": 3.9,
+  "minGpaType": "unweighted",
+  "minSat": 1450,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://www.cnsu.edu/bsmd/admissions/bs-md-3-4-application-requirements.php — 3+4 track; CNU Committee then College of Medicine Committee interview"
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "id": "ucsb",
+ "order": 37,
+ "general": {
+  "id": "ucsb",
+  "n": "UC Santa Barbara",
+  "city": "Santa Barbara",
+  "st": "CA",
+  "region": "CA",
+  "type": "UC",
+  "size": "L",
+  "admit": 0.38,
+  "g25": 3.65,
+  "g75": 3.95,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 45000,
+  "merit": 1000,
+  "meritName": "Regents (competitive)",
+  "dl": "Nov 30, 2026 (UC App)",
+  "dlDate": "2026-11-30",
+  "premed": 6,
+  "research": 8,
+  "bio": 8,
+  "med": 6,
+  "grad4": 72,
+  "honors": "College of Creative Studies (separate app)",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "Great research and the best social/campus life in the system — but no med school and thinner clinical access. A quality admit that premeds have to work harder to convert.",
+  "medNote": "Choose it for fit, not the premed machinery.",
+  "links": [
+   [
+    "UC Admissions",
+    "https://admission.universityofcalifornia.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "ucGPAband",
+   "coa"
+  ],
+  "admit": 0.44,
+  "g25w": 4.05,
+  "g75w": 4.27,
+  "coa": 50946,
+  "tuitV": 17673,
+  "housV": 23985,
+  "ship": 4008
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "UC App",
+  "—",
+  "Nov 30",
+  "4 PIQs (shared)"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 4,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 16400,
+ "cds7": {
+  "h": 0.42,
+  "t": 0,
+  "y": "2026-27 UC policy",
+  "src": "UCOP comprehensive review — system-wide, no per-campus numeric breakdown published: https://admission.universityofcalifornia.edu/how-to-apply/applying-as-a-freshman/how-applications-are-reviewed.html"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

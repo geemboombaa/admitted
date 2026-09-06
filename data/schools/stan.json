@@ -1,0 +1,80 @@
+{
+ "id": "stan",
+ "order": 69,
+ "general": {
+  "id": "stan",
+  "n": "Stanford",
+  "city": "Stanford",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.04,
+  "g25": 3.9,
+  "g75": 4,
+  "s25": 1510,
+  "s75": 1570,
+  "tb": false,
+  "coa": 95000,
+  "merit": 0,
+  "meritName": "Need-based only (generous if eligible)",
+  "dl": "REA Nov 1 / RD Jan 5",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 10,
+  "bio": 10,
+  "med": 9,
+  "grad4": 76,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "On your consultant’s list, so it’s here: 4% admit, need-based only, world-best research. In-state emotional pull is real; the odds are the odds.",
+  "medNote": "One essay-heavy lottery ticket, if the list has room.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.stanford.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa",
+   "merit"
+  ],
+  "coa": 97545,
+  "tuitV": 70341,
+  "housV": 22944,
+  "merit": 0
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "REA Nov 1",
+  "Jan 5",
+  "Supplements"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.545,
+  "t": 0.1,
+  "y": "2024-25",
+  "src": "https://irds.stanford.edu/data-findings/cds"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,98 @@
+{
+ "id": "gwu",
+ "order": 81,
+ "general": {
+  "id": "gwu",
+  "n": "George Washington University",
+  "city": "Washington",
+  "st": "DC",
+  "region": "Other",
+  "type": "Private",
+  "size": "L",
+  "admit": 0.44,
+  "g25": 3.6,
+  "g75": 3.95,
+  "s25": 1350,
+  "s75": 1500,
+  "tb": false,
+  "coa": 90000,
+  "merit": 10000,
+  "meritName": "Presidential merit (auto-considered)",
+  "dl": "ED Nov 1 / RD Jan 5; 7-yr BA/MD app Nov 1",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 78,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 7,
+  "note": "7-year BA/MD with GW School of Medicine, no MCAT — but it wants top-decile scores, and the base school is a ~$90k sticker with modest merit. DC hospital access is excellent.",
+  "medNote": "Base school is a target; the BA/MD is out of band at his numbers and the price is the priciest 7-year bill on the board.",
+  "links": [
+   [
+    "Admissions",
+    "https://undergraduate.admissions.gwu.edu"
+   ],
+   [
+    "BA/MD",
+    "https://smhs.gwu.edu/academics/md-program/admissions/ba-md"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 1",
+  "Jan 5",
+  "Short; BA/MD extra Nov 1"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "7-yr BA/MD",
+ "instateRef": null,
+ "tuition": 68000,
+ "cds7": {
+  "h": 0.583,
+  "t": 0.25,
+  "y": "2024-25",
+  "src": "https://irp.gwu.edu/sites/g/files/zaxdzs6056/files/2025-05/CDS_2024-2025_FINAL.pdf"
+ },
+ "accel": {
+  "id": "gwu",
+  "sc": "George Washington University",
+  "prog": "BA/MD dual admission (now 8-year, 4+4)",
+  "kind": "bsmd",
+  "ugYrs": 4,
+  "st": "DC",
+  "region": "Other",
+  "coa": 90000,
+  "merit": 10000,
+  "medYr": 100000,
+  "medName": "GW SMHS",
+  "bar": {
+   "gpa": 3.85,
+   "sat": 1480
+  },
+  "mcat": "Required in college (program cutoff; 3.60 college GPA)",
+  "seats": "~10–20/yr",
+  "resid": null,
+  "apply": "RD only, program app Nov 15 (verified) — no longer accelerated",
+  "url": "https://smhs.gwu.edu/academics/md-program/admissions/ba-md",
+  "note": "Selective (top-decile scores expected). One of the priciest 7-year bills in the country.",
+  "why": "Stats out of band at his numbers; the price would be brutal even if it landed."
+ },
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 100000,
+ "affiliatedMedName": "GW SMHS",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

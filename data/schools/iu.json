@@ -1,0 +1,84 @@
+{
+ "id": "iu",
+ "order": 23,
+ "general": {
+  "id": "iu",
+  "n": "Indiana University Bloomington",
+  "city": "Bloomington",
+  "st": "IN",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.8,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1180,
+  "s75": 1400,
+  "tb": false,
+  "coa": 58000,
+  "merit": 9000,
+  "meritName": "IU auto tiers favor 3.8+ — lower tier at his band",
+  "dl": "Nov 1, 2026 EA (merit priority)",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 7,
+  "bio": 7,
+  "med": 7,
+  "grad4": 71,
+  "honors": "Hutton Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Classic solid-flagship play: good bio, IU School of Medicine pipeline (largest US med school by enrollment), reliable merit. Net ~$46k.",
+  "medNote": "Nothing flashy, few weaknesses.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.indiana.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.78,
+  "s25": 1250,
+  "s75": 1450,
+  "coa": 62956,
+  "tuitV": 42702,
+  "housV": 14398,
+  "grad4": 69
+ },
+ "social": 9,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Feb 1",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": null,
+ "instateRef": 30000,
+ "tuition": 42000,
+ "cds7": {
+  "h": 0.304,
+  "t": 0.182,
+  "y": "2024-25",
+  "src": "https://iuapps.iu.edu/cds/?p=index&i=home&section=C.+First-Time,+First-Year+Admission&year=2025"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

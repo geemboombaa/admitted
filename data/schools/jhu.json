@@ -1,0 +1,88 @@
+{
+ "id": "jhu",
+ "order": 27,
+ "general": {
+  "id": "jhu",
+  "n": "Johns Hopkins",
+  "city": "Baltimore",
+  "st": "MD",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.06,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1520,
+  "s75": 1560,
+  "tb": false,
+  "coa": 92000,
+  "merit": 1000,
+  "meritName": "Hodson Trust (rare, top-stats); otherwise need-based only",
+  "dl": "ED1 Nov 1 / ED2 Jan 2 / RD Jan 2",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 10,
+  "bio": 10,
+  "med": 10,
+  "grad4": 88,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "The premed pinnacle — Hopkins Hospital, unmatched research. Included because you asked for it: at his numbers this is a ~2% lottery ticket, and Hopkins gives almost no merit (need-based aid only, which is excellent if you qualify).",
+  "medNote": "Intense premed competition internally; superb committee support for those who survive it.",
+  "links": [
+   [
+    "Admissions",
+    "https://apply.jhu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.064,
+  "s25": 1530,
+  "s75": 1570,
+  "coa": 94858,
+  "tuitV": 68670,
+  "housV": 21967,
+  "ship": 3624,
+  "merit": 0,
+  "grad4": 87
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1 / ED2 Jan 2",
+  "Jan 2",
+  "1 supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.571,
+  "t": 0.333,
+  "y": "2025-26",
+  "src": "https://oira.jhu.edu/wp-content/uploads/2025-2026-CDS-Johns-Hopkins-University-v2.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

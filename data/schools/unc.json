@@ -1,0 +1,71 @@
+{
+ "id": "unc",
+ "order": 61,
+ "general": {
+  "id": "unc",
+  "n": "UNC Chapel Hill",
+  "city": "Chapel Hill",
+  "st": "NC",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.19,
+  "g25": 3.8,
+  "g75": 4,
+  "s25": 1350,
+  "s75": 1500,
+  "tb": false,
+  "coa": 60000,
+  "merit": 2000,
+  "meritName": "Morehead-Cain (lottery)",
+  "dl": "EA Oct 15 / RD Jan 15",
+  "dlDate": "2026-10-15",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 84,
+  "honors": "Honors Carolina",
+  "wue": false,
+  "conf": "solid",
+  "social": 9,
+  "note": "State law caps OOS enrollment at 18%, so OOS admits run near single digits. Superb premed if it lands; plan around it, not on it.",
+  "medNote": "EA Oct 15 deadline is the earliest on this list.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.unc.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Oct 15",
+  "Jan 15",
+  "Short answers"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": 27000,
+ "tuition": 42000,
+ "cds7": {
+  "h": 0.545,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

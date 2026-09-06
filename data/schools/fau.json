@@ -1,0 +1,99 @@
+{
+ "id": "fau",
+ "order": 86,
+ "general": {
+  "id": "fau",
+  "n": "Florida Atlantic",
+  "city": "Boca Raton",
+  "st": "FL",
+  "region": "Other",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.68,
+  "g25": 3.4,
+  "g75": 3.9,
+  "s25": 1090,
+  "s75": 1270,
+  "tb": false,
+  "coa": 40000,
+  "merit": 5000,
+  "meritName": "OOS merit (limited)",
+  "dl": "Rolling; Wilkes Medical Scholars (7-yr) app Nov",
+  "dlDate": "2026-11-15",
+  "premed": 5,
+  "research": 5,
+  "bio": 6,
+  "med": 6,
+  "grad4": 38,
+  "honors": "Wilkes Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 6,
+  "note": "Cheapest OOS public on the board with a 7-year BS/MD (Schmidt College of Medicine) — but the program bar is a hard 4.0-weighted / 1500. Growing sciences, South Florida hospital access.",
+  "medNote": "Program out of band; base school is a low-cost backstop.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.fau.edu/admissions"
+   ],
+   [
+    "BS/MD",
+    "https://www.fau.edu/medicine/admissions/bs-md/"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 5,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App or Own",
+  "Rolling",
+  "Rolling",
+  "None; Wilkes extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "7-yr Wilkes",
+ "instateRef": 22000,
+ "tuition": 22000,
+ "cds7": {
+  "h": 0.286,
+  "t": 0.2,
+  "y": "2024-25",
+  "src": "https://www.fau.edu/iea/documents/pdf/cds/cds-2024-2025.pdf"
+ },
+ "accel": {
+  "id": "fau",
+  "sc": "Florida Atlantic",
+  "prog": "7-year Wilkes Medical Scholars",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "FL",
+  "region": "Other",
+  "coa": 40000,
+  "merit": 5000,
+  "medYr": 80000,
+  "medName": "Schmidt COM",
+  "bar": {
+   "gpa": 3.9,
+   "sat": 1490
+  },
+  "gate": "4.30 weighted + SAT 1490/ACT 33 (verified)",
+  "mcat": "Required (threshold)",
+  "seats": "Small",
+  "resid": null,
+  "apply": "FAU Honors app + program app, Nov 23, 2026",
+  "url": "https://www.fau.edu/medicine/admissions/bs-md/",
+  "note": "Cheap public, hard bar.",
+  "why": "Out of band on stats."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 80000,
+ "affiliatedMedName": "Schmidt COM",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

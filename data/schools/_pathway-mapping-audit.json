@@ -1,0 +1,177 @@
+[
+ {
+  "pid": null,
+  "sc": "Saint Louis University",
+  "matchedId": "slu"
+ },
+ {
+  "pid": null,
+  "sc": "Virginia Commonwealth (VCU)",
+  "matchedId": "vcu"
+ },
+ {
+  "pid": null,
+  "sc": "Siena College",
+  "matchedId": "siena"
+ },
+ {
+  "pid": null,
+  "sc": "UC Riverside",
+  "matchedId": "ucr"
+ },
+ {
+  "pid": null,
+  "sc": "Michigan State (Lyman Briggs)",
+  "matchedId": "msu"
+ },
+ {
+  "pid": null,
+  "sc": "University of Cincinnati",
+  "matchedId": "cinci"
+ },
+ {
+  "pid": null,
+  "sc": "UMKC",
+  "matchedId": "umkc"
+ },
+ {
+  "pid": "uconn_prog",
+  "sc": "UConn",
+  "matchedId": "uconn"
+ },
+ {
+  "pid": "union_prog",
+  "sc": "Union College",
+  "matchedId": "union"
+ },
+ {
+  "pid": "rpi_prog",
+  "sc": "RPI",
+  "matchedId": "rpi"
+ },
+ {
+  "pid": "drex_prog",
+  "sc": "Drexel University",
+  "matchedId": "drex"
+ },
+ {
+  "pid": "cnu_prog",
+  "sc": "California Northstate",
+  "matchedId": "cnu"
+ },
+ {
+  "pid": "luc_prog",
+  "sc": "Loyola University Chicago",
+  "matchedId": "luc"
+ },
+ {
+  "pid": null,
+  "sc": "Creighton University",
+  "matchedId": "crei"
+ },
+ {
+  "pid": "unr_prog",
+  "sc": "University of Nevada, Reno",
+  "matchedId": "unr"
+ },
+ {
+  "pid": "ucm_prog",
+  "sc": "UC Merced",
+  "matchedId": "ucm"
+ },
+ {
+  "pid": null,
+  "sc": "UT Dallas",
+  "matchedId": "utd"
+ },
+ {
+  "pid": "rut_njms_prog",
+  "sc": "Rutgers",
+  "matchedId": "rut"
+ },
+ {
+  "pid": "sbu_prog",
+  "sc": "Stony Brook",
+  "matchedId": "sbu"
+ },
+ {
+  "pid": "hof_prog",
+  "sc": "Hofstra University",
+  "matchedId": "hof"
+ },
+ {
+  "pid": null,
+  "sc": "Penn State",
+  "matchedId": "psu"
+ },
+ {
+  "pid": "bay_prog",
+  "sc": "Baylor University",
+  "matchedId": "bay"
+ },
+ {
+  "pid": "pitt_prog",
+  "sc": "University of Pittsburgh",
+  "matchedId": "pitt"
+ },
+ {
+  "pid": "cwru_prog",
+  "sc": "Case Western Reserve",
+  "matchedId": "cwru"
+ },
+ {
+  "pid": "roch_prog",
+  "sc": "Rochester",
+  "matchedId": "roch"
+ },
+ {
+  "pid": "brown_prog",
+  "sc": "Brown University",
+  "matchedId": "brown"
+ },
+ {
+  "pid": null,
+  "sc": "Howard University",
+  "matchedId": "howard"
+ },
+ {
+  "pid": null,
+  "sc": "NYIT",
+  "matchedId": "nyit"
+ },
+ {
+  "pid": null,
+  "sc": "Grambling State",
+  "matchedId": "gram"
+ },
+ {
+  "pid": null,
+  "sc": "Rowan University",
+  "matchedId": "rowan"
+ },
+ {
+  "pid": null,
+  "sc": "Temple / NJIT / GWU / USF / FAU",
+  "matchedId": "temple"
+ },
+ {
+  "pid": null,
+  "sc": "Augusta (MCG) / CUNY Sophie Davis",
+  "matchedId": null
+ },
+ {
+  "pid": "rice_prog",
+  "sc": "Rice University",
+  "matchedId": "rice"
+ },
+ {
+  "pid": "tulane_prog",
+  "sc": "Tulane University",
+  "matchedId": "tulane"
+ },
+ {
+  "pid": null,
+  "sc": "The rest of the ~60 BS/MD universe",
+  "matchedId": null
+ }
+]

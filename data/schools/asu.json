@@ -1,0 +1,87 @@
+{
+ "id": "asu",
+ "order": 4,
+ "general": {
+  "id": "asu",
+  "n": "Arizona State (Barrett)",
+  "city": "Tempe",
+  "st": "AZ",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.9,
+  "g25": 3.2,
+  "g75": 3.8,
+  "s25": 1130,
+  "s75": 1360,
+  "tb": false,
+  "coa": 56000,
+  "merit": 16000,
+  "meritName": "ASU Commitment Scholarship (auto, $5,500-$7,500/yr per ASU) — replaces WUE for Fall 2026+ admits; exact amount for his cycle not yet published, conservative low end used",
+  "dl": "Rolling; Barrett priority Nov 1, 2026",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 8,
+  "bio": 8,
+  "med": 7,
+  "grad4": 56,
+  "honors": "Barrett Honors College",
+  "wue": false,
+  "conf": "solid",
+  "note": "Barrett is the play here — arguably the strongest honors college in the country layered on huge research capacity. Mayo Clinic partnership (MedStart, shadowing pipelines) is a real premed asset.",
+  "medNote": "At ASU scale you must self-advocate, but Barrett shrinks it. Auto merit by stats.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.asu.edu"
+   ],
+   [
+    "Scholarship est.",
+    "https://scholarships.asu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "coa",
+   "grad4",
+   "merit"
+  ],
+  "admit": 0.899,
+  "coa": 63394,
+  "tuitV": 39262,
+  "housV": 18819,
+  "grad4": 56,
+  "merit": 5500
+ },
+ "social": 9,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Own or Common App",
+  "Rolling; Barrett Nov 1",
+  "Feb 1",
+  "Barrett essay only"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 7,
+ "pathNameLegacy": null,
+ "instateRef": 33000,
+ "tuition": 34000,
+ "cds7": {
+  "h": 0.324,
+  "t": 0.2,
+  "y": "2024-25",
+  "src": "https://uoia.asu.edu/sites/default/files/2025-04/ASU%20Campus%20Immersion%20-%20Common%20Data%20Set%202024-25.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

@@ -1,0 +1,97 @@
+{
+ "id": "njit",
+ "order": 83,
+ "general": {
+  "id": "njit",
+  "n": "NJIT",
+  "city": "Newark",
+  "st": "NJ",
+  "region": "Other",
+  "type": "Public",
+  "size": "M",
+  "admit": 0.64,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1270,
+  "s75": 1470,
+  "tb": false,
+  "coa": 55000,
+  "merit": 15000,
+  "meritName": "Dorman Honors / OOS merit (auto)",
+  "dl": "EA Nov 15; 7-yr BS/MD (NJMS) app Nov 15",
+  "dlDate": "2026-11-15",
+  "premed": 6,
+  "research": 7,
+  "bio": 5,
+  "med": 7,
+  "grad4": 45,
+  "honors": "Albert Dorman Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 4,
+  "note": "Engineering school next door to Rutgers New Jersey Medical School; the 7-year BS/MD runs through Dorman Honors and expects top-10%-of-class credentials. Real OOS merit; thin campus life.",
+  "medNote": "BS/MD is a stretch-to-out; the merit makes the base school affordable if the tech-campus vibe suits him.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.njit.edu/admissions"
+   ],
+   [
+    "BS/MD",
+    "https://njms.rutgers.edu/education/office_education/admissions/bsmd.php"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 7,
+ "pathType": "bsmd",
+ "restrictNote": "top-10% class",
+ "appInfo": [
+  "Common App",
+  "EA Nov 15",
+  "Rolling",
+  "None; BS/MD extra Nov 15"
+ ],
+ "progRateLegacy": {
+  "rate": 2.6,
+  "note": "19 admitted of 734 applicants, current cycle (NJIT/NJMS 7-yr BS/MD)"
+ },
+ "clinicalAccess": 8,
+ "pathNameLegacy": "7-yr BS/MD (NJMS)",
+ "instateRef": 38000,
+ "tuition": 36000,
+ "cds7": null,
+ "accel": {
+  "id": "njit",
+  "sc": "NJIT / TCNJ / Stevens / Rutgers-Newark",
+  "prog": "7-year BS/MD with Rutgers NJMS",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "NJ",
+  "region": "Other",
+  "coa": 55000,
+  "merit": 15000,
+  "medYr": 90000,
+  "medName": "Rutgers NJMS",
+  "bar": {
+   "gpa": 3.85,
+   "sat": 1490
+  },
+  "gate": "SAT 1490/ACT 33 in a SINGLE sitting — no superscore (verified)",
+  "mcat": "Required, no minimum; 3.5 college GPA",
+  "seats": "19 admitted for 2025-26 (734 applied)",
+  "resid": "No formal in-state rule, but top-10%-of-class expectation",
+  "apply": "Partner-school app + NJMS program app, ~Nov 1–15",
+  "url": "https://njms.rutgers.edu/education/office_education/admissions/bsmd.php",
+  "note": "Four undergrad doors into one 7-year track; NJIT’s Dorman Honors gives real OOS merit.",
+  "why": "Class-rank and score expectations sit above his band; stretch only if his numbers land at the top."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 90000,
+ "affiliatedMedName": "Rutgers NJMS",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

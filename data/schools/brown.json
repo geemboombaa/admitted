@@ -1,0 +1,107 @@
+{
+ "id": "brown",
+ "order": 68,
+ "general": {
+  "id": "brown",
+  "n": "Brown",
+  "city": "Providence",
+  "st": "RI",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.05,
+  "g25": 3.9,
+  "g75": 4,
+  "s25": 1510,
+  "s75": 1570,
+  "tb": false,
+  "coa": 93000,
+  "merit": 0,
+  "meritName": "Need-based only",
+  "dl": "ED Nov 1 (PLME with admission) / RD Jan 3",
+  "dlDate": "2026-11-01",
+  "premed": 8,
+  "research": 8,
+  "bio": 8,
+  "med": 8,
+  "grad4": 86,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 8,
+  "note": "PLME (8-yr, no-MCAT-pressure) is the most famous BS/MD and among the most selective (~2%). Open curriculum protects GPA.",
+  "medNote": "Consultant and Claude agree: lottery; not a merit play.",
+  "links": [
+   [
+    "Admissions",
+    "https://admission.brown.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.05,
+  "s25": 1510,
+  "s75": 1580,
+  "coa": 99984,
+  "tuitV": 77652,
+  "housV": 19464,
+  "merit": 0,
+  "grad4": 77
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED Nov 1 (PLME)",
+  "Jan 3",
+  "Supplements; PLME extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "PLME",
+ "instateRef": null,
+ "tuition": 70000,
+ "cds7": {
+  "h": 0.483,
+  "t": 0.25,
+  "y": "2025-26",
+  "src": "https://oir.brown.edu/institutional-data/common-data-set"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 100000,
+ "affiliatedMedName": "Warren Alpert (Brown)",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Brown University",
+  "name": "PLME (8-yr)",
+  "pid": "brown_prog",
+  "band": "out",
+  "type": "The most famous BS/MD",
+  "req": "Real published rate: 84 admitted of 3,827 applicants (~2.19%, Class of 2026 cycle) — no minimum GPA/SAT published",
+  "note": "Lottery, not a merit play, confirmed by real reported numbers (not the informal folk estimate).",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": 3827,
+  "admitCount": 84,
+  "admitRatePct": 2.19,
+  "statsOnly": false,
+  "src": "https://www.browndailyherald.com/article/2022/03/brown-admits-record-low-5-of-applicants-to-class-of-2026 — PLME, Class of 2026 cycle; no official minimum GPA/SAT published"
+ }
+}

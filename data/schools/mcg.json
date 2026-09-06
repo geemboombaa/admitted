@@ -1,0 +1,96 @@
+{
+ "id": "mcg",
+ "order": 87,
+ "general": {
+  "id": "mcg",
+  "n": "Augusta University",
+  "city": "Augusta",
+  "st": "GA",
+  "region": "Other",
+  "type": "Public",
+  "size": "M",
+  "admit": 0.7,
+  "g25": 3.3,
+  "g75": 3.9,
+  "s25": 1100,
+  "s75": 1290,
+  "tb": false,
+  "coa": 45000,
+  "merit": 5000,
+  "meritName": "OOS merit (limited)",
+  "dl": "Rolling; Professional Scholars (7-yr MCG) app with admission",
+  "dlDate": "2026-11-15",
+  "premed": 6,
+  "research": 6,
+  "bio": 6,
+  "med": 8,
+  "grad4": 35,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "rep",
+  "social": 4,
+  "note": "Home of the Medical College of Georgia — the med school is literally the campus. The 7-year Professional Scholars Program leans Georgia-resident; verify eligibility before spending essays.",
+  "medNote": "Restricted-to-stretch; clinical access is excellent, campus life is thin.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.augusta.edu/admissions/"
+   ],
+   [
+    "MCG",
+    "https://www.augusta.edu/mcg/"
+   ]
+  ]
+ },
+ "verifiedFacts": null,
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": "bsmd",
+ "restrictNote": "GA-leaning — verify",
+ "appInfo": [
+  "Common App or Own",
+  "Rolling",
+  "Rolling",
+  "None; PSP extra"
+ ],
+ "progRateLegacy": {
+  "rate": 10,
+  "note": "~25 seats of ~250 applicants, approximate per Augusta University itself (Professional Scholars Pathway)"
+ },
+ "clinicalAccess": 8,
+ "pathNameLegacy": "7-yr MCG",
+ "instateRef": 26000,
+ "tuition": 26000,
+ "cds7": null,
+ "accel": {
+  "id": "mcg",
+  "sc": "Augusta University",
+  "prog": "7-year Professional Scholars (Medical College of Georgia)",
+  "kind": "bsmd",
+  "ugYrs": 3,
+  "st": "GA",
+  "region": "Other",
+  "coa": 45000,
+  "merit": 5000,
+  "medYr": 75000,
+  "medName": "Medical College of Georgia",
+  "bar": {
+   "gpa": 3.7,
+   "sat": 1450
+  },
+  "mcat": "Required (threshold)",
+  "seats": "up to 25",
+  "resid": "Georgia residents preferred (explicit)",
+  "apply": "EA Oct 31 + Professional Scholars supplement Dec 15 (verified)",
+  "url": "https://www.augusta.edu/admissions/",
+  "note": "Inexpensive public; strong in-state lean.",
+  "why": "Restricted-to-stretch; check residency rules before spending essays."
+ },
+ "ugYearsOverride": 3,
+ "affiliatedMedCost": 75000,
+ "affiliatedMedName": "Medical College of Georgia",
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

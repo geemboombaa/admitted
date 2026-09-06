@@ -1,0 +1,72 @@
+{
+ "id": "scu",
+ "order": 14,
+ "general": {
+  "id": "scu",
+  "n": "Santa Clara University",
+  "city": "Santa Clara",
+  "st": "CA",
+  "region": "CA",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.41,
+  "g25": 3.6,
+  "g75": 3.95,
+  "s25": 1330,
+  "s75": 1470,
+  "tb": false,
+  "coa": 86000,
+  "merit": 14000,
+  "meritName": "Provost/Johannes merit (competitive)",
+  "dl": "Nov 1, 2026 EA",
+  "dlDate": "2026-11-01",
+  "premed": 7,
+  "research": 6,
+  "bio": 7,
+  "med": 6,
+  "grad4": 86,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "rep",
+  "note": "Bay Area, superb grad rate, strong advising — but merit is thinner and his band sits at their 25th percentile, so treat as a reach with a ~$72k net if it lands.",
+  "medNote": "Include only if the Bay Area pull is strong; otherwise LMU/USD do the same job cheaper.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.scu.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": []
+ },
+ "social": 6,
+ "religAffiliated": true,
+ "researchAccess": 5,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 7",
+  "Short supplement"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 63000,
+ "cds7": {
+  "h": 0.494,
+  "t": 0.111,
+  "y": "2022-23",
+  "src": "https://www.scu.edu/media/offices/institutional-research/fampf/common-data-set/Common-Data-Set-2022-2023.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

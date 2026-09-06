@@ -1,0 +1,92 @@
+{
+ "id": "crei",
+ "order": 18,
+ "general": {
+  "id": "crei",
+  "n": "Creighton University",
+  "city": "Omaha",
+  "st": "NE",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.74,
+  "g25": 3.5,
+  "g75": 3.95,
+  "s25": 1220,
+  "s75": 1400,
+  "tb": false,
+  "coa": 68000,
+  "merit": 28000,
+  "meritName": "Merit (auto, generous at his band)",
+  "dl": "Nov 1, 2026 EA (merit priority)",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 7,
+  "bio": 8,
+  "med": 9,
+  "grad4": 72,
+  "honors": "Honors Program",
+  "wue": false,
+  "conf": "solid",
+  "note": "Health-professions university in disguise: own MD school, ~40% of students on pre-health tracks, exceptional advising and committee support. Net ~$40k. Also has a Phoenix health campus.",
+  "medNote": "One of the highest med-school acceptance cultures for a school at this selectivity level.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.creighton.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.921,
+  "s25": 1280,
+  "s75": 1410,
+  "coa": 69863,
+  "tuitV": 50960,
+  "housV": 14453,
+  "ship": 3916,
+  "grad4": 73
+ },
+ "social": 6,
+ "religAffiliated": true,
+ "researchAccess": 8,
+ "pathType": "ea",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 15",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": "Pre-health EA",
+ "instateRef": null,
+ "tuition": 50000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": {
+  "sc": "Creighton University",
+  "name": "Pre-Professional Medical Scholars",
+  "band": "out",
+  "type": "Guaranteed med-school INTERVIEW only (verified Sep 2026)",
+  "req": "HARD GATE: 3.8 HS GPA + 1360 SAT to apply; then 3.6 science GPA + MCAT 80th percentile for the interview",
+  "note": "Verified from the program page: his 3.67 misses the 3.8 GPA gate, and the payoff is only an interview. The counselor’s doubt was right.",
+  "bar": {
+   "gpa": 3.8,
+   "sat": 1360
+  },
+  "hardGate": true
+ },
+ "programVerified": null
+}

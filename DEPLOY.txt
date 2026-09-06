@@ -1,16 +1,16 @@
-PUBLISH ADMITTED v14 — update the live site (PowerShell, one command per line)
+PUBLISH ADMITTED v15 — update the live site (PowerShell, one command per line)
 
-1) Unzip admitted-v14.zip and copy its files OVER your existing repo folder (replace index.html, README.md, DEPLOY.txt)
+1) Unzip admitted-v15.zip and copy its files OVER your existing repo folder (replace index.html, README.md, DEPLOY.txt)
 2) In that folder:
    git add .
-   git commit -m "admitted v14: True Cost ledger, BS/MD cost fix, Accelerated tab"
+   git commit -m "admitted v15: True Cost ledger, BS/MD cost fix, Accelerated tab"
    git push
 3) Vercel redeploys automatically from the push (about a minute). Hard-refresh the site (Ctrl+F5).
 
 First-time setup (only if the repo does not exist yet):
    git init
    git add .
-   git commit -m "admitted v14"
+   git commit -m "admitted v15"
    git branch -M main
    git remote add origin https://github.com/geemboombaa/admitted.git
    git push -u origin main

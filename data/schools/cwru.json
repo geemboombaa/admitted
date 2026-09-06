@@ -1,0 +1,107 @@
+{
+ "id": "cwru",
+ "order": 29,
+ "general": {
+  "id": "cwru",
+  "n": "Case Western Reserve",
+  "city": "Cleveland",
+  "st": "OH",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.27,
+  "g25": 3.7,
+  "g75": 4,
+  "s25": 1470,
+  "s75": 1540,
+  "tb": false,
+  "coa": 88000,
+  "merit": 26000,
+  "meritName": "University/Bolton merit (generous, auto-considered)",
+  "dl": "Nov 1 EA / RD Jan 8; PPSP pre-professional app Dec 1",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 9,
+  "grad4": 71,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 5,
+  "note": "Premed heavyweight sandwiched between University Hospitals and the Cleveland Clinic; discounts generously. His band is below their middle 50 — a reach that becomes interesting if his SAT is at the top of the range.",
+  "medNote": "PPSP (their BS/MD) is among the most selective in the country.",
+  "links": [
+   [
+    "Admissions",
+    "https://case.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.353,
+  "s25": 1440,
+  "s75": 1530,
+  "coa": 95704,
+  "tuitV": 72866,
+  "housV": 20288,
+  "merit": 32560,
+  "grad4": 75
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Jan 8",
+  "None; PPSP = extra essays by Dec 1"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 9,
+ "pathNameLegacy": "PPSP",
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.468,
+  "t": 0.2,
+  "y": "2025-26",
+  "src": "https://case.edu/ir/sites/default/files/2026-02/CDS%202025-26%20Adjusted%20Final.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 97000,
+ "affiliatedMedName": "CWRU SOM",
+ "yieldProtection": true,
+ "program": {
+  "sc": "Case Western Reserve",
+  "name": "PPSP",
+  "pid": "cwru_prog",
+  "band": "out",
+  "type": "Formal BS/MD (PPSP)",
+  "req": "No numeric GPA/SAT published anywhere official — qualities named instead (rigor, volunteering/shadowing, care for others)",
+  "note": "Worth applying to on merit + premed strength alone regardless of PPSP.",
+  "bar": null
+ },
+ "programVerified": {
+  "minGpa": null,
+  "minGpaType": null,
+  "minSat": null,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": null,
+  "admitCount": null,
+  "admitRatePct": null,
+  "statsOnly": false,
+  "src": "https://case.edu/admission/academics/pre-professional-programs — no numeric GPA/SAT published; qualities named (rigor, volunteering/shadowing, care for others)"
+ }
+}

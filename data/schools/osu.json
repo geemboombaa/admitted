@@ -1,0 +1,84 @@
+{
+ "id": "osu",
+ "order": 8,
+ "general": {
+  "id": "osu",
+  "n": "Oregon State University",
+  "city": "Corvallis",
+  "st": "OR",
+  "region": "West",
+  "type": "Public",
+  "size": "L",
+  "admit": 0.83,
+  "g25": 3.2,
+  "g75": 3.8,
+  "s25": 1120,
+  "s75": 1350,
+  "tb": false,
+  "coa": 54000,
+  "merit": 12000,
+  "meritName": "Nonresident scholar awards (auto-ish)",
+  "dl": "Nov 1, 2026 EA priority",
+  "dlDate": "2026-11-01",
+  "premed": 6,
+  "research": 7,
+  "bio": 8,
+  "med": 5,
+  "grad4": 41,
+  "honors": "Honors College",
+  "wue": true,
+  "conf": "solid",
+  "note": "Stronger in bio/life-science research than its reputation suggests (marine bio, biochem). Same Oregon caveat: no on-site medical center.",
+  "medNote": "Good Plan B breadth (bioengineering, public health).",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.oregonstate.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "grad4"
+  ],
+  "admit": 0.773,
+  "s25": 1160,
+  "s75": 1390,
+  "coa": 65013,
+  "tuitV": 42459,
+  "housV": 18066,
+  "grad4": 47
+ },
+ "social": 6,
+ "religAffiliated": false,
+ "researchAccess": 6,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "Nov 1 EA",
+  "Feb 1",
+  "None"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 3,
+ "pathNameLegacy": null,
+ "instateRef": 34000,
+ "tuition": 35000,
+ "cds7": {
+  "h": 0.4,
+  "t": 0,
+  "y": "2024-2025",
+  "src": "https://institutionalresearch.oregonstate.edu/sites/institutionalresearch.oregonstate.edu/files/2025-07/cds_2024-25.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

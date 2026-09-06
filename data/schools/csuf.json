@@ -1,0 +1,78 @@
+{
+ "id": "csuf",
+ "order": 43,
+ "general": {
+  "id": "csuf",
+  "n": "CSU Fullerton",
+  "city": "Fullerton",
+  "st": "CA",
+  "region": "CA",
+  "type": "CSU",
+  "size": "L",
+  "admit": 0.6,
+  "g25": 3,
+  "g75": 3.6,
+  "s25": 0,
+  "s75": 0,
+  "tb": true,
+  "coa": 31000,
+  "merit": 1000,
+  "meritName": "Limited merit",
+  "dl": "Nov 30, 2026 (Cal State Apply)",
+  "dlDate": "2026-11-30",
+  "premed": 5,
+  "research": 4,
+  "bio": 6,
+  "med": 5,
+  "grad4": 36,
+  "honors": "University Honors",
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Third CSU safety, OC location with LA/OC hospital volunteering in reach. Plan courses aggressively — 4-yr grad rate is low.",
+  "medNote": "Self-driven premed path; advising stretched.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.fullerton.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "coa"
+  ],
+  "coa": 36148,
+  "tuitV": 8516,
+  "housV": 21530
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Cal State Apply",
+  "—",
+  "Nov 30",
+  "None — no essays"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 7500,
+ "cds7": {
+  "h": 0.15,
+  "t": 0,
+  "y": "2026-27 CSU policy",
+  "src": "CSU Admission Handbook — GPA/A-G-driven with supplemental holistic factors only near impacted-campus cutoffs: https://www2.calstate.edu/apply/freshman"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

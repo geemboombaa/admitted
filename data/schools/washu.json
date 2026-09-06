@@ -1,0 +1,87 @@
+{
+ "id": "washu",
+ "order": 65,
+ "general": {
+  "id": "washu",
+  "n": "WashU St. Louis",
+  "city": "St. Louis",
+  "st": "MO",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.12,
+  "g25": 3.85,
+  "g75": 4,
+  "s25": 1500,
+  "s75": 1560,
+  "tb": false,
+  "coa": 95000,
+  "merit": 3000,
+  "meritName": "Named scholarships (rare)",
+  "dl": "ED1 Nov 1 / RD Jan 2",
+  "dlDate": "2026-11-01",
+  "premed": 9,
+  "research": 9,
+  "bio": 9,
+  "med": 10,
+  "grad4": 88,
+  "honors": null,
+  "wue": false,
+  "conf": "solid",
+  "social": 6,
+  "note": "Med-school-adjacent everything — WashU Med is a top-5 research school and undergrads feel it. Elite reach.",
+  "medNote": "Among the best pure premed environments in the country, if it lands.",
+  "links": [
+   [
+    "Admissions",
+    "https://admissions.washu.edu"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.12,
+  "s25": 1490,
+  "s75": 1550,
+  "coa": 102260,
+  "tuitV": 72722,
+  "housV": 24272,
+  "merit": 0,
+  "grad4": 89
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": null,
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "ED1 Nov 1",
+  "Jan 2",
+  "Short"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 8,
+ "pathNameLegacy": null,
+ "instateRef": null,
+ "tuition": 66000,
+ "cds7": {
+  "h": 0.571,
+  "t": 0.333,
+  "y": "2025-26",
+  "src": "https://washu.edu/app/uploads/2026/06/2025-2026-WashU-CDS.pdf"
+ },
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": null,
+ "affiliatedMedName": null,
+ "yieldProtection": false,
+ "program": null,
+ "programVerified": null
+}

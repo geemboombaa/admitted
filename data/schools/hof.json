@@ -1,0 +1,105 @@
+{
+ "id": "hof",
+ "order": 51,
+ "general": {
+  "id": "hof",
+  "n": "Hofstra University",
+  "city": "Hempstead",
+  "st": "NY",
+  "region": "Other",
+  "type": "Private",
+  "size": "M",
+  "admit": 0.69,
+  "g25": 3.3,
+  "g75": 3.8,
+  "s25": 1200,
+  "s75": 1400,
+  "tb": false,
+  "coa": 78000,
+  "merit": 26000,
+  "meritName": "Merit (large, auto)",
+  "dl": "4+4 BS-MD (Zucker) app due early with admission",
+  "dlDate": "2026-11-01",
+  "premed": 6,
+  "research": 5,
+  "bio": 6,
+  "med": 7,
+  "grad4": 55,
+  "honors": "Honors College",
+  "wue": false,
+  "conf": "rep",
+  "social": 5,
+  "note": "Easy admit with big merit; the 4+4 BS-MD with Zucker/Northwell is a separate, tiny, EC-weighted competition. Long Island location, Northwell hospital system access.",
+  "medNote": "The base school is a safety; the BS-MD is not.",
+  "links": [
+   [
+    "Admissions",
+    "https://www.hofstra.edu/admission"
+   ]
+  ]
+ },
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "sat",
+   "coa",
+   "merit",
+   "grad4"
+  ],
+  "admit": 0.68,
+  "s25": 1270,
+  "s75": 1450,
+  "coa": 78390,
+  "tuitV": 59960,
+  "housV": 18430,
+  "merit": 35000,
+  "grad4": 57
+ },
+ "social": null,
+ "religAffiliated": false,
+ "researchAccess": null,
+ "pathType": "bsmd",
+ "restrictNote": null,
+ "appInfo": [
+  "Common App",
+  "EA Nov 1",
+  "Rolling",
+  "None; BS-MD extra"
+ ],
+ "progRateLegacy": null,
+ "clinicalAccess": 6,
+ "pathNameLegacy": "4+4 Zucker",
+ "instateRef": null,
+ "tuition": 58000,
+ "cds7": null,
+ "accel": null,
+ "ugYearsOverride": null,
+ "affiliatedMedCost": 85000,
+ "affiliatedMedName": "Zucker SOM",
+ "yieldProtection": false,
+ "program": {
+  "sc": "Hofstra University",
+  "name": "4+4 BS-MD (Zucker)",
+  "pid": "hof_prog",
+  "band": "out",
+  "type": "Direct with Zucker SOM / Northwell",
+  "req": "Verified minimum 3.7 unweighted GPA / SAT 1410; ~2,000 express interest annually for a class of 10–15",
+  "note": "Base school is a big-merit safety; the BS-MD is its own lottery.",
+  "bar": {
+   "gpa": 3.7,
+   "sat": 1410
+  }
+ },
+ "programVerified": {
+  "minGpa": 3.7,
+  "minGpaType": "unweighted",
+  "minSat": 1410,
+  "avgGpa": null,
+  "avgSat": null,
+  "applicantCount": 2000,
+  "admitCount": 12,
+  "admitRatePct": 0.6,
+  "statsOnly": false,
+  "src": "https://www.hofstra.edu/admission/4-plus-4.html — ~2,000 express interest annually, class of 10–15; rate is derived from these two official figures, not itself published"
+ }
+}
