@@ -102,3 +102,37 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   disagree with the verified `tuitV` 72420 / `coa` 93580. Left untouched (out of scope for this merge; the
   app reads the verified values via the VERD overlay). Flagging so a later pass can reconcile the estimate
   fields with the verified ones.
+- [ ] usf — no source URL for any of the 7 merged `verifiedFacts` fields (admit 43.2%, SAT 1130-1320,
+  COA $32,913 = $15,473 tuition/fees + $14,440 housing/food + $3,000 books/personal, 4-yr grad 61%). Same
+  situation as howard and gwu: the numbers ARE local — they sit in the `Object.assign(VERD,{...})` patch block
+  in `index1.html` that the Sep-5 verification pass wrote and that `scripts/extract-to-json.js` never picked up
+  (it only reads the `const VERD={...}` literal), which is why `usf.json.verifiedFacts` was still `null`. But
+  `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the per-field source URLs for these 15 schools live only
+  "in the assistant's prior message in this conversation" — they are in NO local file. Merged as-is (app
+  behaviour unchanged); the src URLs need a Stage-2 web pass.
+- [ ] usf — **the three fields the project's own notes say could NOT be verified are nevertheless flagged
+  verified.** `data/PENDING-RESEARCH-2026-09-05.md` line 49 names USF as one of the 7 schools where "admit rate
+  + SAT range + 4yr grad — CDS blocked by robots.txt", i.e. explicitly unverifiable. Yet the Sep-5
+  `Object.assign(VERD,{...})` block in `index1.html` lists `admit`, `s25`, `s75` and `grad4` inside USF's `vf`
+  array, so the shipped app already renders a green VERIFIED badge on all four. Merged verbatim so the JSON
+  matches what the app already does (and because Stage 1 may not touch `index1.html`), but this is a live
+  false-verified claim, not just a missing source. Needs a user decision: either source these four from the
+  USF CDS in a Stage-2 web pass, or drop them from `vf` so they show amber/EST.
+- [ ] usf — two local sources disagree and there is no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.usf`, dated 2026-09-04) says SAT 1290-1420 and
+  OOS COA $38,688; the later Sep-5 pass in `index1.html` says SAT 1130-1320 and COA $32,913. No field overlaps
+  cleanly — the two SAT bands barely intersect and the COA gap is $5,775. Took the Sep-5 values (newer, and the
+  ones the shipped app already renders), consistent with how the howard and gwu conflicts were resolved. Needs
+  the official USF CDS / bursar URL to settle which is right.
+- [ ] usf — the merged `coa` $32,913 / `tuitV` $15,473 may be the IN-STATE rather than the out-of-state rate.
+  `usf.json` carries `instateRef` 26000 and `general.tuition` 18000, and USF's published non-resident
+  tuition+fees is well above $15,473, so a $15,473 "tuition/fees" line reads low for the OOS figure this app
+  needs. Cannot be checked against any local file. Flagged rather than changed — needs the official USF
+  cost-of-attendance page in a Stage-2 web pass to confirm which residency tier this number is.
+- [ ] usf — `general.coa` (45000) and `general.tuition` (18000) are the older unverified estimates and now
+  disagree with the verified `coa` 32913 / `tuitV` 15473. Left untouched (out of scope for this merge; the app
+  reads the verified values via the VERD overlay). Same reconciliation gap as logged for gwu.
+- [ ] usf — `merit` ($6,000/yr, "OOS merit (competitive, limited)") is still an unverified estimate.
+  `data/verify-batch6-accelerated.json` says only "OOS waivers $5-11k/yr" — a range, no tier table, no source.
+  It is correctly NOT in the merged `vf` list, so the app shows it amber/EST. No local file carries USF's
+  automatic merit tiers or a source for them.
