@@ -58,8 +58,14 @@ The Brown source is a student newspaper, not an official page. Needs a user call
 - verifiedFacts populated: 92 / 101 · null: 9 (all in GAPS, need web)
 - validate PASSED · 101 files · nothing deployed
 
+## Deploy (2026-09-06)
+**LIVE:** https://admitted-six.vercel.app — pushed (efb0a72/81c4f67). index.html is now the canonical
+served/built file (was index1.html; Vercel serves index.html). Privacy verified: 0 real names. First real
+deploy this project — site was stuck on v14, now ships the verified dataset.
+
 ## Stage / Next step
-**Stage 1 (data, local-only): DONE.** Next = **Stage 2 (engine unified)** — the big open item is
-reconciling the band thresholds (web ≥75/55/30 vs iOS ≥80/50/20) and making one canonical chance/fit/cost
-engine both surfaces call. Stage 2 likely needs approved web pulls (the 9 GAPS + CDS C7 factor weights) —
-decide scope at Stage-2 kickoff. Loop now runs with dynamic model routing + progress bar.
+**Stage 1 (data, local-only): DONE + DEPLOYED.** Now in **Stage 2 (engine unified).** Open items:
+(1) reconcile band thresholds (web ≥75/55/30 vs iOS ≥80/50/20) — decide at kickoff;
+(2) one canonical chance/fit/cost engine both surfaces call;
+(3) Stage 2 likely needs APPROVED web pulls (9 GAPS + CDS C7 factor weights) — scope at kickoff.
+Loop upgrades live: dynamic model routing + progress bar.
