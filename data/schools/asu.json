@@ -15,9 +15,9 @@
   "s25": 1130,
   "s75": 1360,
   "tb": false,
-  "coa": 56000,
-  "merit": 16000,
-  "meritName": "ASU Commitment Scholarship (auto, $5,500-$7,500/yr per ASU) — replaces WUE for Fall 2026+ admits; exact amount for his cycle not yet published, conservative low end used",
+  "coa": 63394,
+  "merit": 5500,
+  "meritName": "ASU Commitment Scholarship — $5,500-$7,500/yr range (replaces WUE for Fall 2026+ admits); low end used, his-cycle amount not yet published",
   "dl": "Rolling; Barrett priority Nov 1, 2026",
   "dlDate": "2026-11-01",
   "premed": 7,
@@ -28,7 +28,7 @@
   "honors": "Barrett Honors College",
   "wue": false,
   "conf": "solid",
-  "note": "Barrett is the play here — arguably the strongest honors college in the country layered on huge research capacity. Mayo Clinic partnership (MedStart, shadowing pipelines) is a real premed asset.",
+  "note": "Barrett is the play here — arguably the strongest honors college in the country layered on huge research capacity. Mayo Clinic partnership (MedStart, shadowing pipelines) is a real premed asset. COST CAVEAT: ASU is ENDING WUE for students admitted Fall 2026 onward — the WUE 150%-of-resident rate is simply not available to him. The replacement is the ASU Commitment Scholarship, published as a RANGE of $5,500-$7,500/yr, not a flat award; this list uses the $5,500 low end. Full 2026-27 Tempe non-resident cost of attendance is $63,394/yr ($39,262 tuition+fees + $18,819 housing/food + $5,313 books/personal). ASU has published NO 2027-28 rates and NO scholarship terms for his actual application cycle as of 2026-09-05 — those are unknown, not projected here.",
   "medNote": "At ASU scale you must self-advocate, but Barrett shrinks it. Auto merit by stats.",
   "links": [
    [
@@ -36,7 +36,15 @@
     "https://admission.asu.edu"
    ],
    [
-    "Scholarship est.",
+    "WUE ending / Commitment Scholarship",
+    "https://admission.asu.edu/wue"
+   ],
+   [
+    "Non-resident cost of attendance (2026-27)",
+    "https://admission.asu.edu/cost-aid/non-resident-first-year"
+   ],
+   [
+    "Scholarships",
     "https://scholarships.asu.edu"
    ]
   ]
@@ -83,5 +91,34 @@
  "affiliatedMedName": null,
  "yieldProtection": false,
  "program": null,
- "programVerified": null
+ "programVerified": null,
+ "wueDetail": {
+  "participation": "ending",
+  "guaranteed": false,
+  "competitive": false,
+  "endsForEntrantsFrom": "Fall 2026",
+  "availableToHisCycle": false,
+  "basis": "ASU is officially ending WUE for students admitted Fall 2026 onward. Confirmed directly on admission.asu.edu/wue (not merely the Arizona State Press news article), 2026-09-05.",
+  "officialWueFigurePublished": false,
+  "estTuitionPerYear": null,
+  "replacement": {
+   "name": "ASU Commitment Scholarship",
+   "minPerYear": 5500,
+   "maxPerYear": 7500,
+   "isRange": true,
+   "note": "Published as a $5,500-$7,500/yr range, NOT the flat $7,500 the Arizona State Press reported. The $5,500 low end is what this list carries.",
+   "termsForHisCycle": null
+  },
+  "coaNonresident2627": 63394,
+  "coaTuitionFees2627": 39262,
+  "coaHousingFood2627": 18819,
+  "coaBooksPersonal2627": 5313,
+  "coaSrc": "https://admission.asu.edu/cost-aid/non-resident-first-year",
+  "coaSrcNote": "2026-27 Tempe non-resident COA, sourced via data/verify-batch1-west.json (asu.coa). Components sum exactly to the $63,394 total.",
+  "coa2728": null,
+  "rates2728Published": false,
+  "src": "https://admission.asu.edu/wue",
+  "srcLabel": "ASU Admission, WUE page (WUE ending + Commitment Scholarship replacement)",
+  "verifiedOn": "2026-09-05"
+ }
 }

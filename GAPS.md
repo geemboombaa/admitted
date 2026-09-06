@@ -55,3 +55,10 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   `wueDetail.estTuitionPerYear` is 150%-of-resident-tuition as computed in PENDING-RESEARCH B2; the resident
   base-tuition input behind it is in no local file, so it is carried as a derived estimate
   (`estIsDerived: true`) and must not be shown as official.
+- [ ] asu — ASU Commitment Scholarship $5,500–$7,500/yr has no dedicated local source URL. The range is stated
+  in `data/PENDING-RESEARCH-2026-09-05.md` B2, which attributes the WUE-ending confirmation to
+  admission.asu.edu/wue; that page is what `wueDetail.src` carries. No local file has a standalone ASU
+  Commitment Scholarship award-terms page. Needs the official scholarship page URL from a Stage-2 web pass.
+- [ ] asu — 2027-28 cost of attendance and 2027-28 scholarship terms (his actual application cycle) are not
+  published anywhere as of 2026-09-05. Left as `wueDetail.coa2728: null` /
+  `wueDetail.replacement.termsForHisCycle: null` — deliberately NOT projected from the 2026-27 figures.
