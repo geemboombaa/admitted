@@ -1,15 +1,15 @@
-// Rebuilds the const-literal blocks in index1.html from data/schools/*.json +
-// data/shared/app-config.json. Writes to a SEPARATE file (index1.generated.html)
+// Rebuilds the const-literal blocks in index.html from data/schools/*.json +
+// data/shared/app-config.json. Writes to a SEPARATE file (index.generated.html)
 // by default so the live app is never overwritten by an unverified build —
-// pass --out=index1.html explicitly (and re-run the full test suite after)
-// once a build has been diff/behavior-verified.
+// pass --out=index.html explicitly (and re-run the full test suite after)
+// once a build has been diff/behavior-verified. index.html is the file Vercel serves.
 const fs = require('fs');
 const path = require('path');
 const { extractScriptBlock, grabConst } = require('./_extract-lib');
 
 const ROOT = path.join(__dirname, '..');
 const outArg = (process.argv.find(a => a.startsWith('--out=')) || '').slice(6);
-const OUT = outArg || 'index1.generated.html';
+const OUT = outArg || 'index.generated.html';
 
 const dir = path.join(ROOT, 'data/schools');
 const files = fs.readdirSync(dir).filter(f => f.endsWith('.json') && !f.startsWith('_'));
@@ -56,7 +56,7 @@ function lit(name, value, asSet) {
 }
 
 if (shared.orphanAccel) ACCEL.push(...shared.orphanAccel);
-const html = fs.readFileSync(path.join(ROOT, 'index1.html'), 'utf8');
+const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const src = extractScriptBlock(html);
 let newSrc = src;
 

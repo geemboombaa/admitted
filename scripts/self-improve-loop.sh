@@ -122,14 +122,14 @@ append to is GAPS.md, and only to record a value you genuinely could not satisfy
     score "FAIL" "na" "reverted"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
-  # Loop owns regeneration of the shipped file (Builder edits JSON only, never index1.html).
-  if ! node scripts/build.js --out=index1.html || [ ! -s index1.html ]; then
+  # Loop owns regeneration of the shipped file (Builder edits JSON only, never index.html).
+  if ! node scripts/build.js --out=index.html || [ ! -s index.html ]; then
     log "REJECTED: build.js failed or produced an empty file. Reverting to $BASELINE."
     score "PASS" "na" "buildjs-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
   # Bug 1 fix: review the SOURCE diff only (generated HTML excluded), fed via stdin (no argv size limit).
-  DIFF=$(git diff -- . ':(exclude)index1.html' ':(exclude)index1.generated.html')
+  DIFF=$(git diff -- . ':(exclude)index.html' ':(exclude)index.generated.html')
   REVIEW_PROMPT="You are the adversarial-reviewer subagent (.claude/agents/adversarial-reviewer.md). You did NOT
 write this diff -- review it cold. It claims to implement: ${ITEM}
 
