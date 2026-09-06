@@ -87,6 +87,13 @@ blogs, ranking aggregators, or student papers. Every published number you write 
 page it came from (schema: data/schema/school.schema.json). If you cannot find an OFFICIAL source for a value, do NOT
 invent or approximate it — leave it null/EST-flagged and append a line to GAPS.md saying which field is still unsourced.
 Never fabricate a number."
+  REVIEW_RULE="STAGE 2 (web sourcing): web-sourced numbers ARE allowed and expected. You MAY fetch the cited src URLs
+to verify. REJECT on: a published number with NO src URL; a src that is NOT an official/authoritative source (school
+site, Common Data Set, official bursar/financial-aid, IPEDS, College Scorecard) — forums/blogs/ranking-aggregators/
+student-papers are NOT acceptable; a cited number that does NOT match what the source actually says (spot-check by
+fetching at least the least-plausible figures); internally inconsistent figures (e.g. tuition+housing != stated COA);
+or scope beyond this one item. Do NOT reject a value merely for being web-sourced rather than in a local file — that
+is the whole point of this stage."
 else
   DISALLOW=(--disallowedTools WebSearch WebFetch)   # Stage 1: local-only, blocked at tool level
   BUILD_CONTRACT="STAGE 1 IS LOCAL-DATA-ONLY. You may only read/write local files in this repo. Do NOT use the web.
@@ -94,6 +101,9 @@ Verification data already lives locally in data/verify-batch1-6.json and data/PE
 If a value you need is not in any local file: DO NOT fetch or invent it. Instead append a specific line to
 GAPS.md (which school, which field, what's missing), leave that field flagged as an estimate, and continue.
 Never fabricate a number. Every published number you write must keep its src URL (schema: data/schema/school.schema.json)."
+  REVIEW_RULE="STAGE 1 (local-only): REJECT on fabricated/invented numbers; a published number without a src URL;
+scope beyond this one item; or any value that looks web-sourced but is NOT present in data/verify-batch*.json or
+data/PENDING-RESEARCH-2026-09-05.md (Stage 1 forbids web-sourced values)."
 fi
 
 log "mode: $([ "$WEB" -eq 1 ] && echo 'WEB — Stage 2 sourcing (official sources only, every number needs a src)' || echo 'LOCAL-ONLY — Stage 1 (web blocked at tool level)') | batch=$ITERATIONS push=$PUSH"
@@ -149,18 +159,17 @@ append to is GAPS.md, and only to record a value you genuinely could not satisfy
   REVIEW_PROMPT="You are the adversarial-reviewer subagent (.claude/agents/adversarial-reviewer.md). You did NOT
 write this diff -- review it cold. It claims to implement: ${ITEM}
 
-Judge ONLY the source-of-truth changes below (data/*.json, config). The generated index1.html is excluded on
-purpose. Enforce, and REJECT on any violation: fabricated/invented numbers; a published number without a src URL;
-scope beyond this one item; any value that looks web-sourced but is not present in data/verify-batch*.json or
-data/PENDING-RESEARCH-2026-09-05.md (Stage 1 is local-only).
+Judge ONLY the source-of-truth changes below (data/*.json, config). The generated index.html is excluded on purpose.
+
+${REVIEW_RULE}
 
 Diff:
 ${DIFF}
 
 Reply with ONE line starting APPROVE or REJECT, then your reasoning."
 
-  # Reviewer is always Opus (high-leverage gate, low token volume).
-  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS" --disallowedTools WebSearch WebFetch)
+  # Reviewer is always Opus (high-leverage gate). In --web mode it may fetch to verify cited sources.
+  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS" "${DISALLOW[@]}")
   VERDICT=$(printf '%s' "$REVIEW" | head -1)
   log "review verdict: $VERDICT"
 
