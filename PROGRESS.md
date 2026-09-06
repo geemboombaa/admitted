@@ -76,5 +76,13 @@ deploy this project — site was stuck on v14, now ships the verified dataset.
 - Stage-2 bugs found+fixed (all failed safe, no bad data committed): reviewer stuck on Stage-1 rule; builder scratch files; verdict parsed from wrong line. Loop now stable.
 - 6 loop commits of churn from my repeated `git reset --hard` wiping edits — resolved via rebase; lesson: commit before reset.
 
+## Stage 2 sourcing — PAUSED 2026-09-06 (user call: audit too slow, defer the rest)
+Sourced this session: **mich, unc, uga, syracuse, usc_sc** (5 schools, official-verified). Data quality 7.8/10.
+**Remaining 13 sourcing items are DEFERRED as gaps** — they stay as `- [ ]` in SELF-IMPROVE-BACKLOG.md (auburn,
+wayne, uta, cuny + Batch-D src-fills). Come back with `./scripts/self-improve-loop.sh --web --batch=N` anytime.
+The loop is proven + stable; the data audit is simply lower priority than shipping visible product.
+
 ## Stage / Next step
-**Stage 2 (sourcing), in progress: 2/9 Batch-C schools done (mich, unc).** Remaining Batch C: uga, auburn, syracuse, usc_sc, wayne, uta(blocked?), cuny(blocked?). Then Batch D (10 src-fills). Loop is stable; safe to run larger batches, watched live on the dashboard. Loop capabilities: dynamic model routing + progress bar + `--web` scoped sourcing + web-verifying reviewer + scratch cleanup + pre-flight.
+Data plumbing (Stages 1-2) is far enough along. **Pivot to visible product.** Options: Stage 3 (polish the live
+web app — immediate wow) or Stage 4 (start the iOS app — the new surface, wired to the same verified core).
+Engine chance-math still parked (needs Naviance outcome data). Awaiting user pick of surface.
