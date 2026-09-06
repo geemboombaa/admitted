@@ -17,7 +17,7 @@ Ordered easy→hard; the last two are flagged where prior research found the off
 - [x] Source UNC Chapel Hill (unc) 5 core fields from official UNC CDS + cost pages; add verifiedFacts with per-field src.
 - [x] Source University of Georgia (uga) 5 core fields from official UGA CDS + cost pages; add verifiedFacts with per-field src.
 - [x] Populate Auburn (auburn) verifiedFacts from official Auburn CDS (ir.auburn.edu) + 2026-27 cost PDF; correct COA to the official figure; per-field src.
-- [ ] Source Syracuse (syracuse) 5 core fields from official Syracuse CDS + cost pages; add verifiedFacts with per-field src.
+- [x] Source Syracuse (syracuse) 5 core fields from official Syracuse CDS + cost pages; add verifiedFacts with per-field src.
 - [ ] Source University of South Carolina (usc_sc) 5 core fields from official USC CDS + cost pages; add verifiedFacts with per-field src.
 - [ ] Source Wayne State (wayne) 5 core fields from official Wayne State CDS + cost pages; add verifiedFacts with per-field src.
 - [ ] Source UT Austin (uta) 5 core fields from official sources; prior research flagged the CDS behind a Box viewer — if truly unreachable officially, source what IPEDS/College Scorecard publishes and leave the rest null + GAPS.

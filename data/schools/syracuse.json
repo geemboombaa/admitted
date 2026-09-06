@@ -15,7 +15,7 @@
   "s25": 1270,
   "s75": 1440,
   "tb": false,
-  "coa": 87716,
+  "coa": 95676,
   "merit": 0,
   "meritName": "No automatic tier found; Syracuse awards merit via competitive holistic review",
   "dl": "ED Nov 15, 2026 / RD Jan 1, 2027",
@@ -24,7 +24,7 @@
   "research": 7,
   "bio": 6,
   "med": 7,
-  "grad4": 84,
+  "grad4": 73,
   "honors": "Renee Crown University Honors Program",
   "wue": false,
   "conf": "rep",
@@ -42,7 +42,25 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": ["admit", "s25", "s75", "coa", "tuitV", "housV", "grad4"],
+  "admit": 0.46,
+  "s25": 1270,
+  "s75": 1440,
+  "coa": 95676,
+  "tuitV": 69180,
+  "housV": 20580,
+  "grad4": 73,
+  "srcs": {
+   "admit": "https://nces.ed.gov/collegenavigator/?id=196413",
+   "s25": "https://nces.ed.gov/collegenavigator/?id=196413",
+   "s75": "https://nces.ed.gov/collegenavigator/?id=196413",
+   "coa": "https://www.syracuse.edu/admissions-aid/tuition-fees/undergraduate-costs/",
+   "tuitV": "https://www.syracuse.edu/admissions-aid/tuition-fees/undergraduate-costs/",
+   "housV": "https://www.syracuse.edu/admissions-aid/tuition-fees/undergraduate-costs/",
+   "grad4": "https://nces.ed.gov/collegenavigator/?id=196413"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
