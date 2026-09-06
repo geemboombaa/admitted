@@ -42,7 +42,24 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "s25",
+   "s75",
+   "coa",
+   "tuitV",
+   "housV",
+   "grad4"
+  ],
+  "admit": 0.651,
+  "s25": 1240,
+  "s75": 1470,
+  "coa": 60492,
+  "tuitV": 39912,
+  "housV": 17580,
+  "grad4": 48
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": 7,

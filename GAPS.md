@@ -136,3 +136,38 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   `data/verify-batch6-accelerated.json` says only "OOS waivers $5-11k/yr" — a range, no tier table, no source.
   It is correctly NOT in the merged `vf` list, so the app shows it amber/EST. No local file carries USF's
   automatic merit tiers or a source for them.
+- [ ] njit — no source URL for any of the 7 merged `verifiedFacts` fields (admit 65.1%, SAT 1240-1470,
+  COA $60,492 = $39,912 tuition/fees + $17,580 housing/food + $3,000 books/personal, 4-yr grad 48%). Same
+  situation as howard, gwu and usf: the numbers ARE local — they sit in the `Object.assign(VERD,{...})` patch
+  block at `index1.html` line 400 that the Sep-5 verification pass wrote and that `scripts/extract-to-json.js`
+  never picked up (it only reads the `const VERD={...}` literal on line 391), which is why
+  `njit.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this conversation"
+  — they are in NO local file. Merged as-is (app behaviour unchanged); the src URLs need a Stage-2 web pass.
+- [ ] njit — **the three fields the project's own notes say could NOT be verified are nevertheless flagged
+  verified.** `data/PENDING-RESEARCH-2026-09-05.md` line 49 names NJIT as one of the 7 schools where "admit
+  rate + SAT range + 4yr grad" could not be verified. Yet the Sep-5 `Object.assign(VERD,{...})` block in
+  `index1.html` lists `admit`, `s25`, `s75` and `grad4` inside NJIT's `vf` array, so the shipped app already
+  renders a green VERIFIED badge on all four. Merged verbatim so the JSON matches what the app already does
+  (and because Stage 1 may not touch `index1.html`), but this is a live false-verified claim, not just a
+  missing source. Needs a user decision: either source these four from the NJIT CDS in a Stage-2 web pass, or
+  drop them from `vf` so they show amber/EST. Identical to the usf case logged above.
+- [ ] njit — two local sources disagree on cost and SAT, with no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.njit`, dated 2026-09-04) says OOS tuition/fees
+  $42,300 + room/board $18,900 (= $61,200) and gives a single SAT *average* of 1317 (plus a Dorman Honors
+  average of 1502) rather than a 25-75 band; the later Sep-5 pass in `index1.html` says tuition/fees $39,912 +
+  housing/food $17,580, COA $60,492, SAT band 1240-1470. Tuition gap $2,388, housing gap $1,320. Took the
+  Sep-5 values (newer, and the ones the shipped app already renders), consistent with how the howard, gwu and
+  usf conflicts were resolved. Needs the official NJIT CDS / bursar URL to settle which is right.
+- [ ] njit — `general.coa` (55000) and `tuition` (36000) are the older unverified estimates and now disagree
+  with the verified `coa` 60492 / `tuitV` 39912 (a $5,492 COA gap). `accel.coa` (55000) carries the same stale
+  estimate. Left untouched (out of scope for this merge; the app reads the verified values via the VERD
+  overlay). Same reconciliation gap as logged for gwu and usf.
+- [ ] njit — `merit` ($15,000/yr, "Dorman Honors / OOS merit (auto)") is an unverified estimate that the one
+  local source **directly contradicts**: `data/verify-batch6-accelerated.json` says NJIT merit is "Dorman
+  small awards $1.5-2.5k" — an order of magnitude lower, and a range with no tier table and no source URL.
+  `merit` is correctly NOT in the merged `vf` list, so the app shows it amber/EST, but $15,000 is also
+  duplicated in `accel.merit` and is quoted in `general.note` ("Real OOS merit") and `general.medNote` ("the
+  merit makes the base school affordable"), so an unverified number is driving user-facing prose. Not changed
+  here — no local file carries NJIT's real automatic merit tiers or a source for them. Needs a Stage-2 web
+  pass against the NJIT/Dorman scholarship page.

@@ -22,7 +22,7 @@ verifiedFacts with per-field src; any of the 5 core fields not present locally -
 - [x] Merge local verify-batch data into howard (data/schools/howard.json verifiedFacts is null).
 - [x] Merge local verify-batch data into gwu (verifiedFacts null).
 - [x] Merge local verify-batch data into usf (verifiedFacts null).
-- [ ] Merge local verify-batch data into njit (verifiedFacts null).
+- [x] Merge local verify-batch data into njit (verifiedFacts null).
 - [ ] Merge local verify-batch data into rowan (verifiedFacts null).
 - [ ] Merge local verify-batch data into temple (verifiedFacts null).
 - [ ] Merge local verify-batch data into fau (verifiedFacts null).
