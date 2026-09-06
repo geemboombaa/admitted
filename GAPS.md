@@ -422,3 +422,81 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   One mismatch worth a later local pass: `program.req` says "~3.5 / 1200" while both `program.bar` and
   `accel.bar` say 3.25 / 1100 — the prose is stricter than the verified bar it sits next to. Out of scope
   for a verifiedFacts merge.
+- [ ] nyit (New York Institute of Technology) — no source URL for any of the 7 merged `verifiedFacts` fields
+  (admit 81%, SAT 1190-1420, COA $75,400 = $46,000 tuition/fees + $26,400 housing/food + $3,000
+  books/personal, 4-yr grad 38%). Identical situation to howard, gwu, usf, njit, rowan, temple, fau, mcg and
+  gram: the numbers ARE local — they sit in the `Object.assign(VERD,{...})` patch block at `index1.html`
+  line 407 that the Sep-5 verification pass wrote and that `scripts/extract-to-json.js` never picked up (it
+  only reads the `const VERD={...}` literal), which is why `nyit.json.verifiedFacts` was still `null`. But
+  `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the per-field source URLs for these 15 schools live only
+  "in the assistant's prior message in this conversation" — they are in NO local file. Needs a Stage-2 web
+  pass, and NYIT is the hardest target of the series: `cds7` is `null` and `PENDING-RESEARCH` line 117 lists
+  nyit among the 21 schools with no machine-readable Common Data Set published at all, so IPEDS/College
+  Navigator is the likely Stage-2 source rather than a school-published CDS.
+- [ ] nyit — this is the strongest form of the verified-flag contradiction in the whole series, and it covers
+  4 of the 7 merged fields. `data/PENDING-RESEARCH-2026-09-05.md` line 49 lists NYIT among the 7 schools whose
+  fields came back "not published / could not verify", and the wording for NYIT is the most absolute of the
+  seven: "NYIT: admit rate + SAT range + 4yr grad — none published anywhere found". Not "ambiguous"
+  (Augusta, Grambling), not "blocked by robots.txt" (USF), not "unreadable Box viewer" (UT Austin) — simply
+  not found. Yet the Sep-5 VERD patch ships `admit` 0.81, `s25`/`s75` 1190-1420 and `grad4` 38 inside `vf`,
+  i.e. flagged to the user as VERIFIED green. One of the two records is wrong and no local file can settle
+  it. Merged as-is so the JSON matches the shipped app's current behaviour (this merge changes nothing the
+  user sees), but of the fields merged in this batch these four have the least local support. Same
+  unresolved doubt already logged for mcg and gram; NYIT is the clearest case for a Stage-2 pass that is
+  willing to set fields back to `null` rather than find a URL.
+- [ ] nyit — the two local sources disagree on out-of-state cost of attendance on every component, not just
+  the total, so unlike fau these are two different cost bases rather than one arithmetic slip.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.nyit`, dated 2026-09-04) says COA $89,518 with
+  tuition/fees $50,900 and housing/food $31,024; the later Sep-5 pass in `index1.html` says $75,400 with
+  $46,000 + $26,400. Gaps: $14,118 total, $4,900 tuition, $4,624 housing. Neither total reconciles cleanly
+  with the other, and batch6's own total does not reconcile with its own split ($50,900 + $31,024 = $81,924,
+  leaving $7,594 unexplained), whereas the Sep-5 total does ($46,000 + $26,400 + $3,000 books/personal =
+  $75,400, the same $3,000 indirect-cost line used for temple and fau). Took the Sep-5 set (newer, internally
+  consistent, and the one the shipped app already renders). Needs the official NYIT cost-of-attendance /
+  bursar page to settle which year and which components each figure covers.
+- [ ] nyit — the BS/DO tuition surcharge is recorded locally but is in neither cost figure. Batch6's
+  `_meta.key_undergrad.nyit.coa` carries `"note": "BS/DO students +$4k tuition"`, and NYIT is a BS/DO school
+  in this app (`pathType: "bsmd"`, `accel.kind: "bsdo"`) — so for the accelerated path the applicable
+  tuition is plausibly $46,000 + $4,000 (or $50,900 + $4,000) and the applicable COA correspondingly $4,000
+  higher than the $75,400 now flagged verified. Nothing local states whether the Sep-5 $46,000 already
+  includes it. Left unmerged rather than guessed. Needs the NYIT BS/DO program cost page in Stage 2.
+- [ ] nyit — a merit value exists locally but was not merged, and it is $13,000 above the estimate the app
+  still shows. `data/verify-batch6-accelerated.json` carries `_meta.key_undergrad.nyit.merit` =
+  `{"v": 28000, "name": "auto tier 3.5-3.74 GPA = $28k/yr"}`, and `_meta.notes` repeats it ("NYIT BS/DO min
+  90 avg/1270 SAT -> qualifies, merit tier 3.5-3.74 = $28k/yr"). The Sep-5 VERD patch has no `merit` for
+  NYIT, so `merit` is absent from `vf` and the app shows it amber/EST; `general.merit` and `accel.merit` both
+  still say 15000 (`meritName` "Merit (auto tiers)"). Not merged, for two reasons: (a) `_meta.key_undergrad`
+  carries no `src` field at all, so there is no URL for the tier table — batch6's only NYIT source
+  (`nyit7.src`) is the BS/DO admission-requirements page, not a scholarship schedule; and (b) $28,000 is
+  applicant-conditional, not a school fact — it is the award for a 3.5-3.74 GPA band, and the profile's 3.67
+  sits inside that band, so the number would silently become wrong if the GPA slider moves, the same trap
+  already logged for fau's verified `merit` of $0. Needs the NYIT automatic merit tier table + URL before
+  either 15000 or 28000 can be called verified.
+- [ ] nyit — the older unverified estimates in `general` now disagree with every merged verified value except
+  one. `general.admit` 0.75 vs verified 0.81; `general.s25`/`s75` 1150/1350 vs verified 1190/1420 (the
+  75th is 70 points higher); `general.coa` 65000 and `accel.coa` 65000 vs verified 75400 (a $10,400 gap);
+  `general.grad4` 45 vs verified 38 (a 7-point gap, and the estimate is the optimistic one). The single field
+  that agrees is `tuition` (46000), which matches the verified `tuitV` to the dollar. `instateRef` is `null`,
+  which is correct for a private. All left untouched (out of scope for this merge; the app reads the verified
+  values via the VERD overlay). Same reconciliation gap already logged for gwu, usf, njit, rowan, temple, fau
+  and gram.
+- [ ] nyit — the BS/DO application deadline conflicts between two local records, and here the sourced one is
+  the EARLIER one, which is the dangerous direction. `data/verify-batch6-accelerated.json` (`nyit7`) says
+  "EA Nov 15" and carries a source
+  (`nyit.edu/academics/degrees/life-sciences-bs-osteopathic-medicine-do/admission-requirements/`), but
+  `general.dl` says "Rolling; 7-yr BS/DO app Dec 1", `general.dlDate` says `2026-12-01` and `accel.apply`
+  says "NYIT app + BS/DO app, Dec" — so the date the app sorts and counts down on is 16 days LATER than the
+  only sourced local value. Unlike fau's equivalent discrepancy (where the app read early, i.e. safe by
+  accident), an app that reads late can cause a missed deadline. Not changed here (out of scope for a
+  verifiedFacts merge), but this is correctable from local data, not a web-research gap, and it should be
+  the first nyit item picked up.
+- [ ] nyit — `programVerified` is `null` and that is correct, not a gap to fill:
+  `PENDING-RESEARCH-2026-09-05.md` line 61 lists NYIT among the 16 programs that publish no applicant count,
+  no seat-based rate and nothing computable. `progRateLegacy` is likewise `null`, and `accel.seats`
+  ("~25/yr") is an approximation with no denominator, so no rate is computable from it. The program terms
+  themselves are sourced in `verify-batch6-accelerated.json` (`nyit7`) and `accel.bar.sat` (1270) matches
+  that record's "SAT 1270 (CR+M)/ACT 28" exactly. Two smaller mismatches for a later local pass:
+  `accel.bar.gpa` (3.6) is a conversion of batch6's "min 90 HS avg" — a high-school average is not a GPA and
+  no local file records the conversion used; and `program.req` says "~3.6 / 1300" while both `program.bar`
+  and `accel.bar` say 3.6 / 1270, so the prose sits 30 SAT points stricter than the verified bar next to it.
+  Out of scope for a verifiedFacts merge.
