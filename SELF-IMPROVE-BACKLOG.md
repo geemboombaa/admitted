@@ -15,7 +15,7 @@ Run with: `./scripts/self-improve-loop.sh --web --batch=N`
 Ordered easy→hard; the last two are flagged where prior research found the official CDS blocked.
 - [x] Source University of Michigan (mich) 5 core fields from official Michigan CDS + cost-of-attendance pages; add verifiedFacts with a src URL per field.
 - [x] Source UNC Chapel Hill (unc) 5 core fields from official UNC CDS + cost pages; add verifiedFacts with per-field src.
-- [ ] Source University of Georgia (uga) 5 core fields from official UGA CDS + cost pages; add verifiedFacts with per-field src.
+- [x] Source University of Georgia (uga) 5 core fields from official UGA CDS + cost pages; add verifiedFacts with per-field src.
 - [ ] Populate Auburn (auburn) verifiedFacts from official Auburn CDS (ir.auburn.edu) + 2026-27 cost PDF; correct COA to the official figure; per-field src.
 - [ ] Source Syracuse (syracuse) 5 core fields from official Syracuse CDS + cost pages; add verifiedFacts with per-field src.
 - [ ] Source University of South Carolina (usc_sc) 5 core fields from official USC CDS + cost pages; add verifiedFacts with per-field src.

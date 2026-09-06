@@ -38,7 +38,25 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": ["admit", "s25", "s75", "coa", "tuitV", "housV", "grad4"],
+  "admit": 0.33,
+  "s25": 1270,
+  "s75": 1480,
+  "coa": 52156,
+  "tuitV": 31804,
+  "housV": 7722,
+  "grad4": 75,
+  "srcs": {
+   "admit": "https://news.uga.edu/uga-admits-class-of-2029/",
+   "s25": "https://nces.ed.gov/collegenavigator/?id=139959",
+   "s75": "https://nces.ed.gov/collegenavigator/?id=139959",
+   "coa": "https://osfa.uga.edu/costs/",
+   "tuitV": "https://osfa.uga.edu/costs/",
+   "housV": "https://osfa.uga.edu/costs/",
+   "grad4": "https://nces.ed.gov/collegenavigator/?id=139959"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
