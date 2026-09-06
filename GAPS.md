@@ -317,3 +317,57 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   number in two metrics — while `accel.bar.sat` (1490) does match. Finally, `programVerified` is `null` and
   `PENDING-RESEARCH-2026-09-05.md` line 61 lists FAU among the 16 programs that publish no applicant count,
   no seat-based rate and nothing computable, so `null` is correct and should NOT be filled with an estimate.
+- [ ] mcg (Augusta University) — no source URL for any of the 5 merged `verifiedFacts` fields (admit 86.4%,
+  COA $44,700 = $30,392 tuition/fees + $11,308 housing/food + $3,000 books/personal, 4-yr grad 25%). Same
+  situation as howard, gwu, usf, njit, rowan, temple and fau: the numbers ARE local — they sit in the
+  `Object.assign(VERD,{...})` patch block at `index1.html` line 404 that the Sep-5 verification pass wrote and
+  that `scripts/extract-to-json.js` never picked up (it only reads the `const VERD={...}` literal), which is
+  why `mcg.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this conversation"
+  — they are in NO local file. Needs a Stage-2 web pass. Augusta publishes no machine-readable CDS
+  (`PENDING-RESEARCH` line 117 lists `mcg` among the 21 schools with no extractable CDS), so the bursar
+  cost-of-attendance page and IPEDS/College Navigator are the likely Stage-2 targets, not a CDS PDF.
+- [ ] mcg — the merged `admit` (0.864) and `grad4` (25) directly contradict this repo's own note on whether
+  they are verifiable at all. `data/PENDING-RESEARCH-2026-09-05.md` line 49 lists Augusta among the 7 schools
+  that came back with fields "not published / could not verify", naming specifically "admit rate + SAT range +
+  merit tiers + clean 4yr grad — only an ambiguously-labeled rate series exists". Yet the Sep-5 VERD patch
+  ships `admit` and `grad4` inside `vf`, i.e. flagged to the user as VERIFIED green. One of the two is wrong
+  and no local file can settle it. Merged as-is so the JSON matches the shipped app's current behaviour (this
+  merge changes nothing the user sees), but this is the strongest verified-flag doubt in this series and
+  should be the first thing Stage 2 checks: if the 4-yr rate really is the ambiguously-labeled series, 25% may
+  be a 4-yr rate for a mixed/transfer-heavy cohort rather than the first-time-full-time figure the app
+  implies. The same ambiguous-metric problem is logged for Grambling on the same PENDING line.
+- [ ] mcg — two local sources disagree on out-of-state cost, with no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.mcg`, dated 2026-09-04) says OOS COA $44,360 =
+  $23,852 tuition/fees + $12,906 housing/food; the later Sep-5 pass in `index1.html` says $44,700 = $30,392 +
+  $11,308 + $3,000 books/personal. The COA totals agree to within $340 (0.8%) but the split does not: a
+  $6,540 tuition gap and a $1,598 housing gap that happen to cancel out. Two near-identical totals built from
+  materially different components is a sign at least one split is mis-attributed. Took the Sep-5 values
+  (newer, and the ones the shipped app already renders), consistent with how the howard, gwu, usf, njit,
+  rowan, temple and fau conflicts were resolved. Needs the official Augusta University cost-of-attendance /
+  bursar URL to settle the tuition-vs-housing split.
+- [ ] mcg — `s25`/`s75` and `merit` are correctly absent from `vf` (the app shows them amber/EST), and no
+  local file carries a verified value for either, so they were NOT merged. `general.s25`/`s75` (1100-1290) and
+  `general.merit` ($5,000, "OOS merit (limited)") remain unverified estimates. `verify-batch6` gives no SAT
+  band and no merit figure for Augusta — unlike Temple/NJIT/Grambling/NYIT it has no `key_undergrad` entry
+  beyond `coaOOS` — so there is nothing local to reconcile against. Note the $5,000 is duplicated in
+  `accel.merit`; unlike temple/rowan it is not quoted in `general.note`, so no user-facing prose depends on
+  it. Needs a Stage-2 web pass.
+- [ ] mcg — `general.coa` (45000) and `tuition` (26000) are the older unverified estimates and now disagree
+  with the verified `coa` 44700 / `tuitV` 30392. The COA gap is trivial ($300, the smallest in this series)
+  but the tuition gap is $4,392 in the opposite direction, and `instateRef` (26000) is set to the exact same
+  number as `tuition`, which cannot be right for a Georgia public with a large resident discount — `tuition`
+  looks like it was populated with the in-state rate. `accel.coa` (45000) carries the same stale COA estimate.
+  `general.grad4` (35) also disagrees with the verified 25 — a 10-point gap, the largest grad-rate
+  disagreement in this series. All left untouched (out of scope for this merge; the app reads the verified
+  values via the VERD overlay). Same reconciliation gap as logged for gwu, usf, njit, rowan, temple and fau.
+- [ ] mcg — the accelerated/BS-MD record is the best-sourced part of this file and needs no verifiedFacts
+  work, but one number is unreconciled. `progRateLegacy.rate` (10) and `accel` (min 3.7 GPA USG-recalculated /
+  1450 SAT superscored, up to 25 seats, GA residents preferred, EA Oct 31 + PSP supplement Dec 15) both match
+  `verify-batch6-accelerated.json` (`mcg7`) and both carry the augusta.edu source URL, so they are sound.
+  However `general.dl` says "Professional Scholars (7-yr MCG) app with admission" with `dlDate` 2026-11-15,
+  which matches neither of the two verified dates (EA Oct 31, PSP supplement Dec 15) — the same stale-deadline
+  pattern logged for fau. Left untouched (a local prose/date reconciliation, not a web gap). Separately,
+  `programVerified` is `null` while `progRateLegacy` holds the sourced ~10% rate; `PENDING-RESEARCH` line 94
+  confirms Augusta/MCG is one of only 4 programs with a real sourced rate, so `programVerified` is a candidate
+  to be populated from `progRateLegacy` (25 seats / ~250 applicants) in a later item — out of scope here.

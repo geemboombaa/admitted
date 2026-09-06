@@ -26,7 +26,7 @@ verifiedFacts with per-field src; any of the 5 core fields not present locally -
 - [x] Merge local verify-batch data into rowan (verifiedFacts null).
 - [x] Merge local verify-batch data into temple (verifiedFacts null).
 - [x] Merge local verify-batch data into fau (verifiedFacts null).
-- [ ] Merge local verify-batch data into mcg (verifiedFacts null).
+- [x] Merge local verify-batch data into mcg (verifiedFacts null).
 - [ ] Merge local verify-batch data into gram (verifiedFacts null).
 - [ ] Merge local verify-batch data into nyit (verifiedFacts null).
 
