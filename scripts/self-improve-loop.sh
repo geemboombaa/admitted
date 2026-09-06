@@ -134,14 +134,20 @@ ${BUILD_CONTRACT}
 Workflow (README.md): edit data/schools/*.json or data/shared/app-config.json only. Do NOT touch index.html at
 all -- the loop regenerates it from your JSON after you finish. Do NOT edit the tracker files either
 (SELF-IMPROVE-BACKLOG.md, PROGRESS.md, SELF-IMPROVE-LOG.md) -- the loop manages those; the ONLY tracker you may
-append to is GAPS.md, and only to record a value you genuinely could not satisfy. Run
-'node scripts/validate.js' yourself and fix anything it flags before finishing. Keep it scoped to this one item."
+append to is GAPS.md, and only to record a value you genuinely could not satisfy. If you download any file while
+researching (PDF, HTML, text), save it ONLY under a .scratch/ directory or delete it before you finish -- never
+leave scratch files anywhere else in the repo. Run 'node scripts/validate.js' yourself and fix anything it flags
+before finishing. Keep it scoped to this one item."
 
   # Builder — prompt via stdin; model dynamically routed; web per mode (DISALLOW empty when --web).
   if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$BUILD_MODEL" "${DISALLOW[@]}"; then
     log "REJECTED: Builder (claude -p) failed. Reverting to $BASELINE."
     score "na" "na" "build-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
+
+  # Remove any scratch the Builder left behind (downloaded PDFs/HTML/text from web research),
+  # keeping everything under data/. Prevents scratch from dirtying the tree or landing in a commit.
+  git clean -fdq -e data >/dev/null 2>&1
 
   if ! node scripts/validate.js; then
     log "REJECTED: validate.js failed. Reverting to $BASELINE."
