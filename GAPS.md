@@ -79,3 +79,26 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
 - [ ] howard — `merit` ($10,000/yr, "Capstone/Founders merit (auto for ~3.5+/1300+)") is still an unverified
   estimate. It is not in the merged `vf` list, so the app correctly shows it amber/EST. No local file carries
   Howard's automatic merit tiers or a source for them.
+- [ ] gwu — no source URL for any of the 7 merged `verifiedFacts` fields (admit 47.1%, SAT 1360-1470,
+  COA $93,580 = $72,420 tuition/fees + $18,160 housing/food + $3,000 books/personal, 4-yr grad 79%). Same
+  situation as howard: the numbers ARE local — they sit in the `Object.assign(VERD,{...})` patch block in
+  `index1.html` that the Sep-5 verification pass wrote and that `scripts/extract-to-json.js` never picked up
+  (it only reads the `const VERD={...}` literal), which is why `gwu.json.verifiedFacts` was still `null`. But
+  `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the per-field source URLs for these 15 schools live only
+  "in the assistant's prior message in this conversation" — they are in NO local file. GW is listed there as
+  one of the 8 that "came back fully clean," so the values are trustworthy but unsourced-locally. Merged
+  as-is (app behaviour unchanged); the src URLs need a Stage-2 web pass.
+- [ ] gwu — two local sources disagree and there is no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.gwu`, dated 2026-09-04) says admit 0.50,
+  SAT 1300-1450, COA total $95,155, tuition/fees $72,770; the later Sep-5 pass in `index1.html` says
+  admit 0.471, SAT 1360-1470, COA $93,580, tuition/fees $72,420. Housing/food ($18,160) is IDENTICAL in both.
+  Took the Sep-5 values (newer, and the ones the shipped app already renders). Needs the official GW CDS /
+  student-accounts URL to settle which is right.
+- [ ] gwu — `merit` ($10,000/yr, "Presidential merit (auto-considered)") is still an unverified estimate.
+  `data/verify-batch6-accelerated.json` says only "Presidential auto-considered, amounts vary" — no dollar
+  figure, no tier table, no source. It is correctly NOT in the merged `vf` list, so the app shows it
+  amber/EST. No local file carries GW's merit award amounts.
+- [ ] gwu — `general.tuition` (68000) and `general.coa` (90000) are the older unverified estimates and now
+  disagree with the verified `tuitV` 72420 / `coa` 93580. Left untouched (out of scope for this merge; the
+  app reads the verified values via the VERD overlay). Flagging so a later pass can reconcile the estimate
+  fields with the verified ones.
