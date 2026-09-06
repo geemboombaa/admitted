@@ -204,3 +204,56 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   shows it amber/EST, but $10,000 is also duplicated in `accel.merit` and is quoted in `general.note`
   ("decent OOS merit"), so an unverified number is driving user-facing prose. Not changed here — no local file
   carries Rowan's Brown & Gold award amounts or a source for them. Needs a Stage-2 web pass.
+- [ ] temple — no source URL for any of the 7 merged `verifiedFacts` fields (admit 80.4%, SAT 1120-1360,
+  COA $52,976 = $35,232 tuition/fees + $14,744 housing/food + $3,000 books/personal, 4-yr grad 62%). Same
+  situation as howard, gwu, usf, njit and rowan: the numbers ARE local — they sit in the
+  `Object.assign(VERD,{...})` patch block at `index1.html` line 392 that the Sep-5 verification pass wrote and
+  that `scripts/extract-to-json.js` never picked up (it only reads the `const VERD={...}` literal), which is
+  why `temple.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this conversation"
+  — they are in NO local file. Like rowan (and unlike njit/usf), Temple is named on that same line as one of
+  the 8 schools that "came back fully clean", so all 7 fields being in `vf` is consistent with the project's
+  own notes; only the URLs are missing. Merged as-is (app behaviour unchanged); the src URLs need a Stage-2
+  web pass. Note the one already-sourced Temple number, `cds7.src`
+  (`https://ira.temple.edu/sites/ira/files/media/document/CDS%202025-26_Temple%20University_0.pdf`), is the
+  2025-26 Common Data Set and is the likely home of admit rate, the SAT band and the 4-yr grad rate — check it
+  first in Stage 2 before searching anywhere else.
+- [ ] temple — two local sources disagree on out-of-state cost, with no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.temple`, dated 2026-09-04) says OOS COA $64,384 =
+  $37,698 tuition/fees + $19,636 housing/food; the later Sep-5 pass in `index1.html` says $52,976 = $35,232 +
+  $14,744 + $3,000 books/personal. Tuition gap $2,466, housing gap $4,892, total COA gap $11,408 — second only
+  to rowan's in this series, and large enough to change his affordability ranking. Took the Sep-5 values
+  (newer, and the ones the shipped app already renders), consistent with how the howard, gwu, usf, njit and
+  rowan conflicts were resolved. Needs the official Temple cost-of-attendance / bursar URL to settle which is
+  right — and to confirm the Sep-5 figure is the non-resident rate, not the in-state one (Temple's PA-resident
+  tuition is roughly half the OOS rate, so an in-state/OOS mix-up is the most likely explanation for a gap
+  this size). The two sources agree closely on admit rate (0.81 vs 0.804), which is mild evidence they are
+  describing the same cycle rather than different years.
+- [ ] temple — the two local sources also report SAT on incompatible metrics: `verify-batch6` gives a single
+  SAT *average* of 1213 with no 25-75 band; the Sep-5 pass gives a band of 1120-1360 (midpoint 1240). 1213
+  sits inside 1120-1360, so they are not contradictory, but there is no local way to confirm the band's
+  endpoints. Merged the band (the app renders s25/s75). Same metric-mismatch pattern logged for njit.
+- [ ] temple — `general.coa` (55000) and `tuition` (36000) are the older unverified estimates and now disagree
+  with the verified `coa` 52976 / `tuitV` 35232 (a $2,024 COA gap — the smallest in this series).
+  `accel.coa` (55000) and `instateRef` (40000) carry the same stale estimates. `general.grad4` (58) also
+  disagrees with the verified 62, and `general.admit` (0.8) / `g`-band SAT (1150-1350) are near but not equal
+  to the verified 0.804 / 1120-1360. All left untouched (out of scope for this merge; the app reads the
+  verified values via the VERD overlay). Same reconciliation gap as logged for gwu, usf, njit and rowan.
+- [ ] temple — `merit` ($12,000/yr, "OOS merit (auto tiers)") is an unverified estimate that the one local
+  source partly contradicts: `data/verify-batch6-accelerated.json` says Temple merit is "auto-considered,
+  tiers unpublished" — it confirms awards are automatic but says the tier amounts are NOT published, so
+  $12,000 has no local basis. `merit` is correctly NOT in the merged `vf` list, so the app shows it amber/EST,
+  but $12,000 is also duplicated in `accel.merit` and the claim is quoted in `general.note` ("Auto merit tiers
+  keep OOS cost reasonable"), so an unverified number is driving user-facing prose. Not changed here — no
+  local file carries Temple's automatic merit tier table or a source for it. Needs a Stage-2 web pass.
+- [ ] temple — the accelerated-program record has no verified stats and the two local sources describe two
+  different things. `verify-batch6-accelerated.json` (`temple34`) is unambiguous that Temple's route is NOT a
+  high-school BS/MD but a Pre-Med Health Scholar linkage applied for in the fall of sophomore year of college
+  (3.6 college GPA, MCAT 509 min, no section below 126), and `accel` in the JSON already reflects that
+  correction with a source URL. But `general.dl` still advertises "3+4 Katz app with admission" and
+  `general.note` still describes "a 3+4 accelerated track", both of which imply the HS-entry program that the
+  verification says does not exist — the same stale framing the `accel.note` explicitly calls "Corrected".
+  Separately, `programVerified` is `null` and `PENDING-RESEARCH-2026-09-05.md` line 61 lists Temple among the
+  16 programs that publish no applicant count, no seat-based rate and nothing computable, so `null` is correct
+  and should NOT be filled with an estimate. Prose reconciliation left untouched (out of scope for a
+  verifiedFacts merge); needs a copy edit, not a web pass.
