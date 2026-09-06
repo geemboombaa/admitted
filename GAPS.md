@@ -371,3 +371,54 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   `programVerified` is `null` while `progRateLegacy` holds the sourced ~10% rate; `PENDING-RESEARCH` line 94
   confirms Augusta/MCG is one of only 4 programs with a real sourced rate, so `programVerified` is a candidate
   to be populated from `progRateLegacy` (25 seats / ~250 applicants) in a later item — out of scope here.
+- [ ] gram (Grambling State) — no source URL for any of the 6 merged `verifiedFacts` fields (admit 44.9%,
+  SAT 860-1150, tuition/fees $16,875, auto merit $7,683, 4-yr grad 14%). Identical situation to howard, gwu,
+  usf, njit, rowan, temple, fau and mcg: the numbers ARE local — they sit in the `Object.assign(VERD,{...})`
+  patch block at `index1.html` line 406 that the Sep-5 verification pass wrote and that
+  `scripts/extract-to-json.js` never picked up (it only reads the `const VERD={...}` literal), which is why
+  `gram.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this
+  conversation" — they are in NO local file. Needs a Stage-2 web pass. Grambling publishes a readable CDS
+  (`cds7.src` points at the 2019-20 Common Data Set PDF on gram.edu), so a newer edition of that same PDF
+  plus IPEDS/College Navigator are the likely Stage-2 targets.
+- [ ] gram — the merged `admit` (0.449), `s25`/`s75` (860-1150) and `grad4` (14) contradict this repo's own
+  note on whether they are verifiable at all. `data/PENDING-RESEARCH-2026-09-05.md` line 49 lists Grambling
+  among the 7 schools whose fields came back "not published / could not verify", naming specifically "admit
+  rate + SAT/ACT range + clean 4yr grad — same ambiguous-metric issue as Augusta". Yet the Sep-5 VERD patch
+  ships all four of those inside `vf`, i.e. flagged to the user as VERIFIED green. One of the two is wrong
+  and no local file can settle it. Merged as-is so the JSON matches the shipped app's current behaviour (this
+  merge changes nothing the user sees). Same unresolved verified-flag doubt already logged for mcg; if the
+  4-yr rate really is the ambiguously-labeled series, 14% may be a rate for a mixed/transfer-heavy cohort
+  rather than the first-time-full-time figure the app implies.
+- [ ] gram — `tuitV` (16875) is merged as VERIFIED but `data/verify-batch6-accelerated.json`
+  (`_meta.key_undergrad.gram`, dated 2026-09-04) says the opposite in as many words: "OOS tuition schedule
+  ambiguous per/sem vs per/yr — keep estimate flag". That is the only thing verify-batch6 carries for
+  Grambling — no COA total, no housing split, no admit rate. If the published figure is per-semester, the
+  real OOS annual tuition is ~$33,750 and the merged value is off by 2x, which would also make
+  `general.coa` (30000) and `accel.coa` (30000) impossible. Merged as-is (the shipped app already renders
+  it) but this is the highest-consequence doubt in this file. Needs the official Grambling bursar
+  tuition-and-fees schedule to settle per-semester vs per-year.
+- [ ] gram — `coa` and `housV` are correctly absent from `vf` (the app shows total cost amber/EST) and no
+  local file carries a verified out-of-state COA or housing/food figure for Grambling, so neither was
+  merged. `general.coa` (30000), `accel.coa` (30000) and `tuition` (15000) remain unverified estimates, and
+  `tuition` (15000) now disagrees with the verified `tuitV` (16875) by $1,875. `instateRef` (22000) exceeds
+  `tuition` (15000), which is the wrong direction for a Louisiana public with a resident discount — same
+  in-state/out-of-state mix-up pattern logged for mcg. All left untouched (out of scope for this merge; the
+  app reads the verified value via the VERD overlay). Needs a Stage-2 web pass.
+- [ ] gram — the estimates in `general` that the verified values now override are the widest disagreements
+  in this whole series and no local file explains them: `general.admit` 0.9 vs verified 0.449 (a 45-point
+  gap — the estimate is double the verified rate), `general.grad4` 20 vs verified 14, `general.s25` 1000 vs
+  verified 860, `general.merit` 5000 vs verified 7683 (also duplicated in `accel.merit`). The merit figure is
+  the one field with a local rationale — `PENDING-RESEARCH-2026-09-05.md` line 92 states Grambling merit was
+  set to $7,683 because the profile clears the top 3.5 GPA/1300 SAT automatic tier — but even that carries no
+  URL. Left untouched. Note `general.note` calls the program bar "friendly" and `medNote` says "attainable on
+  stats", prose that was written against the 0.9 estimate, not the 0.449 verified rate.
+- [ ] gram — `programVerified` is `null` and that is correct, not a gap to fill:
+  `PENDING-RESEARCH-2026-09-05.md` line 61 lists Grambling among the 16 programs that publish no applicant
+  count, no seat-based rate and nothing computable. `progRateLegacy` is likewise `null`. The program terms
+  themselves are well sourced — `accel.bar` (3.25 GPA / 1100 SAT), the MCAT no-section-below-122 rule and the
+  hard eligibility gate (Black/African American + economically/educationally disadvantaged + US citizen/PR)
+  all match `verify-batch6-accelerated.json` (`gram7`) and that record carries the gram.edu source URL.
+  One mismatch worth a later local pass: `program.req` says "~3.5 / 1200" while both `program.bar` and
+  `accel.bar` say 3.25 / 1100 — the prose is stricter than the verified bar it sits next to. Out of scope
+  for a verifiedFacts merge.

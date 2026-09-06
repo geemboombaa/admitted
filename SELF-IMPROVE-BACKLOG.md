@@ -27,7 +27,7 @@ verifiedFacts with per-field src; any of the 5 core fields not present locally -
 - [x] Merge local verify-batch data into temple (verifiedFacts null).
 - [x] Merge local verify-batch data into fau (verifiedFacts null).
 - [x] Merge local verify-batch data into mcg (verifiedFacts null).
-- [ ] Merge local verify-batch data into gram (verifiedFacts null).
+- [x] Merge local verify-batch data into gram (verifiedFacts null).
 - [ ] Merge local verify-batch data into nyit (verifiedFacts null).
 
 <!-- Add new items above this line, one per line, using the exact "- [ ] " prefix. -->
