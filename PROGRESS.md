@@ -2,8 +2,9 @@
 
 Single source of truth for status. Updated at the end of every run.
 
-**Current stage:** Stage 1 — Dataset complete + verified (LOCAL DATA ONLY).
-**Autonomy level:** batch + checkpoint, no auto-deploy (ramp up as checkpoints deliver).
+**Scope (expanded 2026-09-06):** one verified CORE (data + engine) → two surfaces: WEB (index1.html, live) + iOS app (Expo/RN). See GOAL.md + PRODUCT-VISION.md. 4 stages: 1 data → 2 engine → 3 web UX → 4 iOS.
+**Current stage:** Stage 1 — Dataset complete + verified (LOCAL DATA ONLY). Serves both surfaces.
+**Autonomy level:** batch + checkpoint, no auto-deploy. Ramped to option 4 (A4 + full Batch B, one checkpoint).
 
 ## Setup steps
 | # | Step | Status | Notes |
