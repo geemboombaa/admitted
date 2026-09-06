@@ -19,7 +19,7 @@ Web-dependent work (new schools, the 5 no-local-data verifications) lives in `GA
 ## Batch B — merge existing local verify-batch data into zero-VERD schools
 (each: merge whatever data/verify-batch*.json holds for the school into its data/schools/<id>.json
 verifiedFacts with per-field src; any of the 5 core fields not present locally -> GAPS.md, leave EST)
-- [ ] Merge local verify-batch data into howard (data/schools/howard.json verifiedFacts is null).
+- [x] Merge local verify-batch data into howard (data/schools/howard.json verifiedFacts is null).
 - [ ] Merge local verify-batch data into gwu (verifiedFacts null).
 - [ ] Merge local verify-batch data into usf (verifiedFacts null).
 - [ ] Merge local verify-batch data into njit (verifiedFacts null).

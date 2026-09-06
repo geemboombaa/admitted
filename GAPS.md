@@ -62,3 +62,20 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
 - [ ] asu — 2027-28 cost of attendance and 2027-28 scholarship terms (his actual application cycle) are not
   published anywhere as of 2026-09-05. Left as `wueDetail.coa2728: null` /
   `wueDetail.replacement.termsForHisCycle: null` — deliberately NOT projected from the 2026-27 figures.
+- [ ] howard — no source URL for any of the 5 merged `verifiedFacts` fields (admit 0.41, SAT 1090-1320,
+  COA $63,084 = $39,036 tuition/fees + $21,048 housing/food + $3,000 books/personal, 4-yr grad 60%). The
+  numbers themselves ARE local — they sit in the `Object.assign(VERD,{...})` patch block in `index1.html`
+  that the Sep-5 verification pass wrote and that `scripts/extract-to-json.js` never picked up (it only reads
+  the `const VERD={...}` literal), which is why `howard.json.verifiedFacts` was still `null`. But
+  `data/PENDING-RESEARCH-2026-09-05.md` line 49 states outright that the per-field source URLs for these 15
+  schools live only "in the assistant's prior message in this conversation" — they are in NO local file.
+  Values merged as-is (app behaviour unchanged); the src URLs need a Stage-2 web pass.
+- [ ] howard — two local sources disagree and there is no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.howard`, dated 2026-09-04) says admit 0.35 and
+  COA total $66,182; the later Sep-5 pass in `index1.html` says admit 0.41 and COA $63,084. The
+  tuition/housing split ($39,036 / $21,048) is IDENTICAL in both, so only the top-line COA and the admit rate
+  conflict. Took the Sep-5 values (newer, and the ones the shipped app already renders). Needs the official
+  Howard CDS / bursar URL to settle which is right.
+- [ ] howard — `merit` ($10,000/yr, "Capstone/Founders merit (auto for ~3.5+/1300+)") is still an unverified
+  estimate. It is not in the merged `vf` list, so the app correctly shows it amber/EST. No local file carries
+  Howard's automatic merit tiers or a source for them.
