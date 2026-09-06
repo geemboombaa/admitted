@@ -36,8 +36,8 @@ for arg in "$@"; do
 done
 
 log()   { printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" | tee -a "$LOG"; }
-score() { printf '[%s] SCORE | validate=%-4s review=%-7s result=%-9s | %s\n' \
-          "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2" "$3" "$4" >> "$LOG"; }
+score() { printf '[%s] SCORE | validate=%-4s review=%-7s result=%s\n' \
+          "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2" "$3" >> "$LOG"; }
 revert() { git reset --hard "$1" >/dev/null 2>&1; git clean -fd >/dev/null 2>&1; }
 
 if [ -n "$(git status --porcelain)" ]; then
@@ -66,8 +66,10 @@ ${ITEM}
 ${NO_WEB}
 
 Workflow (README.md): edit data/schools/*.json or data/shared/app-config.json only. Do NOT touch index1.html at
-all -- the loop regenerates it from your JSON after you finish. Run 'node scripts/validate.js' yourself and fix
-anything it flags before finishing. Keep it scoped to this one item."
+all -- the loop regenerates it from your JSON after you finish. Do NOT edit the tracker files either
+(SELF-IMPROVE-BACKLOG.md, PROGRESS.md, SELF-IMPROVE-LOG.md) -- the loop manages those; the ONLY tracker you may
+append to is GAPS.md, and only to record a value you genuinely could not satisfy from local data. Run
+'node scripts/validate.js' yourself and fix anything it flags before finishing. Keep it scoped to this one item."
 
   # Builder — prompt via stdin; web tools blocked at the tool level.
   if ! printf '%s' "$BUILD_PROMPT" | claude -p --disallowedTools WebSearch WebFetch; then
