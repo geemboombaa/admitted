@@ -16,14 +16,17 @@ Single source of truth for status. Updated at the end of every run.
 | S5 | Enforce local-only (--disallowedTools WebSearch WebFetch + prompt) | DONE 2026-09-06 | verified block honored |
 | S6 | Add self-score record per iteration | DONE 2026-09-06 | score() in loop -> log |
 | S7 | Reframe backlog to local items; move web work to GAPS.md | DONE 2026-09-06 | 14 local items, 17 gaps |
-| S8 | Run first checkpoint batch + open app for user | NOT STARTED | Batch A (4 items) next |
+| S8 | Run checkpoint batches + open app for user | DONE 2026-09-06 | Checkpoints 1 & 2 delivered |
+| S9 | Merge iOS product vision (1 core, 2 surfaces, 4 stages) | DONE 2026-09-06 | GOAL.md + PRODUCT-VISION.md |
+| S10 | Dynamic model routing (Haiku triage→builder, reject-escalate, Opus reviewer) | DONE 2026-09-06 | verified: merge→Sonnet, conflict/engine→Opus |
+| S11 | Live progress bar in loop | DONE 2026-09-06 | bar_str in self-improve-loop.sh |
 
-## Stage 1 backlog
+## Stage 1 backlog — COMPLETE (local-only)
 | Batch | Items | Status |
 |---|---|---|
-| A | B4 BS/MD rates, ua/osu/asu WUE fixes (4) | A1/A2/A3 DONE 2026-09-06; A4 (asu) NOT STARTED |
-| B | merge verify-batch into 10 zero-VERD schools | NOT STARTED |
-| GAPS | 5 no-local verifies + Auburn + 12 new schools | DEFERRED (needs web / user go) |
+| A | B4 BS/MD rates, ua/osu/asu WUE fixes (4) | DONE 2026-09-06 |
+| B | merge verify-batch into 10 zero-VERD schools | DONE 2026-09-06 (howard,gwu,usf,njit,rowan,temple,fau,mcg,gram,nyit) |
+| GAPS | 5 no-local verifies + Auburn + 12 new schools | DEFERRED (needs web / user go) — see GAPS.md |
 
 ## Metrics baseline (2026-09-06)
 - School files: 101 (validate PASSED)
@@ -44,11 +47,19 @@ which says Brown PLME publishes nothing computable. All three DO have a src URL,
 rather than nulled - different field from PROGRATE, and deleting sourced data is outside this backlog item.
 The Brown source is a student newspaper, not an official page. Needs a user call.
 
-## Checkpoint 1 result (2026-09-06)
-Loop ran end-to-end. Self-score: 4 commits, 1 reject-then-fixed (osu). Independent reviewer caught a real
-COA contradiction on osu and forced a corrected retry — self-correction proven.
-Commits: 93b4b7b (A1 rates), 903e99f (A2 ua), 71693b4 (A3 osu). validate PASSED throughout.
+## Checkpoint 2 result (2026-09-06) — STAGE 1 LOCAL WORK COMPLETE
+- Batch A (checkpoint 1): 4 commits, 1 reject-then-fixed (osu COA contradiction caught by reviewer).
+- Option-4 batch: **11/11 committed, all APPROVED first try, zero rejects.** A4 + all of Batch B.
+- **verifiedFacts 82 → 92 / 101.** Backlog empty (0 items left).
+- Remaining 9 null = the web-needed GAPS: auburn, cuny, mich, syracuse, uga, unc, usc_sc, uta, wayne.
+- brown/drex/hof: user decided KEEP AS-IS (GAPS G4, informational).
 
-## Next step
-Awaiting user go at Checkpoint 1. Options: (a) finish A4 (asu); (b) start Batch B (merge verify-batch
-into 10 zero-VERD schools); (c) resolve the brown/drex/hof source-quality decision in GAPS G4.
+## Metrics after Stage 1 (2026-09-06)
+- verifiedFacts populated: 92 / 101 · null: 9 (all in GAPS, need web)
+- validate PASSED · 101 files · nothing deployed
+
+## Stage / Next step
+**Stage 1 (data, local-only): DONE.** Next = **Stage 2 (engine unified)** — the big open item is
+reconciling the band thresholds (web ≥75/55/30 vs iOS ≥80/50/20) and making one canonical chance/fit/cost
+engine both surfaces call. Stage 2 likely needs approved web pulls (the 9 GAPS + CDS C7 factor weights) —
+decide scope at Stage-2 kickoff. Loop now runs with dynamic model routing + progress bar.

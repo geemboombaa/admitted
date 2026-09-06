@@ -40,6 +40,36 @@ score() { printf '[%s] SCORE | validate=%-4s review=%-7s result=%s\n' \
           "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2" "$3" >> "$LOG"; }
 revert() { git reset --hard "$1" >/dev/null 2>&1; git clean -fd >/dev/null 2>&1; }
 
+# Model IDs
+M_OPUS="claude-opus-4-8"; M_SONNET="claude-sonnet-4-6"; M_HAIKU="claude-haiku-4-5-20251001"
+
+# Dynamic model routing: a cheap Haiku triage rates the item's complexity; its native
+# label picks the Builder model. No numeric gate -- the classifier's word IS the decision.
+triage_model() {
+  local label
+  label=$(printf '%s' "Classify this data task's complexity in ONE word from {merge, judgment, conflict, engine}. \
+merge = a straight copy of already-sourced local fields into a JSON file. \
+judgment = needs a judgment call or honest null decision. conflict = reconcile conflicting sources. \
+engine = logic/scoring/engine change. Reply ONLY the one word.
+
+Task: $1" | claude -p --model "$M_HAIKU" --disallowedTools WebSearch WebFetch 2>/dev/null \
+        | tr '[:upper:]' '[:lower:]' | grep -oE 'merge|judgment|conflict|engine' | head -1)
+  case "$label" in
+    merge) echo "$M_SONNET|merge->sonnet" ;;
+    judgment|conflict|engine) echo "$M_OPUS|$label->opus" ;;
+    *) echo "$M_OPUS|unclassified->opus(safe default)" ;;
+  esac
+}
+
+# Progress bar string: bar_str <done> <total>
+bar_str() {
+  local done=$1 total=$2 n=20 filled k b=""
+  [ "$total" -gt 0 ] || total=1
+  filled=$(( done * n / total ))
+  for ((k=0; k<n; k++)); do [ $k -lt $filled ] && b+="#" || b+="-"; done
+  printf '[%s] %d/%d committed' "$b" "$done" "$total"
+}
+
 if [ -n "$(git status --porcelain)" ]; then
   log "ABORT: working tree is not clean. Commit or stash your own changes before running the loop."
   exit 1
@@ -53,12 +83,22 @@ GAPS.md (which school, which field, what's missing), leave that field flagged as
 Never fabricate a number. Every published number you write must keep its src URL (schema: data/schema/school.schema.json)."
 
 DONE=0
+LAST_REJECTED=""
 for ((i=1; i<=ITERATIONS; i++)); do
-  log "=== iteration $i/$ITERATIONS ==="
+  log "=== iteration $i/$ITERATIONS | $(bar_str "$DONE" "$ITERATIONS") ==="
 
   ITEM=$(node scripts/self-improve-backlog.js next) || { log "backlog empty -- stopping."; break; }
   log "picked: $ITEM"
   BASELINE=$(git rev-parse HEAD)
+
+  # Pick Builder model: escalate to Opus if this is a retry of a just-rejected item,
+  # else route by Haiku triage.
+  if [ "$ITEM" = "$LAST_REJECTED" ]; then
+    BUILD_MODEL="$M_OPUS"; ROUTE="escalated (retry of rejected item)"
+  else
+    IFS='|' read -r BUILD_MODEL ROUTE <<<"$(triage_model "$ITEM")"
+  fi
+  log "model: $BUILD_MODEL ($ROUTE)"
 
   BUILD_PROMPT="Implement exactly this one backlog item from SELF-IMPROVE-BACKLOG.md, and nothing else:
 ${ITEM}
@@ -71,21 +111,21 @@ all -- the loop regenerates it from your JSON after you finish. Do NOT edit the 
 append to is GAPS.md, and only to record a value you genuinely could not satisfy from local data. Run
 'node scripts/validate.js' yourself and fix anything it flags before finishing. Keep it scoped to this one item."
 
-  # Builder — prompt via stdin; web tools blocked at the tool level.
-  if ! printf '%s' "$BUILD_PROMPT" | claude -p --disallowedTools WebSearch WebFetch; then
+  # Builder — prompt via stdin; web tools blocked at the tool level; model dynamically routed.
+  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$BUILD_MODEL" --disallowedTools WebSearch WebFetch; then
     log "REJECTED: Builder (claude -p) failed. Reverting to $BASELINE."
-    score "na" "na" "build-fail"; revert "$BASELINE"; continue
+    score "na" "na" "build-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
   if ! node scripts/validate.js; then
     log "REJECTED: validate.js failed. Reverting to $BASELINE."
-    score "FAIL" "na" "reverted"; revert "$BASELINE"; continue
+    score "FAIL" "na" "reverted"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
   # Loop owns regeneration of the shipped file (Builder edits JSON only, never index1.html).
   if ! node scripts/build.js --out=index1.html || [ ! -s index1.html ]; then
     log "REJECTED: build.js failed or produced an empty file. Reverting to $BASELINE."
-    score "PASS" "na" "buildjs-fail"; revert "$BASELINE"; continue
+    score "PASS" "na" "buildjs-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
   # Bug 1 fix: review the SOURCE diff only (generated HTML excluded), fed via stdin (no argv size limit).
@@ -103,13 +143,14 @@ ${DIFF}
 
 Reply with ONE line starting APPROVE or REJECT, then your reasoning."
 
-  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --disallowedTools WebSearch WebFetch)
+  # Reviewer is always Opus (high-leverage gate, low token volume).
+  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS" --disallowedTools WebSearch WebFetch)
   VERDICT=$(printf '%s' "$REVIEW" | head -1)
   log "review verdict: $VERDICT"
 
   if ! printf '%s' "$VERDICT" | grep -qi '^APPROVE'; then
     log "REJECTED by independent review: $REVIEW"
-    score "PASS" "REJECT" "reverted"; revert "$BASELINE"; continue
+    score "PASS" "REJECT" "reverted"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
 
   node scripts/self-improve-backlog.js done "$ITEM"
@@ -120,6 +161,7 @@ Reviewed by: adversarial-reviewer (independent claude -p call, no memory of the 
 Co-Authored-By: Claude self-improve loop <noreply@anthropic.com>"
   log "COMMITTED: ${ITEM}"
   score "PASS" "APPROVE" "committed"
+  LAST_REJECTED=""
   DONE=$((DONE+1))
 
   if [ "$PUSH" -eq 1 ]; then
