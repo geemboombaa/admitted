@@ -257,3 +257,63 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   16 programs that publish no applicant count, no seat-based rate and nothing computable, so `null` is correct
   and should NOT be filled with an estimate. Prose reconciliation left untouched (out of scope for a
   verifiedFacts merge); needs a copy edit, not a web pass.
+- [ ] fau — no source URL for any of the 8 merged `verifiedFacts` fields (admit 66.1%, SAT 1040-1200, COA
+  $41,720 = $22,888 tuition/fees + $15,832 housing/food + $3,000 books/personal, merit $0, 4-yr grad 48%).
+  Same situation as howard, gwu, usf, njit, rowan and temple: the numbers ARE local — they sit in the
+  `Object.assign(VERD,{...})` patch block at `index1.html` line 403 that the Sep-5 verification pass wrote and
+  that `scripts/extract-to-json.js` never picked up (it only reads the `const VERD={...}` literal), which is
+  why `fau.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this conversation"
+  — they are in NO local file. Like rowan and temple, FAU is named on that same line as one of the 8 schools
+  that "came back fully clean", so all 8 fields being in `vf` is consistent with the project's own notes; only
+  the URLs are missing. Merged as-is (app behaviour unchanged); the src URLs need a Stage-2 web pass. Note the
+  one already-sourced FAU number, `cds7.src`
+  (`https://www.fau.edu/iea/documents/pdf/cds/cds-2024-2025.pdf`), is the 2024-25 Common Data Set and is the
+  likely home of admit rate, the SAT band and the 4-yr grad rate — check it first in Stage 2.
+- [ ] fau — the two local sources disagree on total OOS cost of attendance, but ONLY on the total.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.fau`, dated 2026-09-04) says COA $47,934 with
+  tuition/fees $22,888 and housing/food $15,832; the later Sep-5 pass in `index1.html` says $41,720 with the
+  *identical* $22,888 + $15,832 split. The two components match to the dollar, so the $6,214 gap is entirely
+  in the totals — and batch6's own total does not reconcile with its own split ($22,888 + $15,832 = $38,720,
+  leaving $9,214 unexplained), whereas the Sep-5 total does ($38,720 + $3,000 books/personal = $41,720, the
+  same $3,000 books/personal line used for temple). Took the Sep-5 total (newer, internally consistent, and
+  the one the shipped app already renders). Still needs the official FAU cost-of-attendance / bursar URL to
+  confirm the $3,000 indirect-cost line and whether batch6's $47,934 included something else (health
+  insurance, transportation) that the Sep-5 figure drops.
+- [ ] fau — the two local sources give two different SAT 25-75 bands, and unlike temple's case these are the
+  same metric so they genuinely conflict. `verify-batch6-accelerated.json` says 1090-1270; the Sep-5 pass says
+  1040-1200 (50 points lower at the 25th, 70 lower at the 75th; the bands overlap but share no endpoint).
+  There is no local basis to pick between them. Merged the Sep-5 band (newer, and what the app renders); note
+  that `general.s25`/`general.s75` (1090/1270) still carry the batch6 values, so the file now holds both.
+  Needs the FAU CDS (`cds7.src`, section C9) in Stage 2 to settle it.
+- [ ] fau — the verified `merit` value of $0 is applicant-conditional, not a school fact, and nothing local
+  sources it. `PENDING-RESEARCH-2026-09-05.md` line 92 explains it: "FAU merit set to $0 (verified: automatic
+  non-resident floor requires 3.85 GPA; his 3.67 does not clear it, despite 1440 SAT clearing every test
+  threshold)". So $0 is not FAU's award — it is what FAU's automatic OOS award pays *this applicant at a 3.67
+  GPA*. Two consequences worth a Stage-2 pass: (a) no URL is given for the 3.85 automatic-award floor or for
+  the award amounts above it, and (b) because `merit` is in `vf` the app shows $0 as a verified green number,
+  so if his GPA is ever revised above 3.85 — or if the GPA slider is moved — the "verified" figure silently
+  becomes wrong. The unverified estimates it contradicts are still in the file: `general.merit` 5000 /
+  `general.meritName` "OOS merit (limited)" and `accel.merit` 5000. Left untouched (out of scope for this
+  merge). Needs the FAU non-resident automatic scholarship table + its URL.
+- [ ] fau — `general.coa` (40000) and `general.grad4` (38) are the older unverified estimates and now disagree
+  with the verified `coa` 41720 (a $1,720 gap) and `grad4` 48 (a 10-point gap, the largest in this series);
+  `accel.coa` (40000) carries the same stale COA. `general.admit` (0.68) is near but not equal to the verified
+  0.661. All left untouched (out of scope for this merge; the app reads the verified values via the VERD
+  overlay). Same reconciliation gap as logged for gwu, usf, njit, rowan and temple. Separately,
+  `instateRef` (22000) is implausible on its face now that the verified OOS tuition/fees is $22,888 — a
+  Florida public's in-state rate should be a fraction of its non-resident rate, not 96% of it, so
+  `instateRef` looks like a copy of the OOS number rather than a real in-state figure. `tuition` (22000) has
+  the same value and is presumably the OOS one. No local file carries FAU's in-state tuition, so nothing was
+  changed; needs a Stage-2 web pass against the FAU tuition schedule.
+- [ ] fau — the Wilkes Medical Scholars deadline conflicts between two local records, with the sourced one
+  losing. `verify-batch6-accelerated.json` (`fau7`) says "Nov 23, 2026" and carries a source
+  (`fau.edu/honors/future-students/medical-scholar-program/`), and `accel.apply` already agrees ("FAU Honors
+  app + program app, Nov 23, 2026"), but `general.dlDate` says `2026-11-15` and `general.dl` says only
+  "app Nov" — so the date the app sorts and counts down on is 8 days earlier than the only sourced local
+  value. Not changed here (out of scope for a verifiedFacts merge), but this is a correctable-from-local
+  discrepancy, not a web-research gap, and a deadline that reads early is the safer error only by accident.
+  Also note `accel.bar.gpa` (3.9) does not match `accel.gate`'s stated bar of 4.30 *weighted* — the same
+  number in two metrics — while `accel.bar.sat` (1490) does match. Finally, `programVerified` is `null` and
+  `PENDING-RESEARCH-2026-09-05.md` line 61 lists FAU among the 16 programs that publish no applicant count,
+  no seat-based rate and nothing computable, so `null` is correct and should NOT be filled with an estimate.
