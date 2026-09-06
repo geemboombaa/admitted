@@ -1,10 +1,23 @@
 # OPERATING MODEL — how the self-improving loop runs
 
 ## Roles
-- **Builder** — nested `claude -p`, fresh context, implements ONE backlog item. Web tools blocked (`--disallowedTools WebSearch WebFetch`).
+- **Triage** — cheap `claude -p --model claude-haiku-4-5-20251001`, classifies each item's complexity (merge/judgment/conflict/engine) to route the Builder model. Web blocked.
+- **Builder** — nested `claude -p`, fresh context, implements ONE backlog item, model chosen by Triage. Web tools blocked (`--disallowedTools WebSearch WebFetch`).
 - **Validator** — `scripts/validate.js`, objective structural/referential gate.
-- **Reviewer** — a SECOND, independent nested `claude -p`, no memory of the build, judges the source diff cold (APPROVE/REJECT). Brief: `.claude/agents/adversarial-reviewer.md`.
+- **Reviewer** — a SECOND, independent nested `claude -p --model claude-opus-4-8`, no memory of the build, judges the source diff cold (APPROVE/REJECT). Brief: `.claude/agents/adversarial-reviewer.md`.
 - **Orchestrator (me)** — runs batches, does the checkpoint, presents results, decides next stage with the user.
+
+## Model routing (autonomous — the loop decides, never the user)
+Dynamic allocation by revealed complexity; token-optimal (cheap model where the volume is, strong model where the leverage is):
+| Role | Model | Rule |
+|---|---|---|
+| Triage | Haiku 4.5 | one-word complexity label per item |
+| Builder (1st try) | **Sonnet 4.6** if Triage says `merge`; **Opus 4.8** for `judgment`/`conflict`/`engine` or unclassified | classifier's label IS the decision — no numeric gate |
+| Builder (retry after REJECT) | **Opus 4.8** | a rejection is the complexity signal → escalate one tier |
+| Reviewer | **Opus 4.8** always | short output, high leverage; the safety net stays strong |
+| My subagents | Haiku=search/list · Sonnet=digest/extract · Opus=architecture/reconcile | match model to task |
+
+Model IDs: `claude-opus-4-8`, `claude-sonnet-4-6`, `claude-haiku-4-5-20251001`. Wired in `scripts/self-improve-loop.sh` (`triage_model`, `--model`). Reviewer tier is the one tunable dial (drop to Sonnet only to cut cost at some quality risk).
 
 ## One iteration (autonomous, in `scripts/self-improve-loop.sh`)
 ```

@@ -20,3 +20,4 @@ Consolidates the no-fabrication / data-driven rules scattered across README, han
 
 ## Process
 9. **Checkpoint after every batch:** self-audit against `GOAL.md` + this file + `DELIVERABLES.md`, produce a visible result (open the app + changelog + metrics), then stop for user go/no-go. Autonomy ramps up only as checkpoints keep delivering.
+10. **Model selection is autonomous, never asked of the user.** The loop routes models by revealed complexity (Haiku triage → Sonnet for merges / Opus for judgment; reject escalates to Opus; reviewer stays Opus). Full policy in `OPERATING-MODEL.md`. Keep token usage optimal by default; improve the routing each run.
