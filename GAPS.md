@@ -500,3 +500,29 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   no local file records the conversion used; and `program.req` says "~3.6 / 1300" while both `program.bar`
   and `accel.bar` say 3.6 / 1270, so the prose sits 30 SAT points stricter than the verified bar next to it.
   Out of scope for a verifiedFacts merge.
+- [ ] uta (UT Austin) — SAT 25-75 composite band is NOT officially published and was left EST (general.s25/s75
+  1350/1520 unchanged, NOT added to verifiedFacts.vf). Reason: UT submits the CDS SAT-percentile section (C9)
+  BLANK in both the 2024-25 and 2025-26 filings, so there is no official UT composite band. IPEDS
+  (College Navigator, id=228778) does publish UT's SAT, but only sectional: EBRW 630-740, Math 620-770
+  (25th-75th). A composite band derived by summing section percentiles (1250-1510) is a known approximation,
+  not an official figure, so per the no-approximation rule it was not written as verified. If a summed-section
+  band is later deemed acceptable, source: https://nces.ed.gov/collegenavigator/?id=228778 — note it would
+  sit ~100 pts below the current 1350 estimate at the 25th.
+- [ ] uta — OOS cost of attendance is an official RANGE, not a single figure, because UT charges flat-rate
+  tuition set per college. The 2026-27 nonresident undergraduate COA (official, onestop.utexas.edu) is
+  $64,204-$72,916 total = tuition $42,554-$51,106 + housing/food $15,420-$15,580 + transportation $1,840 +
+  books $724 + personal $3,666. verifiedFacts stores the published MINIMUM ($64,204 COA / $42,554 tuition /
+  $15,420 housing) as a conservative verified floor; higher-tuition colleges (incl. CNS, the relevant college
+  for a premed) run toward the top of the range, so the stored COA understates for many majors. Needs the
+  per-college tuition schedule to store a premed/CNS-specific figure. Src:
+  https://onestop.utexas.edu/managing-costs/cost-tuition-rates/cost-of-attendance/
+- [ ] uta — auto merit left EST (general.merit 2000 / meritName "Almost no OOS merit" unchanged, NOT in
+  verifiedFacts.vf). UT publishes no automatic non-resident merit scholarship (OOS awards are competitive, not
+  stat-triggered), and its guaranteed free-tuition programs (Texas Advance Commitment, Texas Empowerment) are
+  Texas-resident-only. No official page states a $0/auto OOS merit figure, so the estimate was not promoted to
+  verified. Needs an official UT financial-aid/scholarships page confirming no auto OOS merit.
+- [ ] uta — cds7 (C7 factor weighting h:0.5 / t:0.25) still sourced to a third-party (collegedata.fyi) that
+  cites the CDS, because UT's own CDS is served through an unreadable Box viewer
+  (https://utexas.app.box.com/s/d9izqb6s8dw2xxg5h5sunxyhrnef2ay6). Left untouched — out of scope for the
+  5-core-field sourcing item; flagged so a later pass can replace it with the official CDS if the Box viewer
+  becomes reachable.

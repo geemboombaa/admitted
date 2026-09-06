@@ -20,7 +20,7 @@ Ordered easy→hard; the last two are flagged where prior research found the off
 - [x] Source Syracuse (syracuse) 5 core fields from official Syracuse CDS + cost pages; add verifiedFacts with per-field src.
 - [x] Source University of South Carolina (usc_sc) 5 core fields from official USC CDS + cost pages; add verifiedFacts with per-field src.
 - [x] Source Wayne State (wayne) 5 core fields from official Wayne State CDS + cost pages; add verifiedFacts with per-field src.
-- [ ] Source UT Austin (uta) 5 core fields from official sources; prior research flagged the CDS behind a Box viewer — if truly unreachable officially, source what IPEDS/College Scorecard publishes and leave the rest null + GAPS.
+- [x] Source UT Austin (uta) 5 core fields from official sources; prior research flagged the CDS behind a Box viewer — if truly unreachable officially, source what IPEDS/College Scorecard publishes and leave the rest null + GAPS.
 - [ ] Source CCNY/CUNY (cuny) 5 core fields from official sources; prior research flagged SAT range + OOS housing + 4-yr grad as unpublished — source what's official, null the rest + GAPS.
 
 ## Batch D — add missing src URLs to already-merged verifiedFacts (Stage 1 merged values without sources)

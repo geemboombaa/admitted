@@ -9,13 +9,13 @@
   "region": "Other",
   "type": "Public",
   "size": "L",
-  "admit": 0.29,
+  "admit": 0.27,
   "g25": 3.7,
   "g75": 4,
   "s25": 1350,
   "s75": 1520,
   "tb": false,
-  "coa": 62000,
+  "coa": 64204,
   "merit": 2000,
   "meritName": "Almost no OOS merit",
   "dl": "ApplyTexas/Common App, priority Dec 1",
@@ -24,7 +24,7 @@
   "research": 8,
   "bio": 8,
   "med": 7,
-  "grad4": 74,
+  "grad4": 76,
   "honors": "Plan II / CNS Honors",
   "wue": false,
   "conf": "solid",
@@ -38,7 +38,21 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": ["admit", "coa", "tuitV", "housV", "grad4"],
+  "admit": 0.27,
+  "coa": 64204,
+  "tuitV": 42554,
+  "housV": 15420,
+  "grad4": 76,
+  "srcs": {
+   "admit": "https://nces.ed.gov/collegenavigator/?id=228778",
+   "coa": "https://onestop.utexas.edu/managing-costs/cost-tuition-rates/cost-of-attendance/",
+   "tuitV": "https://onestop.utexas.edu/managing-costs/cost-tuition-rates/cost-of-attendance/",
+   "housV": "https://onestop.utexas.edu/managing-costs/cost-tuition-rates/cost-of-attendance/",
+   "grad4": "https://admissions.utexas.edu/explore/ranks-stats/"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
@@ -54,7 +68,7 @@
  "clinicalAccess": 6,
  "pathNameLegacy": null,
  "instateRef": 33000,
- "tuition": 43000,
+ "tuition": 42554,
  "cds7": {
   "h": 0.5,
   "t": 0.25,
