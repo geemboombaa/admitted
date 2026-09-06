@@ -38,7 +38,25 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": ["admit", "s25", "s75", "coa", "tuitV", "housV", "grad4"],
+  "admit": 0.167,
+  "s25": 1400,
+  "s75": 1530,
+  "coa": 64942,
+  "tuitV": 45228,
+  "housV": 15038,
+  "grad4": 83,
+  "srcs": {
+   "admit": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf",
+   "s25": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf",
+   "s75": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf",
+   "coa": "https://studentaid.unc.edu/current/costs/",
+   "tuitV": "https://studentaid.unc.edu/current/costs/",
+   "housV": "https://studentaid.unc.edu/current/costs/",
+   "grad4": "https://oira.unc.edu/wp-content/uploads/sites/297/2026/06/CDS_UNCCH_2025-26_20260615.pdf"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
