@@ -28,10 +28,12 @@ BACKLOG="SELF-IMPROVE-BACKLOG.md"
 LOG="SELF-IMPROVE-LOG.md"        # gitignored on purpose -> survives the revert (Bug 2 fix)
 ITERATIONS=1
 PUSH=0
+WEB=0
 for arg in "$@"; do
   case "$arg" in
     --iterations=*|--batch=*) ITERATIONS="${arg#*=}" ;;
     --push) PUSH=1 ;;
+    --web) WEB=1 ;;   # Stage 2+: allow the Builder to use the web (official sources only)
   esac
 done
 
@@ -75,12 +77,26 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-# Local-only contract handed to the Builder, enforced ALSO at the tool level below.
-NO_WEB="STAGE 1 IS LOCAL-DATA-ONLY. You may only read/write local files in this repo. Do NOT use the web.
+# Builder data contract + tool-level enforcement depend on mode.
+if [ "$WEB" -eq 1 ]; then
+  DISALLOW=()   # web allowed (Stage 2+ sourcing)
+  BUILD_CONTRACT="STAGE 2 SOURCING — WEB ALLOWED, OFFICIAL SOURCES ONLY. You MAY use WebSearch/WebFetch, but ONLY
+to pull numbers from authoritative sources: the school's own site, its Common Data Set, official bursar/financial-aid
+pages, IPEDS/College Scorecard. Do NOT take hard numbers (admit rate, SAT band, COA, merit, grad rate) from forums,
+blogs, ranking aggregators, or student papers. Every published number you write MUST carry a src URL to the official
+page it came from (schema: data/schema/school.schema.json). If you cannot find an OFFICIAL source for a value, do NOT
+invent or approximate it — leave it null/EST-flagged and append a line to GAPS.md saying which field is still unsourced.
+Never fabricate a number."
+else
+  DISALLOW=(--disallowedTools WebSearch WebFetch)   # Stage 1: local-only, blocked at tool level
+  BUILD_CONTRACT="STAGE 1 IS LOCAL-DATA-ONLY. You may only read/write local files in this repo. Do NOT use the web.
 Verification data already lives locally in data/verify-batch1-6.json and data/PENDING-RESEARCH-2026-09-05.md.
 If a value you need is not in any local file: DO NOT fetch or invent it. Instead append a specific line to
 GAPS.md (which school, which field, what's missing), leave that field flagged as an estimate, and continue.
 Never fabricate a number. Every published number you write must keep its src URL (schema: data/schema/school.schema.json)."
+fi
+
+log "mode: $([ "$WEB" -eq 1 ] && echo 'WEB — Stage 2 sourcing (official sources only, every number needs a src)' || echo 'LOCAL-ONLY — Stage 1 (web blocked at tool level)') | batch=$ITERATIONS push=$PUSH"
 
 DONE=0
 LAST_REJECTED=""
@@ -103,16 +119,16 @@ for ((i=1; i<=ITERATIONS; i++)); do
   BUILD_PROMPT="Implement exactly this one backlog item from SELF-IMPROVE-BACKLOG.md, and nothing else:
 ${ITEM}
 
-${NO_WEB}
+${BUILD_CONTRACT}
 
-Workflow (README.md): edit data/schools/*.json or data/shared/app-config.json only. Do NOT touch index1.html at
+Workflow (README.md): edit data/schools/*.json or data/shared/app-config.json only. Do NOT touch index.html at
 all -- the loop regenerates it from your JSON after you finish. Do NOT edit the tracker files either
 (SELF-IMPROVE-BACKLOG.md, PROGRESS.md, SELF-IMPROVE-LOG.md) -- the loop manages those; the ONLY tracker you may
-append to is GAPS.md, and only to record a value you genuinely could not satisfy from local data. Run
+append to is GAPS.md, and only to record a value you genuinely could not satisfy. Run
 'node scripts/validate.js' yourself and fix anything it flags before finishing. Keep it scoped to this one item."
 
-  # Builder — prompt via stdin; web tools blocked at the tool level; model dynamically routed.
-  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$BUILD_MODEL" --disallowedTools WebSearch WebFetch; then
+  # Builder — prompt via stdin; model dynamically routed; web per mode (DISALLOW empty when --web).
+  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$BUILD_MODEL" "${DISALLOW[@]}"; then
     log "REJECTED: Builder (claude -p) failed. Reverting to $BASELINE."
     score "na" "na" "build-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi

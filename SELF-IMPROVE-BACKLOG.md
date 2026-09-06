@@ -1,33 +1,39 @@
-# Self-improve backlog — STAGE 1 (local data only)
+# Self-improve backlog — STAGE 2 (sourcing, web ON, official sources only)
 
-Format the loop depends on exactly: `- [ ] <one-line task>` = pending, `- [x] <same text>` = done.
-One item = one loop iteration = one commit (or one revert).
+Format: `- [ ] <task>` pending, `- [x] <task>` done. One item = one iteration = one commit (or revert).
+(Stage 1 backlog complete — its items are in git history: Batch A + Batch B, all committed.)
 
-**Stage 1 rule (see RULES.md): LOCAL DATA ONLY.** Sources allowed: `data/verify-batch1-6.json`,
-`data/PENDING-RESEARCH-2026-09-05.md`, existing `data/schools/*.json`. No web. If a required value is
-not in a local file, the builder appends it to `GAPS.md` and leaves the field EST-flagged — never fetched,
-never invented. Every merged number keeps its `src` URL.
+**Stage 2 rule (RULES.md + loop --web): OFFICIAL SOURCES ONLY.** WebSearch/WebFetch allowed, but hard numbers
+(admit rate, SAT 25/75, OOS COA + tuition/housing split, auto merit, 4-yr grad) may come ONLY from the school's
+own site / Common Data Set / official bursar / IPEDS / College Scorecard. No forums, blogs, ranking aggregators,
+student papers. Every published number keeps a src URL to the official page. Can't find an official source →
+leave null/EST, log to GAPS.md. Never fabricate. Goal: raise the computed data-quality score (checkpoint-report.js).
 
-Web-dependent work (new schools, the 5 no-local-data verifications) lives in `GAPS.md`, NOT here.
+Run with: `./scripts/self-improve-loop.sh --web --batch=N`
 
-## Batch A — inline-sourced fixes (numbers live directly in PENDING-RESEARCH)
-- [x] Replace the invented PROGRATE/program-admit-rate values with the 4 real sourced BS/MD rates from PENDING-RESEARCH B4 (NJIT/NJMS 2.6%, Augusta/MCG ~10%, CCNY/CUNY 10.4% labeled 2021-dated, UMKC 6yr ~7-11% self-computed range with denominator stated) and set every other program's rate to null; keep each number's src URL; do not invent the 16 unpublished ones.
-- [x] Fix the University of Arizona (ua) WUE representation per PENDING-RESEARCH B2: mark it competitive/limited-participation (not a guaranteed rate), keep the ~$18,252/yr as an explicitly-derived estimate (150% of resident), src the FY27 bursar chart; do not present it as an official published figure.
-- [x] Fix the Oregon State (osu) WUE representation per PENDING-RESEARCH B2: competitive scholarship (~30% of eligible students offered), not a guaranteed discount; COA resident $38,568 / non-resident $65,013; any WUE dollar figure flagged derived-estimate, not official.
-- [x] Update Arizona State (asu) per PENDING-RESEARCH B2: WUE ends for Fall-2026+ entrants, replaced by ASU Commitment Scholarship $5,500-$7,500/yr (range); 2026-27 Tempe nonresident COA $63,394 ($39,262 tuition+fees + $18,819 housing/food + $5,313 books/personal); leave 2027-28/his-cycle terms null/TBD, not projected.
+## Batch C — the 9 zero-VERD schools (verify 5 core fields from official sources, add verifiedFacts w/ per-field src)
+Ordered easy→hard; the last two are flagged where prior research found the official CDS blocked.
+- [ ] Source University of Michigan (mich) 5 core fields from official Michigan CDS + cost-of-attendance pages; add verifiedFacts with a src URL per field.
+- [ ] Source UNC Chapel Hill (unc) 5 core fields from official UNC CDS + cost pages; add verifiedFacts with per-field src.
+- [ ] Source University of Georgia (uga) 5 core fields from official UGA CDS + cost pages; add verifiedFacts with per-field src.
+- [ ] Populate Auburn (auburn) verifiedFacts from official Auburn CDS (ir.auburn.edu) + 2026-27 cost PDF; correct COA to the official figure; per-field src.
+- [ ] Source Syracuse (syracuse) 5 core fields from official Syracuse CDS + cost pages; add verifiedFacts with per-field src.
+- [ ] Source University of South Carolina (usc_sc) 5 core fields from official USC CDS + cost pages; add verifiedFacts with per-field src.
+- [ ] Source Wayne State (wayne) 5 core fields from official Wayne State CDS + cost pages; add verifiedFacts with per-field src.
+- [ ] Source UT Austin (uta) 5 core fields from official sources; prior research flagged the CDS behind a Box viewer — if truly unreachable officially, source what IPEDS/College Scorecard publishes and leave the rest null + GAPS.
+- [ ] Source CCNY/CUNY (cuny) 5 core fields from official sources; prior research flagged SAT range + OOS housing + 4-yr grad as unpublished — source what's official, null the rest + GAPS.
 
-## Batch B — merge existing local verify-batch data into zero-VERD schools
-(each: merge whatever data/verify-batch*.json holds for the school into its data/schools/<id>.json
-verifiedFacts with per-field src; any of the 5 core fields not present locally -> GAPS.md, leave EST)
-- [x] Merge local verify-batch data into howard (data/schools/howard.json verifiedFacts is null).
-- [x] Merge local verify-batch data into gwu (verifiedFacts null).
-- [x] Merge local verify-batch data into usf (verifiedFacts null).
-- [x] Merge local verify-batch data into njit (verifiedFacts null).
-- [x] Merge local verify-batch data into rowan (verifiedFacts null).
-- [x] Merge local verify-batch data into temple (verifiedFacts null).
-- [x] Merge local verify-batch data into fau (verifiedFacts null).
-- [x] Merge local verify-batch data into mcg (verifiedFacts null).
-- [x] Merge local verify-batch data into gram (verifiedFacts null).
-- [x] Merge local verify-batch data into nyit (verifiedFacts null).
+## Batch D — add missing src URLs to already-merged verifiedFacts (Stage 1 merged values without sources)
+(each: add an official src URL to every merged field lacking one; correct any that official sources contradict)
+- [ ] Add official src URLs to howard verifiedFacts fields.
+- [ ] Add official src URLs to gwu verifiedFacts fields.
+- [ ] Add official src URLs to usf verifiedFacts fields (prior research flagged CDS robots-blocked — use IPEDS/Scorecard where the official site is blocked).
+- [ ] Add official src URLs to njit verifiedFacts fields.
+- [ ] Add official src URLs to rowan verifiedFacts fields.
+- [ ] Add official src URLs to temple verifiedFacts fields.
+- [ ] Add official src URLs to fau verifiedFacts fields.
+- [ ] Add official src URLs to mcg verifiedFacts fields.
+- [ ] Add official src URLs to gram verifiedFacts fields.
+- [ ] Add official src URLs to nyit verifiedFacts fields.
 
 <!-- Add new items above this line, one per line, using the exact "- [ ] " prefix. -->

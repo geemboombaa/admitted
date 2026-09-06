@@ -63,9 +63,12 @@ The Brown source is a student newspaper, not an official page. Needs a user call
 served/built file (was index1.html; Vercel serves index.html). Privacy verified: 0 real names. First real
 deploy this project — site was stuck on v14, now ships the verified dataset.
 
+## Stage 2 decisions (locked 2026-09-06)
+- **Canonical engine = web** (`index.html`): only one with 101 schools, real `fit()`, real year-by-year `trueCost()`. iOS is a 4-school concept (no fit, flat×4 cost).
+- **Band thresholds:** keep web **75/55/30** now, flagged "counseling-standard, not outcome-fitted"; revisit if outcome data appears.
+- **Chance formula constants (steepness k, position shape):** user chose "derive from data first." Research verdict: **NOT feasible from public data** — Scorecard/IPEDS record only *enrolled* students; no public source has admit/deny by score band. Only user Naviance or biased Reddit self-reports do. → **k stays a flagged placeholder; no engine chance-math change.** Engine unification (porting log-odds form) parked until real outcome data exists.
+- **Actionable Stage-2 work = the sourcing pass** (web ON, official sources): close the 9 zero-VERD schools + add missing src URLs. Raises the computed data-quality score. Loop `--web` mode built.
+
 ## Stage / Next step
-**Stage 1 (data, local-only): DONE + DEPLOYED.** Now in **Stage 2 (engine unified).** Open items:
-(1) reconcile band thresholds (web ≥75/55/30 vs iOS ≥80/50/20) — decide at kickoff;
-(2) one canonical chance/fit/cost engine both surfaces call;
-(3) Stage 2 likely needs APPROVED web pulls (9 GAPS + CDS C7 factor weights) — scope at kickoff.
-Loop upgrades live: dynamic model routing + progress bar.
+In **Stage 2 (sourcing).** Loop `--web` scoped-web mode wired + Stage-2 backlog written (Batch C: 9 schools; Batch D: 10 src-fills). Running first batch (`--web --batch=3`: mich, unc, uga). Checkpoint after with data-quality score.
+Loop upgrades live: dynamic model routing + progress bar + `--web` mode + pre-flight `bash -n`.
