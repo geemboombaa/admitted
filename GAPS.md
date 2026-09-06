@@ -44,3 +44,14 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   unpublished). Left in place — they are sourced, not invented, and live in a different field from the
   PROGRATE table that backlog item "4 real BS/MD rates" covered. Needs a user decision: is a student-newspaper
   figure acceptable as a `programVerified` source, or should brown be nulled to match B4?
+
+- [ ] osu — `instateRef` (Oregon State resident cost of attendance, $38,568 for 2026-27). The number is taken
+  verbatim from `data/PENDING-RESEARCH-2026-09-05.md` B2, which states it without a URL. No local file carries
+  a source link for it (`data/verify-batch1-west.json` has only the non-resident side: $65,013 total = $42,459
+  tuition/fees + $18,066 housing/food, sourced to financialaid.oregonstate.edu/cost-attendance). Written in and
+  disclosed as unsourced in `wueDetail.coaSrcNote`, NOT presented as a published sourced figure. Needs the
+  official OSU resident COA URL from a Stage-2 web pass to be promoted to sourced.
+- [ ] osu — WUE dollar value. OSU publishes no WUE line item. The ~$24,102/yr base-tuition figure in
+  `wueDetail.estTuitionPerYear` is 150%-of-resident-tuition as computed in PENDING-RESEARCH B2; the resident
+  base-tuition input behind it is in no local file, so it is carried as a derived estimate
+  (`estIsDerived: true`) and must not be shown as official.

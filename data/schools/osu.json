@@ -15,7 +15,7 @@
   "s25": 1120,
   "s75": 1350,
   "tb": false,
-  "coa": 54000,
+  "coa": 65013,
   "merit": 12000,
   "meritName": "Nonresident scholar awards (auto-ish)",
   "dl": "Nov 1, 2026 EA priority",
@@ -28,12 +28,20 @@
   "honors": "Honors College",
   "wue": true,
   "conf": "solid",
-  "note": "Stronger in bio/life-science research than its reputation suggests (marine bio, biochem). Same Oregon caveat: no on-site medical center.",
+  "note": "Stronger in bio/life-science research than its reputation suggests (marine bio, biochem). Same Oregon caveat: no on-site medical center. WUE caveat: at OSU the WUE rate is a COMPETITIVE SCHOLARSHIP, not a guaranteed discount every WUE-state applicant gets — OSU's own WUE page states only about 30% of students from WUE-eligible states will be offered the WUE Scholarship. Plan on the full non-resident cost of attendance ($65,013/yr, 2026-27) unless the award actually lands. OSU publishes no WUE dollar figure; the policy is 150% of resident tuition, so the ~$24,102/yr base-tuition number is a DERIVED ESTIMATE, not an official published figure. Resident COA for reference is $38,568/yr (2026-27).",
   "medNote": "Good Plan B breadth (bioengineering, public health).",
   "links": [
    [
     "Admissions",
     "https://admissions.oregonstate.edu"
+   ],
+   [
+    "WUE Scholarship (competitive, ~30% offered)",
+    "https://admissions.oregonstate.edu/wue"
+   ],
+   [
+    "Cost of attendance (2026-27)",
+    "https://financialaid.oregonstate.edu/cost-attendance"
    ]
   ]
  },
@@ -66,7 +74,7 @@
  "progRateLegacy": null,
  "clinicalAccess": 3,
  "pathNameLegacy": null,
- "instateRef": 34000,
+ "instateRef": 38568,
  "tuition": 35000,
  "cds7": {
   "h": 0.4,
@@ -80,5 +88,24 @@
  "affiliatedMedName": null,
  "yieldProtection": false,
  "program": null,
- "programVerified": null
+ "programVerified": null,
+ "wueDetail": {
+  "participation": "competitive-scholarship",
+  "guaranteed": false,
+  "competitive": true,
+  "offerRateApprox": 0.3,
+  "basis": "OSU's WUE award is a competitive scholarship, not an automatic rate: its own page states only about 30% of students from WUE-eligible states will be offered the WUE Scholarship. Confirmed via admissions.oregonstate.edu/wue, 2026-09-05.",
+  "policy": "150% of resident tuition",
+  "officialWueFigurePublished": false,
+  "estTuitionPerYear": 24102,
+  "estIsDerived": true,
+  "estDerivation": "~$24,102/yr base tuition = 150% of resident base tuition, as computed in data/PENDING-RESEARCH-2026-09-05.md B2. The resident base-tuition input is not published in any local file, so this figure is carried forward as-is rather than re-derived here. Not an official OSU number.",
+  "coaNonresident2627": 65013,
+  "coaResident2627": 38568,
+  "coaSrc": "https://financialaid.oregonstate.edu/cost-attendance",
+  "coaSrcNote": "Non-resident $65,013 (tuition+fees $42,459 + housing/food $18,066) is sourced to the OSU financial aid cost-of-attendance page via data/verify-batch1-west.json. The resident $38,568 figure comes from data/PENDING-RESEARCH-2026-09-05.md B2 with no accompanying URL — logged in GAPS.md, treated as disclosed-unsourced, not as a published sourced number.",
+  "src": "https://admissions.oregonstate.edu/wue",
+  "srcLabel": "Oregon State University Admissions, WUE Scholarship page",
+  "verifiedOn": "2026-09-05"
+ }
 }
