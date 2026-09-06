@@ -171,3 +171,36 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
   merit makes the base school affordable"), so an unverified number is driving user-facing prose. Not changed
   here — no local file carries NJIT's real automatic merit tiers or a source for them. Needs a Stage-2 web
   pass against the NJIT/Dorman scholarship page.
+- [ ] rowan — no source URL for any of the 7 merged `verifiedFacts` fields (admit 77.7%, SAT 1110-1310,
+  COA $41,522 = $23,168 tuition/fees + $15,354 housing/food + $3,000 books/personal, 4-yr grad 37%). Same
+  situation as howard, gwu, usf and njit: the numbers ARE local — they sit in the `Object.assign(VERD,{...})`
+  patch block at `index1.html` line 392 that the Sep-5 verification pass wrote and that
+  `scripts/extract-to-json.js` never picked up (it only reads the `const VERD={...}` literal), which is why
+  `rowan.json.verifiedFacts` was still `null`. But `data/PENDING-RESEARCH-2026-09-05.md` line 49 says the
+  per-field source URLs for these 15 schools live only "in the assistant's prior message in this conversation"
+  — they are in NO local file. Unlike njit/usf, Rowan is named on that same line as one of the 8 schools that
+  "came back fully clean", so all 7 fields being in `vf` is consistent with the project's own notes; only the
+  URLs are missing. Merged as-is (app behaviour unchanged); the src URLs need a Stage-2 web pass.
+- [ ] rowan — two local sources disagree on out-of-state cost, with no local basis to pick between them.
+  `data/verify-batch6-accelerated.json` (`_meta.key_undergrad.rowan`, dated 2026-09-04) says OOS COA $53,192 =
+  $28,252 tuition/fees + $17,024 housing/food; the later Sep-5 pass in `index1.html` says $41,522 = $23,168 +
+  $15,354. Tuition gap $5,084, housing gap $1,670, total COA gap $11,670 — the largest of any school merged in
+  this series, and large enough to change his affordability ranking. Took the Sep-5 values (newer, and the
+  ones the shipped app already renders), consistent with how the howard, gwu, usf and njit conflicts were
+  resolved. Needs the official Rowan cost-of-attendance / bursar URL to settle which is right — and to confirm
+  the Sep-5 figure is the non-resident rate, not the in-state one.
+- [ ] rowan — `general.coa` (50000) and `tuition` (30000) are the older unverified estimates and now disagree
+  with the verified `coa` 41522 / `tuitV` 23168 (an $8,478 COA gap). `accel.coa` (50000) and `instateRef`
+  (35000) carry the same stale estimates. Left untouched (out of scope for this merge; the app reads the
+  verified values via the VERD overlay). Same reconciliation gap as logged for gwu, usf and njit.
+- [ ] rowan — `general.grad4` (55) is an unverified estimate that the verified value contradicts by 18 points
+  (verified 4-yr grad 37%). `grad4` IS in the merged `vf` list so the app renders the verified 37, but the
+  stale 55 is still the value sitting in the JSON's `general` block, and 37% materially weakens the "3+4
+  finish-in-three" premise that `general.note` and `general.medNote` sell. Left untouched (same scope call as
+  the COA reconciliation above); needs the Rowan CDS URL in a Stage-2 pass, then a single reconciliation edit.
+- [ ] rowan — `merit` ($10,000/yr, "OOS merit (auto)") is an unverified estimate the one local source
+  contradicts: `data/verify-batch6-accelerated.json` says Rowan merit is "Brown&Gold OOS, amounts unpublished,
+  Jan 31" — i.e. no published amount at all. `merit` is correctly NOT in the merged `vf` list, so the app
+  shows it amber/EST, but $10,000 is also duplicated in `accel.merit` and is quoted in `general.note`
+  ("decent OOS merit"), so an unverified number is driving user-facing prose. Not changed here — no local file
+  carries Rowan's Brown & Gold award amounts or a source for them. Needs a Stage-2 web pass.
