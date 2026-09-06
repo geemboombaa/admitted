@@ -56,7 +56,8 @@
  ],
  "progRateLegacy": {
   "rate": 2.6,
-  "note": "19 admitted of 734 applicants, current cycle (NJIT/NJMS 7-yr BS/MD)"
+  "note": "19 admitted of 734 applicants, current cycle (NJIT/NJMS 7-yr BS/MD). Source: https://honors.njit.edu/content/njms-accelerated-bsmd-program-faqs",
+  "src": "https://honors.njit.edu/content/njms-accelerated-bsmd-program-faqs"
  },
  "clinicalAccess": 8,
  "pathNameLegacy": "7-yr BS/MD (NJMS)",

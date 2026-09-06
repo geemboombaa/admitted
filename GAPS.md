@@ -36,3 +36,11 @@ Some are new schools; three (wayne, syracuse, usc_sc) already exist and only nee
 - [ ] University of Tulsa "Early Careers in Medicine" — https://myapparchitect.com/complete-bs-md-school-list/
 
 ## G4. Auto-logged gaps (builder appends below during loop runs)
+
+- [ ] brown / drex / hof — `programVerified.admitRatePct` (2.19% / 2.7% / 0.6%) conflicts with PENDING-RESEARCH B4,
+  which lists Brown PLME as publishing nothing computable and does not mention Drexel or Hofstra at all.
+  Each of the three DOES carry a `src` URL locally (Brown = Brown Daily Herald student paper, not an official
+  school page; Drexel = official admissions page; Hofstra = derived from two official figures, rate itself
+  unpublished). Left in place — they are sourced, not invented, and live in a different field from the
+  PROGRATE table that backlog item "4 real BS/MD rates" covered. Needs a user decision: is a student-newspaper
+  figure acceptable as a `programVerified` source, or should brown be nulled to match B4?

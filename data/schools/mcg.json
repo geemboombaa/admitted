@@ -56,7 +56,8 @@
  ],
  "progRateLegacy": {
   "rate": 10,
-  "note": "~25 seats of ~250 applicants, approximate per Augusta University itself (Professional Scholars Pathway)"
+  "note": "~25 seats of ~250 applicants, approximate per Augusta University itself (Professional Scholars Pathway). Source: https://www.augusta.edu/admissions/professionalscholars-faq.php",
+  "src": "https://www.augusta.edu/admissions/professionalscholars-faq.php"
  },
  "clinicalAccess": 8,
  "pathNameLegacy": "7-yr MCG",

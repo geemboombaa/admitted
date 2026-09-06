@@ -72,7 +72,8 @@
  ],
  "progRateLegacy": {
   "rate": "7-11",
-  "note": "self-computed range depending on applications-vs-completions denominator; UMKC does not publish one single rate (6-yr BA/MD)"
+  "note": "self-computed range depending on applications-vs-completions denominator; UMKC does not publish one single rate (6-yr BA/MD). Source: https://med.umkc.edu/academics/degree-and-certificate-programs/ba-md/faqs.html",
+  "src": "https://med.umkc.edu/academics/degree-and-certificate-programs/ba-md/faqs.html"
  },
  "clinicalAccess": 7,
  "pathNameLegacy": "6-yr BA/MD",
