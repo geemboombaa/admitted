@@ -172,14 +172,19 @@ ${REVIEW_RULE}
 Diff:
 ${DIFF}
 
-Reply with ONE line starting APPROVE or REJECT, then your reasoning."
+Give your reasoning, then end your reply with a final line in EXACTLY this format and nothing after it:
+VERDICT: APPROVE
+or
+VERDICT: REJECT"
 
   # Reviewer is always Opus (high-leverage gate). In --web mode it may fetch to verify cited sources.
   REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS" "${DISALLOW[@]}")
-  VERDICT=$(printf '%s' "$REVIEW" | head -1)
-  log "review verdict: $VERDICT"
+  # Parse the machine-readable final verdict anywhere in the reply (models put reasoning first,
+  # verdict last). Missing/ambiguous verdict -> treat as REJECT (fail safe).
+  VERDICT=$(printf '%s' "$REVIEW" | grep -oiE 'VERDICT:[[:space:]]*(APPROVE|REJECT)' | tail -1)
+  log "review verdict: ${VERDICT:-<none emitted>}"
 
-  if ! printf '%s' "$VERDICT" | grep -qi '^APPROVE'; then
+  if ! printf '%s' "$VERDICT" | grep -qiE 'VERDICT:[[:space:]]*APPROVE'; then
     log "REJECTED by independent review: $REVIEW"
     score "PASS" "REJECT" "reverted"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
