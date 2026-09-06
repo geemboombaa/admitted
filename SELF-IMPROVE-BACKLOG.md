@@ -12,7 +12,7 @@ Web-dependent work (new schools, the 5 no-local-data verifications) lives in `GA
 
 ## Batch A — inline-sourced fixes (numbers live directly in PENDING-RESEARCH)
 - [x] Replace the invented PROGRATE/program-admit-rate values with the 4 real sourced BS/MD rates from PENDING-RESEARCH B4 (NJIT/NJMS 2.6%, Augusta/MCG ~10%, CCNY/CUNY 10.4% labeled 2021-dated, UMKC 6yr ~7-11% self-computed range with denominator stated) and set every other program's rate to null; keep each number's src URL; do not invent the 16 unpublished ones.
-- [ ] Fix the University of Arizona (ua) WUE representation per PENDING-RESEARCH B2: mark it competitive/limited-participation (not a guaranteed rate), keep the ~$18,252/yr as an explicitly-derived estimate (150% of resident), src the FY27 bursar chart; do not present it as an official published figure.
+- [x] Fix the University of Arizona (ua) WUE representation per PENDING-RESEARCH B2: mark it competitive/limited-participation (not a guaranteed rate), keep the ~$18,252/yr as an explicitly-derived estimate (150% of resident), src the FY27 bursar chart; do not present it as an official published figure.
 - [ ] Fix the Oregon State (osu) WUE representation per PENDING-RESEARCH B2: competitive scholarship (~30% of eligible students offered), not a guaranteed discount; COA resident $38,568 / non-resident $65,013; any WUE dollar figure flagged derived-estimate, not official.
 - [ ] Update Arizona State (asu) per PENDING-RESEARCH B2: WUE ends for Fall-2026+ entrants, replaced by ASU Commitment Scholarship $5,500-$7,500/yr (range); 2026-27 Tempe nonresident COA $63,394 ($39,262 tuition+fees + $18,819 housing/food + $5,313 books/personal); leave 2027-28/his-cycle terms null/TBD, not projected.
 

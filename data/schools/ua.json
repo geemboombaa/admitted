@@ -28,7 +28,7 @@
   "honors": "W.A. Franke Honors",
   "wue": true,
   "conf": "solid",
-  "note": "The value anchor of this list: automatic merit by GPA tier drops net cost near in-state levels, own MD school + Banner University Medical Center on campus for clinical/research hours.",
+  "note": "The value anchor of this list: automatic merit by GPA tier drops net cost near in-state levels, own MD school + Banner University Medical Center on campus for clinical/research hours. WUE caveat: Arizona is a LIMITED-PARTICIPATION WUE member — the award is competitive, capacity-capped and decided program-by-program, NOT a guaranteed rate every WUE-state applicant gets. Arizona publishes no WUE dollar figure; the policy is 150% of resident tuition, so the ~$18,252/yr figure is OUR OWN calculation (FY27 resident tuition $12,168 × 1.5), not an official published number. Treat the merit tiers, not WUE, as the reliable discount here.",
   "medNote": "Guaranteed-tier merit means no scholarship lottery. Franke Honors adds small classes at flagship scale.",
   "links": [
    [
@@ -38,6 +38,10 @@
    [
     "Merit tiers",
     "https://financialaid.arizona.edu"
+   ],
+   [
+    "FY27 tuition chart (Bursar)",
+    "https://bursar.arizona.edu/sites/default/files/tuition_chart_fy_27.pdf"
    ]
   ]
  },
@@ -79,5 +83,21 @@
  "affiliatedMedName": null,
  "yieldProtection": false,
  "program": null,
- "programVerified": null
+ "programVerified": null,
+ "wueDetail": {
+  "participation": "limited",
+  "guaranteed": false,
+  "competitive": true,
+  "basis": "Limited-participation WUE member: competitive, capacity-capped, program-by-program eligibility. Confirmed via catalog.arizona.edu / financialaid.arizona.edu, 2026-09-05.",
+  "policy": "150% of resident tuition",
+  "officialWueFigurePublished": false,
+  "residentTuitionFY27": 12168,
+  "nonresidentTuitionFY27": 42600,
+  "estTuitionPerYear": 18252,
+  "estIsDerived": true,
+  "estDerivation": "12168 * 1.5 = 18252 (self-computed from the FY27 bursar chart; Arizona publishes no standalone WUE line item)",
+  "src": "https://bursar.arizona.edu/sites/default/files/tuition_chart_fy_27.pdf",
+  "srcLabel": "University of Arizona Bursar, FY27 tuition chart",
+  "verifiedOn": "2026-09-05"
+ }
 }
