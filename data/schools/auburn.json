@@ -15,7 +15,7 @@
   "s25": 1280,
   "s75": 1370,
   "tb": false,
-  "coa": 59020,
+  "coa": 63540,
   "merit": 7000,
   "meritName": "Auburn Nonresident Merit Scale (auto, by ACT/SAT: $7,000-$17,000/yr)",
   "dl": "Feb 1, 2027 (rolling before)",
@@ -42,7 +42,33 @@
    ]
   ]
  },
- "verifiedFacts": null,
+ "verifiedFacts": {
+  "vf": [
+   "admit",
+   "s25",
+   "s75",
+   "coa",
+   "tuitV",
+   "housV",
+   "grad4"
+  ],
+  "admit": 0.469,
+  "s25": 1280,
+  "s75": 1370,
+  "coa": 63540,
+  "tuitV": 37596,
+  "housV": 18424,
+  "grad4": 61.7,
+  "srcs": {
+   "admit": "https://ir.auburn.edu/common-data-set/2025/section-c.php",
+   "s25": "https://ir.auburn.edu/common-data-set/2025/section-c.php",
+   "s75": "https://ir.auburn.edu/common-data-set/2025/section-c.php",
+   "coa": "https://auburn.edu/administration/finaid/cost/estimates.php",
+   "tuitV": "https://auburn.edu/administration/finaid/cost/estimates.php",
+   "housV": "https://auburn.edu/administration/finaid/cost/estimates.php",
+   "grad4": "https://ir.auburn.edu/common-data-set/2025/section-b.php"
+  }
+ },
  "social": null,
  "religAffiliated": false,
  "researchAccess": null,
