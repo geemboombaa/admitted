@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>The Coach — Premed Admissions Mentor</title>
+<style>
+:root{
+  --bg0:#0a0e1a; --bg1:#0f1424; --bg2:#141b2e; --bg3:#1a2338;
+  --line:#233052; --line2:#2e3d63;
+  --tx:#e8f0ff; --tx2:#a9b6d4; --tx3b:#6f7da0;
+  --safety:#00ff88; --likely:#00d4ff; --target:#f5a623; --reach:#a855f7;
+  --accent:#7c6dfa; --accent2:#00d4ff;
+  --green:#00ff88; --amber:#f5a623;
+  --shadow:0 10px 40px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:#05070d; color:var(--tx);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+#phone{
+  position:relative; width:100%; max-width:430px; height:100dvh; max-height:932px;
+  background:radial-gradient(1200px 600px at 50% -10%, #14203a 0%, var(--bg0) 55%);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+@media(min-width:460px){
+  body{background:#03040a}
+  #phone{height:900px;border-radius:38px;box-shadow:var(--shadow),0 0 0 10px #0c0f18,0 0 0 12px #1a2032;overflow:hidden}
+}
+/* scrollbars */
+.scroll::-webkit-scrollbar{width:0}
+.scroll{scrollbar-width:none}
+
+/* ===== Screens ===== */
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex}
+
+/* ===== Header ===== */
+.hdr{padding:14px 18px 10px;display:flex;align-items:center;gap:11px;flex:0 0 auto}
+.hdr .orb{width:38px;height:38px;border-radius:50%;flex:0 0 auto;position:relative;
+  background:radial-gradient(circle at 35% 30%,#a89bff,#7c6dfa 45%,#00d4ff 120%);
+  box-shadow:0 0 18px rgba(124,109,250,.6);animation:pulse 3.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 12px rgba(124,109,250,.5)}50%{box-shadow:0 0 26px rgba(0,212,255,.7)}}
+.hdr .orb::after{content:"";position:absolute;inset:8px;border-radius:50%;background:rgba(255,255,255,.25);filter:blur(3px)}
+.hdr h1{font-size:16px;font-weight:700;letter-spacing:.2px}
+.hdr .sub{font-size:11.5px;color:var(--tx2);margin-top:1px}
+.hdr .spacer{flex:1}
+.hdr .stat{font-size:11px;color:var(--tx2);text-align:right;line-height:1.35}
+.hdr .stat b{color:var(--tx);font-weight:700}
+
+/* ===== Chat ===== */
+.chat{flex:1;overflow-y:auto;padding:6px 16px 12px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:86%;display:flex;flex-direction:column;gap:2px;animation:rise .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.msg.ai{align-self:flex-start}
+.msg.me{align-self:flex-end}
+.bubble{padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;word-wrap:break-word}
+.msg.ai .bubble{background:var(--bg2);border:1px solid var(--line);border-bottom-left-radius:6px;color:var(--tx)}
+.msg.me .bubble{background:linear-gradient(135deg,#7c6dfa,#5b8bff);border-bottom-right-radius:6px;color:#fff;font-weight:500}
+.bubble b{color:#fff;font-weight:700}
+.msg.ai .bubble b{color:#cbd8ff}
+.bubble .k{color:var(--accent2);font-weight:700}
+.typing{display:flex;gap:5px;padding:14px 16px;background:var(--bg2);border:1px solid var(--line);border-radius:18px;border-bottom-left-radius:6px;width:fit-content}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--tx3b);animation:blink 1.3s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+/* chips + input */
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 16px 4px;animation:rise .4s}
+.chip{padding:9px 14px;border-radius:20px;background:var(--bg2);border:1px solid var(--line2);
+  color:var(--tx);font-size:13px;font-weight:600;cursor:pointer;min-height:38px;display:flex;align-items:center;transition:.15s}
+.chip:active{transform:scale(.95)}
+.chip:hover{border-color:var(--accent);background:var(--bg3)}
+.chip.sel{background:linear-gradient(135deg,#7c6dfa33,#00d4ff22);border-color:var(--accent)}
+.chip.go{background:linear-gradient(135deg,#7c6dfa,#5b8bff);border:none;color:#fff}
+
+.composer{flex:0 0 auto;display:flex;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  align-items:flex-end;border-top:1px solid var(--line);background:var(--bg1)}
+.composer textarea{flex:1;resize:none;background:var(--bg2);border:1px solid var(--line2);border-radius:20px;
+  color:var(--tx);font-family:inherit;font-size:14.5px;padding:11px 14px;max-height:96px;line-height:1.4;outline:none;min-height:44px}
+.composer textarea:focus{border-color:var(--accent)}
+.composer textarea::placeholder{color:var(--tx3b)}
+.iconbtn{width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s}
+.iconbtn:active{transform:scale(.9)}
+.mic{background:var(--bg2);border:1px solid var(--line2);color:var(--tx2)}
+.send{background:linear-gradient(135deg,#7c6dfa,#5b8bff);color:#fff}
+.send svg{width:20px;height:20px}
+
+/* ===== Bottom nav ===== */
+.nav{flex:0 0 auto;display:flex;border-top:1px solid var(--line);background:var(--bg1);padding-bottom:env(safe-area-inset-bottom)}
+.nav button{flex:1;background:none;border:none;color:var(--tx3b);padding:9px 0 8px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;transition:.15s;min-height:52px}
+.nav button.on{color:var(--tx)}
+.nav button.on .ic{filter:drop-shadow(0 0 8px var(--accent))}
+.nav .ic{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav button.on .ic{stroke:var(--accent2)}
+
+/* ===== List screen ===== */
+.listwrap{flex:1;overflow-y:auto;padding:4px 14px 20px}
+.listhead{padding:12px 4px 6px}
+.listhead h2{font-size:19px;font-weight:800}
+.listhead p{font-size:12.5px;color:var(--tx2);margin-top:3px;line-height:1.45}
+.miniprof{display:flex;gap:8px;margin:10px 0 4px;flex-wrap:wrap}
+.miniprof .pill{font-size:11.5px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:5px 10px;color:var(--tx2)}
+.miniprof .pill b{color:var(--tx);font-weight:700}
+.miniprof .edit{color:var(--accent2);cursor:pointer;font-weight:700}
+
+.bandgroup{margin-top:18px}
+.bandhdr{display:flex;align-items:center;gap:9px;margin-bottom:9px;padding:0 2px}
+.banddot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+.bandhdr .bname{font-size:14px;font-weight:800;letter-spacing:.3px}
+.bandhdr .bcount{font-size:11px;color:var(--tx3b);font-weight:700}
+.bandhdr .bdesc{font-size:11px;color:var(--tx2);flex:1;text-align:right}
+
+/* card */
+.card{background:var(--bg1);border:1px solid var(--line);border-radius:16px;padding:13px 14px;margin-bottom:10px;
+  position:relative;cursor:pointer;transition:transform .12s,border-color .15s;overflow:hidden}
+.card:active{transform:scale(.985)}
+.card .accentbar{position:absolute;left:0;top:0;bottom:0;width:4px}
+.card .toprow{display:flex;align-items:flex-start;gap:8px}
+.card .nm{font-size:15px;font-weight:700;line-height:1.25}
+.card .loc{font-size:11.5px;color:var(--tx2);margin-top:2px}
+.card .pct{margin-left:auto;text-align:right;flex:0 0 auto}
+.card .pct .big{font-size:22px;font-weight:800;line-height:1}
+.card .pct .lbl{font-size:9.5px;color:var(--tx3b);font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.vbadge{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:6px;vertical-align:middle}
+.vbadge.v{background:#00ff8818;color:var(--green);border:1px solid #00ff8840}
+.vbadge.e{background:#f5a62318;color:var(--amber);border:1px solid #f5a62340}
+.posbar{height:6px;border-radius:4px;background:var(--bg3);margin-top:10px;position:relative;overflow:hidden}
+.posbar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.card .flip{font-size:12px;color:var(--tx2);margin-top:9px;line-height:1.45}
+.card .flip .hi{font-weight:700}
+.card .oneliner{font-size:12px;color:var(--tx2);margin-top:8px;line-height:1.45;font-style:italic}
+.card .cardactions{display:flex;gap:8px;margin-top:11px}
+.card .ca{flex:1;text-align:center;font-size:12px;font-weight:700;padding:8px 0;border-radius:10px;border:1px solid var(--line2);
+  background:var(--bg2);color:var(--tx);min-height:36px}
+.card .ca.star.on{background:#f5a62322;border-color:var(--amber);color:var(--amber)}
+.card .ca svg{width:13px;height:13px;vertical-align:-2px;margin-right:3px}
+
+.emptystate{text-align:center;padding:50px 30px;color:var(--tx2)}
+.emptystate .em{font-size:40px;margin-bottom:12px}
+.emptystate h3{color:var(--tx);font-size:16px;margin-bottom:6px}
+.emptystate p{font-size:13px;line-height:1.5}
+.emptystate button{margin-top:16px;background:linear-gradient(135deg,#7c6dfa,#5b8bff);border:none;color:#fff;
+  padding:11px 22px;border-radius:22px;font-weight:700;font-size:14px;cursor:pointer}
+
+/* ===== Detail sheet ===== */
+.sheet{position:absolute;inset:0;background:var(--bg0);display:none;flex-direction:column;z-index:40;animation:slideup .3s cubic-bezier(.2,.8,.2,1)}
+.sheet.open{display:flex}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+.sheet .shhdr{padding:14px 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.sheet .back{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:1px solid var(--line2);color:var(--tx);font-size:20px;cursor:pointer;flex:0 0 auto}
+.sheet .shttl{font-size:16px;font-weight:800;line-height:1.2}
+.sheet .shloc{font-size:11.5px;color:var(--tx2);margin-top:1px}
+.sheet .shbody{flex:1;overflow-y:auto;padding:16px}
+.dblock{background:var(--bg1);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.dblock h4{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--tx3b);margin-bottom:10px;font-weight:800}
+.chancerow{display:flex;align-items:baseline;gap:10px}
+.chancerow .cbig{font-size:40px;font-weight:800;line-height:1}
+.chancerow .cband{font-size:13px;font-weight:800;padding:4px 10px;border-radius:10px}
+.poswrap{margin-top:14px}
+.posbar2{height:34px;border-radius:9px;background:var(--bg3);position:relative;overflow:hidden;border:1px solid var(--line)}
+.posbar2 .range{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,#7c6dfa44,#00d4ff44);border-left:2px solid #00d4ff88;border-right:2px solid #00d4ff88}
+.posbar2 .you{position:absolute;top:-3px;bottom:-3px;width:3px;background:#fff;box-shadow:0 0 8px #fff}
+.posbar2 .youlbl{position:absolute;top:-20px;transform:translateX(-50%);font-size:10px;font-weight:800;color:#fff;white-space:nowrap}
+.poslegend{display:flex;justify-content:space-between;font-size:10.5px;color:var(--tx3b);margin-top:6px}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-radius:10px;overflow:hidden}
+.statgrid .cell{background:var(--bg1);padding:11px 12px}
+.statgrid .cell .l{font-size:10.5px;color:var(--tx3b);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.statgrid .cell .v{font-size:16px;font-weight:800;margin-top:3px}
+.costrow{display:flex;justify-content:space-between;padding:7px 0;font-size:13.5px;border-bottom:1px solid var(--line)}
+.costrow:last-child{border:none}
+.costrow .l{color:var(--tx2)}.costrow .v{font-weight:700}
+.costrow.tot{margin-top:4px;padding-top:10px;border-top:2px solid var(--line2)}
+.costrow.tot .v{color:var(--accent2);font-size:17px}
+.flipbox{background:linear-gradient(135deg,#7c6dfa1a,#00d4ff12);border:1px solid var(--accent);border-radius:12px;padding:13px}
+.flipbox .fh{font-size:12px;font-weight:800;color:var(--accent2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.flipbox .fline{font-size:13.5px;line-height:1.55;color:var(--tx)}
+.flipbox .fline b{color:#fff}
+.note{font-size:13.5px;line-height:1.6;color:var(--tx2)}
+.links a{display:inline-block;color:var(--accent2);text-decoration:none;font-size:13px;font-weight:600;
+  background:var(--bg2);border:1px solid var(--line2);padding:7px 12px;border-radius:10px;margin:0 6px 6px 0}
+.deadline{display:flex;align-items:center;gap:8px;font-size:13px}
+.deadline .dot{width:8px;height:8px;border-radius:50%;background:var(--reach)}
+.sheetstar{background:linear-gradient(135deg,#7c6dfa,#5b8bff);border:none;color:#fff;width:100%;padding:13px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;margin-top:4px}
+.sheetstar.on{background:#f5a62322;border:1px solid var(--amber);color:var(--amber)}
+
+/* ===== Profile / edit modal ===== */
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:flex-end;z-index:60}
+.modal.open{display:flex}
+.modalcard{background:var(--bg1);width:100%;border-radius:22px 22px 0 0;border-top:1px solid var(--line2);padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:slideup .3s;max-height:88%;overflow-y:auto}
+.modalcard h3{font-size:17px;font-weight:800;margin-bottom:4px}
+.modalcard p.sub{font-size:12.5px;color:var(--tx2);margin-bottom:16px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--tx2);margin-bottom:7px}
+.field input[type=text],.field input[type=number],.field select{width:100%;background:var(--bg2);border:1px solid var(--line2);
+  border-radius:12px;color:var(--tx);font-size:15px;padding:12px 14px;font-family:inherit;outline:none}
+.field input:focus{border-color:var(--accent)}
+.toggle{display:flex;gap:8px}
+.toggle .t{flex:1;text-align:center;padding:11px 0;border-radius:11px;border:1px solid var(--line2);background:var(--bg2);
+  font-size:13px;font-weight:700;cursor:pointer;color:var(--tx2)}
+.toggle .t.on{background:linear-gradient(135deg,#7c6dfa33,#00d4ff22);border-color:var(--accent);color:var(--tx)}
+.priogrid{display:flex;flex-wrap:wrap;gap:8px}
+.savebtn{width:100%;background:linear-gradient(135deg,#7c6dfa,#5b8bff);border:none;color:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;margin-top:4px}
+.closex{position:absolute;top:14px;right:16px;font-size:26px;color:var(--tx3b);cursor:pointer;line-height:1;z-index:2}
+
+/* toast */
+.toast{position:absolute;bottom:78px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);
+  border:1px solid var(--line2);color:var(--tx);padding:10px 18px;border-radius:22px;font-size:13px;font-weight:600;
+  opacity:0;transition:.3s;z-index:80;pointer-events:none;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="phone">
+
+  <!-- ============ CHAT SCREEN ============ -->
+  <section class="screen active" id="scr-chat">
+    <div class="hdr">
+      <div class="orb"></div>
+      <div>
+        <h1>The Coach</h1>
+        <div class="sub" id="hdrSub">Your premed admissions mentor</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="stat" id="hdrStat"></div>
+    </div>
+    <div class="chat scroll" id="chat"></div>
+    <div id="chipZone"></div>
+    <div class="composer">
+      <button class="iconbtn mic" id="micBtn" title="Voice (coming soon)">🎙</button>
+      <textarea id="input" rows="1" placeholder="Ask me anything…"></textarea>
+      <button class="iconbtn send" id="sendBtn" title="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>
+      </button>
+    </div>
+    <nav class="nav" id="nav1"></nav>
+  </section>
+
+  <!-- ============ LIST SCREEN ============ -->
+  <section class="screen" id="scr-list">
+    <div class="listwrap scroll" id="listWrap"></div>
+    <nav class="nav" id="nav2"></nav>
+  </section>
+
+  <!-- ============ SHORTLIST SCREEN ============ -->
+  <section class="screen" id="scr-short">
+    <div class="listwrap scroll" id="shortWrap"></div>
+    <nav class="nav" id="nav3"></nav>
+  </section>
+
+  <!-- ============ DETAIL SHEET ============ -->
+  <div class="sheet" id="sheet">
+    <div class="shhdr">
+      <button class="back" id="sheetBack">‹</button>
+      <div>
+        <div class="shttl" id="shTtl"></div>
+        <div class="shloc" id="shLoc"></div>
+      </div>
+    </div>
+    <div class="shbody scroll" id="shBody"></div>
+  </div>
+
+  <!-- ============ EDIT MODAL ============ -->
+  <div class="modal" id="editModal">
+    <div class="modalcard">
+      <span class="closex" id="editClose">×</span>
+      <h3>Your profile</h3>
+      <p class="sub">Everything recomputes the moment you save.</p>
+      <div class="field">
+        <label>Unweighted GPA (0–4.0+)</label>
+        <input type="number" id="fGpa" step="0.01" min="0" max="5" placeholder="3.85">
+      </div>
+      <div class="field">
+        <label>Testing</label>
+        <div class="toggle" id="fTo">
+          <div class="t" data-to="0">I have an SAT</div>
+          <div class="t" data-to="1">Test-optional</div>
+        </div>
+      </div>
+      <div class="field" id="fSatWrap">
+        <label>SAT total (400–1600)</label>
+        <input type="number" id="fSat" step="10" min="400" max="1600" placeholder="1450">
+      </div>
+      <div class="field">
+        <label>Graduation year</label>
+        <select id="fYear"><option>2026</option><option>2027</option><option>2028</option><option>2029</option></select>
+      </div>
+      <div class="field">
+        <label>What matters most? (pick any)</label>
+        <div class="priogrid" id="fPrio"></div>
+      </div>
+      <button class="savebtn" id="fSave">Save & recompute</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="app-data.js"></script>
+<script>
+/* ============================================================
+   THE COACH — premed admissions mentor
+   ============================================================ */
+"use strict";
+var SCHOOLS = window.SCHOOLS || [];
+
+/* ---------- Engine (EXACT per spec) ---------- */
+function chance(s,gpa,sat,to){
+  const pg=Math.max(0,Math.min(1.25,(gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  let pos=pg;
+  if(!s.tb&&!to&&s.s25>0&&sat>0){const ps=Math.max(0,Math.min(1.25,(sat-s.s25)/Math.max(1,(s.s75-s.s25))));pos=0.5*pg+0.5*ps;}
+  return Math.max(0.02,Math.min(0.96,s.admit*(0.35+1.3*pos)));
+}
+function band(p){ return p>=.75?"Safety":p>=.55?"Likely":p>=.30?"Target":"Reach"; }
+var BANDCOLOR={Safety:"#00ff88",Likely:"#00d4ff",Target:"#f5a623",Reach:"#a855f7"};
+var BANDDESC={
+  Safety:"Very likely in. Great to anchor your list.",
+  Likely:"Odds are on your side here.",
+  Target:"Coin-flip range — the heart of a smart list.",
+  Reach:"Ambitious. Worth it if you love them."
+};
+var BANDORDER=["Reach","Target","Likely","Safety"];
+
+/* fit priorities available */
+var PRIOS=[
+  {k:"cost",label:"Low cost"},
+  {k:"premed",label:"Premed strength"},
+  {k:"research",label:"Research"},
+  {k:"social",label:"Social life"},
+  {k:"prestige",label:"Prestige"},
+  {k:"west",label:"Stay out West"}
+];
+function fitScore(s,prios){
+  if(!prios||!prios.length) return null;
+  var parts=[];
+  prios.forEach(function(p){
+    if(p==="cost"){ var net=(s.coa||0)-(s.merit||0); var sc=Math.max(0,Math.min(10,10-(net-25000)/6000)); parts.push(sc); }
+    else if(p==="premed") parts.push(s.premed||0);
+    else if(p==="research") parts.push(s.research||0);
+    else if(p==="social") parts.push(s.social||0);
+    else if(p==="prestige") parts.push((1-s.admit)*10);
+    else if(p==="west") parts.push(s.region==="CA"||s.region==="West"?9:3);
+  });
+  var avg=parts.reduce(function(a,b){return a+b;},0)/parts.length;
+  return Math.round(avg*10);
+}
+
+/* ---------- "What flips it" — real math off chance() ---------- */
+// find min GPA bump (holding sat) to raise band, and min SAT bump (holding gpa)
+function nextBandThreshold(p){ // returns lower prob boundary of the NEXT band up
+  if(p<.30) return .30;
+  if(p<.55) return .55;
+  if(p<.75) return .75;
+  return null; // already Safety
+}
+function flipInfo(s,gpa,sat,to){
+  var p=chance(s,gpa,sat,to);
+  var target=nextBandThreshold(p);
+  if(target===null) return null; // already safety
+  var cur=band(p), nxt=band(target+0.0001);
+  var res={curBand:cur,nextBand:nxt,gpaDelta:null,satDelta:null,gpaTarget:null,satTarget:null};
+  // GPA search (0.01 steps up to +1.0)
+  for(var g=gpa+0.01; g<=Math.min(5,gpa+1.001); g+=0.01){
+    if(chance(s,g,sat,to)>=target){ res.gpaDelta=+(g-gpa).toFixed(2); res.gpaTarget=+g.toFixed(2); break; }
+  }
+  // SAT search only if scored & not TO & school uses SAT
+  if(!to && !s.tb && s.s25>0 && sat>0){
+    for(var v=sat+10; v<=1600; v+=10){
+      if(chance(s,gpa,v,to)>=target){ res.satDelta=v-sat; res.satTarget=v; break; }
+    }
+  }
+  return res;
+}
+function flipSentence(s,gpa,sat,to){
+  var f=flipInfo(s,gpa,sat,to);
+  if(!f) return null;
+  var opts=[];
+  if(f.satDelta!==null) opts.push("<span class='hi'>+"+f.satDelta+" SAT</span> (to "+f.satTarget+")");
+  if(f.gpaDelta!==null) opts.push("<span class='hi'>+"+f.gpaDelta.toFixed(2)+" GPA</span> (to "+f.gpaTarget.toFixed(2)+")");
+  if(!opts.length) return "Even a big stat jump won't move the band here — it's a true reach on admit rate alone.";
+  return opts.join(" &nbsp;or&nbsp; ")+" moves it from <b>"+f.curBand+"</b> → <b>"+f.nextBand+"</b>.";
+}
+
+/* ---------- State + persistence ---------- */
+var DEF={ done:false, gpa:null, sat:null, to:false, year:"2027", prios:[], shortlist:[], step:0, chatlog:[] };
+var S=load();
+function load(){
+  try{ var r=JSON.parse(localStorage.getItem('admitted_app')); if(r&&typeof r==='object') return Object.assign({},DEF,r); }catch(e){}
+  return Object.assign({},DEF);
+}
+function save(){ try{ localStorage.setItem('admitted_app',JSON.stringify(S)); }catch(e){} }
+
+/* ---------- Small DOM helpers ---------- */
+function $(id){return document.getElementById(id);}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+function esc(t){return (t==null?"":String(t)).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function money(n){ return n==null?"—":"$"+Number(n).toLocaleString(); }
+function pct(p){ return Math.round(p*100)+"%"; }
+function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},1900); }
+
+/* ---------- Ranked list for a given profile ---------- */
+function rankedSchools(){
+  return SCHOOLS.map(function(s){
+    var p=chance(s,S.gpa,S.sat,S.to);
+    return {s:s,p:p,band:band(p),fit:fitScore(s,S.prios)};
+  });
+}
+
+/* ============================================================
+   CHAT / ONBOARDING
+   ============================================================ */
+var chatEl=$('chat'), chipZone=$('chipZone');
+var busy=false;
+
+function pushMsg(who,html,noAnim){
+  var m=el('div','msg '+who);
+  var b=el('div','bubble',html);
+  m.appendChild(b);
+  chatEl.appendChild(m);
+  chatEl.scrollTop=chatEl.scrollHeight;
+  if(who==='ai'){ S.chatlog.push({w:'ai',h:html}); }
+  else { S.chatlog.push({w:'me',h:html}); }
+  save();
+  return m;
+}
+function typing(cb,delay){
+  busy=true;
+  var t=el('div','typing','<span></span><span></span><span></span>');
+  var wrap=el('div','msg ai'); wrap.appendChild(t); chatEl.appendChild(wrap);
+  chatEl.scrollTop=chatEl.scrollHeight;
+  setTimeout(function(){ wrap.remove(); busy=false; cb(); }, delay||Math.min(1100, 500+ (cb._len||30)*8));
+}
+function aiSay(html,cb,delay){
+  typing(function(){
+    pushMsg('ai',html);
+    if(cb) cb();
+  }, delay);
+}
+function setChips(arr){
+  chipZone.innerHTML='';
+  if(!arr||!arr.length) return;
+  var wrap=el('div','chips');
+  arr.forEach(function(c){
+    var chip=el('div','chip'+(c.go?' go':''), esc(c.label));
+    chip.onclick=function(){ if(busy)return; c.onClick(chip); };
+    wrap.appendChild(chip);
+  });
+  chipZone.appendChild(wrap);
+}
+function clearChips(){ chipZone.innerHTML=''; }
+
+/* --- onboarding script (state machine) --- */
+var ONB={
+  start:function(){
+    aiSay("Hey — I'm your <b>Coach</b>. 👋 I help premeds build a college list that's <b>honest</b> — real admit rates, real numbers, no fluff.",function(){
+      aiSay("First, so I actually get you: <b>what's your unweighted GPA?</b> (roughly is fine — you can tweak it later.)",function(){
+        setChips([
+          {label:"~3.9+",onClick:function(){onbGpa(3.92);}},
+          {label:"~3.7",onClick:function(){onbGpa(3.7);}},
+          {label:"~3.5",onClick:function(){onbGpa(3.5);}},
+          {label:"Type it",onClick:function(){clearChips(); focusInput("Type your GPA, e.g. 3.85");}}
+        ]);
+      });
+    });
+  }
+};
+function focusInput(ph){ var i=$('input'); i.placeholder=ph||"Type here…"; i.focus(); }
+
+function onbGpa(g){
+  S.gpa=g; save();
+  pushMsg('me',"GPA: "+g.toFixed(2));
+  clearChips();
+  aiSay("Got it — <span class='k'>"+g.toFixed(2)+"</span>. Now testing: <b>do you have an SAT score</b>, or going test-optional?",function(){
+    setChips([
+      {label:"I have an SAT",onClick:function(){pushMsg('me',"I have an SAT");clearChips();askSat();}},
+      {label:"Test-optional",onClick:function(){S.to=true;S.sat=null;save();pushMsg('me',"Test-optional");clearChips();onbYear();}}
+    ]);
+  });
+}
+function askSat(){
+  aiSay("Nice. <b>What's your SAT total?</b> (400–1600)",function(){
+    setChips([
+      {label:"1500+",onClick:function(){onbSat(1520);}},
+      {label:"~1400",onClick:function(){onbSat(1400);}},
+      {label:"~1300",onClick:function(){onbSat(1300);}},
+      {label:"Type it",onClick:function(){clearChips();focusInput("Type your SAT, e.g. 1450");}}
+    ]);
+  });
+}
+function onbSat(v){
+  S.sat=v; S.to=false; save();
+  pushMsg('me',"SAT: "+v);
+  clearChips();
+  aiSay("Locked in — <span class='k'>"+v+"</span>. 🎯",function(){ onbYear(); });
+}
+function onbYear(){
+  aiSay("When do you graduate high school?",function(){
+    setChips([
+      {label:"2027",onClick:function(){onbYearPick("2027");}},
+      {label:"2028",onClick:function(){onbYearPick("2028");}},
+      {label:"2026",onClick:function(){onbYearPick("2026");}},
+      {label:"2029",onClick:function(){onbYearPick("2029");}}
+    ]);
+  });
+}
+function onbYearPick(y){ S.year=y; save(); pushMsg('me',"Class of "+y); clearChips(); onbPrio(); }
+
+var prioTemp=[];
+function onbPrio(){
+  prioTemp=[];
+  aiSay("Last thing, then I'll build your list. <b>What matters most to you?</b> Tap all that apply — this shapes your <i>fit</i> score.",function(){
+    renderPrioChips();
+  });
+}
+function renderPrioChips(){
+  var arr=PRIOS.map(function(p){
+    return {label:(prioTemp.indexOf(p.k)>=0?"✓ ":"")+p.label, sel:prioTemp.indexOf(p.k)>=0, onClick:function(chip){
+      var i=prioTemp.indexOf(p.k);
+      if(i>=0) prioTemp.splice(i,1); else prioTemp.push(p.k);
+      renderPrioChips();
+    }};
+  });
+  arr.push({label:(prioTemp.length?"Build my list →":"Skip — build it →"),go:true,onClick:function(){finishOnb();}});
+  // re-render chips with selection highlight
+  chipZone.innerHTML='';
+  var wrap=el('div','chips');
+  arr.forEach(function(c){
+    var chip=el('div','chip'+(c.go?' go':'')+(c.sel?' sel':''),esc(c.label));
+    chip.onclick=function(){ if(busy)return; c.onClick(chip); };
+    wrap.appendChild(chip);
+  });
+  chipZone.appendChild(wrap);
+}
+function finishOnb(){
+  S.prios=prioTemp.slice(); S.done=true; save();
+  var names=S.prios.map(function(k){var f=PRIOS.filter(function(p){return p.k===k;})[0];return f?f.label:k;});
+  pushMsg('me', names.length?names.join(", "):"No strong preferences");
+  clearChips();
+  // compute summary
+  var r=rankedSchools();
+  var counts={Safety:0,Likely:0,Target:0,Reach:0};
+  r.forEach(function(x){counts[x.band]++;});
+  aiSay("Perfect. Here's the honest read on <b>101 real schools</b> against your profile:",function(){
+    var line="I count <span class='k'>"+counts.Safety+" safeties</span>, <span class='k'>"+counts.Likely+" likelies</span>, <span class='k'>"+counts.Target+" targets</span>, and <span class='k'>"+counts.Reach+" reaches</span>.";
+    aiSay(line,function(){
+      aiSay("A strong list usually has <b>2–3 safeties, 3–4 targets, and a few reaches you'd be thrilled by</b>. Tap <b>List</b> below to see them grouped — and for every reach I'll tell you <i>exactly</i> what would flip it.",function(){
+        updateHeader();
+        setChips([
+          {label:"📋 Show my list",go:true,onClick:function(){go('list');}},
+          {label:"What are my best safeties?",onClick:function(){askAssistant("what are my best safeties");}},
+          {label:"Cheapest good options?",onClick:function(){askAssistant("cheapest options");}}
+        ]);
+      });
+    });
+  });
+}
+
+/* ============================================================
+   OMNIPRESENT ASSISTANT (grounded QA)
+   ============================================================ */
+var STOP={college:1,university:1,state:1,school:1,the:1,of:1,and:1,at:1,institute:1,tech:1,poly:1,polytechnic:1,saint:1,st:1,new:1,north:1,south:1,east:1,west:1,national:1,central:1,my:1,me:1,essay:1,list:1,about:1,best:1,good:1,cheap:1,cost:1};
+function meaningfulTokens(nm){
+  return nm.replace(/[^a-z0-9 ]/g,'').split(/\s+/).filter(function(w){return w.length>2 && !STOP[w];});
+}
+function findSchool(q){
+  q=q.toLowerCase();
+  var best=null,bestScore=0;
+  SCHOOLS.forEach(function(s){
+    var score=0;
+    var nm=s.n.toLowerCase();
+    if(q.indexOf(nm)>=0) score=100+nm.length;
+    else {
+      // token overlap on MEANINGFUL tokens only (ignore "college","university", etc.)
+      var toks=meaningfulTokens(nm);
+      if(toks.length){
+        toks.forEach(function(t){ if(q.indexOf(t)>=0) score+=t.length; });
+      }
+      if(s.id.length>2 && new RegExp("\\b"+s.id+"\\b").test(q)) score+=8;
+    }
+    if(score>bestScore){bestScore=score;best=s;}
+  });
+  return bestScore>=5?best:null;
+}
+function schoolLine(s){
+  var p=chance(s,S.gpa,S.sat,S.to), b=band(p);
+  return "<b>"+esc(s.n)+"</b> ("+esc(s.city)+", "+esc(s.st)+") — admit rate <b>"+pct(s.admit)+"</b>. For you: <span style='color:"+BANDCOLOR[b]+";font-weight:800'>"+pct(p)+" · "+b+"</span>.";
+}
+
+function answer(qRaw){
+  var q=qRaw.toLowerCase().trim();
+  if(!S.done){ // during onboarding, treat typed input as data
+    return handleOnbText(qRaw);
+  }
+  // greetings
+  if(/^(hi|hey|hello|yo|sup|thanks|thank you|ty)\b/.test(q)){
+    return aiSay("I'm here. Ask me about any school, compare two, or say <i>\"best safeties\"</i>, <i>\"cheapest options\"</i>, or <i>\"what flips Emory\"</i>.");
+  }
+  // profile queries
+  if(/(my|current) (gpa|sat|profile|stats)/.test(q) || /^(profile|stats)$/.test(q)){
+    return aiSay("Right now I have you at <b>GPA "+(S.gpa!=null?S.gpa.toFixed(2):"—")+"</b>, "+(S.to?"<b>test-optional</b>":"<b>SAT "+(S.sat||"—")+"</b>")+", class of <b>"+S.year+"</b>. Change it anytime with the ✏️ Edit on the List tab — everything recomputes.");
+  }
+  // best safeties / likelies / targets / reaches
+  if(/(safet)/.test(q)){ return listByBand("Safety","best safeties"); }
+  if(/(likely|likelies)/.test(q)){ return listByBand("Likely","likelies"); }
+  if(/(target)/.test(q)){ return listByBand("Target","targets"); }
+  if(/(reach)/.test(q)){ if(/what.*(flip|move|change)/.test(q)===false && /(list|show|my|best|top)/.test(q)) return listByBand("Reach","reaches"); }
+  // cheapest
+  if(/(cheap|afford|low.?cost|least expensive|net cost|price)/.test(q)){
+    return cheapestAnswer();
+  }
+  // what flips X
+  if(/(flip|what would (it|make)|move .* (from|to)|turn .* into|raise|improve my odds)/.test(q)){
+    var sf=findSchool(q);
+    if(sf){ return flipAnswer(sf); }
+    return aiSay("Which school? Try <i>\"what flips Emory\"</i> or <i>\"what would move UCLA\"</i>.");
+  }
+  // compare two schools ("vs", "or", "compare")
+  if(/( vs | versus | or | compare )/.test(" "+q+" ")){
+    var two=findTwo(q);
+    if(two && two.length===2){ return compareAnswer(two[0],two[1]); }
+  }
+  // single school lookup
+  var s=findSchool(q);
+  if(s){ return schoolAnswer(s); }
+  // fallback / off-topic redirect
+  return aiSay("I stick to what I can actually back up — the <b>101 real schools</b> in your list and your odds at each. I can't help with essays or off-topic stuff, but ask me about any school, a comparison, or your best fits and I'll give you the real numbers.");
+}
+
+function handleOnbText(t){
+  // parse GPA
+  if(S.gpa==null){
+    var g=parseFloat(t.replace(/[^0-9.]/g,''));
+    if(!isNaN(g)&&g>0&&g<=5){ return onbGpa(+g.toFixed(2)); }
+    return aiSay("I need a GPA like <b>3.85</b>. What's yours?");
+  }
+  if(S.sat==null && !S.to){
+    var v=parseInt(t.replace(/[^0-9]/g,''),10);
+    if(!isNaN(v)&&v>=400&&v<=1600){ return onbSat(v); }
+    if(/optional|no|skip|none/.test(t.toLowerCase())){ S.to=true;save();pushMsg('me',"Test-optional");return onbYear(); }
+    return aiSay("An SAT total is 400–1600 — like <b>1450</b>. Or say <i>test-optional</i>.");
+  }
+  return aiSay("Tap one of the options above to keep going 🙂");
+}
+
+function listByBand(b,word){
+  var r=rankedSchools().filter(function(x){return x.band===b;});
+  if(b==="Safety"||b==="Likely") r.sort(function(a,c){return c.p-a.p;});
+  else r.sort(function(a,c){return c.p-a.p;});
+  if(S.prios.length) r.sort(function(a,c){return (c.fit||0)-(a.fit||0);});
+  if(!r.length) return aiSay("You don't have any "+word+" right now with GPA "+(S.gpa?S.gpa.toFixed(2):"—")+". Want to peek at your <b>Targets</b> instead? Just ask.");
+  var top=r.slice(0,4);
+  var lines=top.map(function(x){
+    return "• "+schoolLine(x.s)+(x.fit!=null?" <span style='color:#a9b6d4'>Fit "+x.fit+"/100.</span>":"");
+  }).join("<br><br>");
+  aiSay("Your strongest <b>"+word+"</b>:",function(){
+    aiSay(lines,function(){
+      aiSay("Open any of them on the <b>List</b> tab for the full breakdown — cost, sources, deadline.",null,600);
+    });
+  });
+}
+function cheapestAnswer(){
+  var r=SCHOOLS.map(function(s){return {s:s,net:(s.coa||0)-(s.merit||0),p:chance(s,S.gpa,S.sat,S.to)};})
+    .filter(function(x){return x.s.coa;})
+    .sort(function(a,b){return a.net-b.net;}).slice(0,4);
+  var lines=r.map(function(x){
+    var b=band(x.p);
+    return "• <b>"+esc(x.s.n)+"</b> — est. net <b>"+money(x.net)+"/yr</b> (COA "+money(x.s.coa)+" − merit "+money(x.s.merit)+"). Your odds: <span style='color:"+BANDCOLOR[b]+";font-weight:800'>"+pct(x.p)+" "+b+"</span>.";
+  }).join("<br><br>");
+  aiSay("Cheapest real options by <b>estimated net cost</b> (sticker minus typical merit — these are flat estimates, not aid offers):",function(){
+    aiSay(lines);
+  });
+}
+function schoolAnswer(s){
+  var p=chance(s,S.gpa,S.sat,S.to), b=band(p);
+  var net=(s.coa||0)-(s.merit||0);
+  var vtxt=s.verified?"✓ verified":"est. (unverified)";
+  aiSay(schoolLine(s)+"<br><br>Est. net cost <b>"+money(net)+"/yr</b> · premed strength <b>"+s.premed+"/10</b> · research <b>"+s.research+"/10</b>. <span style='color:#6f7da0'>("+vtxt+")</span>",function(){
+    if(b==="Reach"||b==="Target"){
+      var fl=flipSentence(s,S.gpa,S.sat,S.to);
+      if(fl) aiSay("<b>What would flip it:</b> "+fl,function(){ offerOpen(s); });
+      else offerOpen(s);
+    } else {
+      aiSay(s.note?"<i>"+esc(s.note.slice(0,220))+(s.note.length>220?"…":"")+"</i>":BANDDESC[b],function(){offerOpen(s);});
+    }
+  });
+}
+function offerOpen(s){
+  setChips([
+    {label:"Open "+s.n.split(/[ ,]/)[0]+" ↗",go:true,onClick:function(){openSheet(s.id);}},
+    {label:"Best safeties",onClick:function(){askAssistant("best safeties");}}
+  ]);
+}
+function flipAnswer(s){
+  var p=chance(s,S.gpa,S.sat,S.to), b=band(p);
+  if(b==="Safety"){ return aiSay("<b>"+esc(s.n)+"</b> is already a <span style='color:#00ff88;font-weight:800'>Safety</span> for you ("+pct(p)+"). Nothing to flip — you're above the line. 🎉"); }
+  var fl=flipSentence(s,S.gpa,S.sat,S.to);
+  aiSay("At GPA "+(S.gpa?S.gpa.toFixed(2):"—")+(S.to?" (test-optional)":", SAT "+(S.sat||"—"))+", <b>"+esc(s.n)+"</b> sits at <span style='color:"+BANDCOLOR[b]+";font-weight:800'>"+pct(p)+" · "+b+"</span>.",function(){
+    aiSay(fl||"This one moves on admit rate alone — stats won't shift the band much.",function(){offerOpen(s);});
+  });
+}
+function findTwo(q){
+  // find two distinct schools mentioned
+  var found=[];
+  SCHOOLS.forEach(function(s){
+    var nm=s.n.toLowerCase();
+    var toks=meaningfulTokens(nm);
+    var hit=q.indexOf(nm)>=0 || toks.filter(function(t){return q.indexOf(t)>=0;}).length>=1 || (s.id.length>2&&new RegExp("\\b"+s.id+"\\b").test(q));
+    if(hit) found.push(s);
+  });
+  // dedupe by id
+  var seen={},out=[];
+  found.forEach(function(s){if(!seen[s.id]){seen[s.id]=1;out.push(s);}});
+  return out.slice(0,2);
+}
+function compareAnswer(a,b){
+  var pa=chance(a,S.gpa,S.sat,S.to), pb=chance(b,S.gpa,S.sat,S.to);
+  var na=(a.coa||0)-(a.merit||0), nb=(b.coa||0)-(b.merit||0);
+  aiSay("Head to head, for <b>your</b> profile:",function(){
+    var line="<b>"+esc(a.n)+"</b>: <span style='color:"+BANDCOLOR[band(pa)]+";font-weight:800'>"+pct(pa)+" "+band(pa)+"</span> · net "+money(na)+" · premed "+a.premed+"/10<br><br>"+
+             "<b>"+esc(b.n)+"</b>: <span style='color:"+BANDCOLOR[band(pb)]+";font-weight:800'>"+pct(pb)+" "+band(pb)+"</span> · net "+money(nb)+" · premed "+b.premed+"/10";
+    aiSay(line,function(){
+      var verdict;
+      if(band(pa)!==band(pb)) verdict=(pa>pb?a:b).n+" is the safer bet on odds";
+      else if(na!==nb) verdict=(na<nb?a:b).n+" is cheaper by ~"+money(Math.abs(na-nb))+"/yr";
+      else verdict=(a.premed>=b.premed?a:b).n+" edges it on premed support";
+      aiSay("<b>Bottom line:</b> "+esc(verdict)+". Open either for the full picture.");
+    });
+  });
+}
+// programmatic assistant call (from chips)
+function askAssistant(q){ go('chat'); pushMsg('me',q); clearChips(); answer(q); }
+
+/* ---------- send handler ---------- */
+$('sendBtn').onclick=doSend;
+$('input').addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();} });
+$('input').addEventListener('input',function(){ this.style.height='auto'; this.style.height=Math.min(96,this.scrollHeight)+'px'; });
+function doSend(){
+  if(busy) return;
+  var i=$('input'); var v=i.value.trim(); if(!v) return;
+  i.value=''; i.style.height='auto';
+  pushMsg('me',esc(v));
+  clearChips();
+  answer(v);
+}
+$('micBtn').onclick=function(){ toast("Voice input coming soon 🎙"); };
+
+function updateHeader(){
+  if(!S.done){ $('hdrStat').innerHTML=''; return; }
+  $('hdrStat').innerHTML="<b>GPA "+(S.gpa!=null?S.gpa.toFixed(2):"—")+"</b><br>"+(S.to?"Test-optional":"SAT "+(S.sat||"—"));
+}
+
+/* ============================================================
+   NAV + ROUTING
+   ============================================================ */
+var NAVITEMS=[
+  {k:'chat',label:'Coach',ic:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'},
+  {k:'list',label:'List',ic:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'},
+  {k:'short',label:'Shortlist',ic:'<path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 17.3 5.8 20.9l1.6-6.8L2.2 8.9l6.9-.6z"/>'}
+];
+function buildNav(id){
+  var n=$(id); n.innerHTML='';
+  NAVITEMS.forEach(function(it){
+    var b=el('button',null,'<svg class="ic" viewBox="0 0 24 24">'+it.ic+'</svg><span>'+it.label+(it.k==='short'&&S.shortlist.length?' ('+S.shortlist.length+')':'')+'</span>');
+    if(it.k===cur) b.classList.add('on');
+    b.onclick=function(){ go(it.k); };
+    n.appendChild(b);
+  });
+}
+var cur='chat';
+function go(k){
+  cur=k;
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  $('scr-'+k).classList.add('active');
+  buildNav('nav1');buildNav('nav2');buildNav('nav3');
+  if(k==='list') renderList();
+  if(k==='short') renderShort();
+  if(k==='chat'){ $('chat').scrollTop=$('chat').scrollHeight; }
+}
+
+/* ============================================================
+   LIST + SHORTLIST RENDER
+   ============================================================ */
+function renderList(){
+  var w=$('listWrap'); w.innerHTML='';
+  var head=el('div','listhead');
+  head.innerHTML="<h2>Your realistic list</h2><p>101 real schools, your true odds, grouped by how likely you are to get in.</p>";
+  w.appendChild(head);
+  // mini profile
+  var mp=el('div','miniprof');
+  mp.innerHTML="<span class='pill'>GPA <b>"+(S.gpa!=null?S.gpa.toFixed(2):"—")+"</b></span>"+
+    "<span class='pill'>"+(S.to?"<b>Test-optional</b>":"SAT <b>"+(S.sat||"—")+"</b>")+"</span>"+
+    "<span class='pill'>Class of <b>"+S.year+"</b></span>"+
+    "<span class='pill edit' id='editProf'>✏️ Edit</span>";
+  w.appendChild(mp);
+  mp.querySelector('#editProf').onclick=openEdit;
+
+  var ranked=rankedSchools();
+  BANDORDER.forEach(function(b){
+    var grp=ranked.filter(function(x){return x.band===b;});
+    if(!grp.length) return;
+    // sort within band by fit if prios, else by prob
+    grp.sort(function(a,c){ if(S.prios.length){ var d=(c.fit||0)-(a.fit||0); if(d) return d; } return c.p-a.p; });
+    var section=el('div','bandgroup');
+    var hdr=el('div','bandhdr');
+    hdr.innerHTML="<span class='banddot' style='background:"+BANDCOLOR[b]+";box-shadow:0 0 8px "+BANDCOLOR[b]+"'></span>"+
+      "<span class='bname' style='color:"+BANDCOLOR[b]+"'>"+b.toUpperCase()+"</span>"+
+      "<span class='bcount'>"+grp.length+"</span>"+
+      "<span class='bdesc'>"+esc(BANDDESC[b])+"</span>";
+    section.appendChild(hdr);
+    grp.forEach(function(x){ section.appendChild(makeCard(x)); });
+    w.appendChild(section);
+  });
+}
+
+function makeCard(x){
+  var s=x.s, p=x.p, b=x.band, color=BANDCOLOR[b];
+  var c=el('div','card');
+  c.innerHTML="<div class='accentbar' style='background:"+color+"'></div>";
+  var top=el('div','toprow');
+  var starred=S.shortlist.indexOf(s.id)>=0;
+  top.innerHTML=
+    "<div style='min-width:0'><div class='nm'>"+esc(s.n)+
+      "<span class='vbadge "+(s.verified?'v':'e')+"'>"+(s.verified?'✓ verified':'est')+"</span></div>"+
+      "<div class='loc'>"+esc(s.city)+", "+esc(s.st)+" · "+esc(s.type)+" · admit "+pct(s.admit)+"</div></div>"+
+    "<div class='pct'><div class='big' style='color:"+color+"'>"+pct(p)+"</div><div class='lbl' style='color:"+color+"'>"+b+"</div></div>";
+  c.appendChild(top);
+  // position bar
+  var pgFrac=Math.max(0,Math.min(1,(S.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  var bar=el('div','posbar');
+  bar.innerHTML="<div class='fill' style='width:"+Math.round(p*100)+"%;background:linear-gradient(90deg,"+color+"88,"+color+")'></div>";
+  c.appendChild(bar);
+  // flip line (only reach/target) else oneliner
+  if(b==="Reach"||b==="Target"){
+    var fl=flipSentence(s,S.gpa,S.sat,S.to);
+    if(fl){ var f=el('div','flip','⚡ '+fl); c.appendChild(f); }
+    else { var o=el('div','oneliner',esc(oneLiner(s,b))); c.appendChild(o); }
+  } else {
+    var o2=el('div','oneliner',esc(oneLiner(s,b))); c.appendChild(o2);
+  }
+  // actions
+  var acts=el('div','cardactions');
+  var starBtn=el('div','ca star'+(starred?' on':''), (starred?'★ Shortlisted':'☆ Shortlist'));
+  starBtn.onclick=function(e){ e.stopPropagation(); toggleStar(s.id); starBtn.classList.toggle('on'); starBtn.innerHTML=(S.shortlist.indexOf(s.id)>=0?'★ Shortlisted':'☆ Shortlist'); buildNav('nav1');buildNav('nav2');buildNav('nav3'); };
+  var openBtn=el('div','ca','Details ↗');
+  openBtn.onclick=function(e){ e.stopPropagation(); openSheet(s.id); };
+  acts.appendChild(starBtn); acts.appendChild(openBtn);
+  c.appendChild(acts);
+  c.onclick=function(){ openSheet(s.id); };
+  return c;
+}
+function oneLiner(s,b){
+  if(s.note){ var n=s.note.split('. ')[0]; return (n.length>120?n.slice(0,118)+'…':n)+'.'; }
+  return BANDDESC[b];
+}
+
+function toggleStar(id){
+  var i=S.shortlist.indexOf(id);
+  if(i>=0){ S.shortlist.splice(i,1); toast("Removed from shortlist"); }
+  else { S.shortlist.push(id); toast("Added to shortlist ★"); }
+  save();
+}
+
+function renderShort(){
+  var w=$('shortWrap'); w.innerHTML='';
+  var head=el('div','listhead'); head.innerHTML="<h2>Your shortlist</h2><p>The schools you're seriously considering. Total 4-year cost is a flat estimate.</p>";
+  w.appendChild(head);
+  if(!S.shortlist.length){
+    var e=el('div','emptystate','<div class="em">★</div><h3>Nothing shortlisted yet</h3><p>Tap the ☆ on any school in your List to save it here — then compare costs and odds side by side.</p>');
+    var btn=el('button',null,'Go to my list'); btn.onclick=function(){go('list');};
+    e.appendChild(btn); w.appendChild(e); return;
+  }
+  // summary of total est 4yr cost
+  var total=0, ranked=rankedSchools();
+  var items=S.shortlist.map(function(id){ return ranked.filter(function(x){return x.s.id===id;})[0]; }).filter(Boolean);
+  items.sort(function(a,c){return c.p-a.p;});
+  var sum=el('div','miniprof');
+  var costs=items.map(function(x){ return ((x.s.coa||0)-(x.s.merit||0))*4; });
+  var avg=costs.length?Math.round(costs.reduce(function(a,b){return a+b;},0)/costs.length):0;
+  sum.innerHTML="<span class='pill'><b>"+items.length+"</b> schools</span>"+
+    "<span class='pill'>Avg 4-yr est <b>"+money(avg)+"</b></span>";
+  w.appendChild(sum);
+  items.forEach(function(x){ w.appendChild(makeCard(x)); });
+}
+
+/* ============================================================
+   DETAIL SHEET
+   ============================================================ */
+$('sheetBack').onclick=function(){ $('sheet').classList.remove('open'); };
+function openSheet(id){
+  var s=SCHOOLS.filter(function(x){return x.id===id;})[0]; if(!s) return;
+  var p=chance(s,S.gpa,S.sat,S.to), b=band(p), color=BANDCOLOR[b];
+  $('shTtl').innerHTML=esc(s.n)+" <span class='vbadge "+(s.verified?'v':'e')+"'>"+(s.verified?'✓ verified':'est')+"</span>";
+  $('shLoc').textContent=s.city+", "+s.st+" · "+s.type+" · "+(s.size==='L'?'Large':s.size==='M'?'Medium':'Small');
+  var body=$('shBody'); body.innerHTML='';
+
+  // chance block
+  var cb=el('div','dblock');
+  cb.innerHTML="<h4>Your admission chance</h4>";
+  var cr=el('div','chancerow');
+  cr.innerHTML="<span class='cbig' style='color:"+color+"'>"+pct(p)+"</span>"+
+    "<span class='cband' style='background:"+color+"22;color:"+color+"'>"+b.toUpperCase()+"</span>"+
+    "<span style='margin-left:auto;font-size:11.5px;color:#a9b6d4'>Base admit "+pct(s.admit)+"</span>";
+  cb.appendChild(cr);
+  // position bar (GPA)
+  var pw=el('div','poswrap');
+  var gpaFrac=Math.max(0,Math.min(1,(S.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  pw.innerHTML="<div style='font-size:11px;color:#6f7da0;font-weight:700;margin-bottom:20px;text-transform:uppercase;letter-spacing:.4px'>Where your GPA lands</div>"+
+    "<div class='posbar2'><div class='range' style='left:25%;width:50%'></div>"+
+    "<div class='you' style='left:"+(12.5+gpaFrac*75).toFixed(1)+"%'></div>"+
+    "<div class='youlbl' style='left:"+(12.5+gpaFrac*75).toFixed(1)+"%'>You "+(S.gpa!=null?S.gpa.toFixed(2):'—')+"</div></div>"+
+    "<div class='poslegend'><span>Below range</span><span>25th: "+(s.g25||'—')+"</span><span>75th: "+(s.g75||'—')+"</span><span>Above</span></div>";
+  cb.appendChild(pw);
+  body.appendChild(cb);
+
+  // what flips it
+  if(b==="Reach"||b==="Target"){
+    var fl=flipSentence(s,S.gpa,S.sat,S.to);
+    if(fl){
+      var fb=el('div','dblock');
+      fb.innerHTML="<div class='flipbox'><div class='fh'>⚡ What flips this school</div><div class='fline'>"+fl+"</div></div>";
+      body.appendChild(fb);
+    }
+  } else if(b==="Safety"||b==="Likely"){
+    var fb2=el('div','dblock');
+    fb2.innerHTML="<div class='flipbox' style='background:linear-gradient(135deg,"+color+"1a,"+color+"0d);border-color:"+color+"'><div class='fh' style='color:"+color+"'>✓ You're above the line</div><div class='fline'>Your stats already clear this school's typical admitted range. Solid anchor for your list.</div></div>";
+    body.appendChild(fb2);
+  }
+
+  // stats grid
+  var sg=el('div','dblock');
+  sg.innerHTML="<h4>The real numbers</h4>";
+  var grid=el('div','statgrid');
+  grid.innerHTML=
+    cell("GPA 25–75",(s.g25||'—')+"–"+(s.g75||'—'))+
+    cell("SAT 25–75", s.tb?"Test-blind":(s.s25>0?s.s25+"–"+s.s75:"Not used"))+
+    cell("Admit rate",pct(s.admit))+
+    cell("4-yr grad",(s.grad4!=null?s.grad4+"%":'—'))+
+    cell("Premed",(s.premed!=null?s.premed+"/10":'—'))+
+    cell("Research",(s.research!=null?s.research+"/10":'—'));
+  sg.appendChild(grid);
+  body.appendChild(sg);
+
+  // cost
+  var net=(s.coa||0)-(s.merit||0);
+  var costB=el('div','dblock');
+  costB.innerHTML="<h4>Cost (flat estimate — not a real aid offer)</h4>"+
+    "<div class='costrow'><span class='l'>Cost of attendance / yr</span><span class='v'>"+money(s.coa)+"</span></div>"+
+    "<div class='costrow'><span class='l'>Typical merit"+(s.meritName?" ("+esc(s.meritName)+")":"")+"</span><span class='v' style='color:#00ff88'>−"+money(s.merit||0)+"</span></div>"+
+    "<div class='costrow tot'><span class='l'>Est. net / yr</span><span class='v'>"+money(net)+"</span></div>"+
+    "<div class='costrow tot'><span class='l'>Est. 4-year total</span><span class='v'>"+money(net*4)+"</span></div>";
+  body.appendChild(costB);
+
+  // program (if present)
+  if(s.program&&s.program.name){
+    var pb=el('div','dblock'); pb.innerHTML="<h4>Special program</h4><div class='note'>"+esc(s.program.name)+"</div>";
+    body.appendChild(pb);
+  }
+
+  // note / bio
+  if(s.note){
+    var nb=el('div','dblock'); nb.innerHTML="<h4>Coach's read</h4><div class='note'>"+esc(s.note)+"</div>";
+    body.appendChild(nb);
+  }
+
+  // deadline
+  if(s.dl){
+    var db=el('div','dblock'); db.innerHTML="<h4>Deadline</h4><div class='deadline'><span class='dot'></span><span>"+esc(s.dl)+"</span></div>";
+    body.appendChild(db);
+  }
+
+  // links / sources
+  if(s.links&&s.links.length){
+    var lb=el('div','dblock'); var h="<h4>Sources</h4><div class='links'>";
+    s.links.forEach(function(l){ h+="<a href='"+esc(l[1])+"' target='_blank' rel='noopener'>"+esc(l[0])+" ↗</a>"; });
+    h+="</div>"; lb.innerHTML=h; body.appendChild(lb);
+  }
+
+  // shortlist button
+  var starred=S.shortlist.indexOf(s.id)>=0;
+  var sb=el('button','sheetstar'+(starred?' on':''), starred?'★ On your shortlist — tap to remove':'☆ Add to shortlist');
+  sb.onclick=function(){ toggleStar(s.id); var on=S.shortlist.indexOf(s.id)>=0; sb.className='sheetstar'+(on?' on':''); sb.textContent=on?'★ On your shortlist — tap to remove':'☆ Add to shortlist'; buildNav('nav1');buildNav('nav2');buildNav('nav3'); if(cur==='short')renderShort(); };
+  body.appendChild(sb);
+  body.appendChild(el('div',null,'<div style="height:20px"></div>'));
+
+  body.scrollTop=0;
+  $('sheet').classList.add('open');
+}
+function cell(l,v){ return "<div class='cell'><div class='l'>"+l+"</div><div class='v'>"+v+"</div></div>"; }
+
+/* ============================================================
+   EDIT MODAL
+   ============================================================ */
+function openEdit(){
+  $('fGpa').value=S.gpa!=null?S.gpa:'';
+  $('fSat').value=S.sat!=null?S.sat:'';
+  $('fYear').value=S.year;
+  // to toggle
+  document.querySelectorAll('#fTo .t').forEach(function(t){ t.classList.toggle('on', (t.getAttribute('data-to')==='1')===S.to); });
+  $('fSatWrap').style.display=S.to?'none':'block';
+  // prios
+  var pg=$('fPrio'); pg.innerHTML='';
+  PRIOS.forEach(function(p){
+    var chip=el('div','chip'+(S.prios.indexOf(p.k)>=0?' sel':''), (S.prios.indexOf(p.k)>=0?'✓ ':'')+p.label);
+    chip.setAttribute('data-k',p.k);
+    chip.onclick=function(){
+      chip.classList.toggle('sel');
+      var sel=chip.classList.contains('sel');
+      chip.textContent=(sel?'✓ ':'')+p.label;
+    };
+    pg.appendChild(chip);
+  });
+  $('editModal').classList.add('open');
+}
+$('editClose').onclick=function(){ $('editModal').classList.remove('open'); };
+document.querySelectorAll('#fTo .t').forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll('#fTo .t').forEach(function(x){x.classList.remove('on');});
+    t.classList.add('on');
+    $('fSatWrap').style.display=(t.getAttribute('data-to')==='1')?'none':'block';
+  };
+});
+$('fSave').onclick=function(){
+  var g=parseFloat($('fGpa').value);
+  if(isNaN(g)||g<=0||g>5){ toast("Enter a valid GPA (0–5)"); return; }
+  S.gpa=+g.toFixed(2);
+  var to=document.querySelector('#fTo .t.on').getAttribute('data-to')==='1';
+  S.to=to;
+  if(to){ S.sat=null; }
+  else{
+    var v=parseInt($('fSat').value,10);
+    if(isNaN(v)||v<400||v>1600){ toast("Enter a valid SAT (400–1600)"); return; }
+    S.sat=v;
+  }
+  S.year=$('fYear').value;
+  var prios=[]; document.querySelectorAll('#fPrio .chip.sel').forEach(function(c){ prios.push(c.getAttribute('data-k')); });
+  S.prios=prios;
+  save();
+  $('editModal').classList.remove('open');
+  updateHeader();
+  if(cur==='list') renderList();
+  if(cur==='short') renderShort();
+  toast("Recomputed for GPA "+S.gpa.toFixed(2));
+};
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function boot(){
+  buildNav('nav1');buildNav('nav2');buildNav('nav3');
+  updateHeader();
+  if(S.done && S.chatlog && S.chatlog.length){
+    // replay chat log (no typing)
+    S.chatlog.forEach(function(m){
+      var wrap=el('div','msg '+m.w); wrap.appendChild(el('div','bubble',m.h)); chatEl.appendChild(wrap);
+    });
+    chatEl.scrollTop=chatEl.scrollHeight;
+    // offer quick actions
+    setChips([
+      {label:"📋 My list",go:true,onClick:function(){go('list');}},
+      {label:"Best safeties",onClick:function(){askAssistant("best safeties");}},
+      {label:"Cheapest options",onClick:function(){askAssistant("cheapest options");}}
+    ]);
+  } else {
+    // fresh onboarding
+    S.chatlog=[]; save();
+    ONB.start();
+  }
+}
+if(!SCHOOLS.length){
+  document.body.innerHTML='<div style="color:#e8f0ff;font-family:system-ui;padding:40px;text-align:center">Could not load <b>app-data.js</b>. Make sure it sits next to this file.</div>';
+} else {
+  boot();
+}
+</script>
+</body>
+</html>

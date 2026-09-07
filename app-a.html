@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Admitted — The Living Map</title>
+<style>
+:root{
+  --bg0:#0a0e1a; --bg1:#0f1424; --bg2:#141b2e; --line:#1e2740;
+  --tx:#e8f0ff; --tx2:#a9b6d4; --tx3:#6b7794;
+  --safety:#00ff88; --likely:#00d4ff; --target:#f5a623; --reach:#a855f7;
+  --verified:#00ff88; --est:#f5a623;
+  --pad:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:#05070f;color:var(--tx);
+  display:flex;justify-content:center;align-items:stretch;
+  overscroll-behavior:none;
+}
+#phone{
+  width:100%;max-width:430px;height:100vh;height:100dvh;position:relative;
+  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  display:flex;flex-direction:column;overflow:hidden;
+}
+@media(min-width:520px){
+  body{align-items:center;background:radial-gradient(circle at 50% 0%,#101a30,#05070f 70%);}
+  #phone{height:92vh;max-height:900px;border-radius:38px;border:1px solid var(--line);
+    box-shadow:0 30px 90px rgba(0,0,0,.7),inset 0 0 0 8px #05070f;overflow:hidden;}
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.hidden{display:none!important;}
+
+/* ===== SCREENS ===== */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.screen.active{opacity:1;pointer-events:auto;z-index:2;}
+
+/* ===== ONBOARDING ===== */
+#onboard{background:linear-gradient(180deg,#0a0e1a,#0f1424);}
+.ob-head{padding:24px var(--pad) 8px;text-align:center;}
+.ob-logo{font-size:15px;font-weight:800;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--likely),var(--reach));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.chatwrap{flex:1;overflow-y:auto;padding:12px var(--pad) 8px;display:flex;flex-direction:column;gap:12px;}
+.msg{max-width:80%;padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.4;
+  animation:pop .3s ease;}
+.msg.bot{background:var(--bg2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px;}
+.msg.user{background:linear-gradient(120deg,var(--likely),#0090d0);color:#04121e;
+  align-self:flex-end;border-bottom-right-radius:5px;font-weight:600;}
+@keyframes pop{from{transform:translateY(8px) scale(.96);opacity:0;}to{transform:none;opacity:1;}}
+.typing{display:flex;gap:4px;padding:14px 16px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:18px;border-bottom-left-radius:5px;align-self:flex-start;width:fit-content;}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--tx3);animation:blink 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+.ob-input{padding:10px var(--pad) calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
+  background:var(--bg1);}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chip{padding:10px 15px;border-radius:22px;background:var(--bg2);border:1px solid var(--line);
+  color:var(--tx);font-size:14px;font-weight:600;min-height:40px;transition:.15s;}
+.chip:active{transform:scale(.94);}
+.chip.sel{background:linear-gradient(120deg,var(--likely),var(--reach));color:#04121e;border-color:transparent;}
+.freerow{display:flex;gap:8px;}
+.freerow input{flex:1;background:var(--bg0);border:1px solid var(--line);border-radius:12px;
+  padding:0 14px;height:46px;color:var(--tx);font-size:15px;font-family:inherit;}
+.freerow input:focus{outline:none;border-color:var(--likely);}
+.sendbtn{width:46px;height:46px;border-radius:12px;background:var(--likely);color:#04121e;
+  font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.sendbtn:active{transform:scale(.92);}
+
+/* ===== APP SHELL ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px var(--pad) 10px;
+  padding-top:calc(14px + env(safe-area-inset-top));}
+.topbar h1{font-size:19px;font-weight:800;letter-spacing:-.3px;}
+.topbar .sub{font-size:11px;color:var(--tx3);font-weight:600;letter-spacing:.5px;}
+.iconbtn{width:40px;height:40px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tx2);}
+.iconbtn:active{transform:scale(.92);}
+.body{flex:1;position:relative;overflow:hidden;}
+
+/* ===== TABS ===== */
+.tabbar{display:flex;border-top:1px solid var(--line);background:rgba(10,14,26,.92);
+  backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom);}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;
+  color:var(--tx3);font-size:10px;font-weight:700;letter-spacing:.3px;min-height:44px;transition:.15s;}
+.tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.tab.active{color:var(--likely);}
+
+/* ===== MAP ===== */
+#mapView{position:absolute;inset:0;display:flex;flex-direction:column;}
+.mapcanvas-wrap{flex:1;position:relative;overflow:hidden;}
+#mapCanvas{width:100%;height:100%;display:block;touch-action:none;}
+.bandlabels{position:absolute;top:0;left:0;right:0;display:flex;pointer-events:none;padding:6px 8px 0;gap:4px;}
+.bl{flex:1;text-align:center;font-size:9px;font-weight:800;letter-spacing:.5px;opacity:.55;text-transform:uppercase;}
+.legend{position:absolute;left:10px;bottom:12px;display:flex;flex-direction:column;gap:5px;
+  background:rgba(10,14,26,.75);backdrop-filter:blur(10px);padding:9px 11px;border-radius:12px;
+  border:1px solid var(--line);pointer-events:none;}
+.legrow{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--tx2);}
+.legdot{width:10px;height:10px;border-radius:50%;}
+.maphint{position:absolute;right:10px;bottom:12px;max-width:130px;font-size:10px;color:var(--tx3);
+  text-align:right;line-height:1.3;pointer-events:none;}
+
+/* dials */
+.dials{background:var(--bg1);border-top:1px solid var(--line);padding:11px var(--pad) 12px;}
+.dialrow{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.dialrow:last-child{margin-bottom:0;}
+.diallab{width:74px;font-size:12px;font-weight:700;color:var(--tx2);}
+.diallab b{display:block;font-size:16px;color:var(--tx);font-weight:800;}
+.diallab .toflag{color:var(--target);font-size:10px;font-weight:700;}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,var(--reach),var(--target),var(--likely),var(--safety));outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:#fff;border:3px solid var(--likely);box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:grab;}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;
+  border:3px solid var(--likely);cursor:grab;}
+input[type=range]:disabled{opacity:.4;}
+.toggle-to{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2);font-weight:600;}
+.toggle-to input{width:16px;height:16px;accent-color:var(--likely);}
+.bandcounts{display:flex;gap:6px;margin-top:10px;}
+.bc{flex:1;text-align:center;padding:6px 2px;border-radius:9px;background:var(--bg0);border:1px solid var(--line);}
+.bc b{display:block;font-size:17px;font-weight:800;transition:.2s;}
+.bc span{font-size:9px;font-weight:700;letter-spacing:.4px;color:var(--tx3);}
+
+/* ===== DECK ===== */
+#deckView,#listView,#shortView{position:absolute;inset:0;display:flex;flex-direction:column;}
+.deckstage{flex:1;position:relative;padding:14px;overflow:hidden;}
+.card{position:absolute;inset:14px;background:linear-gradient(165deg,var(--bg2),var(--bg1));
+  border:1px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);will-change:transform;touch-action:pan-y;}
+.card .cbadge{position:absolute;top:18px;right:18px;font-size:10px;font-weight:800;padding:5px 10px;
+  border-radius:20px;letter-spacing:.5px;}
+.card h2{font-size:26px;font-weight:800;line-height:1.1;margin-bottom:4px;padding-right:70px;}
+.card .loc{font-size:13px;color:var(--tx2);font-weight:600;margin-bottom:14px;}
+.chancebig{font-size:52px;font-weight:900;line-height:1;letter-spacing:-2px;}
+.chancebig small{font-size:15px;font-weight:700;color:var(--tx3);}
+.bandtag{display:inline-block;font-size:12px;font-weight:800;padding:4px 12px;border-radius:20px;margin:8px 0 14px;letter-spacing:.5px;}
+.posbar{height:10px;border-radius:6px;background:var(--bg0);position:relative;overflow:hidden;margin:6px 0 3px;}
+.posfill{position:absolute;top:0;bottom:0;left:0;border-radius:6px;transition:width .3s;}
+.posmark{position:absolute;top:-3px;width:3px;height:16px;background:#fff;border-radius:2px;box-shadow:0 0 4px #000;}
+.poslabels{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);font-weight:600;}
+.cnote{font-size:13px;color:var(--tx2);line-height:1.5;margin:14px 0;flex:1;overflow-y:auto;}
+.cstat{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line);}
+.cstat span{color:var(--tx3);font-weight:600;}.cstat b{font-weight:700;}
+.cardactions{display:flex;gap:10px;margin-top:14px;}
+.cardactions button{flex:1;height:48px;border-radius:14px;font-size:14px;font-weight:800;display:flex;
+  align-items:center;justify-content:center;gap:6px;}
+.btn-skip{background:var(--bg0);border:1px solid var(--line);color:var(--tx2);}
+.btn-why{background:var(--bg0);border:1px solid var(--reach);color:var(--reach);}
+.btn-save{background:linear-gradient(120deg,var(--safety),#00c060);color:#04160c;}
+.btn-save.saved{background:var(--bg0);border:1px solid var(--safety);color:var(--safety);}
+.deckhint{text-align:center;font-size:11px;color:var(--tx3);padding:0 0 10px;font-weight:600;}
+.deckempty{position:absolute;inset:14px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;gap:14px;color:var(--tx2);}
+.deckempty .big{font-size:40px;}
+.resetbtn{padding:12px 22px;border-radius:14px;background:var(--likely);color:#04121e;font-weight:800;font-size:14px;}
+
+/* ===== LIST ===== */
+.filterbar{display:flex;gap:7px;padding:10px var(--pad);overflow-x:auto;border-bottom:1px solid var(--line);}
+.filterbar::-webkit-scrollbar{display:none;}
+.fchip{white-space:nowrap;padding:7px 13px;border-radius:18px;background:var(--bg2);border:1px solid var(--line);
+  font-size:12px;font-weight:700;color:var(--tx2);min-height:36px;}
+.fchip.on{background:var(--likely);color:#04121e;border-color:transparent;}
+.listscroll{flex:1;overflow-y:auto;padding:8px var(--pad) 14px;}
+.lrow{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:16px;margin-bottom:9px;}
+.lrow:active{transform:scale(.99);}
+.ldot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.linfo{flex:1;min-width:0;}
+.linfo h3{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.linfo p{font-size:11px;color:var(--tx3);font-weight:600;}
+.lchance{text-align:right;flex-shrink:0;}
+.lchance b{font-size:19px;font-weight:800;}
+.lchance span{display:block;font-size:9px;font-weight:800;letter-spacing:.4px;}
+.vbadge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;margin-top:2px;display:inline-block;}
+.vok{background:rgba(0,255,136,.15);color:var(--safety);}
+.vest{background:rgba(245,166,35,.15);color:var(--est);}
+
+/* ===== DETAIL SHEET ===== */
+#sheet{position:absolute;inset:0;z-index:40;display:flex;align-items:flex-end;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:.28s;}
+#sheet.open{opacity:1;pointer-events:auto;}
+.sheetcard{width:100%;max-height:92%;background:linear-gradient(180deg,var(--bg2),var(--bg1));
+  border-top-left-radius:26px;border-top-right-radius:26px;border-top:1px solid var(--line);
+  transform:translateY(100%);transition:.32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+#sheet.open .sheetcard{transform:none;}
+.sheetgrip{width:42px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 4px;}
+.sheetscroll{overflow-y:auto;padding:6px 20px calc(24px + env(safe-area-inset-bottom));}
+.sheetscroll h2{font-size:24px;font-weight:800;line-height:1.1;padding-right:60px;}
+.sh-close{position:absolute;top:16px;right:18px;width:34px;height:34px;border-radius:50%;
+  background:var(--bg0);border:1px solid var(--line);color:var(--tx2);font-size:16px;z-index:2;}
+.sh-loc{font-size:13px;color:var(--tx2);font-weight:600;margin:3px 0 14px;}
+.sh-chance{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+.sh-chance .big{font-size:44px;font-weight:900;letter-spacing:-1px;}
+.explainbox{background:var(--bg0);border:1px solid var(--line);border-radius:16px;padding:15px;margin:14px 0;}
+.explainbox .eh{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--reach);
+  letter-spacing:.5px;margin-bottom:9px;}
+.explainbox p{font-size:14px;line-height:1.55;color:var(--tx);}
+.explainbox .flip{margin-top:10px;padding:10px 12px;border-radius:11px;background:rgba(245,166,35,.1);
+  border:1px solid rgba(245,166,35,.3);font-size:13px;color:var(--target);font-weight:600;line-height:1.4;}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0;}
+.sh-cell{background:var(--bg0);border:1px solid var(--line);border-radius:13px;padding:11px 13px;}
+.sh-cell .k{font-size:10px;color:var(--tx3);font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.sh-cell .v{font-size:17px;font-weight:800;margin-top:3px;}
+.sh-cell .v small{font-size:11px;color:var(--tx3);font-weight:600;}
+.sectitle{font-size:12px;font-weight:800;color:var(--tx3);letter-spacing:.6px;text-transform:uppercase;margin:18px 0 8px;}
+.costbreak{background:var(--bg0);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.costbreak .cr{display:flex;justify-content:space-between;padding:11px 14px;font-size:14px;border-bottom:1px solid var(--line);}
+.costbreak .cr:last-child{border-bottom:none;}
+.costbreak .cr.net{background:rgba(0,255,136,.07);font-weight:800;}
+.costbreak .cr .neg{color:var(--safety);}
+.costflag{font-size:11px;color:var(--est);margin-top:6px;font-weight:600;line-height:1.4;}
+.sourcelinks{display:flex;flex-direction:column;gap:8px;}
+.slink{display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--bg0);border:1px solid var(--line);
+  border-radius:12px;font-size:14px;font-weight:600;color:var(--likely);text-decoration:none;}
+.slink:after{content:'↗';margin-left:auto;color:var(--tx3);}
+.sh-actions{display:flex;gap:10px;margin-top:18px;}
+.sh-actions button{flex:1;height:50px;border-radius:14px;font-weight:800;font-size:15px;}
+.posbar.lg{height:12px;}
+
+/* toast */
+#toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);
+  background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:11px 18px;border-radius:24px;
+  font-size:13px;font-weight:700;z-index:60;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.empty{text-align:center;color:var(--tx2);padding:50px 30px;font-size:14px;line-height:1.6;}
+.empty .big{font-size:38px;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div id="phone">
+
+  <!-- ONBOARDING -->
+  <section id="onboard" class="screen active">
+    <div class="ob-head"><div class="ob-logo">◆ ADMITTED</div></div>
+    <div class="chatwrap" id="chatwrap"></div>
+    <div class="ob-input" id="obInput"></div>
+  </section>
+
+  <!-- MAIN APP -->
+  <section id="app" class="screen">
+    <div class="topbar">
+      <div>
+        <h1 id="appTitle">The Living Map</h1>
+        <div class="sub" id="appSub">TAP A BUBBLE · DRAG A DIAL</div>
+      </div>
+      <button class="iconbtn" id="btnEdit" title="Edit profile">⚙</button>
+    </div>
+    <div class="body">
+
+      <!-- MAP -->
+      <div id="mapView">
+        <div class="mapcanvas-wrap">
+          <canvas id="mapCanvas"></canvas>
+          <div class="bandlabels">
+            <div class="bl" style="color:var(--reach)">Reach</div>
+            <div class="bl" style="color:var(--target)">Target</div>
+            <div class="bl" style="color:var(--likely)">Likely</div>
+            <div class="bl" style="color:var(--safety)">Safety</div>
+          </div>
+          <div class="legend">
+            <div class="legrow"><span class="legdot" style="background:var(--safety)"></span>Safety ≥75%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--likely)"></span>Likely ≥55%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--target)"></span>Target ≥30%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--reach)"></span>Reach &lt;30%</div>
+          </div>
+          <div class="maphint">Bubble size = your Fit.<br>Drag dials to reshape.</div>
+        </div>
+        <div class="dials">
+          <div class="dialrow">
+            <div class="diallab">GPA<b id="gpaVal">3.80</b></div>
+            <input type="range" id="gpaDial" min="2.0" max="4.3" step="0.01" value="3.8">
+          </div>
+          <div class="dialrow">
+            <div class="diallab">SAT<b id="satVal">1300</b><span class="toflag" id="toFlag"></span></div>
+            <input type="range" id="satDial" min="800" max="1600" step="10" value="1300">
+          </div>
+          <label class="toggle-to"><input type="checkbox" id="toChk"> Apply test-optional (ignore SAT)</label>
+          <div class="bandcounts" id="bandCounts"></div>
+        </div>
+      </div>
+
+      <!-- DECK -->
+      <div id="deckView" class="hidden">
+        <div class="deckstage" id="deckStage"></div>
+        <div class="deckhint">← skip · swipe right to shortlist →</div>
+      </div>
+
+      <!-- LIST -->
+      <div id="listView" class="hidden">
+        <div class="filterbar" id="filterBar"></div>
+        <div class="listscroll" id="listScroll"></div>
+      </div>
+
+      <!-- SHORTLIST -->
+      <div id="shortView" class="hidden">
+        <div class="filterbar"><button class="fchip on" id="costToggle">💰 Show 4-yr est. cost</button></div>
+        <div class="listscroll" id="shortScroll"></div>
+      </div>
+
+    </div>
+
+    <!-- TABS -->
+    <nav class="tabbar">
+      <button class="tab active" data-tab="map">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Map</button>
+      <button class="tab" data-tab="deck">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 4v16"/></svg>Deck</button>
+      <button class="tab" data-tab="list">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>All 101</button>
+      <button class="tab" data-tab="short">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 6H21l-5 4 2 7-6-4-6 4 2-7-5-4h6.5z"/></svg>Shortlist</button>
+    </nav>
+  </section>
+
+  <!-- DETAIL SHEET -->
+  <div id="sheet"><div class="sheetcard">
+    <button class="sh-close" id="sheetClose">✕</button>
+    <div class="sheetgrip"></div>
+    <div class="sheetscroll" id="sheetScroll"></div>
+  </div></div>
+
+  <div id="toast"></div>
+</div>
+
+<script src="app-data.js"></script>
+<script>
+"use strict";
+/* ============ ENGINE (fixed constants — do not change) ============ */
+function chance(s,gpa,sat,to){
+  const pg=Math.max(0,Math.min(1.25,(gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  let pos=pg;
+  if(!s.tb&&!to&&s.s25>0&&sat>0){const ps=Math.max(0,Math.min(1.25,(sat-s.s25)/Math.max(1,(s.s75-s.s25))));pos=0.5*pg+0.5*ps;}
+  return Math.max(0.02,Math.min(0.96,s.admit*(0.35+1.3*pos)));
+}
+function band(p){return p>=.75?'Safety':p>=.55?'Likely':p>=.30?'Target':'Reach';}
+const BANDS=['Reach','Target','Likely','Safety'];
+const BANDCOL={Safety:'#00ff88',Likely:'#00d4ff',Target:'#f5a623',Reach:'#a855f7'};
+
+/* Fit: weighted avg of chosen priorities over sub-scores (0-100) */
+function subScores(s){
+  const cost = s.coa!=null ? Math.max(0,Math.min(10, 10 - ((s.coa-(s.merit||0))-15000)/6500 )) : 5;
+  const prestige = (1-s.admit)*10;
+  const west = (s.region==='CA'||s.region==='West')?10:3;
+  return {cost, premed:s.premed??5, research:s.research??5, social:s.social??5, prestige, west};
+}
+function fit(s,prio){
+  const ss=subScores(s);
+  const keys = (prio&&prio.length)?prio:['premed','cost','research','social','prestige'];
+  let sum=0,n=0; keys.forEach(k=>{if(ss[k]!=null){sum+=ss[k];n++;}});
+  return Math.round((n?sum/n:5)*10); // 0-100
+}
+
+/* delta to flip a Reach up one band. Returns text or null */
+function flipDelta(s,gpa,sat,to){
+  const p=chance(s,gpa,sat,to); const b=band(p);
+  if(b==='Safety') return null;
+  const targetP = b==='Reach'?0.30 : b==='Target'?0.55 : 0.75;
+  const nextB = b==='Reach'?'Target' : b==='Target'?'Likely' : 'Safety';
+  // GPA needed (hold sat)
+  let gNeed=null;
+  for(let g=gpa; g<=5.0; g+=0.01){ if(chance(s,g,sat,to)>=targetP){gNeed=g;break;} }
+  // SAT needed (hold gpa), only if test used
+  let sNeed=null;
+  const usesSat = !s.tb && !to && s.s25>0;
+  if(usesSat){ for(let x=sat; x<=1600; x+=10){ if(chance(s,gpa,x,to)>=targetP){sNeed=x;break;} } }
+  const parts=[];
+  if(gNeed!=null){ const d=(gNeed-gpa); if(d>0.005) parts.push('+'+d.toFixed(2)+' GPA'); else parts.push('current GPA'); }
+  if(sNeed!=null){ const d=Math.round((sNeed-sat)/10)*10; if(d>0) parts.push('+'+d+' SAT'); }
+  if(!parts.length){
+    if(gNeed==null && (!usesSat||sNeed==null)) return {b,nextB,txt:'Even a perfect profile stays a '+b+' here — admit rate ('+Math.round(s.admit*100)+'%) is the ceiling.'};
+  }
+  return {b,nextB,txt:parts.join(' or ')+' → '+nextB};
+}
+
+/* ============ STATE ============ */
+const KEY='admitted_app';
+const DEFAULT_ST={gpa:3.8, sat:1300, to:false, grad:'2027', prio:[], saved:[], onboarded:false};
+let ST = Object.assign({}, DEFAULT_ST, load()||{});
+if(!Array.isArray(ST.saved)) ST.saved=[];
+if(!Array.isArray(ST.prio)) ST.prio=[];
+function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+
+const SCHOOLS = (window.SCHOOLS||[]).slice();
+if(!SCHOOLS.length){document.body.innerHTML='<p style="color:#fff;padding:40px">Error: app-data.js failed to load.</p>';}
+
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function money(n){return n==null?'—':'$'+Math.round(n).toLocaleString();}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1600);}
+
+/* ============ ONBOARDING (conversational) ============ */
+const OB_STEPS=[
+  {key:'welcome',bot:["Hey — I'm your admissions co-pilot. 👋","I'll map all 101 schools to YOUR real odds in about 30 seconds. Ready?"],chips:["Let's go →"],free:false,capture:()=>{}},
+  {key:'gpa',bot:["First — what's your GPA? (unweighted, 4.0 scale is fine)"],
+    chips:["3.5","3.7","3.9","4.0"],free:true,placeholder:"e.g. 3.85",
+    parse:v=>{const n=parseFloat(v);return (n>=1&&n<=5)?n:null;},
+    capture:n=>{ST.gpa=Math.max(2,Math.min(4.3,n));},
+    echo:n=>"GPA "+n},
+  {key:'sat',bot:["Got it. What about the SAT? Tap 'Test-optional' if you're skipping it — plenty of these schools are test-blind anyway."],
+    chips:["1200","1300","1400","1500","Test-optional"],free:true,placeholder:"e.g. 1350",
+    parse:v=>{ if(/test|optional|skip|blind|none/i.test(v)) return 'TO'; const n=parseInt(v.replace(/\D/g,''));return (n>=400&&n<=1600)?n:null;},
+    capture:v=>{ if(v==='TO'){ST.to=true;} else {ST.to=false;ST.sat=Math.max(800,Math.min(1600,v));}},
+    echo:v=>v==='TO'?"Test-optional":("SAT "+v)},
+  {key:'grad',bot:["When do you apply / graduate high school?"],
+    chips:["2026","2027","2028"],free:true,placeholder:"grad year",
+    parse:v=>{const n=v.replace(/\D/g,'');return n.length===4?n:null;},
+    capture:v=>{ST.grad=v;}, echo:v=>"Class of "+v},
+  {key:'prio',bot:["Last thing — what matters most? Pick a few. This shapes your Fit score.","(you can pick several)"],
+    multi:true,
+    chips:[["premed","🩺 Premed / health"],["cost","💰 Low cost"],["research","🔬 Research"],["social","🎉 Social life"],["prestige","🏛️ Prestige"],["west","🌴 West coast"]],
+    free:false, done:"Build my map →",
+    capture:arr=>{ST.prio=arr;}, echo:arr=>arr.length+" priorities"},
+];
+let obIdx=0, obMulti=[];
+function startOnboard(){obIdx=0;obMulti=[];$('chatwrap').innerHTML='';renderObStep();}
+function botBubble(text,cb){
+  const w=$('chatwrap');
+  const t=document.createElement('div');t.className='typing';t.innerHTML='<span></span><span></span><span></span>';
+  w.appendChild(t);w.scrollTop=w.scrollHeight;
+  setTimeout(()=>{t.remove();const m=document.createElement('div');m.className='msg bot';m.textContent=text;
+    w.appendChild(m);w.scrollTop=w.scrollHeight;cb&&cb();},650);
+}
+function userBubble(text){const w=$('chatwrap');const m=document.createElement('div');m.className='msg user';m.textContent=text;w.appendChild(m);w.scrollTop=w.scrollHeight;}
+function renderObStep(){
+  const step=OB_STEPS[obIdx];
+  $('obInput').innerHTML='';
+  let i=0;
+  (function next(){
+    if(i<step.bot.length){botBubble(step.bot[i++],next);}
+    else{renderObControls(step);}
+  })();
+}
+function renderObControls(step){
+  const box=$('obInput');box.innerHTML='';obMulti=[];
+  const chips=document.createElement('div');chips.className='chips';
+  (step.chips||[]).forEach(c=>{
+    const val=Array.isArray(c)?c[0]:c, lab=Array.isArray(c)?c[1]:c;
+    const b=document.createElement('button');b.className='chip';b.textContent=lab;
+    b.onclick=()=>{
+      if(step.multi){ b.classList.toggle('sel'); const k=val;
+        if(obMulti.includes(k))obMulti=obMulti.filter(x=>x!==k); else obMulti.push(k); return; }
+      handleOb(step, Array.isArray(c)?c[0]:c, lab);
+    };
+    chips.appendChild(b);
+  });
+  box.appendChild(chips);
+  if(step.multi){
+    const done=document.createElement('button');done.className='sendbtn';done.style.width='100%';done.style.borderRadius='14px';
+    done.textContent=step.done||'Continue →';done.onclick=()=>handleOb(step,obMulti.slice(),step.echo(obMulti));
+    box.appendChild(done);
+  }
+  if(step.free){
+    const row=document.createElement('div');row.className='freerow';
+    const inp=document.createElement('input');inp.type='text';inp.placeholder=step.placeholder||'Type…';inp.inputMode='decimal';
+    const send=document.createElement('button');send.className='sendbtn';send.textContent='→';
+    const go=()=>{const v=inp.value.trim();if(!v)return;const p=step.parse?step.parse(v):v;
+      if(p==null){toast("Hmm, try a number like "+ (step.placeholder||'that'));return;}
+      handleOb(step,p, step.echo?step.echo(p):v);};
+    send.onclick=go; inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+    row.appendChild(inp);row.appendChild(send);box.appendChild(row);
+  }
+}
+function handleOb(step,val,echo){
+  if(echo) userBubble(echo);
+  step.capture&&step.capture(val);
+  $('obInput').innerHTML='';
+  obIdx++;
+  if(obIdx>=OB_STEPS.length){ finishOnboard(); }
+  else { setTimeout(renderObStep,300); }
+}
+function finishOnboard(){
+  ST.onboarded=true; save();
+  botBubble("Done. Building your Living Map…",()=>{
+    setTimeout(()=>{ $('onboard').classList.remove('active'); $('app').classList.add('active'); initApp(); },700);
+  });
+}
+
+/* ============ THE LIVING MAP (physics) ============ */
+const canvas=$('mapCanvas'); const ctx=canvas.getContext('2d');
+let W=0,H=0,DPR=1;
+let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit}
+let raf=null, lastPick=null;
+
+function bandColumnX(b,w){ const i=BANDS.indexOf(b); const col=w/4; return col*i+col/2; }
+
+function buildNodes(){
+  const prio=ST.prio;
+  nodes = SCHOOLS.map(s=>{
+    const f=fit(s,prio);
+    const p=chance(s,ST.gpa,ST.sat,ST.to);
+    return {s, x:Math.random()*W, y:Math.random()*H, vx:0,vy:0,
+      r:6, tr:6, col:BANDCOL[band(p)], p, band:band(p), fit:f};
+  });
+  recomputeTargets();
+  // seed positions near columns
+  nodes.forEach(n=>{ n.x=bandColumnX(n.band,W)+(Math.random()*40-20); n.y=H*(0.2+Math.random()*0.6); });
+}
+function recomputeTargets(){
+  nodes.forEach(n=>{
+    const p=chance(n.s,ST.gpa,ST.sat,ST.to);
+    n.p=p; n.band=band(p); n.col=BANDCOL[n.band];
+    n.tr = 5 + (n.fit/100)*15; // radius 5-20 by fit
+  });
+}
+function resizeCanvas(){
+  const wrap=canvas.parentElement; DPR=Math.min(window.devicePixelRatio||1,2);
+  W=wrap.clientWidth; H=wrap.clientHeight;
+  canvas.width=W*DPR; canvas.height=H*DPR; canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+function step(){
+  const cx=[]; // column centers
+  for(let i=0;i<4;i++) cx[i]=(W/4)*i+(W/8);
+  // forces
+  for(let i=0;i<nodes.length;i++){
+    const n=nodes[i];
+    n.r += (n.tr-n.r)*0.12;
+    const targetX = bandColumnX(n.band,W);
+    // pull toward band column x, and gentle gravity to vertical center-band
+    n.vx += (targetX - n.x)*0.010;
+    n.vy += (H*0.5 - n.y)*0.004;
+  }
+  // collision / repulsion (O(n^2) but n=101, fine)
+  for(let i=0;i<nodes.length;i++){
+    const a=nodes[i];
+    for(let j=i+1;j<nodes.length;j++){
+      const b=nodes[j];
+      let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
+      const min=a.r+b.r+2;
+      if(d<min){ const push=(min-d)/d*0.5; dx*=push;dy*=push;
+        a.vx-=dx;a.vy-=dy;b.vx+=dx;b.vy+=dy; }
+    }
+  }
+  for(const n of nodes){
+    n.vx*=0.82; n.vy*=0.82;
+    n.x+=n.vx; n.y+=n.vy;
+    const m=n.r+2;
+    if(n.x<m){n.x=m;n.vx*=-.4;} if(n.x>W-m){n.x=W-m;n.vx*=-.4;}
+    if(n.y<m+16){n.y=m+16;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
+  }
+  draw();
+  raf=requestAnimationFrame(step);
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // band column tint
+  for(let i=0;i<4;i++){
+    ctx.fillStyle='rgba(255,255,255,'+(i%2?0.012:0.028)+')';
+    ctx.fillRect((W/4)*i,0,W/4,H);
+  }
+  for(const n of nodes){
+    const glow = n===lastPick;
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7);
+    const g=ctx.createRadialGradient(n.x-n.r*.3,n.y-n.r*.3,1,n.x,n.y,n.r);
+    g.addColorStop(0,n.col); g.addColorStop(1,shade(n.col,-.35));
+    ctx.fillStyle=g;
+    if(glow){ctx.shadowColor=n.col;ctx.shadowBlur=22;} else {ctx.shadowColor=n.col;ctx.shadowBlur=6;}
+    ctx.fill(); ctx.shadowBlur=0;
+    if(n.r>13){ // label big bubbles
+      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='700 9px Inter,sans-serif';ctx.textAlign='center';
+      const nm=n.s.n.length>13?n.s.n.slice(0,12)+'…':n.s.n;
+      ctx.fillText(nm,n.x,n.y+3);
+    }
+  }
+}
+function shade(hex,amt){ // amt -1..1
+  const c=hex.replace('#',''); let r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
+  r=Math.max(0,Math.min(255,r+amt*255));g=Math.max(0,Math.min(255,g+amt*255));b=Math.max(0,Math.min(255,b+amt*255));
+  return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
+}
+function pickNode(px,py){
+  let best=null,bd=1e9;
+  for(const n of nodes){const d=Math.hypot(px-n.x,py-n.y); if(d<n.r+6&&d<bd){bd=d;best=n;}}
+  return best;
+}
+canvas.addEventListener('click',e=>{
+  const rect=canvas.getBoundingClientRect();
+  const n=pickNode(e.clientX-rect.left,e.clientY-rect.top);
+  if(n){lastPick=n;openSheet(n.s);}
+});
+canvas.addEventListener('touchend',e=>{
+  if(!e.changedTouches.length)return;
+  const t=e.changedTouches[0];const rect=canvas.getBoundingClientRect();
+  const n=pickNode(t.clientX-rect.left,t.clientY-rect.top);
+  if(n){lastPick=n;openSheet(n.s);}
+},{passive:true});
+
+function startMap(){ if(!nodes.length){resizeCanvas();buildNodes();} if(!raf)step(); }
+function stopMap(){ if(raf){cancelAnimationFrame(raf);raf=null;} }
+
+/* band counts UI */
+function renderBandCounts(){
+  const c={Reach:0,Target:0,Likely:0,Safety:0};
+  SCHOOLS.forEach(s=>c[band(chance(s,ST.gpa,ST.sat,ST.to))]++);
+  const el=$('bandCounts');
+  el.innerHTML=BANDS.map(b=>`<div class="bc"><b style="color:${BANDCOL[b]}">${c[b]}</b><span>${b.toUpperCase()}</span></div>`).join('');
+}
+
+/* dials */
+function syncDials(){
+  $('gpaDial').value=ST.gpa; $('gpaVal').textContent=ST.gpa.toFixed(2);
+  $('satDial').value=ST.sat; $('satVal').textContent=ST.to?'—':ST.sat;
+  $('toChk').checked=ST.to; $('satDial').disabled=ST.to;
+  $('toFlag').textContent=ST.to?'(TO)':'';
+}
+function onDialChange(){
+  ST.gpa=parseFloat($('gpaDial').value);
+  ST.sat=parseInt($('satDial').value);
+  ST.to=$('toChk').checked;
+  $('gpaVal').textContent=ST.gpa.toFixed(2);
+  $('satVal').textContent=ST.to?'—':ST.sat;
+  $('satDial').disabled=ST.to; $('toFlag').textContent=ST.to?'(TO)':'';
+  recomputeTargets(); renderBandCounts();
+  save();
+}
+
+/* ============ DECK ============ */
+let deckOrder=[], deckPos=0;
+function buildDeck(){
+  // order by fit desc, then chance
+  deckOrder = SCHOOLS.map(s=>s).sort((a,b)=> fit(b,ST.prio)-fit(a,ST.prio) || chance(b,ST.gpa,ST.sat,ST.to)-chance(a,ST.gpa,ST.sat,ST.to));
+  deckPos=0; renderDeck();
+}
+function renderDeck(){
+  const stage=$('deckStage'); stage.innerHTML='';
+  const remaining=deckOrder.slice(deckPos, deckPos+3).reverse();
+  if(!remaining.length){
+    stage.innerHTML=`<div class="deckempty"><div class="big">🎉</div><div><b>That's all 101.</b><br>You've been through every school.</div><button class="resetbtn" id="deckReset">Restart deck</button></div>`;
+    $('deckReset').onclick=()=>buildDeck();
+    return;
+  }
+  remaining.forEach((s,idx)=>{
+    const isTop = idx===remaining.length-1;
+    const depth = remaining.length-1-idx;
+    const card=buildCard(s);
+    card.style.transform=`translateY(${depth*10}px) scale(${1-depth*0.04})`;
+    card.style.zIndex=idx+1;
+    card.style.opacity = depth>1?0:1;
+    if(isTop) enableSwipe(card,s);
+    stage.appendChild(card);
+  });
+}
+function buildCard(s){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p); const col=BANDCOL[b];
+  const pos=posPct(s,ST.gpa,ST.sat,ST.to);
+  const saved=ST.saved.includes(s.id);
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`
+    <div class="cbadge" style="background:${col}22;color:${col}">${b.toUpperCase()}</div>
+    <h2>${esc(s.n)}</h2>
+    <div class="loc">${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)} · ${sizeLabel(s.size)}</div>
+    <div class="chancebig" style="color:${col}">${Math.round(p*100)}<small>% chance</small></div>
+    <div class="bandtag" style="background:${col}22;color:${col}">${b}</div>
+    <div class="posbar"><div class="posfill" style="width:${Math.min(100,pos)}%;background:${col}"></div><div class="posmark" style="left:${Math.min(99,pos)}%"></div></div>
+    <div class="poslabels"><span>${s.g25} GPA${s.tb?'':' / '+(s.s25||'—')+' SAT'}</span><span>your position</span><span>${s.g75}${s.tb?'':' / '+(s.s75||'—')}</span></div>
+    <div class="cnote">${esc(s.note)}</div>
+    <div class="cstat"><span>Cost of attendance</span><b>${money(s.coa)}/yr</b></div>
+    <div class="cstat"><span>Est. merit</span><b>${s.merit?money(s.merit)+'/yr':'—'}</b></div>
+    <div class="cstat"><span>4-yr grad rate</span><b>${s.grad4!=null?s.grad4+'%':'—'}</b></div>
+    <div class="cardactions">
+      <button class="btn-skip">✕ Skip</button>
+      <button class="btn-why">? Why</button>
+      <button class="btn-save ${saved?'saved':''}">${saved?'✓ Saved':'★ Save'}</button>
+    </div>`;
+  card.querySelector('.btn-skip').onclick=()=>swipeCard(card,-1);
+  card.querySelector('.btn-save').onclick=()=>{toggleSave(s.id);swipeCard(card,1);};
+  card.querySelector('.btn-why').onclick=()=>openSheet(s,true);
+  return card;
+}
+function sizeLabel(z){return {S:'Small',M:'Medium',L:'Large'}[z]||z||'';}
+function posPct(s,gpa,sat,to){
+  const pg=(gpa-s.g25)/Math.max(0.05,(s.g75-s.g25));
+  if(s.tb||to||!s.s25){return Math.max(0,Math.min(100,pg*100));}
+  const ps=(sat-s.s25)/Math.max(1,(s.s75-s.s25));
+  return Math.max(0,Math.min(100,((pg+ps)/2)*100));
+}
+function enableSwipe(card,s){
+  let sx=0,sy=0,dx=0,dy=0,drag=false;
+  const start=(x,y)=>{drag=true;sx=x;sy=y;card.style.transition='none';};
+  const move=(x,y)=>{ if(!drag)return; dx=x-sx;dy=y-sy;
+    card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*0.06}deg)`;
+    card.style.borderColor = dx>60?'var(--safety)':dx<-60?'var(--reach)':'var(--line)';
+  };
+  const end=()=>{ if(!drag)return; drag=false;
+    card.style.transition='transform .3s, opacity .3s, border-color .2s';
+    if(dx>90){ if(!ST.saved.includes(s.id))toggleSave(s.id); swipeCard(card,1); }
+    else if(dx<-90){ swipeCard(card,-1); }
+    else { card.style.transform=''; card.style.borderColor='var(--line)'; }
+    dx=dy=0;
+  };
+  card.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);
+    const mm=e=>move(e.clientX,e.clientY),mu=()=>{end();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+    document.addEventListener('mousemove',mm);document.addEventListener('mouseup',mu);});
+  card.addEventListener('touchstart',e=>start(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
+  card.addEventListener('touchmove',e=>{move(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+  card.addEventListener('touchend',end);
+}
+function swipeCard(card,dir){
+  card.style.transition='transform .35s ease, opacity .35s';
+  card.style.transform=`translate(${dir*500}px,${-40}px) rotate(${dir*25}deg)`;
+  card.style.opacity=0;
+  setTimeout(()=>{ deckPos++; renderDeck(); },260);
+}
+
+/* ============ SHORTLIST / SAVE ============ */
+function toggleSave(id){
+  if(ST.saved.includes(id)){ST.saved=ST.saved.filter(x=>x!==id);toast('Removed from shortlist');}
+  else {ST.saved.push(id);toast('★ Added to shortlist');}
+  save(); if(currentTab==='short')renderShort(); if(currentTab==='list')renderList();
+}
+let showCost=true;
+function renderShort(){
+  const box=$('shortScroll');
+  const list=ST.saved.map(id=>SCHOOLS.find(s=>s.id===id)).filter(Boolean);
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">★</div>No schools saved yet.<br>Swipe right in the Deck or tap ★ on any school to build your shortlist.</div>`;return;}
+  let total4=0; list.forEach(s=>{if(s.coa!=null)total4+=(s.coa-(s.merit||0))*4;});
+  let html='';
+  if(showCost){ html+=`<div class="lrow" style="background:var(--bg0);border-color:var(--target)"><div class="linfo"><h3>Est. 4-yr net cost (all saved)</h3><p style="color:var(--est)">flat estimate · COA − merit × 4 · verify each</p></div><div class="lchance"><b style="color:var(--target)">${money(total4)}</b></div></div>`; }
+  list.forEach(s=>{ html+=rowHTML(s, showCost?`4yr ${money((s.coa!=null)?(s.coa-(s.merit||0))*4:null)}`:null); });
+  box.innerHTML=html;
+  bindRows(box);
+}
+function rowHTML(s, extra){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p); const col=BANDCOL[b];
+  return `<div class="lrow" data-id="${s.id}">
+    <div class="ldot" style="background:${col}"></div>
+    <div class="linfo"><h3>${esc(s.n)}</h3><p>${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)}${extra?' · '+esc(extra):''}</p>
+      <span class="vbadge ${s.verified?'vok':'vest'}">${s.verified?'✓ VERIFIED':'~ EST'}</span></div>
+    <div class="lchance"><b style="color:${col}">${Math.round(p*100)}%</b><span style="color:${col}">${b.toUpperCase()}</span></div>
+  </div>`;
+}
+function bindRows(box){box.querySelectorAll('.lrow[data-id]').forEach(r=>{r.onclick=()=>{const s=SCHOOLS.find(x=>x.id===r.dataset.id);if(s)openSheet(s);};});}
+
+/* ============ LIST ============ */
+let listFilter='all';
+const FILTERS=[['all','All'],['Reach','Reach'],['Target','Target'],['Likely','Likely'],['Safety','Safety'],['saved','★ Saved'],['UC','UC'],['CSU','CSU'],['Private','Private'],['Public','Public']];
+function renderFilterBar(){
+  $('filterBar').innerHTML=FILTERS.map(f=>`<button class="fchip ${listFilter===f[0]?'on':''}" data-f="${f[0]}">${f[1]}</button>`).join('');
+  $('filterBar').querySelectorAll('.fchip').forEach(b=>b.onclick=()=>{listFilter=b.dataset.f;renderFilterBar();renderList();});
+}
+function renderList(){
+  const box=$('listScroll');
+  let list=SCHOOLS.slice();
+  if(['Reach','Target','Likely','Safety'].includes(listFilter)) list=list.filter(s=>band(chance(s,ST.gpa,ST.sat,ST.to))===listFilter);
+  else if(listFilter==='saved') list=list.filter(s=>ST.saved.includes(s.id));
+  else if(['UC','CSU','Private','Public'].includes(listFilter)) list=list.filter(s=>s.type===listFilter);
+  list.sort((a,b)=>chance(b,ST.gpa,ST.sat,ST.to)-chance(a,ST.gpa,ST.sat,ST.to));
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">🔍</div>No schools match this filter${listFilter==='saved'?' — save some first!':''}.</div>`;return;}
+  box.innerHTML=list.map(s=>rowHTML(s)).join('');
+  bindRows(box);
+}
+
+/* ============ DETAIL SHEET + AI EXPLAINER ============ */
+function explainText(s){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p);
+  const pg=(ST.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25));
+  const gposTxt = pg>=1?'above their 75th-percentile GPA': pg>=0.5?'in the upper half of their admitted GPA range': pg>=0?'in the lower half of their admitted GPA range':'below their typical admitted GPA range';
+  const usesSat=!s.tb&&!ST.to&&s.s25>0;
+  let satTxt='';
+  if(s.tb) satTxt=' They\'re test-blind, so your SAT isn\'t counted.';
+  else if(ST.to) satTxt=' You\'re applying test-optional, so only GPA is weighed.';
+  else if(usesSat){ const ps=(ST.sat-s.s25)/Math.max(1,(s.s75-s.s25));
+    satTxt=' Your '+ST.sat+' SAT sits '+(ps>=1?'above':ps>=0.5?'in the upper half of':ps>=0?'in the lower half of':'below')+' their '+s.s25+'–'+s.s75+' range.'; }
+  const rate=Math.round(s.admit*100);
+  let msg=`For you this is a ${b}. Their overall admit rate is ${rate}%. Your ${ST.gpa.toFixed(2)} GPA lands ${gposTxt} (${s.g25}–${s.g75}).${satTxt} Combined, the model puts your personal odds at ${Math.round(p*100)}%.`;
+  return {msg, flip: flipDelta(s,ST.gpa,ST.sat,ST.to), band:b, col:BANDCOL[b], p};
+}
+function openSheet(s,jumpExplain){
+  const {msg,flip,band:b,col,p}=explainText(s);
+  const pos=posPct(s,ST.gpa,ST.sat,ST.to);
+  const net=s.coa!=null?s.coa-(s.merit||0):null;
+  const saved=ST.saved.includes(s.id);
+  let flipHTML='';
+  if(flip){ flipHTML=`<div class="flip">📈 ${esc(flip.txt)}</div>`; }
+  const linksHTML=(s.links||[]).map(l=>`<a class="slink" href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join('')||'<div style="color:var(--tx3);font-size:13px">No source links provided.</div>';
+  $('sheetScroll').innerHTML=`
+    <span class="vbadge ${s.verified?'vok':'vest'}" style="margin-bottom:6px">${s.verified?'✓ VERIFIED DATA':'~ ESTIMATED — verify'}</span>
+    <h2>${esc(s.n)}</h2>
+    <div class="sh-loc">${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)} · ${sizeLabel(s.size)}${s.program?' · '+esc(s.program.name):''}</div>
+    <div class="sh-chance"><div class="big" style="color:${col}">${Math.round(p*100)}%</div><div class="bandtag" style="background:${col}22;color:${col};margin:0">${b}</div></div>
+    <div class="posbar lg"><div class="posfill" style="width:${Math.min(100,pos)}%;background:${col}"></div><div class="posmark" style="left:${Math.min(99,pos)}%"></div></div>
+    <div class="poslabels"><span>25th: ${s.g25} GPA${s.tb?'':' / '+(s.s25||'—')}</span><span>you</span><span>75th: ${s.g75}${s.tb?'':' / '+(s.s75||'—')}</span></div>
+
+    <div class="explainbox" id="explainBox">
+      <div class="eh">✦ WHY IS THIS A ${b.toUpperCase()} FOR ME?</div>
+      <p>${esc(msg)}</p>
+      ${flipHTML}
+    </div>
+
+    <div class="sh-grid">
+      <div class="sh-cell"><div class="k">Admit rate</div><div class="v">${Math.round(s.admit*100)}%</div></div>
+      <div class="sh-cell"><div class="k">4-yr grad</div><div class="v">${s.grad4!=null?s.grad4+'%':'—'}</div></div>
+      <div class="sh-cell"><div class="k">Premed / health</div><div class="v">${s.premed??'—'}<small>/10</small></div></div>
+      <div class="sh-cell"><div class="k">Research</div><div class="v">${s.research??'—'}<small>/10</small></div></div>
+    </div>
+
+    <div class="sectitle">Cost breakdown (per year)</div>
+    <div class="costbreak">
+      <div class="cr"><span>Cost of attendance</span><b>${money(s.coa)}</b></div>
+      <div class="cr"><span>Est. merit${s.meritName?' · '+esc(s.meritName):''}</span><b class="neg">${s.merit?'−'+money(s.merit):'—'}</b></div>
+      <div class="cr net"><span>Est. net / year</span><b>${money(net)}</b></div>
+      <div class="cr net"><span>Est. 4-year total</span><b>${net!=null?money(net*4):'—'}</b></div>
+    </div>
+    <div class="costflag">⚠ Flat estimate — assumes constant cost & merit for 4 years, no need-based aid modeled. Always confirm with the school's official net-price calculator.</div>
+
+    <div class="sectitle">Deadline</div>
+    <div class="sh-cell" style="border-radius:13px">${esc(s.dl||'—')}</div>
+
+    <div class="sectitle">Sources</div>
+    <div class="sourcelinks">${linksHTML}</div>
+
+    <div class="sh-actions">
+      <button class="btn-skip" id="shClose2">Close</button>
+      <button class="btn-save ${saved?'saved':''}" id="shSave">${saved?'✓ On shortlist':'★ Add to shortlist'}</button>
+    </div>`;
+  $('shClose2').onclick=closeSheet;
+  $('shSave').onclick=()=>{toggleSave(s.id); const btn=$('shSave'); const now=ST.saved.includes(s.id);
+    btn.className='btn-save '+(now?'saved':''); btn.textContent=now?'✓ On shortlist':'★ Add to shortlist';};
+  $('sheet').classList.add('open');
+  if(jumpExplain){ setTimeout(()=>{const eb=$('explainBox');eb&&eb.scrollIntoView({behavior:'smooth',block:'center'});},350); }
+}
+function closeSheet(){$('sheet').classList.remove('open');}
+$('sheetClose').onclick=closeSheet;
+$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet();});
+
+/* ============ TABS ============ */
+let currentTab='map';
+const VIEWS={map:'mapView',deck:'deckView',list:'listView',short:'shortView'};
+const TITLES={map:['The Living Map','TAP A BUBBLE · DRAG A DIAL'],deck:['Swipe Deck','← SKIP · SAVE →'],list:['All 101 Schools','SORTED BY YOUR ODDS'],short:['Your Shortlist','SAVED SCHOOLS']};
+function switchTab(t){
+  currentTab=t;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  Object.entries(VIEWS).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==t));
+  $('appTitle').textContent=TITLES[t][0]; $('appSub').textContent=TITLES[t][1];
+  if(t==='map'){startMap();} else {stopMap();}
+  if(t==='deck')buildDeck();
+  if(t==='list'){renderFilterBar();renderList();}
+  if(t==='short')renderShort();
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+
+/* ============ INIT ============ */
+function initApp(){
+  syncDials();
+  ['gpaDial','satDial'].forEach(id=>{$(id).addEventListener('input',()=>{onDialChange();});});
+  $('toChk').addEventListener('change',()=>{onDialChange();});
+  $('btnEdit').onclick=()=>{ ST.onboarded=false; save(); stopMap();
+    $('app').classList.remove('active'); $('onboard').classList.add('active'); startOnboard(); };
+  $('costToggle').onclick=()=>{showCost=!showCost; $('costToggle').classList.toggle('on',showCost);
+    $('costToggle').textContent=showCost?'💰 Show 4-yr est. cost':'💰 4-yr cost hidden'; renderShort();};
+  renderBandCounts();
+  switchTab('map');
+  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas();} });
+}
+
+/* boot */
+if(ST.onboarded){ $('onboard').classList.remove('active'); $('app').classList.add('active'); initApp(); }
+else { startOnboard(); }
+</script>
+</body>
+</html>
