@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>admitted</title>
+<style>
+:root{
+  --bg0:#0a0e1a; --bg1:#0f1424; --bg2:#141b2e; --line:#1e2740;
+  --tx:#e8f0ff; --tx2:#a9b6d4; --tx3:#6b7699;
+  --green:#00ff88; --cyan:#00d4ff; --amber:#f5a623; --purple:#a855f7; --red:#ff4d6d;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{background:#05070e;color:var(--tx);font:15px/1.45 'Inter',-apple-system,'Segoe UI',system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+#phone{position:relative;width:100%;max-width:430px;height:100dvh;max-height:920px;background:var(--bg0);
+  overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+@media(min-width:480px){#phone{border-radius:38px;border:1px solid #222c44;height:min(920px,96vh)}}
+.hidden{display:none!important}
+
+/* top strip */
+#top{padding:14px 18px 10px;background:linear-gradient(180deg,var(--bg1),var(--bg0));border-bottom:1px solid var(--line);flex:0 0 auto}
+#top .brand{font-weight:800;letter-spacing:-.5px;font-size:19px}
+#top .brand span{color:var(--green)}
+#strip{display:flex;gap:14px;margin-top:8px;font-size:12px;color:var(--tx2);align-items:center;cursor:pointer}
+#strip b{color:var(--tx);font-weight:700}
+#strip .chips{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
+#strip .chips span{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:2px 9px;font-size:10.5px;color:var(--tx2)}
+
+/* screen area */
+#screen{flex:1 1 auto;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;overflow-y:auto;padding:16px 16px 90px;-webkit-overflow-scrolling:touch}
+
+/* bottom nav */
+#nav{flex:0 0 auto;display:flex;background:var(--bg1);border-top:1px solid var(--line)}
+#nav button{flex:1;background:none;border:0;color:var(--tx3);font:600 11px 'Inter',sans-serif;padding:10px 0 12px;cursor:pointer;letter-spacing:.3px}
+#nav button .ic{display:block;font-size:19px;margin-bottom:2px;line-height:1}
+#nav button.on{color:var(--green)}
+
+/* band pill */
+.band{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:12px;letter-spacing:.4px;padding:4px 11px;border-radius:20px}
+.b-Safety{color:var(--green);background:rgba(0,255,136,.12)}
+.b-Likely{color:var(--cyan);background:rgba(0,212,255,.12)}
+.b-Target{color:var(--amber);background:rgba(245,166,35,.12)}
+.b-Reach{color:var(--purple);background:rgba(168,85,247,.12)}
+.badge{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:.5px}
+.v-yes{color:var(--green);background:rgba(0,255,136,.1)}
+.v-no{color:var(--amber);background:rgba(245,166,35,.1)}
+
+/* deck */
+#deck{position:relative;height:100%;padding:10px 16px 0}
+#stack{position:relative;height:calc(100% - 96px);max-height:560px}
+.card{position:absolute;inset:0;background:linear-gradient(165deg,var(--bg2),var(--bg1));border:1px solid var(--line);
+  border-radius:24px;padding:22px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.4);will-change:transform}
+.card .rank{font-size:11px;color:var(--tx3);letter-spacing:1px;font-weight:700;text-transform:uppercase}
+.card h2{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:6px 0 2px;line-height:1.1}
+.card .loc{color:var(--tx2);font-size:13px;margin-bottom:16px}
+.card .big{display:flex;align-items:baseline;gap:8px;margin:6px 0}
+.card .pct{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1}
+.card .barwrap{margin:14px 0}
+.card .hook{color:var(--tx2);font-size:13.5px;line-height:1.5;margin-top:14px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
+.card .foot{margin-top:auto;display:flex;gap:16px;align-items:center;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--tx2)}
+.card .foot b{color:var(--tx);font-size:15px;display:block}
+.stamp{position:absolute;top:26px;font-size:26px;font-weight:900;letter-spacing:1px;padding:6px 14px;border:3px solid;border-radius:12px;opacity:0;transform:rotate(-14deg)}
+.stamp.like{right:22px;color:var(--green);border-color:var(--green)}
+.stamp.nope{left:22px;color:var(--red);border-color:var(--red)}
+#deckbtns{display:flex;justify-content:center;gap:26px;margin-top:16px}
+#deckbtns button{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);font-size:24px;cursor:pointer;color:var(--tx);display:flex;align-items:center;justify-content:center;transition:transform .1s}
+#deckbtns button:active{transform:scale(.9)}
+#deckbtns .pass{color:var(--red)}#deckbtns .star{color:var(--green)}
+.progress{text-align:center;color:var(--tx3);font-size:11px;margin-top:10px;letter-spacing:.5px}
+
+/* bar component */
+.pbar{height:8px;border-radius:6px;background:var(--bg0);position:relative;overflow:hidden}
+.pbar > i{position:absolute;top:0;bottom:0;left:0;border-radius:6px}
+.mark{position:absolute;top:-3px;width:3px;height:14px;background:var(--tx);border-radius:2px}
+
+/* lists */
+.sec-title{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--tx3);font-weight:700;margin:6px 2px 10px}
+.row{display:flex;align-items:center;gap:12px;background:var(--bg1);border:1px solid var(--line);border-radius:16px;padding:13px 15px;margin-bottom:10px;cursor:pointer}
+.row h3{font-size:15px;font-weight:700}
+.row .sub{font-size:12px;color:var(--tx2)}
+.row .r-pct{margin-left:auto;text-align:right}
+.row .r-pct b{font-size:19px;font-weight:800}
+.buckets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.bucket{background:var(--bg1);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
+.bucket .n{font-size:30px;font-weight:800;letter-spacing:-1px}
+.bucket .l{font-size:12px;font-weight:700;letter-spacing:.5px}
+.seg{display:flex;gap:6px;margin-bottom:14px}
+.seg button{flex:1;background:var(--bg1);border:1px solid var(--line);color:var(--tx2);border-radius:10px;padding:8px;font:600 12px 'Inter';cursor:pointer}
+.seg button.on{color:var(--green);border-color:var(--green);background:rgba(0,255,136,.08)}
+
+/* detail modal */
+#detail{position:absolute;inset:0;background:var(--bg0);z-index:40;transform:translateY(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:16px 18px 40px}
+#detail.open{transform:none}
+#detail .close{position:sticky;top:0;float:right;font-size:22px;background:var(--bg2);border:1px solid var(--line);color:var(--tx);width:38px;height:38px;border-radius:50%;cursor:pointer;z-index:2}
+#detail h2{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
+.drow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.drow .k{color:var(--tx2)}.drow .val{font-weight:700;text-align:right}
+.mini{margin:10px 0}.mini .lab{display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:4px}
+.why{background:var(--bg1);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--tx2);line-height:1.5;margin:14px 0}
+.lnk{display:inline-block;color:var(--cyan);font-size:13px;text-decoration:none;margin:4px 12px 4px 0;border-bottom:1px solid rgba(0,212,255,.3)}
+.dbtn{width:100%;padding:15px;border-radius:14px;border:0;font:800 15px 'Inter';cursor:pointer;margin-top:18px}
+
+/* onboarding */
+#onb{position:absolute;inset:0;background:var(--bg0);z-index:60;display:flex;flex-direction:column;padding:30px 24px 24px;overflow-y:auto}
+#onb h1{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+#onb .lead{color:var(--tx2);margin:10px 0 26px;font-size:15px;line-height:1.5}
+#onb label{font-size:13px;font-weight:700;color:var(--tx2);display:block;margin:20px 0 8px}
+#onb input[type=number]{width:100%;background:var(--bg1);border:1px solid var(--line);border-radius:12px;color:var(--tx);
+  font:800 24px 'Inter';padding:14px 16px;letter-spacing:-.5px}
+#onb input[type=range]{width:100%;accent-color:var(--green)}
+.rangeval{font-size:24px;font-weight:800;color:var(--green)}
+.toggle{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:var(--tx2)}
+.toggle input{width:20px;height:20px;accent-color:var(--green)}
+.prio{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.prio button{background:var(--bg1);border:1px solid var(--line);color:var(--tx2);border-radius:22px;padding:9px 15px;font:600 13px 'Inter';cursor:pointer}
+.prio button.on{color:#05070e;background:var(--green);border-color:var(--green);font-weight:800}
+.cta{margin-top:auto;padding-top:22px}
+.cta button{width:100%;padding:16px;border-radius:14px;border:0;background:var(--green);color:#05070e;font:800 16px 'Inter';cursor:pointer}
+.cta .skip{background:none;color:var(--tx3);font-weight:600;margin-top:6px}
+.empty{text-align:center;color:var(--tx3);padding:60px 30px;font-size:14px;line-height:1.6}
+.empty .big{font-size:40px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div id="top">
+    <div class="brand">admitted<span>.</span></div>
+    <div id="strip"></div>
+  </div>
+  <div id="screen">
+    <div id="v-deck" class="view hidden"><div id="deck">
+      <div id="stack"></div>
+      <div id="deckbtns">
+        <button class="pass" title="Pass" onclick="swipeTop(-1)">✕</button>
+        <button class="star" title="Shortlist" onclick="swipeTop(1)">★</button>
+      </div>
+      <div class="progress" id="deckprog"></div>
+    </div></div>
+    <div id="v-home" class="view hidden"></div>
+    <div id="v-short" class="view hidden"></div>
+    <div id="v-cost" class="view hidden"></div>
+    <div id="v-profile" class="view hidden"></div>
+    <div id="detail"></div>
+  </div>
+  <div id="nav">
+    <button data-t="deck" class="on" onclick="tab('deck')"><span class="ic">◆</span>Deck</button>
+    <button data-t="home" onclick="tab('home')"><span class="ic">▦</span>Bands</button>
+    <button data-t="short" onclick="tab('short')"><span class="ic">★</span>Shortlist</button>
+    <button data-t="cost" onclick="tab('cost')"><span class="ic">$</span>Cost</button>
+    <button data-t="profile" onclick="tab('profile')"><span class="ic">☰</span>Profile</button>
+  </div>
+  <div id="onb"></div>
+</div>
+
+<script src="app-data.js"></script>
+<script>
+const S = window.SCHOOLS || [];
+const PRIOS = [['cost','Low cost'],['premed','Premed strength'],['research','Research'],['social','Social life'],['prestige','Prestige'],['west','Stay West']];
+const BANDS = ['Safety','Likely','Target','Reach'];
+const BCOL = {Safety:'var(--green)',Likely:'var(--cyan)',Target:'var(--amber)',Reach:'var(--purple)'};
+const money = n => n==null?'—':'$'+Math.round(n).toLocaleString();
+
+let st = load();
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem('admitted_app')); if(s&&s.gpa) return s; }catch(e){}
+  return null;
+}
+function save(){ localStorage.setItem('admitted_app', JSON.stringify(st)); }
+
+/* ---------- engine (matches the live web app; constants not invented here) ---------- */
+function chance(s){
+  const gpa=st.gpa, sat=st.sat, to=st.testOptional;
+  const pg = Math.max(0, Math.min(1.25,(gpa - s.g25)/Math.max(0.05,(s.g75 - s.g25))));
+  let pos = pg;
+  if(!s.tb && !to && s.s25>0 && sat>0){
+    const ps = Math.max(0, Math.min(1.25,(sat - s.s25)/Math.max(1,(s.s75 - s.s25))));
+    pos = 0.5*pg + 0.5*ps;
+  }
+  let p = s.admit * (0.35 + 1.3*pos);
+  return Math.max(0.02, Math.min(0.96, p));
+}
+function band(p){ return p>=.75?'Safety':p>=.55?'Likely':p>=.30?'Target':'Reach'; }
+function net(s){ return Math.max(0,(s.coa||0)-(s.merit||0)); }
+function cost4(s){ return net(s)*4; }
+function sub(s,k){
+  if(k==='cost'){ const n=net(s); return Math.max(0,Math.min(10, 10-(n-25000)/8000)); }
+  if(k==='prestige') return Math.max(0,Math.min(10,(1-(s.admit||1))*10));
+  if(k==='west') return ['West','CA','Southwest'].includes(s.region)||['CA','WA','OR','AZ','NV','UT'].includes(s.st)?9:3;
+  const v=s[k]; return v==null?5:v;
+}
+function fit(s){
+  const P = st.prios&&st.prios.length?st.prios:['premed','cost'];
+  let sum=0; P.forEach(k=>sum+=sub(s,k));
+  return Math.round((sum/P.length)*10);
+}
+function ranked(){ return S.slice().sort((a,b)=>fit(b)-fit(a)); }
+
+/* ---------- rendering ---------- */
+function strip(){
+  const el=document.getElementById('strip');
+  const chips=(st.prios||[]).map(k=>`<span>${(PRIOS.find(p=>p[0]===k)||[])[1]||k}</span>`).join('');
+  el.innerHTML=`<div>GPA <b>${st.gpa.toFixed(2)}</b></div><div>SAT <b>${st.testOptional?'—':st.sat}</b></div><div class="chips">${chips}</div>`;
+  el.onclick=()=>tab('profile');
+}
+
+let deck=[], di=0;
+function initDeck(){ deck=ranked(); di=0; renderDeck(); }
+function renderDeck(){
+  const stack=document.getElementById('stack');
+  stack.innerHTML='';
+  const remaining=deck.slice(di, di+3).reverse();
+  if(remaining.length===0){
+    stack.innerHTML=`<div class="empty"><div class="big">✓</div>That's all ${deck.length} schools.<br>Check your Shortlist, or tap a band to revisit.</div>`;
+    document.getElementById('deckprog').textContent='';
+    return;
+  }
+  remaining.forEach((s,idx)=>{
+    const isTop = idx===remaining.length-1;
+    const p=chance(s), b=band(p);
+    const depth=remaining.length-1-idx;
+    const c=document.createElement('div');
+    c.className='card';
+    c.style.transform=`scale(${1-depth*0.04}) translateY(${depth*-10}px)`;
+    c.style.zIndex=idx;
+    c.innerHTML=`
+      <div class="stamp like">LIKE</div><div class="stamp nope">PASS</div>
+      <div class="rank">Fit ${fit(s)} · ${s.type||''} ${s.program?'· BS/MD':''}</div>
+      <h2>${s.n}</h2><div class="loc">${s.city||''}${s.st?', '+s.st:''}</div>
+      <div class="big"><div class="pct" style="color:${BCOL[b]}">${Math.round(p*100)}%</div>
+        <span class="band b-${b}">${b}</span></div>
+      <div class="barwrap">${chanceBar(s,p)}</div>
+      <div class="hook">${s.note?s.note.replace(/</g,'&lt;'):'A solid option on your list.'}</div>
+      <div class="foot">
+        <div>True cost<b>${money(cost4(s))}</b><span style="color:var(--tx3);font-size:10px">est · 4yr</span></div>
+        <div>Grad 4yr<b>${s.grad4!=null?s.grad4+'%':'—'}</b></div>
+        <div style="margin-left:auto"><span class="badge ${s.verified?'v-yes':'v-no'}">${s.verified?'✓ VERIFIED':'EST'}</span></div>
+      </div>`;
+    c.onclick=(e)=>{ if(!c.dataset.dragged) openDetail(s); };
+    if(isTop) makeDraggable(c);
+    stack.appendChild(c);
+  });
+  document.getElementById('deckprog').textContent=`${di+1} of ${deck.length}`;
+}
+function chanceBar(s,p){
+  // show user's blended position 0..1 on a track
+  const pg=Math.max(0,Math.min(1,(st.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  let pos=pg;
+  if(!s.tb&&!st.testOptional&&s.s25>0){ const ps=Math.max(0,Math.min(1,(st.sat-s.s25)/Math.max(1,(s.s75-s.s25)))); pos=(pg+ps)/2; }
+  const b=band(p);
+  return `<div class="pbar"><i style="width:${Math.round(pos*100)}%;background:${BCOL[b]}"></i><span class="mark" style="left:calc(${Math.round(pos*100)}% - 1px)"></span></div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--tx3);margin-top:4px"><span>you vs their mid-50%</span><span>${s.tb?'test-blind':(st.testOptional?'GPA only':'GPA+SAT')}</span></div>`;
+}
+
+/* drag / swipe: pointer events (touch + mouse) */
+function makeDraggable(c){
+  let sx=0,sy=0,dx=0,dy=0,drag=false;
+  c.addEventListener('pointerdown',e=>{drag=true;sx=e.clientX;sy=e.clientY;c.setPointerCapture(e.pointerId);c.style.transition='none';});
+  c.addEventListener('pointermove',e=>{
+    if(!drag)return; dx=e.clientX-sx; dy=e.clientY-sy;
+    if(Math.abs(dx)>6)c.dataset.dragged='1';
+    c.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*0.06}deg)`;
+    c.querySelector('.like').style.opacity=Math.max(0,Math.min(1,dx/90));
+    c.querySelector('.nope').style.opacity=Math.max(0,Math.min(1,-dx/90));
+  });
+  const end=()=>{
+    if(!drag)return; drag=false; c.style.transition='transform .3s ease';
+    if(dx>95){ fly(c,1); } else if(dx<-95){ fly(c,-1); }
+    else { c.style.transform=''; c.querySelector('.like').style.opacity=0;c.querySelector('.nope').style.opacity=0; setTimeout(()=>c.removeAttribute('data-dragged'),50); }
+    dx=dy=0;
+  };
+  c.addEventListener('pointerup',end); c.addEventListener('pointercancel',end);
+}
+function fly(c,dir){
+  c.style.transform=`translate(${dir*600}px,${-40}px) rotate(${dir*30}deg)`;
+  c.style.opacity='0';
+  setTimeout(()=>commitSwipe(dir),200);
+}
+function swipeTop(dir){
+  const c=document.querySelector('#stack .card:last-child'); if(!c)return;
+  c.style.transition='transform .3s ease'; fly(c,dir);
+}
+function commitSwipe(dir){
+  const s=deck[di];
+  if(dir>0 && s && !st.shortlist.includes(s.id)){ st.shortlist.push(s.id); save(); }
+  di++; renderDeck();
+}
+
+function renderHome(){
+  const counts={Safety:0,Likely:0,Target:0,Reach:0};
+  S.forEach(s=>counts[band(chance(s))]++);
+  const el=document.getElementById('v-home');
+  el.innerHTML=`<div class="sec-title">Your ${S.length} schools by chance</div>
+    <div class="buckets">${BANDS.map(b=>`<div class="bucket" onclick="deckFilter('${b}')">
+      <div class="n" style="color:${BCOL[b]}">${counts[b]}</div><div class="l" style="color:${BCOL[b]}">${b}</div></div>`).join('')}</div>
+    <div class="sec-title">Best fit for your priorities</div>
+    ${ranked().slice(0,6).map(s=>rowHTML(s)).join('')}`;
+}
+function deckFilter(b){ deck=ranked().filter(s=>band(chance(s))===b); di=0; tab('deck'); renderDeck(); }
+
+function rowHTML(s){
+  const p=chance(s),b=band(p);
+  return `<div class="row" onclick="openDetail(SBYID['${s.id}'])">
+    <div><h3>${s.n}</h3><div class="sub">${s.city||''}${s.st?', '+s.st:''} · ${money(cost4(s))} est</div></div>
+    <div class="r-pct"><b style="color:${BCOL[b]}">${Math.round(p*100)}%</b><div class="band b-${b}" style="margin-top:2px">${b}</div></div>
+  </div>`;
+}
+const SBYID={}; S.forEach(s=>SBYID[s.id]=s);
+
+let shortSort='chance';
+function renderShort(){
+  const el=document.getElementById('v-short');
+  const list=st.shortlist.map(id=>SBYID[id]).filter(Boolean);
+  if(!list.length){ el.innerHTML=`<div class="empty"><div class="big">★</div>No schools yet.<br>Swipe right on the Deck to shortlist the ones you like.</div>`; return; }
+  list.sort((a,b)=> shortSort==='chance'?chance(b)-chance(a): shortSort==='cost'?cost4(a)-cost4(b): fit(b)-fit(a));
+  el.innerHTML=`<div class="sec-title">${list.length} shortlisted</div>
+    <div class="seg">${['chance','cost','fit'].map(k=>`<button class="${shortSort===k?'on':''}" onclick="shortSort='${k}';renderShort()">by ${k}</button>`).join('')}</div>
+    ${list.map(s=>rowHTML(s)).join('')}`;
+}
+
+function renderCost(){
+  const el=document.getElementById('v-cost');
+  const list=st.shortlist.map(id=>SBYID[id]).filter(Boolean);
+  if(!list.length){ el.innerHTML=`<div class="empty"><div class="big">$</div>Shortlist some schools to see total cost.</div>`; return; }
+  const total=list.reduce((a,s)=>a+cost4(s),0);
+  el.innerHTML=`<div class="sec-title">Estimated 4-year cost · shortlist</div>
+    <div style="background:var(--bg1);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:8px">
+      <div style="font-size:12px;color:var(--tx2)">Total across ${list.length} schools (est)</div>
+      <div style="font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--green)">${money(total)}</div>
+      <div style="font-size:11px;color:var(--tx3);margin-top:4px">flat (COA − merit) × 4 · not need-based · verify each on its card</div></div>
+    ${list.sort((a,b)=>cost4(a)-cost4(b)).map(s=>`<div class="row" onclick="openDetail(SBYID['${s.id}'])">
+      <div><h3>${s.n}</h3><div class="sub">${money(net(s))}/yr net${s.merit?' · '+money(s.merit)+' merit':''}</div></div>
+      <div class="r-pct"><b>${money(cost4(s))}</b></div></div>`).join('')}`;
+}
+
+function renderProfile(){
+  const el=document.getElementById('v-profile');
+  el.innerHTML=`<div class="sec-title">Your profile</div>
+    <label>Unweighted GPA</label>
+    <input type="range" min="2.5" max="4.0" step="0.01" value="${st.gpa}" oninput="st.gpa=+this.value;document.getElementById('gpav').textContent=(+this.value).toFixed(2);save();strip()">
+    <div class="rangeval" id="gpav">${st.gpa.toFixed(2)}</div>
+    <label>SAT (0 if test-optional)</label>
+    <input type="number" value="${st.sat}" min="0" max="1600" oninput="st.sat=+this.value||0;save();strip()">
+    <div class="toggle"><input type="checkbox" id="topt" ${st.testOptional?'checked':''} onchange="st.testOptional=this.checked;save();strip()"><label style="margin:0">Applying test-optional (ignore SAT)</label></div>
+    <label>Priorities</label>
+    <div class="prio">${PRIOS.map(p=>`<button class="${(st.prios||[]).includes(p[0])?'on':''}" onclick="togglePrio('${p[0]}')">${p[1]}</button>`).join('')}</div>
+    <div class="why" style="margin-top:22px">Everything — chances, bands, fit, cost — recomputes from these values against each school's real, sourced numbers. Nothing is pre-baked.</div>
+    <button class="dbtn" style="background:var(--bg2);color:var(--tx)" onclick="if(confirm('Reset everything?')){localStorage.removeItem('admitted_app');location.reload()}">Reset</button>`;
+}
+function togglePrio(k){ st.prios=st.prios||[]; const i=st.prios.indexOf(k); if(i<0)st.prios.push(k); else st.prios.splice(i,1); save(); renderProfile(); strip(); }
+
+function openDetail(s){
+  if(!s)return; const p=chance(s),b=band(p);
+  const d=document.getElementById('detail');
+  const links=(s.links||[]).map(l=>`<a class="lnk" href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join('');
+  const why = b==='Safety'?`Your GPA/SAT sit at or above ${s.n}'s admitted middle-50%, and its ${Math.round((s.admit||0)*100)}% overall admit rate is forgiving — a strong bet.`
+    : b==='Reach'?`${s.n} admits about ${Math.round((s.admit||0)*100)}% and your stats land in the lower part of its range, so treat it as a reach.`
+    : `Your stats fall within ${s.n}'s admitted middle-50%; at a ${Math.round((s.admit||0)*100)}% admit rate that puts you in ${b.toLowerCase()} territory.`;
+  d.innerHTML=`<button class="close" onclick="closeDetail()">×</button>
+    <div class="rank" style="color:var(--tx3);font-size:11px;letter-spacing:1px;padding-top:6px">${s.type||''} · ${s.city||''}, ${s.st||''} ${s.program?'· BS/MD program':''}</div>
+    <h2>${s.n}</h2>
+    <div style="display:flex;align-items:baseline;gap:10px;margin:10px 0"><span style="font-size:44px;font-weight:800;letter-spacing:-2px;color:${BCOL[b]}">${Math.round(p*100)}%</span><span class="band b-${b}">${b}</span><span class="badge ${s.verified?'v-yes':'v-no'}" style="margin-left:auto">${s.verified?'✓ VERIFIED':'EST'}</span></div>
+    <div class="barwrap">${chanceBar(s,p)}</div>
+    <div class="why">${why}</div>
+    <div class="mini"><div class="lab"><span>Premed</span><span>${s.premed??'—'}/10</span></div><div class="pbar"><i style="width:${(s.premed||0)*10}%;background:var(--cyan)"></i></div></div>
+    <div class="mini"><div class="lab"><span>Research</span><span>${s.research??'—'}/10</span></div><div class="pbar"><i style="width:${(s.research||0)*10}%;background:var(--cyan)"></i></div></div>
+    <div class="mini"><div class="lab"><span>Social life</span><span>${s.social??'—'}/10</span></div><div class="pbar"><i style="width:${(s.social||0)*10}%;background:var(--cyan)"></i></div></div>
+    <div style="margin:18px 0 6px" class="sec-title">Cost (estimate)</div>
+    <div class="drow"><span class="k">Cost of attendance</span><span class="val">${money(s.coa)}/yr</span></div>
+    <div class="drow"><span class="k">Auto merit${s.meritName?' · '+s.meritName:''}</span><span class="val" style="color:var(--green)">${s.merit?'−'+money(s.merit):'—'}</span></div>
+    <div class="drow"><span class="k">Net per year</span><span class="val">${money(net(s))}</span></div>
+    <div class="drow"><span class="k">4-year total (flat est)</span><span class="val" style="color:var(--amber)">${money(cost4(s))}</span></div>
+    <div style="margin:18px 0 6px" class="sec-title">The numbers</div>
+    <div class="drow"><span class="k">Overall admit rate</span><span class="val">${Math.round((s.admit||0)*100)}%</span></div>
+    <div class="drow"><span class="k">Admitted GPA mid-50%</span><span class="val">${s.g25}–${s.g75}</span></div>
+    <div class="drow"><span class="k">SAT mid-50%</span><span class="val">${s.tb?'test-blind':(s.s25?s.s25+'–'+s.s75:'—')}</span></div>
+    <div class="drow"><span class="k">4-year grad rate</span><span class="val">${s.grad4!=null?s.grad4+'%':'—'}</span></div>
+    <div class="drow"><span class="k">Deadline</span><span class="val">${s.dl||'—'}</span></div>
+    <div style="margin:16px 0 6px">${links||''}</div>
+    <button class="dbtn" style="background:${st.shortlist.includes(s.id)?'var(--bg2)':'var(--green)'};color:${st.shortlist.includes(s.id)?'var(--tx)':'#05070e'}" onclick="toggleShort('${s.id}')">${st.shortlist.includes(s.id)?'★ Remove from shortlist':'★ Add to shortlist'}</button>`;
+  d.classList.add('open');
+}
+function closeDetail(){ document.getElementById('detail').classList.remove('open'); refreshCurrent(); }
+function toggleShort(id){ const i=st.shortlist.indexOf(id); if(i<0)st.shortlist.push(id); else st.shortlist.splice(i,1); save(); openDetail(SBYID[id]); }
+
+/* ---------- nav ---------- */
+let cur='deck';
+function tab(t){
+  cur=t;
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+  document.getElementById('v-'+t).classList.remove('hidden');
+  refreshCurrent();
+}
+function refreshCurrent(){
+  if(cur==='deck'){ if(!deck.length) initDeck(); }
+  else if(cur==='home') renderHome();
+  else if(cur==='short') renderShort();
+  else if(cur==='cost') renderCost();
+  else if(cur==='profile') renderProfile();
+}
+
+/* ---------- onboarding ---------- */
+function onboard(){
+  const o=document.getElementById('onb');
+  let tmp={gpa:3.67,sat:1440,testOptional:false,prios:['premed','cost']};
+  o.innerHTML=`<h1>Let's find your schools.</h1>
+    <div class="lead">Two numbers and a few priorities. Every chance, cost and fit is then computed live from real, sourced data — nothing faked.</div>
+    <label>Unweighted GPA</label>
+    <input type="range" min="2.5" max="4.0" step="0.01" value="3.67" oninput="document.getElementById('ogv').textContent=(+this.value).toFixed(2);window._og=+this.value">
+    <div class="rangeval" id="ogv">3.67</div>
+    <label>SAT score</label>
+    <input type="number" id="osat" value="1440" min="0" max="1600">
+    <div class="toggle"><input type="checkbox" id="oto"><label style="margin:0">I'm applying test-optional</label></div>
+    <label>Pick 3–5 priorities</label>
+    <div class="prio" id="oprio">${PRIOS.map(p=>`<button data-k="${p[0]}" class="${tmp.prios.includes(p[0])?'on':''}" onclick="this.classList.toggle('on')">${p[1]}</button>`).join('')}</div>
+    <div class="cta"><button onclick="finishOnb()">Start</button><button class="skip" onclick="finishOnb()">Use defaults</button></div>`;
+  window._og=3.67;
+  o.classList.remove('hidden');
+}
+function finishOnb(){
+  const prios=[...document.querySelectorAll('#oprio button.on')].map(b=>b.dataset.k);
+  st={ gpa:window._og||3.67, sat:+document.getElementById('osat').value||0,
+       testOptional:document.getElementById('oto').checked, prios:prios.length?prios:['premed','cost'], shortlist:[] };
+  save(); document.getElementById('onb').classList.add('hidden');
+  boot();
+}
+
+/* ---------- boot ---------- */
+function boot(){
+  if(!st.shortlist) st.shortlist=[];
+  strip(); initDeck(); tab('deck');
+}
+if(!S.length){ document.getElementById('screen').innerHTML='<div class="empty">Could not load app-data.js</div>'; }
+else if(!st){ onboard(); }
+else { boot(); }
+</script>
+</body>
+</html>
