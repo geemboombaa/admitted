@@ -59,7 +59,10 @@ function state() {
   let elapsed = null;
   const tm = (logFull[logFull.length - 1] || '').match(/\[(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)Z\]/);
   if (tm) { const t = Date.parse(tm[1] + 'Z'); if (!isNaN(t)) elapsed = Math.max(0, Math.round((Date.now() - t) / 1000)); }
-  return { done, pending, total, committed, rejected, modeLine, cur, batchN, item, phase, finished, tail: logFull.slice(-12), elapsed, live: agents() };
+  let runPhase = '?', rubric = null;
+  try { runPhase = JSON.parse(rd('.phase.json')).phase; } catch {}
+  try { rubric = JSON.parse(cp.execSync('node scripts/rubric-score.js --json', { cwd: ROOT, timeout: 5000, stdio: ['ignore', 'pipe', 'ignore'] }).toString()); } catch {}
+  return { done, pending, total, committed, rejected, modeLine, cur, batchN, item, phase, finished, tail: logFull.slice(-12), elapsed, live: agents(), runPhase, rubric };
 }
 
 const es = s => s == null ? '—' : s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's';
@@ -96,6 +99,10 @@ function page() {
 
  <div class="lbl">Running agents (live OS check)</div>
  <div class="agents">${agentsHtml}</div>
+
+ <div class="lbl">Phase + improvement</div>
+ <div class="card" style="font-size:13px">phase: <b style="color:#00b4ff">${esc(s.runPhase)}</b>
+   &nbsp;·&nbsp; rubric ${s.rubric ? `<b style="color:#00ff88">${s.rubric.met}/${s.rubric.total}</b> (${s.rubric.pct}%) · ${s.rubric.blocked} blocked` : '—'}</div>
 
  <div class="lbl">Current batch — ${s.committed}/${s.batchN||'?'} committed (iteration ${s.cur||0}/${s.batchN||0})</div>
  <div class="bar">${bar(batchFrac)} ${Math.round(batchFrac*100)}%</div>

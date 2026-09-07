@@ -23,6 +23,7 @@ if ! command -v claude >/dev/null 2>&1; then
   echo "claude CLI not found on PATH. Run 'claude -p \"say hi\"' by hand first to confirm it works." >&2
   exit 1
 fi
+source scripts/loop-guard.sh   # refuse to start if another loop is already running
 
 BACKLOG="SELF-IMPROVE-BACKLOG.md"
 LOG="SELF-IMPROVE-LOG.md"        # gitignored on purpose -> survives the revert (Bug 2 fix)

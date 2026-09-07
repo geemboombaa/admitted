@@ -9,6 +9,7 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 command -v claude >/dev/null 2>&1 || { echo "claude not on PATH" >&2; exit 1; }
+source scripts/loop-guard.sh   # refuse to start if another loop is already running
 
 LOG="SELF-IMPROVE-LOG.md"
 ITER=1

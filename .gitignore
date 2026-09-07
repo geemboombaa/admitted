@@ -6,3 +6,5 @@ index1.generated.html
 *.tmp
 cds_*.txt
 coa*.html
+
+.loop.lock

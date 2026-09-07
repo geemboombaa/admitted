@@ -18,6 +18,22 @@ if [ -f app.html ] && [ -f scripts/app-check.js ]; then
 - app-check.js FAILED — app.html JS syntax or data link broken. Run: node scripts/app-check.js"
 fi
 
+# 2a. PHASE GATE — every phase (requirements->design->build->prototype->ship), not just data/app.
+if [ -f scripts/phase.js ]; then
+  pg=$(node scripts/phase.js gate 2>&1) || fail="${fail}
+- ${pg}"
+fi
+
+# 2b. IMPROVEMENT METRIC — the rubric score must never REGRESS (a committed criterion undone).
+if [ -f scripts/rubric-score.js ] && [ -f METRICS.md ]; then
+  cur=$(node scripts/rubric-score.js 2>/dev/null | grep -oE '[0-9]+/[0-9]+' | head -1 | cut -d/ -f1)
+  last=$(grep -oE 'rubric=[0-9]+/' METRICS.md | tail -1 | grep -oE '[0-9]+' | head -1)
+  if [ -n "$cur" ] && [ -n "$last" ] && [ "$cur" -lt "$last" ]; then
+    fail="${fail}
+- Rubric REGRESSED (${last} -> ${cur} MET) — a committed criterion was undone. Restore it before finishing."
+  fi
+fi
+
 # 3b. A completed loop run that delivered ZERO improvements is a wasted cycle — do not let it slide.
 if [ -f SELF-IMPROVE-LOG.md ]; then
   last_batch=$(grep -E 'batch complete: [0-9]+ (committed|done)' SELF-IMPROVE-LOG.md 2>/dev/null | tail -1)
