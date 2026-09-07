@@ -25,8 +25,14 @@ const SCHOOLS = docs.map(d => {
   FIELDS.forEach(k => { out[k] = (k in g) ? g[k] : null; });
   // social lives at doc.social in some records, general.social in others
   if (out.social == null && d.social != null) out.social = d.social;
-  const vf = (d.verifiedFacts && d.verifiedFacts.vf) || [];
+  // Trust fix: for every officially-verified field, ship the VERIFIED value (not the rough
+  // general.* value) so the "verified" badge never sits on an unverified number. Only override
+  // fields the app actually shows and that carry a real verified value.
+  const vfObj = d.verifiedFacts || {};
+  const vf = vfObj.vf || [];
+  vf.forEach(k => { if (FIELDS.includes(k) && vfObj[k] != null) out[k] = vfObj[k]; });
   out.verified = vf.length > 0;
+  out.vf = vf;   // which fields are verified — enables per-field badges (retires whole-school claim)
   if (d.program && d.program.name) out.program = { name: d.program.name };
   return out;
 });
