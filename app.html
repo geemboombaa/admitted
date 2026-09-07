@@ -93,8 +93,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 #mapView{position:absolute;inset:0;display:flex;flex-direction:column;}
 .mapcanvas-wrap{flex:1;position:relative;overflow:hidden;}
 #mapCanvas{width:100%;height:100%;display:block;touch-action:none;}
-.bandlabels{position:absolute;top:0;left:0;right:0;display:flex;pointer-events:none;padding:6px 8px 0;gap:4px;}
-.bl{flex:1;text-align:center;font-size:9px;font-weight:800;letter-spacing:.5px;opacity:.55;text-transform:uppercase;}
+.bandlabels{position:absolute;top:0;left:0;right:0;display:flex;pointer-events:none;padding:6px 8px 0;gap:4px;z-index:3;}
+.bl{flex:1;text-align:center;font-size:9px;font-weight:800;letter-spacing:.5px;opacity:.55;text-transform:uppercase;
+  pointer-events:auto;cursor:pointer;padding:4px 2px 6px;border-radius:8px;transition:.15s;background:none;}
+.bl:active{opacity:1;background:rgba(255,255,255,.06);}
+
+/* zoom bar (band focus mode) */
+.zoombar{position:absolute;top:8px;left:8px;right:8px;z-index:5;display:none;align-items:center;gap:8px;
+  background:rgba(10,14,26,.86);backdrop-filter:blur(14px);border:1px solid var(--line);
+  border-radius:14px;padding:7px 9px;box-shadow:0 8px 26px rgba(0,0,0,.5);}
+.zoombar.show{display:flex;animation:pop .25s ease;}
+.zoomback{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--tx);
+  background:var(--bg0);border:1px solid var(--line);border-radius:10px;padding:8px 11px;min-height:36px;}
+.zoomback:active{transform:scale(.94);}
+.zoomtitle{flex:1;font-size:13px;font-weight:800;letter-spacing:.3px;}
+.zoomtitle span{font-size:11px;font-weight:700;color:var(--tx3);}
 .legend{position:absolute;left:10px;bottom:12px;display:flex;flex-direction:column;gap:5px;
   background:rgba(10,14,26,.75);backdrop-filter:blur(10px);padding:9px 11px;border-radius:12px;
   border:1px solid var(--line);pointer-events:none;}
@@ -109,6 +122,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .dialrow:last-child{margin-bottom:0;}
 .diallab{width:74px;font-size:12px;font-weight:700;color:var(--tx2);}
 .diallab b{display:block;font-size:16px;color:var(--tx);font-weight:800;}
+.diallab b.editable{cursor:text;display:inline-block;border-bottom:1px dashed var(--tx3);
+  padding:2px 3px 1px;margin-top:1px;min-height:24px;line-height:20px;transition:color .15s,border-color .15s;}
+.diallab b.editable:active{color:var(--likely);border-color:var(--likely);}
+.diallab b.pulse{animation:statpulse .5s ease;}
+@keyframes statpulse{0%{color:var(--likely);transform:scale(1.18);}100%{color:var(--tx);transform:scale(1);}}
+.statedit{width:60px;background:var(--bg0);border:1px solid var(--likely);border-radius:8px;
+  color:var(--tx);font-size:16px;font-weight:800;font-family:inherit;padding:1px 5px;outline:none;
+  -webkit-appearance:none;text-align:center;}
 .diallab .toflag{color:var(--target);font-size:10px;font-weight:700;}
 input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:6px;
   background:linear-gradient(90deg,var(--reach),var(--target),var(--likely),var(--safety));outline:none;}
@@ -177,6 +198,37 @@ input[type=range]:disabled{opacity:.4;}
 .vbadge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;margin-top:2px;display:inline-block;}
 .vok{background:rgba(0,255,136,.15);color:var(--safety);}
 .vest{background:rgba(245,166,35,.15);color:var(--est);}
+
+/* ===== APPLICATION PLAN (shortlist) ===== */
+.plancap{font-size:11px;font-weight:800;color:var(--tx3);letter-spacing:.6px;text-transform:uppercase;margin:2px 0 7px;}
+.balbar{display:flex;height:28px;border-radius:9px;overflow:hidden;border:1px solid var(--line);background:var(--bg0);}
+.balseg{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#04121e;
+  min-width:0;overflow:hidden;transition:flex-grow .3s;}
+.ballegend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;}
+.balleg{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--tx2);}
+.balleg .d{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+.balleg.zero{opacity:.5;}
+.planflags{margin-top:10px;display:flex;flex-direction:column;gap:6px;}
+.pflag{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;line-height:1.35;
+  padding:9px 11px;border-radius:11px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.35);color:var(--target);}
+.pflag.ok{background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.3);color:var(--safety);}
+.plancost{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:11px 13px;
+  background:var(--bg0);border:1px solid var(--line);border-radius:12px;}
+.plancost .k{font-size:12px;color:var(--tx2);font-weight:600;}
+.plancost .k small{display:block;font-size:9px;color:var(--est);font-weight:700;letter-spacing:.3px;margin-top:2px;}
+.plancost .v{font-size:18px;font-weight:800;color:var(--target);white-space:nowrap;}
+.tlsplit{border:none;border-top:1px solid var(--line);margin:16px 0 4px;}
+.tlgroup{margin-bottom:2px;}
+.tlhead{display:flex;align-items:center;gap:10px;padding:11px 2px 9px;}
+.tlhead:active{opacity:.7;}
+.tlchev{font-size:11px;color:var(--tx3);transition:transform .2s;width:12px;flex-shrink:0;}
+.tlgroup.collapsed .tlchev{transform:rotate(-90deg);}
+.tldate{font-size:15px;font-weight:800;color:var(--tx);}
+.tldue{font-size:11px;font-weight:700;color:var(--tx3);}
+.tlpill{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.3px;padding:4px 10px;border-radius:20px;
+  background:var(--bg2);border:1px solid var(--line);color:var(--tx2);white-space:nowrap;}
+.tlpill.amber{background:rgba(245,166,35,.15);border-color:rgba(245,166,35,.5);color:var(--target);}
+.tlgroup.collapsed .tlbody{display:none;}
 
 /* ===== DETAIL SHEET ===== */
 #sheet{position:absolute;inset:0;z-index:40;display:flex;align-items:flex-end;
@@ -256,6 +308,10 @@ input[type=range]:disabled{opacity:.4;}
       <div id="mapView">
         <div class="mapcanvas-wrap">
           <canvas id="mapCanvas"></canvas>
+          <div class="zoombar" id="zoomBar">
+            <button class="zoomback" id="zoomBack">‹ All bands</button>
+            <div class="zoomtitle" id="zoomTitle"></div>
+          </div>
           <div class="bandlabels">
             <div class="bl" style="color:var(--reach)">Reach</div>
             <div class="bl" style="color:var(--target)">Target</div>
@@ -272,11 +328,11 @@ input[type=range]:disabled{opacity:.4;}
         </div>
         <div class="dials">
           <div class="dialrow">
-            <div class="diallab">GPA<b id="gpaVal">3.80</b></div>
+            <div class="diallab">GPA<b id="gpaVal" class="editable" title="Tap to type an exact GPA">3.80</b></div>
             <input type="range" id="gpaDial" min="2.0" max="4.3" step="0.01" value="3.8">
           </div>
           <div class="dialrow">
-            <div class="diallab">SAT<b id="satVal">1300</b><span class="toflag" id="toFlag"></span></div>
+            <div class="diallab">SAT<b id="satVal" class="editable" title="Tap to type an exact SAT">1300</b><span class="toflag" id="toFlag"></span></div>
             <input type="range" id="satDial" min="800" max="1600" step="10" value="1300">
           </div>
           <label class="toggle-to"><input type="checkbox" id="toChk"> Apply test-optional (ignore SAT)</label>
@@ -296,9 +352,8 @@ input[type=range]:disabled{opacity:.4;}
         <div class="listscroll" id="listScroll"></div>
       </div>
 
-      <!-- SHORTLIST -->
+      <!-- SHORTLIST / APPLICATION PLAN -->
       <div id="shortView" class="hidden">
-        <div class="filterbar"><button class="fchip on" id="costToggle">💰 Show 4-yr est. cost</button></div>
         <div class="listscroll" id="shortScroll"></div>
       </div>
 
@@ -484,8 +539,10 @@ function finishOnboard(){
 /* ============ THE LIVING MAP (physics) ============ */
 const canvas=$('mapCanvas'); const ctx=canvas.getContext('2d');
 let W=0,H=0,DPR=1;
-let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit}
+let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit,zx,zy}
 let raf=null, lastPick=null;
+let zoomBand=null;      // when set, map focuses one band and spreads it out
+let touchHandled=0;     // suppress ghost click after touchend
 
 function bandColumnX(b,w){ const i=BANDS.indexOf(b); const col=w/4; return col*i+col/2; }
 
@@ -505,8 +562,12 @@ function recomputeTargets(){
   nodes.forEach(n=>{
     const p=chance(n.s,ST.gpa,ST.sat,ST.to);
     n.p=p; n.band=band(p); n.col=BANDCOL[n.band];
-    n.tr = 5 + (n.fit/100)*15; // radius 5-20 by fit
+    n.tr = nodeTargetR(n);
   });
+  if(zoomBand){                      // dials moved while focused → refresh the band
+    if(!bandNodes(zoomBand).length) exitZoom();
+    else { layoutZoom(); updateZoomTitle(); }
+  }
 }
 function resizeCanvas(){
   const wrap=canvas.parentElement; DPR=Math.min(window.devicePixelRatio||1,2);
@@ -515,80 +576,146 @@ function resizeCanvas(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
 function step(){
-  const cx=[]; // column centers
-  for(let i=0;i<4;i++) cx[i]=(W/4)*i+(W/8);
   // forces
   for(let i=0;i<nodes.length;i++){
     const n=nodes[i];
-    n.r += (n.tr-n.r)*0.12;
-    const targetX = bandColumnX(n.band,W);
-    // pull toward band column x, and gentle gravity to vertical center-band
-    n.vx += (targetX - n.x)*0.010;
-    n.vy += (H*0.5 - n.y)*0.004;
+    n.tr = nodeTargetR(n);
+    n.r += (n.tr-n.r)*0.14;
+    if(zoomBand){
+      if(n.band===zoomBand){                       // seek assigned grid slot
+        n.vx += ((n.zx!=null?n.zx:n.x) - n.x)*0.02;
+        n.vy += ((n.zy!=null?n.zy:n.y) - n.y)*0.02;
+      } else { n.vx*=0.9; n.vy*=0.9; }             // others fade out in place
+    } else {
+      const targetX = bandColumnX(n.band,W);
+      n.vx += (targetX - n.x)*0.010;
+      n.vy += (H*0.5 - n.y)*0.004;
+    }
   }
-  // collision / repulsion (O(n^2) but n=101, fine)
+  // collision / repulsion (O(n^2) but n=101, fine). Skip hidden nodes.
   for(let i=0;i<nodes.length;i++){
-    const a=nodes[i];
+    const a=nodes[i]; if(a.r<1) continue;
     for(let j=i+1;j<nodes.length;j++){
-      const b=nodes[j];
+      const b=nodes[j]; if(b.r<1) continue;
       let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
       const min=a.r+b.r+2;
       if(d<min){ const push=(min-d)/d*0.5; dx*=push;dy*=push;
         a.vx-=dx;a.vy-=dy;b.vx+=dx;b.vy+=dy; }
     }
   }
+  const topLim = zoomBand?46:16;
   for(const n of nodes){
     n.vx*=0.82; n.vy*=0.82;
     n.x+=n.vx; n.y+=n.vy;
-    const m=n.r+2;
+    const m=Math.max(2,n.r)+2;
     if(n.x<m){n.x=m;n.vx*=-.4;} if(n.x>W-m){n.x=W-m;n.vx*=-.4;}
-    if(n.y<m+16){n.y=m+16;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
+    if(n.y<m+topLim){n.y=m+topLim;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
   }
   draw();
   raf=requestAnimationFrame(step);
 }
 function draw(){
   ctx.clearRect(0,0,W,H);
-  // band column tint
+  // band column tint (focused band brightens when zoomed)
   for(let i=0;i<4;i++){
-    ctx.fillStyle='rgba(255,255,255,'+(i%2?0.012:0.028)+')';
+    let a = i%2?0.012:0.028;
+    if(zoomBand) a = (BANDS[i]===zoomBand)?0.05:0.006;
+    ctx.fillStyle='rgba(255,255,255,'+a+')';
     ctx.fillRect((W/4)*i,0,W/4,H);
   }
   for(const n of nodes){
+    if(n.r<0.6) continue;                         // hidden (faded-out band)
     const glow = n===lastPick;
     ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7);
     const g=ctx.createRadialGradient(n.x-n.r*.3,n.y-n.r*.3,1,n.x,n.y,n.r);
     g.addColorStop(0,n.col); g.addColorStop(1,shade(n.col,-.35));
     ctx.fillStyle=g;
-    if(glow){ctx.shadowColor=n.col;ctx.shadowBlur=22;} else {ctx.shadowColor=n.col;ctx.shadowBlur=6;}
+    ctx.shadowColor=n.col; ctx.shadowBlur=glow?22:6;
     ctx.fill(); ctx.shadowBlur=0;
-    if(n.r>13){ // label big bubbles
+    if(n.r>13){ // inline label for big bubbles
       ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='700 9px Inter,sans-serif';ctx.textAlign='center';
       const nm=n.s.n.length>13?n.s.n.slice(0,12)+'…':n.s.n;
       ctx.fillText(nm,n.x,n.y+3);
     }
   }
+  if(lastPick && lastPick.r>=0.6) drawFocusLabel(lastPick);   // clear name of focused bubble
+}
+function drawFocusLabel(n){
+  const name=n.s.n;
+  ctx.font='800 12px Inter,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const padX=10, tw=ctx.measureText(name).width, w=tw+padX*2, h=24;
+  let cx=Math.max(w/2+4,Math.min(W-w/2-4,n.x));
+  let cy=n.y-n.r-16;
+  if(cy-h/2<2) cy=n.y+n.r+16;                     // flip below when no room above
+  const rr=h/2, x0=cx-w/2, y0=cy-h/2;
+  ctx.beginPath();
+  ctx.moveTo(x0+rr,y0); ctx.arcTo(x0+w,y0,x0+w,y0+h,rr); ctx.arcTo(x0+w,y0+h,x0,y0+h,rr);
+  ctx.arcTo(x0,y0+h,x0,y0,rr); ctx.arcTo(x0,y0,x0+w,y0,rr); ctx.closePath();
+  ctx.fillStyle='rgba(8,12,22,.95)'; ctx.shadowColor='rgba(0,0,0,.6)'; ctx.shadowBlur=10;
+  ctx.fill(); ctx.shadowBlur=0;
+  ctx.strokeStyle=n.col; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.fillStyle=n.col; ctx.fillText(name,cx,cy+0.5);
+  ctx.textBaseline='alphabetic';
 }
 function shade(hex,amt){ // amt -1..1
   const c=hex.replace('#',''); let r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
   r=Math.max(0,Math.min(255,r+amt*255));g=Math.max(0,Math.min(255,g+amt*255));b=Math.max(0,Math.min(255,b+amt*255));
   return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
 }
-function pickNode(px,py){
-  let best=null,bd=1e9;
-  for(const n of nodes){const d=Math.hypot(px-n.x,py-n.y); if(d<n.r+6&&d<bd){bd=d;best=n;}}
-  return best;
+function bandNodes(b){ return nodes.filter(n=>n.band===b); }
+function nodeTargetR(n){
+  if(zoomBand) return n.band===zoomBand ? 11+(n.fit/100)*13 : 0;  // focused big & tappable, others hidden
+  return 5 + (n.fit/100)*15;                                       // overview 5-20 by fit
+}
+function layoutZoom(){
+  if(!zoomBand) return;
+  const list=bandNodes(zoomBand); const n=list.length; if(!n) return;
+  const top=52, availH=Math.max(60,H-top-8);
+  let cols=Math.min(n,Math.max(1,Math.round(Math.sqrt(n*W/availH))));
+  const rows=Math.ceil(n/cols), cw=W/cols, ch=availH/rows;
+  list.sort((a,b)=>b.p-a.p);                                       // best odds → top-left
+  list.forEach((nd,k)=>{ const c=k%cols, r=Math.floor(k/cols);
+    nd.zx=cw*c+cw/2; nd.zy=top+ch*r+ch/2; });
+}
+function updateZoomTitle(){
+  if(!zoomBand) return;
+  $('zoomTitle').innerHTML=esc(zoomBand)+' band <span>· '+bandNodes(zoomBand).length+' schools · tap any bubble</span>';
+}
+function zoomInto(b){
+  if(!nodes.length || !bandNodes(b).length) return;
+  zoomBand=b; layoutZoom(); updateZoomTitle();
+  $('zoomBar').classList.add('show');
+}
+function exitZoom(){ if(!zoomBand) return; zoomBand=null; $('zoomBar').classList.remove('show'); }
+function bandAtX(px){ return BANDS[Math.max(0,Math.min(3,Math.floor(px/(W/4))))]; }
+function pickInfo(px,py){
+  let best=null,bd=1e9,cands=0;
+  for(const n of nodes){
+    if(n.r<1) continue;                            // hidden
+    if(zoomBand && n.band!==zoomBand) continue;    // only focused band is live
+    const d=Math.hypot(px-n.x,py-n.y);
+    const hit=Math.max(n.r+8,22);                  // generous tap radius (≥44px target)
+    if(d<hit){ cands++; if(d<bd){bd=d;best=n;} }
+  }
+  return {best,cands};
+}
+function handleTap(px,py){
+  const {best,cands}=pickInfo(px,py);
+  if(zoomBand){ if(best){lastPick=best;openSheet(best.s);} return; }
+  if(best && cands===1){ lastPick=best; openSheet(best.s); return; }  // clean single hit → open
+  const b = best ? best.band : bandAtX(px);                           // dense/ambiguous/empty → zoom band
+  zoomInto(b);
 }
 canvas.addEventListener('click',e=>{
+  if(Date.now()-touchHandled<600) return;          // ignore ghost click after touch
   const rect=canvas.getBoundingClientRect();
-  const n=pickNode(e.clientX-rect.left,e.clientY-rect.top);
-  if(n){lastPick=n;openSheet(n.s);}
+  handleTap(e.clientX-rect.left,e.clientY-rect.top);
 });
 canvas.addEventListener('touchend',e=>{
   if(!e.changedTouches.length)return;
+  touchHandled=Date.now();
   const t=e.changedTouches[0];const rect=canvas.getBoundingClientRect();
-  const n=pickNode(t.clientX-rect.left,t.clientY-rect.top);
-  if(n){lastPick=n;openSheet(n.s);}
+  handleTap(t.clientX-rect.left,t.clientY-rect.top);
 },{passive:true});
 
 function startMap(){ if(!nodes.length){resizeCanvas();buildNodes();} if(!raf)step(); }
@@ -608,6 +735,39 @@ function syncDials(){
   $('satDial').value=ST.sat; $('satVal').textContent=ST.to?'—':ST.sat;
   $('toChk').checked=ST.to; $('satDial').disabled=ST.to;
   $('toFlag').textContent=ST.to?'(TO)':'';
+  $('satVal').classList.toggle('editable',!ST.to); // no exact SAT entry while test-optional
+}
+function pulseStat(el){ el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+/* tap a stat number on the map -> type an exact value, reshape + persist instantly */
+function editStat(kind){
+  if(kind==='sat'&&ST.to) return;              // SAT not in play under test-optional
+  const valEl=$(kind==='gpa'?'gpaVal':'satVal');
+  if(valEl.querySelector('input')) return;      // already editing
+  const dial=$(kind==='gpa'?'gpaDial':'satDial');
+  const min=parseFloat(dial.min), max=parseFloat(dial.max);
+  const inp=document.createElement('input');
+  inp.type='text'; inp.inputMode='decimal'; inp.className='statedit';
+  inp.value = kind==='gpa'?ST.gpa.toFixed(2):String(ST.sat);
+  valEl.textContent=''; valEl.appendChild(inp);
+  inp.focus(); inp.select();
+  let done=false;
+  const commit=apply=>{
+    if(done) return; done=true;
+    let n=apply?parseFloat(inp.value.replace(/[^0-9.]/g,'')):NaN;
+    if(apply && !isNaN(n)){
+      n=Math.max(min,Math.min(max,n));
+      dial.value = kind==='gpa'?(Math.round(n*100)/100):(Math.round(n/10)*10);
+      onDialChange();                            // dials->ST, recompute, save, repaint value text
+      pulseStat($(kind==='gpa'?'gpaVal':'satVal'));
+    } else {
+      syncDials();                               // cancel / bad input -> restore
+    }
+  };
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){ e.preventDefault(); commit(true); }
+    else if(e.key==='Escape'){ e.preventDefault(); commit(false); }
+  });
+  inp.addEventListener('blur',()=>commit(true));
 }
 function onDialChange(){
   ST.gpa=parseFloat($('gpaDial').value);
@@ -616,6 +776,7 @@ function onDialChange(){
   $('gpaVal').textContent=ST.gpa.toFixed(2);
   $('satVal').textContent=ST.to?'—':ST.sat;
   $('satDial').disabled=ST.to; $('toFlag').textContent=ST.to?'(TO)':'';
+  $('satVal').classList.toggle('editable',!ST.to);
   recomputeTargets(); renderBandCounts();
   save();
 }
@@ -714,17 +875,101 @@ function toggleSave(id){
   else {ST.saved.push(id);toast('★ Added to shortlist');}
   save(); if(currentTab==='short')renderShort(); if(currentTab==='list')renderList();
 }
-let showCost=true;
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let tlCollapsed={}; // group key -> true if collapsed (session only)
+function isRolling(s){ return /rolling/i.test(s.dl||''); }
+function daysUntil(iso){
+  const p=(iso||'').split('-').map(Number);
+  if(p.length!==3||!p[0]) return null;
+  const t=new Date(p[0],p[1]-1,p[2]);
+  const now=new Date(); now.setHours(0,0,0,0);
+  return Math.round((t-now)/86400000);
+}
+function fmtDate(iso){ const p=iso.split('-').map(Number); return MON[p[1]-1]+' '+p[2]; }
+function daysPill(d){
+  if(d==null) return 'No fixed date';
+  if(d<0) return 'Past due';
+  if(d===0) return 'Due today';
+  if(d===1) return 'in 1 day';
+  return 'in '+d+' days';
+}
 function renderShort(){
   const box=$('shortScroll');
   const list=ST.saved.map(id=>SCHOOLS.find(s=>s.id===id)).filter(Boolean);
   if(!list.length){box.innerHTML=`<div class="empty"><div class="big">★</div>No schools saved yet.<br>Swipe right in the Deck or tap ★ on any school to build your shortlist.</div>`;return;}
-  let total4=0; list.forEach(s=>{if(s.coa!=null)total4+=(s.coa-(s.merit||0))*4;});
-  let html='';
-  if(showCost){ html+=`<div class="lrow" style="background:var(--bg0);border-color:var(--target)"><div class="linfo"><h3>Est. 4-yr net cost (all saved)</h3><p style="color:var(--est)">flat estimate · COA − merit × 4 · verify each</p></div><div class="lchance"><b style="color:var(--target)">${money(total4)}</b></div></div>`; }
-  list.forEach(s=>{ html+=rowHTML(s, showCost?`4yr ${money((s.coa!=null)?(s.coa-(s.merit||0))*4:null)}`:null); });
-  box.innerHTML=html;
+
+  /* --- portfolio balance (saved mix by band) --- */
+  const bc={Reach:0,Target:0,Likely:0,Safety:0};
+  list.forEach(s=>bc[band(chance(s,ST.gpa,ST.sat,ST.to))]++);
+  const total=list.length;
+  const segs=BANDS.map(b=>bc[b]>0
+    ? `<div class="balseg" style="flex-grow:${bc[b]};background:${BANDCOL[b]}">${bc[b]}</div>`:'').join('');
+  const legend=BANDS.map(b=>`<span class="balleg${bc[b]?'':' zero'}"><span class="d" style="background:${BANDCOL[b]}"></span>${b} ${bc[b]}</span>`).join('');
+
+  /* --- objective gap flags (band count==0 or all-one-band); no invented ratios --- */
+  let flags='';
+  if(total>=2){
+    const populated=BANDS.filter(b=>bc[b]>0);
+    if(populated.length===1){
+      flags=`<div class="pflag">⚠ ${total} apps saved — all ${populated[0]}. Consider spreading across bands.</div>`;
+    } else {
+      const zero=BANDS.filter(b=>bc[b]===0);
+      flags=zero.map(b=>`<div class="pflag">⚠ 0 ${b} schools saved.</div>`).join('');
+      if(!flags) flags=`<div class="pflag ok">✓ All four bands covered.</div>`;
+    }
+  }
+
+  /* --- est cost total (real coa/merit, flat 4-yr) --- */
+  let net4=0, haveCost=false;
+  list.forEach(s=>{ if(s.coa!=null){ net4+=(s.coa-(s.merit||0))*4; haveCost=true; } });
+  const costHTML=haveCost
+    ? `<div class="plancost"><div class="k">Est. 4-yr net, all saved<small>COA − merit × 4 · verify each</small></div><div class="v">${money(net4)}</div></div>`:'';
+
+  /* --- deadline timeline: group by dlDate, soonest first, rolling last --- */
+  const dated={}, rolling=[];
+  list.forEach(s=>{ if(isRolling(s)||!s.dlDate) rolling.push(s); else (dated[s.dlDate]=dated[s.dlDate]||[]).push(s); });
+  const keys=Object.keys(dated).sort();
+  let tl='';
+  keys.forEach(k=>{
+    const grp=dated[k], d=daysUntil(k), amber=(grp.length>=3||(d!=null&&d<14));
+    tl+=groupHTML(k, fmtDate(k), grp, daysPill(d), amber);
+  });
+  if(rolling.length){
+    tl+=groupHTML('rolling','Rolling admission', rolling, 'No fixed date', false);
+  }
+
+  box.innerHTML=`
+    <div class="plancap">Portfolio balance · ${total} saved</div>
+    <div class="balbar">${segs}</div>
+    <div class="ballegend">${legend}</div>
+    <div class="planflags">${flags}</div>
+    ${costHTML}
+    <hr class="tlsplit">
+    <div class="plancap">Application timeline</div>
+    ${tl}`;
+  bindGroups(box);
   bindRows(box);
+}
+function groupHTML(key,dateLab,grp,pillTxt,amber){
+  const collapsed=tlCollapsed[key]?' collapsed':'';
+  const rows=grp.map(s=>rowHTML(s)).join('');
+  return `<div class="tlgroup${collapsed}" data-key="${esc(key)}">
+    <div class="tlhead">
+      <span class="tlchev">▼</span>
+      <span class="tldate">${esc(dateLab)}</span>
+      <span class="tldue">— ${grp.length} due</span>
+      <span class="tlpill${amber?' amber':''}">${esc(pillTxt)}</span>
+    </div>
+    <div class="tlbody">${rows}</div>
+  </div>`;
+}
+function bindGroups(box){
+  box.querySelectorAll('.tlgroup').forEach(g=>{
+    g.querySelector('.tlhead').onclick=()=>{
+      g.classList.toggle('collapsed');
+      tlCollapsed[g.dataset.key]=g.classList.contains('collapsed');
+    };
+  });
 }
 function rowHTML(s, extra){
   const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p); const col=BANDCOL[b];
@@ -838,7 +1083,7 @@ function switchTab(t){
   document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
   Object.entries(VIEWS).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==t));
   $('appTitle').textContent=TITLES[t][0]; $('appSub').textContent=TITLES[t][1];
-  if(t==='map'){startMap();} else {stopMap();}
+  if(t==='map'){startMap();} else {stopMap(); exitZoom();}
   if(t==='deck')buildDeck();
   if(t==='list'){renderFilterBar();renderList();}
   if(t==='short')renderShort();
@@ -850,13 +1095,15 @@ function initApp(){
   syncDials();
   ['gpaDial','satDial'].forEach(id=>{$(id).addEventListener('input',()=>{onDialChange();});});
   $('toChk').addEventListener('change',()=>{onDialChange();});
+  $('gpaVal').addEventListener('click',()=>editStat('gpa'));
+  $('satVal').addEventListener('click',()=>editStat('sat'));
   $('btnEdit').onclick=()=>{ ST.onboarded=false; save(); stopMap();
     $('app').classList.remove('active'); $('onboard').classList.add('active'); startOnboard(); };
-  $('costToggle').onclick=()=>{showCost=!showCost; $('costToggle').classList.toggle('on',showCost);
-    $('costToggle').textContent=showCost?'💰 Show 4-yr est. cost':'💰 4-yr cost hidden'; renderShort();};
+  document.querySelectorAll('.bl').forEach((el,i)=>{ el.onclick=()=>zoomInto(BANDS[i]); }); // tap band header to zoom
+  $('zoomBack').onclick=exitZoom;
   renderBandCounts();
   switchTab('map');
-  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas();} });
+  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas(); if(zoomBand)layoutZoom();} });
 }
 
 /* boot */

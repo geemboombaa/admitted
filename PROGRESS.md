@@ -86,3 +86,20 @@ The loop is proven + stable; the data audit is simply lower priority than shippi
 Data plumbing (Stages 1-2) is far enough along. **Pivot to visible product.** Options: Stage 3 (polish the live
 web app — immediate wow) or Stage 4 (start the iOS app — the new surface, wired to the same verified core).
 Engine chance-math still parked (needs Naviance outcome data). Awaiting user pick of surface.
+
+## app.html — Shortlist → "Application Plan" (2026-09-06)
+Rebuilt Shortlist tab into a deadline timeline + portfolio-balance readout. Real `dlDate`/`coa`/`merit`/bands only; no new data, no engine change.
+
+| # | Step | Status | Notes |
+|---|------|--------|-------|
+| 1 | Portfolio balance bar (4-seg Reach/Target/Likely/Safety + counts) | DONE | proportional segments, legend with per-band counts |
+| 2 | Objective gap flags (band==0, or all-one-band) | DONE | no invented ratios; flags gated to total≥2 (mix undefined for 1) |
+| 3 | Est. 4-yr net cost line (COA−merit×4, EST-labeled) | DONE | preserves old cost feature; toggle removed |
+| 4 | Deadline timeline grouped by `dlDate`, soonest-first | DONE | "Nov 1 — 5 due" headers; Rolling group sinks to bottom |
+| 5 | Days-away pill, amber when 3+ apps or <14 days | DONE | thresholds from design spec, not invented |
+| 6 | Tap header collapse/expand; tap row → detail sheet | DONE | reuses `openSheet`/`rowHTML`/`bindRows` |
+| 7 | Headless verify (real data, no throws, no regress) | DONE | `.scratch/smoke.js` 16/16 PASS; app-check PASS; syntax OK |
+
+**Not done:** live Chrome visual/touch pass — no Playwright/Chrome automation installed on this box; verified structure+logic+no-throw headlessly against real 101-school data instead.
+**Stage:** Stage 3 (visible-product polish, app.html surface).
+**Next step:** open app.html in a real browser for a human visual/touch confirm, or continue self-improve loop for next design idea.
