@@ -158,6 +158,12 @@ input[type=range]:disabled{opacity:.4;}
 .btn-why{background:var(--bg0);border:1px solid var(--reach);color:var(--reach);}
 .btn-save{background:linear-gradient(120deg,var(--safety),#00c060);color:#04160c;}
 .btn-save.saved{background:var(--bg0);border:1px solid var(--safety);color:var(--safety);}
+.card.dragging{cursor:grabbing;box-shadow:0 28px 70px rgba(0,0,0,.6);}
+.stamp{position:absolute;top:26px;font-size:22px;font-weight:900;letter-spacing:1px;padding:6px 14px;
+  border-radius:12px;border:3px solid;opacity:0;pointer-events:none;z-index:5;transform:rotate(-14deg);
+  text-shadow:0 2px 8px rgba(0,0,0,.5);will-change:opacity;}
+.stamp-like{left:22px;color:var(--safety);border-color:var(--safety);background:rgba(0,255,136,.12);}
+.stamp-pass{right:22px;color:var(--reach);border-color:var(--reach);background:rgba(168,85,247,.12);transform:rotate(14deg);}
 .deckhint{text-align:center;font-size:11px;color:var(--tx3);padding:0 0 10px;font-weight:600;}
 .deckempty{position:absolute;inset:14px;display:flex;flex-direction:column;align-items:center;
   justify-content:center;text-align:center;gap:14px;color:var(--tx2);}
@@ -735,6 +741,8 @@ function buildCard(s){
   const saved=ST.saved.includes(s.id);
   const card=document.createElement('div');card.className='card';
   card.innerHTML=`
+    <div class="stamp stamp-like">★ SHORTLIST</div>
+    <div class="stamp stamp-pass">✕ SKIP</div>
     <div class="cbadge" style="background:${col}22;color:${col}">${b.toUpperCase()}</div>
     <h2>${esc(s.n)}</h2>
     <div class="loc">${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)} · ${sizeLabel(s.size)}</div>
@@ -763,26 +771,37 @@ function posPct(s,gpa,sat,to){
   const ps=(sat-s.s25)/Math.max(1,(s.s75-s.s25));
   return Math.max(0,Math.min(100,((pg+ps)/2)*100));
 }
+const SWIPE_TH=90; // px past which a release commits the swipe
 function enableSwipe(card,s){
-  let sx=0,sy=0,dx=0,dy=0,drag=false;
-  const start=(x,y)=>{drag=true;sx=x;sy=y;card.style.transition='none';};
-  const move=(x,y)=>{ if(!drag)return; dx=x-sx;dy=y-sy;
-    card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*0.06}deg)`;
-    card.style.borderColor = dx>60?'var(--safety)':dx<-60?'var(--reach)':'var(--line)';
+  let sx=0,dx=0,drag=false,pid=null;
+  const stampL=card.querySelector('.stamp-like'), stampP=card.querySelector('.stamp-pass');
+  const paint=()=>{
+    card.style.transform=`translate(${dx}px,${dx*0.12}px) rotate(${dx*0.06}deg)`;
+    const t=Math.max(0,Math.min(1,Math.abs(dx)/SWIPE_TH));
+    stampL.style.opacity = dx>0 ? t : 0;
+    stampP.style.opacity = dx<0 ? t : 0;
+    card.style.borderColor = dx>8?`rgba(0,255,136,${0.3+t*0.7})` : dx<-8?`rgba(168,85,247,${0.3+t*0.7})` : 'var(--line)';
   };
-  const end=()=>{ if(!drag)return; drag=false;
-    card.style.transition='transform .3s, opacity .3s, border-color .2s';
-    if(dx>90){ if(!ST.saved.includes(s.id))toggleSave(s.id); swipeCard(card,1); }
-    else if(dx<-90){ swipeCard(card,-1); }
-    else { card.style.transform=''; card.style.borderColor='var(--line)'; }
-    dx=dy=0;
+  const start=(x,id)=>{ drag=true; sx=x; dx=0; pid=id; card.style.transition='none'; card.classList.add('dragging'); };
+  const move=x=>{ if(!drag)return; dx=x-sx; paint(); };
+  const end=commit=>{ if(!drag)return; drag=false; pid=null; card.classList.remove('dragging');
+    if(commit && dx>SWIPE_TH){ if(!ST.saved.includes(s.id))toggleSave(s.id); swipeCard(card,1); }
+    else if(commit && dx<-SWIPE_TH){ swipeCard(card,-1); }
+    else { // spring back
+      card.style.transition='transform .45s cubic-bezier(.34,1.56,.64,1), border-color .2s';
+      card.style.transform=''; card.style.borderColor='var(--line)';
+      stampL.style.opacity=0; stampP.style.opacity=0;
+    }
+    dx=0;
   };
-  card.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);
-    const mm=e=>move(e.clientX,e.clientY),mu=()=>{end();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
-    document.addEventListener('mousemove',mm);document.addEventListener('mouseup',mu);});
-  card.addEventListener('touchstart',e=>start(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
-  card.addEventListener('touchmove',e=>{move(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
-  card.addEventListener('touchend',end);
+  card.addEventListener('pointerdown',e=>{
+    if(drag || e.target.closest('.cardactions')) return; // buttons handle their own taps
+    try{ card.setPointerCapture(e.pointerId); }catch(_){}
+    start(e.clientX, e.pointerId);
+  });
+  card.addEventListener('pointermove',e=>{ if(e.pointerId===pid) move(e.clientX); });
+  card.addEventListener('pointerup',e=>{ if(e.pointerId===pid) end(true); });
+  card.addEventListener('pointercancel',e=>{ if(e.pointerId===pid) end(false); });
 }
 function swipeCard(card,dir){
   card.style.transition='transform .35s ease, opacity .35s';
