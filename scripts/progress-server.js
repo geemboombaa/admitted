@@ -58,7 +58,7 @@ function page() {
   const batchFrac = s.batchN ? s.committed / s.batchN : 0;
   const phaseColor = { building:'#00b4ff', reviewed:'#ffd60a', committed:'#00ff88', rejected:'#ff2d55', picking:'#a0b8d8', done:'#00ff88', idle:'#a0b8d8' }[s.phase] || '#e8f0ff';
   const esc = t => (t || '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
-  return `<!doctype html><html><head><meta charset="utf8"><meta http-equiv="refresh" content="2">
+  return `<!doctype html><html><head><meta charset="utf8"><meta http-equiv="refresh" content="60">
 <title>admitted — live progress</title>
 <style>
  body{background:#010408;color:#e8f0ff;font:14px/1.5 'Segoe UI',system-ui,sans-serif;margin:0;padding:28px 34px}
