@@ -42,7 +42,7 @@ Chrome and adversarially TEST your change (mouse AND touch, empty states, recomp
 errors); fix everything before you finish. Edit ONLY app.html — do not touch APP-BACKLOG.md, SELF-IMPROVE-LOG.md, or
 other files. If you download scratch, put it under .scratch/ only."
 
-  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$M_OPUS"; then
+  if ! printf '%s' "$BUILD_PROMPT" | claude -p --permission-mode bypassPermissions --model "$M_OPUS"; then
     log "REJECTED: Builder failed."; score na na build-fail; LAST_REJECTED="$ITEM"; revert "$BASE"; continue
   fi
   git clean -fdq -e data >/dev/null 2>&1
@@ -63,7 +63,7 @@ VERDICT: APPROVE
 or
 VERDICT: REJECT"
 
-  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS")
+  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --permission-mode bypassPermissions --model "$M_OPUS")
   VERDICT=$(printf '%s' "$REVIEW" | grep -oiE 'VERDICT:[[:space:]]*(APPROVE|REJECT)' | tail -1)
   log "review verdict: ${VERDICT:-<none emitted>}"
   if ! printf '%s' "$VERDICT" | grep -qiE 'VERDICT:[[:space:]]*APPROVE'; then
