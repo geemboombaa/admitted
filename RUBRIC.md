@@ -55,10 +55,10 @@ CP-0 milestone re-verifies them live; the loop must confirm, not assume.
 
 ## E. Surfaces (kept, not heroes)
 16. [x] Onboarding → Map → Deck → Detail → Shortlist all reachable, no dead ends.
-17. CUT (CP-0) — the physics-bubble Map is removed (surface, not decision value; ~185 lines, 0 decision
-    value per IA lens). Tappability criterion is moot once the feature is gone.
-18. CUT (CP-0) — the swipe Deck is removed (discovery pattern for infinite/unknown sets; wrong for a
-    finite known 101 with a specific goal). Save/skip folds into the List + detail sheet.
+17. [ ] DEMOTED (CP-0, per red-team) — Map is moved OFF the front door but KEPT reachable; do NOT delete the
+    code (deleting to shrink the denominator is metric-gaming). Stop iterating on bubble-tap polish.
+18. [ ] DEMOTED (CP-0, per red-team) — Deck moved off the front door, KEPT reachable; do NOT delete. Save/skip
+    also available on the List + detail sheet. Stop iterating on swipe polish.
 19. [ ] Stat dials (GPA/SAT/test-optional) editable on the Map screen itself; persists instantly.
 20. [ ] Map filters: type / region / cost ceiling / BS-MD-only; band counts update live.
 
@@ -84,16 +84,23 @@ H1. [ ] Generator emits the VERIFIED value per field + `vf`; retire whole-school
 H2. [ ] BS/MD schools show PROGRAM odds, not undergrad odds — two labeled gates (undergrad admit vs
     program/med-seat), program rate from `programVerified.admitRatePct`, honest "not publishable" otherwise.
 H3. [ ] Program-eligibility gate: user GPA/SAT vs `program.bar` → Below / Meets / Not-published.
-H4. [ ] Guarantee-type badge: Guaranteed-seat / Interview-only / Binding / Conditional (from `program.type`).
-H5. [ ] MCAT status (waived/threshold/match-mean) + residency gate surfaced as chips (from `accel.*`).
-H6. [ ] Chance shown as band + range ("Target · ~30–45%"), never a bare single % (linear model honesty).
+H4. [ ] Guarantee-type badge — **DATA-STRUCTURING FIRST**: add a structured `program.guaranteeType` enum
+    (reviewed data edit); NEVER derive the verdict from `program.type` prose at runtime (RULES #1).
+H5. [ ] MCAT status + residency gate — **DATA-STRUCTURING FIRST**: add structured `mcatReq`/`residReq` fields
+    (reviewed); NEVER parse prose into an eligibility verdict at runtime.
+H6. [ ] Chance shown as band + range, never a bare single % (linear-model honesty). Range = the band's own
+    interval (e.g. Target = 30–55%), labeled a heuristic — NOT an invented ± confidence interval.
 H7. [ ] Per-field verified/EST inline + data vintage (`cds7.y`) + real source-on-tap (`cds7.src`).
 H8. [ ] Subjective scores (premed/research/bio/social) marked "our read"; disclose they drive the sort.
 H9. [ ] Two-track portfolio balance: BS/MD (lottery) vs traditional-premed (safety); "all-reach" flag.
 H10. [ ] Application-status tracker per shortlist school: Researching → Essays → Ready → Submitted.
-H11. [ ] IA = 3 tabs — List (home, dials+filters) · BS/MD cluster · My List (decision) + Compare; Map/Deck cut.
-H12. [ ] First read = one named BS/MD (Target-band) school chanced, not the Map; priorities deferred; partial
-    onboarding persisted (makes #6a real — code currently lands on the Map).
+H11. [ ] IA = List (home, dials+filters) · BS/MD cluster · My List (decision) + Compare as the primary spine;
+    Map/Deck demoted off the front door but kept reachable (not deleted).
+H12. [ ] First read = one named BS/MD school chanced (achievable band — marquee BS/MD are Reach, so pick the
+    best-odds program for this profile), not the Map; priorities deferred; partial onboarding persisted.
+H13. [ ] **Validator gate (the safeguard all lenses missed):** `validate.js` FAILS if the app ships
+    `general.X` for any field where `X ∈ vf` (shown value ≠ `verifiedFacts.X`). AND `chance()` reads the
+    VERIFIED admit rate, not `general.admit`. This makes the BUG-A fix STAY true + not leave a stale duplicate.
 
 ## Build order (reprioritized wedge-first — CP-0)
 #0 engine-honesty → **1 + H1** (verified values, the trust floor) → #6a/H12 (first-90s) → #2/H7 (trust visible)

@@ -71,3 +71,41 @@ trust). Each change tagged by type and the lens(es) that raised it. **Convergent
   program attrition rates. These stay real gaps.
 
 ## Count: 19 distinct accepted changes + 2 verified bugs. (This is the anti-thin-3 test — passed.)
+
+---
+
+## RED-TEAM VERDICT (independent adversarial critic, verified in code) — corrected plan
+Both bugs CONFIRMED. But the critic caught real problems; the plan is corrected:
+
+**Scope corrections (verified):**
+- BUG B overstated: only **3 schools** have a numeric program rate (Brown 2.19% newspaper-sourced, Drexel
+  2.7% institutional, Hofstra 0.6% *derived, not published*). Not 33. And `progChance()` does not exist — #3
+  is a BUILD, not "un-discard a field". The wedge's real local value = **eligibility gate on 16 `program.bar`
+  schools + the cluster view**, NOT fleet-wide program rates.
+- Cost-to-MD (#11): `accel.ugYrs` is non-null on **15** schools but **NULL on Brown/Drexel** — don't multiply
+  by a missing year count on the flagship schools.
+
+**🚫 DANGEROUS — would ship fabricated data (do NOT build as runtime features):**
+- #9 guarantee-type badge, #10 MCAT/residency chips: `program.type`/`req` are FREE PROSE. Deriving a
+  categorical verdict at runtime = RULES #1 violation. Allowed ONLY as reviewed data-structuring (add a real
+  structured field first), never a runtime string-match.
+- #3 program odds: distinguish source quality (Drexel institutional vs Brown newspaper vs Hofstra derived) —
+  don't render all three as equal "verified" rates. Build the honest "not published" state FIRST.
+
+**✂️ CUT before build (scope creep, not CP-0 trust-core):** #17 status tracker, #18 parent share → defer.
+**↩️ DON'T delete Map/Deck** — demote + stop iterating, keep reachable. Deleting code to shrink the
+denominator inflates MET/total without building anything (metric-gaming). (Corrects RUBRIC #17/#18, H11.)
+
+**➕ MISSING — the most important change all 6 lenses missed:** a **validator assertion** — `validate.js`
+must FAIL when the app ships `general.X` for any field where `X ∈ vf` (i.e. shown value ≠ `verifiedFacts.X`).
+That's what makes the trust fix STAY true. Plus: `chance()` (`app.html:393`) itself reads the *unverified*
+`general.admit` — fixing the badge but not the computation leaves a stale duplicate. (New criterion H13.)
+
+**H6 range:** label it a heuristic; endpoints = the band's own interval, not an invented ±.
+**H12 flag:** "BS/MD + Target band" may be unsatisfiable (marquee BS/MD are Reach) — pick an achievable school.
+
+### Corrected top-3 to build FIRST (ranked by the critic):
+1. **BUG A fix + validator vf-equality gate + feed verified admit into `chance()`** (H1+H13). Restores AND
+   locks the trust premise; mechanically verifiable; fixes a live wrong-number-under-verified-badge.
+2. **Per-field verified/EST + vintage + real source-on-tap** (H7) — touches every school, all data exists.
+3. **Program-eligibility gate off `program.bar`** (H3, 16 schools) — ABOVE program-odds (#3, only 3 schools).
