@@ -8,17 +8,20 @@ const PORT = 7654;
 const rd = f => { try { return fs.readFileSync(path.join(ROOT, f), 'utf8'); } catch { return ''; } };
 
 // --- live process truth: what loops/agents are actually running right now ---
+// wmic was removed in Win11 24H2+, so use CIM (Get-CimInstance). Exclude this monitor's own
+// query process (it contains the match strings) so the panel never counts itself as rogue.
 function agents() {
   try {
-    const q = 'wmic process where "commandline like \'%-loop.sh%\' or commandline like \'%--model claude-%\'" get ProcessId,CommandLine';
-    const raw = cp.execSync(q, { encoding: 'utf8', timeout: 6000, stdio: ['ignore','pipe','ignore'] });
-    return raw.split('\n').map(l => l.trim())
-      .filter(l => /-loop\.sh|--model claude-/.test(l))
+    const ps = "Get-CimInstance Win32_Process | Where-Object { ($_.CommandLine -match '-loop\\.sh' -or $_.CommandLine -match '--model claude-') -and $_.CommandLine -notmatch 'Get-CimInstance' } | ForEach-Object { $_.ProcessId.ToString() + '|' + $_.CommandLine }";
+    const raw = cp.execSync('powershell -NoProfile -NonInteractive -Command "' + ps.replace(/"/g, '\\"') + '"',
+      { encoding: 'utf8', timeout: 8000, stdio: ['ignore', 'pipe', 'ignore'] });
+    return raw.split('\n').map(l => l.trim()).filter(Boolean)
       .map(l => {
-        const pid = (l.match(/(\d+)\s*$/) || [])[1] || '?';
-        const kind = /-loop\.sh/.test(l) ? 'LOOP' : 'agent (claude -p)';
-        const what = (l.match(/(app-improve|innovate|self-improve)-loop\.sh/) || [])[0]
-          || (l.match(/--model (claude-[a-z0-9-]+)/) || [])[1] || 'process';
+        const pid = (l.match(/^(\d+)\|/) || [])[1] || '?';
+        const cmd = l.replace(/^\d+\|/, '');
+        const kind = /-loop\.sh/.test(cmd) ? 'LOOP' : 'agent (claude -p)';
+        const what = (cmd.match(/(app-improve|innovate|self-improve)-loop\.sh/) || [])[0]
+          || (cmd.match(/--model (claude-[a-z0-9-]+)/) || [])[1] || 'process';
         return { pid, kind, what };
       });
   } catch (e) { return null; }

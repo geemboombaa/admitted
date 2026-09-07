@@ -103,3 +103,17 @@ Rebuilt Shortlist tab into a deadline timeline + portfolio-balance readout. Real
 **Not done:** live Chrome visual/touch pass — no Playwright/Chrome automation installed on this box; verified structure+logic+no-throw headlessly against real 101-school data instead.
 **Stage:** Stage 3 (visible-product polish, app.html surface).
 **Next step:** open app.html in a real browser for a human visual/touch confirm, or continue self-improve loop for next design idea.
+
+## CHECKPOINT 1 — CLOSED 2026-09-07
+Rogue-process disaster recovered; machinery hardened; CP-1 spec+rubric written and committed.
+
+| # | Step | Status | Notes |
+|---|------|--------|-------|
+| C1 | Kill all rogue loops, verify clean | DONE | 6 orphaned loops killed; `kill-agents.sh` kills by command line (TaskStop does NOT kill bash) |
+| C2 | Dashboard live-agents/health panel — FIXED | DONE | wmic removed in Win11 24H2+ → rewrote to CIM (`Get-CimInstance`); verified renders "0 agents — clean, nothing rogue" (was "process check unavailable"); self-query excluded |
+| C3 | SPEC.md — CP-1 locked target | DONE | one core → two faces; only new item vs original = live agents+health dashboard |
+| C4 | RUBRIC.md — 25 binary acceptance criteria | DONE | **15/25 MET.** Remaining 10 = app build backlog (items 8–11, 13–17) |
+| C5 | Commit all immediately (nothing wipeable) | DONE | this commit |
+
+**Rubric score:** 15/25 MET. **Stage:** CP-1 closed → next = Stage 3 app build, one rubric item per attended loop iteration.
+**Next step:** pick the first UNMET app item to build (recommend #8 bubble tap precision — the most-felt bug) and run ONE attended iteration.
