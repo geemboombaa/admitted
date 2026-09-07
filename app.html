@@ -1,441 +1,867 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>admitted</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Admitted — The Living Map</title>
 <style>
 :root{
   --bg0:#0a0e1a; --bg1:#0f1424; --bg2:#141b2e; --line:#1e2740;
-  --tx:#e8f0ff; --tx2:#a9b6d4; --tx3:#6b7699;
-  --green:#00ff88; --cyan:#00d4ff; --amber:#f5a623; --purple:#a855f7; --red:#ff4d6d;
+  --tx:#e8f0ff; --tx2:#a9b6d4; --tx3:#6b7794;
+  --safety:#00ff88; --likely:#00d4ff; --target:#f5a623; --reach:#a855f7;
+  --verified:#00ff88; --est:#f5a623;
+  --pad:16px;
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-html,body{height:100%}
-body{background:#05070e;color:var(--tx);font:15px/1.45 'Inter',-apple-system,'Segoe UI',system-ui,sans-serif;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-#phone{position:relative;width:100%;max-width:430px;height:100dvh;max-height:920px;background:var(--bg0);
-  overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-@media(min-width:480px){#phone{border-radius:38px;border:1px solid #222c44;height:min(920px,96vh)}}
-.hidden{display:none!important}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:#05070f;color:var(--tx);
+  display:flex;justify-content:center;align-items:stretch;
+  overscroll-behavior:none;
+}
+#phone{
+  width:100%;max-width:430px;height:100vh;height:100dvh;position:relative;
+  background:linear-gradient(180deg,var(--bg0),var(--bg1));
+  display:flex;flex-direction:column;overflow:hidden;
+}
+@media(min-width:520px){
+  body{align-items:center;background:radial-gradient(circle at 50% 0%,#101a30,#05070f 70%);}
+  #phone{height:92vh;max-height:900px;border-radius:38px;border:1px solid var(--line);
+    box-shadow:0 30px 90px rgba(0,0,0,.7),inset 0 0 0 8px #05070f;overflow:hidden;}
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.hidden{display:none!important;}
 
-/* top strip */
-#top{padding:14px 18px 10px;background:linear-gradient(180deg,var(--bg1),var(--bg0));border-bottom:1px solid var(--line);flex:0 0 auto}
-#top .brand{font-weight:800;letter-spacing:-.5px;font-size:19px}
-#top .brand span{color:var(--green)}
-#strip{display:flex;gap:14px;margin-top:8px;font-size:12px;color:var(--tx2);align-items:center;cursor:pointer}
-#strip b{color:var(--tx);font-weight:700}
-#strip .chips{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto}
-#strip .chips span{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:2px 9px;font-size:10.5px;color:var(--tx2)}
+/* ===== SCREENS ===== */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.screen.active{opacity:1;pointer-events:auto;z-index:2;}
 
-/* screen area */
-#screen{flex:1 1 auto;position:relative;overflow:hidden}
-.view{position:absolute;inset:0;overflow-y:auto;padding:16px 16px 90px;-webkit-overflow-scrolling:touch}
+/* ===== ONBOARDING ===== */
+#onboard{background:linear-gradient(180deg,#0a0e1a,#0f1424);}
+.ob-head{padding:24px var(--pad) 8px;text-align:center;}
+.ob-logo{font-size:15px;font-weight:800;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--likely),var(--reach));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.chatwrap{flex:1;overflow-y:auto;padding:12px var(--pad) 8px;display:flex;flex-direction:column;gap:12px;}
+.msg{max-width:80%;padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.4;
+  animation:pop .3s ease;}
+.msg.bot{background:var(--bg2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:5px;}
+.msg.user{background:linear-gradient(120deg,var(--likely),#0090d0);color:#04121e;
+  align-self:flex-end;border-bottom-right-radius:5px;font-weight:600;}
+@keyframes pop{from{transform:translateY(8px) scale(.96);opacity:0;}to{transform:none;opacity:1;}}
+.typing{display:flex;gap:4px;padding:14px 16px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:18px;border-bottom-left-radius:5px;align-self:flex-start;width:fit-content;}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--tx3);animation:blink 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+.ob-input{padding:10px var(--pad) calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
+  background:var(--bg1);}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chip{padding:10px 15px;border-radius:22px;background:var(--bg2);border:1px solid var(--line);
+  color:var(--tx);font-size:14px;font-weight:600;min-height:40px;transition:.15s;}
+.chip:active{transform:scale(.94);}
+.chip.sel{background:linear-gradient(120deg,var(--likely),var(--reach));color:#04121e;border-color:transparent;}
+.freerow{display:flex;gap:8px;}
+.freerow input{flex:1;background:var(--bg0);border:1px solid var(--line);border-radius:12px;
+  padding:0 14px;height:46px;color:var(--tx);font-size:15px;font-family:inherit;}
+.freerow input:focus{outline:none;border-color:var(--likely);}
+.sendbtn{width:46px;height:46px;border-radius:12px;background:var(--likely);color:#04121e;
+  font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.sendbtn:active{transform:scale(.92);}
 
-/* bottom nav */
-#nav{flex:0 0 auto;display:flex;background:var(--bg1);border-top:1px solid var(--line)}
-#nav button{flex:1;background:none;border:0;color:var(--tx3);font:600 11px 'Inter',sans-serif;padding:10px 0 12px;cursor:pointer;letter-spacing:.3px}
-#nav button .ic{display:block;font-size:19px;margin-bottom:2px;line-height:1}
-#nav button.on{color:var(--green)}
+/* ===== APP SHELL ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px var(--pad) 10px;
+  padding-top:calc(14px + env(safe-area-inset-top));}
+.topbar h1{font-size:19px;font-weight:800;letter-spacing:-.3px;}
+.topbar .sub{font-size:11px;color:var(--tx3);font-weight:600;letter-spacing:.5px;}
+.iconbtn{width:40px;height:40px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--tx2);}
+.iconbtn:active{transform:scale(.92);}
+.body{flex:1;position:relative;overflow:hidden;}
 
-/* band pill */
-.band{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:12px;letter-spacing:.4px;padding:4px 11px;border-radius:20px}
-.b-Safety{color:var(--green);background:rgba(0,255,136,.12)}
-.b-Likely{color:var(--cyan);background:rgba(0,212,255,.12)}
-.b-Target{color:var(--amber);background:rgba(245,166,35,.12)}
-.b-Reach{color:var(--purple);background:rgba(168,85,247,.12)}
-.badge{font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:.5px}
-.v-yes{color:var(--green);background:rgba(0,255,136,.1)}
-.v-no{color:var(--amber);background:rgba(245,166,35,.1)}
+/* ===== TABS ===== */
+.tabbar{display:flex;border-top:1px solid var(--line);background:rgba(10,14,26,.92);
+  backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom);}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;
+  color:var(--tx3);font-size:10px;font-weight:700;letter-spacing:.3px;min-height:44px;transition:.15s;}
+.tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.tab.active{color:var(--likely);}
 
-/* deck */
-#deck{position:relative;height:100%;padding:10px 16px 0}
-#stack{position:relative;height:calc(100% - 96px);max-height:560px}
-.card{position:absolute;inset:0;background:linear-gradient(165deg,var(--bg2),var(--bg1));border:1px solid var(--line);
-  border-radius:24px;padding:22px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.4);will-change:transform}
-.card .rank{font-size:11px;color:var(--tx3);letter-spacing:1px;font-weight:700;text-transform:uppercase}
-.card h2{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:6px 0 2px;line-height:1.1}
-.card .loc{color:var(--tx2);font-size:13px;margin-bottom:16px}
-.card .big{display:flex;align-items:baseline;gap:8px;margin:6px 0}
-.card .pct{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1}
-.card .barwrap{margin:14px 0}
-.card .hook{color:var(--tx2);font-size:13.5px;line-height:1.5;margin-top:14px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
-.card .foot{margin-top:auto;display:flex;gap:16px;align-items:center;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--tx2)}
-.card .foot b{color:var(--tx);font-size:15px;display:block}
-.stamp{position:absolute;top:26px;font-size:26px;font-weight:900;letter-spacing:1px;padding:6px 14px;border:3px solid;border-radius:12px;opacity:0;transform:rotate(-14deg)}
-.stamp.like{right:22px;color:var(--green);border-color:var(--green)}
-.stamp.nope{left:22px;color:var(--red);border-color:var(--red)}
-#deckbtns{display:flex;justify-content:center;gap:26px;margin-top:16px}
-#deckbtns button{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);font-size:24px;cursor:pointer;color:var(--tx);display:flex;align-items:center;justify-content:center;transition:transform .1s}
-#deckbtns button:active{transform:scale(.9)}
-#deckbtns .pass{color:var(--red)}#deckbtns .star{color:var(--green)}
-.progress{text-align:center;color:var(--tx3);font-size:11px;margin-top:10px;letter-spacing:.5px}
+/* ===== MAP ===== */
+#mapView{position:absolute;inset:0;display:flex;flex-direction:column;}
+.mapcanvas-wrap{flex:1;position:relative;overflow:hidden;}
+#mapCanvas{width:100%;height:100%;display:block;touch-action:none;}
+.bandlabels{position:absolute;top:0;left:0;right:0;display:flex;pointer-events:none;padding:6px 8px 0;gap:4px;}
+.bl{flex:1;text-align:center;font-size:9px;font-weight:800;letter-spacing:.5px;opacity:.55;text-transform:uppercase;}
+.legend{position:absolute;left:10px;bottom:12px;display:flex;flex-direction:column;gap:5px;
+  background:rgba(10,14,26,.75);backdrop-filter:blur(10px);padding:9px 11px;border-radius:12px;
+  border:1px solid var(--line);pointer-events:none;}
+.legrow{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--tx2);}
+.legdot{width:10px;height:10px;border-radius:50%;}
+.maphint{position:absolute;right:10px;bottom:12px;max-width:130px;font-size:10px;color:var(--tx3);
+  text-align:right;line-height:1.3;pointer-events:none;}
 
-/* bar component */
-.pbar{height:8px;border-radius:6px;background:var(--bg0);position:relative;overflow:hidden}
-.pbar > i{position:absolute;top:0;bottom:0;left:0;border-radius:6px}
-.mark{position:absolute;top:-3px;width:3px;height:14px;background:var(--tx);border-radius:2px}
+/* dials */
+.dials{background:var(--bg1);border-top:1px solid var(--line);padding:11px var(--pad) 12px;}
+.dialrow{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.dialrow:last-child{margin-bottom:0;}
+.diallab{width:74px;font-size:12px;font-weight:700;color:var(--tx2);}
+.diallab b{display:block;font-size:16px;color:var(--tx);font-weight:800;}
+.diallab .toflag{color:var(--target);font-size:10px;font-weight:700;}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,var(--reach),var(--target),var(--likely),var(--safety));outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:#fff;border:3px solid var(--likely);box-shadow:0 2px 8px rgba(0,0,0,.5);cursor:grab;}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;
+  border:3px solid var(--likely);cursor:grab;}
+input[type=range]:disabled{opacity:.4;}
+.toggle-to{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx2);font-weight:600;}
+.toggle-to input{width:16px;height:16px;accent-color:var(--likely);}
+.bandcounts{display:flex;gap:6px;margin-top:10px;}
+.bc{flex:1;text-align:center;padding:6px 2px;border-radius:9px;background:var(--bg0);border:1px solid var(--line);}
+.bc b{display:block;font-size:17px;font-weight:800;transition:.2s;}
+.bc span{font-size:9px;font-weight:700;letter-spacing:.4px;color:var(--tx3);}
 
-/* lists */
-.sec-title{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--tx3);font-weight:700;margin:6px 2px 10px}
-.row{display:flex;align-items:center;gap:12px;background:var(--bg1);border:1px solid var(--line);border-radius:16px;padding:13px 15px;margin-bottom:10px;cursor:pointer}
-.row h3{font-size:15px;font-weight:700}
-.row .sub{font-size:12px;color:var(--tx2)}
-.row .r-pct{margin-left:auto;text-align:right}
-.row .r-pct b{font-size:19px;font-weight:800}
-.buckets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.bucket{background:var(--bg1);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
-.bucket .n{font-size:30px;font-weight:800;letter-spacing:-1px}
-.bucket .l{font-size:12px;font-weight:700;letter-spacing:.5px}
-.seg{display:flex;gap:6px;margin-bottom:14px}
-.seg button{flex:1;background:var(--bg1);border:1px solid var(--line);color:var(--tx2);border-radius:10px;padding:8px;font:600 12px 'Inter';cursor:pointer}
-.seg button.on{color:var(--green);border-color:var(--green);background:rgba(0,255,136,.08)}
+/* ===== DECK ===== */
+#deckView,#listView,#shortView{position:absolute;inset:0;display:flex;flex-direction:column;}
+.deckstage{flex:1;position:relative;padding:14px;overflow:hidden;}
+.card{position:absolute;inset:14px;background:linear-gradient(165deg,var(--bg2),var(--bg1));
+  border:1px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);will-change:transform;touch-action:pan-y;}
+.card .cbadge{position:absolute;top:18px;right:18px;font-size:10px;font-weight:800;padding:5px 10px;
+  border-radius:20px;letter-spacing:.5px;}
+.card h2{font-size:26px;font-weight:800;line-height:1.1;margin-bottom:4px;padding-right:70px;}
+.card .loc{font-size:13px;color:var(--tx2);font-weight:600;margin-bottom:14px;}
+.chancebig{font-size:52px;font-weight:900;line-height:1;letter-spacing:-2px;}
+.chancebig small{font-size:15px;font-weight:700;color:var(--tx3);}
+.bandtag{display:inline-block;font-size:12px;font-weight:800;padding:4px 12px;border-radius:20px;margin:8px 0 14px;letter-spacing:.5px;}
+.posbar{height:10px;border-radius:6px;background:var(--bg0);position:relative;overflow:hidden;margin:6px 0 3px;}
+.posfill{position:absolute;top:0;bottom:0;left:0;border-radius:6px;transition:width .3s;}
+.posmark{position:absolute;top:-3px;width:3px;height:16px;background:#fff;border-radius:2px;box-shadow:0 0 4px #000;}
+.poslabels{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);font-weight:600;}
+.cnote{font-size:13px;color:var(--tx2);line-height:1.5;margin:14px 0;flex:1;overflow-y:auto;}
+.cstat{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line);}
+.cstat span{color:var(--tx3);font-weight:600;}.cstat b{font-weight:700;}
+.cardactions{display:flex;gap:10px;margin-top:14px;}
+.cardactions button{flex:1;height:48px;border-radius:14px;font-size:14px;font-weight:800;display:flex;
+  align-items:center;justify-content:center;gap:6px;}
+.btn-skip{background:var(--bg0);border:1px solid var(--line);color:var(--tx2);}
+.btn-why{background:var(--bg0);border:1px solid var(--reach);color:var(--reach);}
+.btn-save{background:linear-gradient(120deg,var(--safety),#00c060);color:#04160c;}
+.btn-save.saved{background:var(--bg0);border:1px solid var(--safety);color:var(--safety);}
+.deckhint{text-align:center;font-size:11px;color:var(--tx3);padding:0 0 10px;font-weight:600;}
+.deckempty{position:absolute;inset:14px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;gap:14px;color:var(--tx2);}
+.deckempty .big{font-size:40px;}
+.resetbtn{padding:12px 22px;border-radius:14px;background:var(--likely);color:#04121e;font-weight:800;font-size:14px;}
 
-/* detail modal */
-#detail{position:absolute;inset:0;background:var(--bg0);z-index:40;transform:translateY(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:16px 18px 40px}
-#detail.open{transform:none}
-#detail .close{position:sticky;top:0;float:right;font-size:22px;background:var(--bg2);border:1px solid var(--line);color:var(--tx);width:38px;height:38px;border-radius:50%;cursor:pointer;z-index:2}
-#detail h2{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
-.drow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
-.drow .k{color:var(--tx2)}.drow .val{font-weight:700;text-align:right}
-.mini{margin:10px 0}.mini .lab{display:flex;justify-content:space-between;font-size:12px;color:var(--tx2);margin-bottom:4px}
-.why{background:var(--bg1);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--tx2);line-height:1.5;margin:14px 0}
-.lnk{display:inline-block;color:var(--cyan);font-size:13px;text-decoration:none;margin:4px 12px 4px 0;border-bottom:1px solid rgba(0,212,255,.3)}
-.dbtn{width:100%;padding:15px;border-radius:14px;border:0;font:800 15px 'Inter';cursor:pointer;margin-top:18px}
+/* ===== LIST ===== */
+.filterbar{display:flex;gap:7px;padding:10px var(--pad);overflow-x:auto;border-bottom:1px solid var(--line);}
+.filterbar::-webkit-scrollbar{display:none;}
+.fchip{white-space:nowrap;padding:7px 13px;border-radius:18px;background:var(--bg2);border:1px solid var(--line);
+  font-size:12px;font-weight:700;color:var(--tx2);min-height:36px;}
+.fchip.on{background:var(--likely);color:#04121e;border-color:transparent;}
+.listscroll{flex:1;overflow-y:auto;padding:8px var(--pad) 14px;}
+.lrow{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:16px;margin-bottom:9px;}
+.lrow:active{transform:scale(.99);}
+.ldot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.linfo{flex:1;min-width:0;}
+.linfo h3{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.linfo p{font-size:11px;color:var(--tx3);font-weight:600;}
+.lchance{text-align:right;flex-shrink:0;}
+.lchance b{font-size:19px;font-weight:800;}
+.lchance span{display:block;font-size:9px;font-weight:800;letter-spacing:.4px;}
+.vbadge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:6px;margin-top:2px;display:inline-block;}
+.vok{background:rgba(0,255,136,.15);color:var(--safety);}
+.vest{background:rgba(245,166,35,.15);color:var(--est);}
 
-/* onboarding */
-#onb{position:absolute;inset:0;background:var(--bg0);z-index:60;display:flex;flex-direction:column;padding:30px 24px 24px;overflow-y:auto}
-#onb h1{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1}
-#onb .lead{color:var(--tx2);margin:10px 0 26px;font-size:15px;line-height:1.5}
-#onb label{font-size:13px;font-weight:700;color:var(--tx2);display:block;margin:20px 0 8px}
-#onb input[type=number]{width:100%;background:var(--bg1);border:1px solid var(--line);border-radius:12px;color:var(--tx);
-  font:800 24px 'Inter';padding:14px 16px;letter-spacing:-.5px}
-#onb input[type=range]{width:100%;accent-color:var(--green)}
-.rangeval{font-size:24px;font-weight:800;color:var(--green)}
-.toggle{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px;color:var(--tx2)}
-.toggle input{width:20px;height:20px;accent-color:var(--green)}
-.prio{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
-.prio button{background:var(--bg1);border:1px solid var(--line);color:var(--tx2);border-radius:22px;padding:9px 15px;font:600 13px 'Inter';cursor:pointer}
-.prio button.on{color:#05070e;background:var(--green);border-color:var(--green);font-weight:800}
-.cta{margin-top:auto;padding-top:22px}
-.cta button{width:100%;padding:16px;border-radius:14px;border:0;background:var(--green);color:#05070e;font:800 16px 'Inter';cursor:pointer}
-.cta .skip{background:none;color:var(--tx3);font-weight:600;margin-top:6px}
-.empty{text-align:center;color:var(--tx3);padding:60px 30px;font-size:14px;line-height:1.6}
-.empty .big{font-size:40px;margin-bottom:12px}
+/* ===== DETAIL SHEET ===== */
+#sheet{position:absolute;inset:0;z-index:40;display:flex;align-items:flex-end;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:.28s;}
+#sheet.open{opacity:1;pointer-events:auto;}
+.sheetcard{width:100%;max-height:92%;background:linear-gradient(180deg,var(--bg2),var(--bg1));
+  border-top-left-radius:26px;border-top-right-radius:26px;border-top:1px solid var(--line);
+  transform:translateY(100%);transition:.32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+#sheet.open .sheetcard{transform:none;}
+.sheetgrip{width:42px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 4px;}
+.sheetscroll{overflow-y:auto;padding:6px 20px calc(24px + env(safe-area-inset-bottom));}
+.sheetscroll h2{font-size:24px;font-weight:800;line-height:1.1;padding-right:60px;}
+.sh-close{position:absolute;top:16px;right:18px;width:34px;height:34px;border-radius:50%;
+  background:var(--bg0);border:1px solid var(--line);color:var(--tx2);font-size:16px;z-index:2;}
+.sh-loc{font-size:13px;color:var(--tx2);font-weight:600;margin:3px 0 14px;}
+.sh-chance{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+.sh-chance .big{font-size:44px;font-weight:900;letter-spacing:-1px;}
+.explainbox{background:var(--bg0);border:1px solid var(--line);border-radius:16px;padding:15px;margin:14px 0;}
+.explainbox .eh{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--reach);
+  letter-spacing:.5px;margin-bottom:9px;}
+.explainbox p{font-size:14px;line-height:1.55;color:var(--tx);}
+.explainbox .flip{margin-top:10px;padding:10px 12px;border-radius:11px;background:rgba(245,166,35,.1);
+  border:1px solid rgba(245,166,35,.3);font-size:13px;color:var(--target);font-weight:600;line-height:1.4;}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0;}
+.sh-cell{background:var(--bg0);border:1px solid var(--line);border-radius:13px;padding:11px 13px;}
+.sh-cell .k{font-size:10px;color:var(--tx3);font-weight:700;letter-spacing:.4px;text-transform:uppercase;}
+.sh-cell .v{font-size:17px;font-weight:800;margin-top:3px;}
+.sh-cell .v small{font-size:11px;color:var(--tx3);font-weight:600;}
+.sectitle{font-size:12px;font-weight:800;color:var(--tx3);letter-spacing:.6px;text-transform:uppercase;margin:18px 0 8px;}
+.costbreak{background:var(--bg0);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.costbreak .cr{display:flex;justify-content:space-between;padding:11px 14px;font-size:14px;border-bottom:1px solid var(--line);}
+.costbreak .cr:last-child{border-bottom:none;}
+.costbreak .cr.net{background:rgba(0,255,136,.07);font-weight:800;}
+.costbreak .cr .neg{color:var(--safety);}
+.costflag{font-size:11px;color:var(--est);margin-top:6px;font-weight:600;line-height:1.4;}
+.sourcelinks{display:flex;flex-direction:column;gap:8px;}
+.slink{display:flex;align-items:center;gap:9px;padding:12px 14px;background:var(--bg0);border:1px solid var(--line);
+  border-radius:12px;font-size:14px;font-weight:600;color:var(--likely);text-decoration:none;}
+.slink:after{content:'↗';margin-left:auto;color:var(--tx3);}
+.sh-actions{display:flex;gap:10px;margin-top:18px;}
+.sh-actions button{flex:1;height:50px;border-radius:14px;font-weight:800;font-size:15px;}
+.posbar.lg{height:12px;}
+
+/* toast */
+#toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);
+  background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:11px 18px;border-radius:24px;
+  font-size:13px;font-weight:700;z-index:60;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.empty{text-align:center;color:var(--tx2);padding:50px 30px;font-size:14px;line-height:1.6;}
+.empty .big{font-size:38px;margin-bottom:12px;}
 </style>
 </head>
 <body>
 <div id="phone">
-  <div id="top">
-    <div class="brand">admitted<span>.</span></div>
-    <div id="strip"></div>
-  </div>
-  <div id="screen">
-    <div id="v-deck" class="view hidden"><div id="deck">
-      <div id="stack"></div>
-      <div id="deckbtns">
-        <button class="pass" title="Pass" onclick="swipeTop(-1)">✕</button>
-        <button class="star" title="Shortlist" onclick="swipeTop(1)">★</button>
+
+  <!-- ONBOARDING -->
+  <section id="onboard" class="screen active">
+    <div class="ob-head"><div class="ob-logo">◆ ADMITTED</div></div>
+    <div class="chatwrap" id="chatwrap"></div>
+    <div class="ob-input" id="obInput"></div>
+  </section>
+
+  <!-- MAIN APP -->
+  <section id="app" class="screen">
+    <div class="topbar">
+      <div>
+        <h1 id="appTitle">The Living Map</h1>
+        <div class="sub" id="appSub">TAP A BUBBLE · DRAG A DIAL</div>
       </div>
-      <div class="progress" id="deckprog"></div>
-    </div></div>
-    <div id="v-home" class="view hidden"></div>
-    <div id="v-short" class="view hidden"></div>
-    <div id="v-cost" class="view hidden"></div>
-    <div id="v-profile" class="view hidden"></div>
-    <div id="detail"></div>
-  </div>
-  <div id="nav">
-    <button data-t="deck" class="on" onclick="tab('deck')"><span class="ic">◆</span>Deck</button>
-    <button data-t="home" onclick="tab('home')"><span class="ic">▦</span>Bands</button>
-    <button data-t="short" onclick="tab('short')"><span class="ic">★</span>Shortlist</button>
-    <button data-t="cost" onclick="tab('cost')"><span class="ic">$</span>Cost</button>
-    <button data-t="profile" onclick="tab('profile')"><span class="ic">☰</span>Profile</button>
-  </div>
-  <div id="onb"></div>
+      <button class="iconbtn" id="btnEdit" title="Edit profile">⚙</button>
+    </div>
+    <div class="body">
+
+      <!-- MAP -->
+      <div id="mapView">
+        <div class="mapcanvas-wrap">
+          <canvas id="mapCanvas"></canvas>
+          <div class="bandlabels">
+            <div class="bl" style="color:var(--reach)">Reach</div>
+            <div class="bl" style="color:var(--target)">Target</div>
+            <div class="bl" style="color:var(--likely)">Likely</div>
+            <div class="bl" style="color:var(--safety)">Safety</div>
+          </div>
+          <div class="legend">
+            <div class="legrow"><span class="legdot" style="background:var(--safety)"></span>Safety ≥75%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--likely)"></span>Likely ≥55%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--target)"></span>Target ≥30%</div>
+            <div class="legrow"><span class="legdot" style="background:var(--reach)"></span>Reach &lt;30%</div>
+          </div>
+          <div class="maphint">Bubble size = your Fit.<br>Drag dials to reshape.</div>
+        </div>
+        <div class="dials">
+          <div class="dialrow">
+            <div class="diallab">GPA<b id="gpaVal">3.80</b></div>
+            <input type="range" id="gpaDial" min="2.0" max="4.3" step="0.01" value="3.8">
+          </div>
+          <div class="dialrow">
+            <div class="diallab">SAT<b id="satVal">1300</b><span class="toflag" id="toFlag"></span></div>
+            <input type="range" id="satDial" min="800" max="1600" step="10" value="1300">
+          </div>
+          <label class="toggle-to"><input type="checkbox" id="toChk"> Apply test-optional (ignore SAT)</label>
+          <div class="bandcounts" id="bandCounts"></div>
+        </div>
+      </div>
+
+      <!-- DECK -->
+      <div id="deckView" class="hidden">
+        <div class="deckstage" id="deckStage"></div>
+        <div class="deckhint">← skip · swipe right to shortlist →</div>
+      </div>
+
+      <!-- LIST -->
+      <div id="listView" class="hidden">
+        <div class="filterbar" id="filterBar"></div>
+        <div class="listscroll" id="listScroll"></div>
+      </div>
+
+      <!-- SHORTLIST -->
+      <div id="shortView" class="hidden">
+        <div class="filterbar"><button class="fchip on" id="costToggle">💰 Show 4-yr est. cost</button></div>
+        <div class="listscroll" id="shortScroll"></div>
+      </div>
+
+    </div>
+
+    <!-- TABS -->
+    <nav class="tabbar">
+      <button class="tab active" data-tab="map">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Map</button>
+      <button class="tab" data-tab="deck">
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 4v16"/></svg>Deck</button>
+      <button class="tab" data-tab="list">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>All 101</button>
+      <button class="tab" data-tab="short">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 6H21l-5 4 2 7-6-4-6 4 2-7-5-4h6.5z"/></svg>Shortlist</button>
+    </nav>
+  </section>
+
+  <!-- DETAIL SHEET -->
+  <div id="sheet"><div class="sheetcard">
+    <button class="sh-close" id="sheetClose">✕</button>
+    <div class="sheetgrip"></div>
+    <div class="sheetscroll" id="sheetScroll"></div>
+  </div></div>
+
+  <div id="toast"></div>
 </div>
 
 <script src="app-data.js"></script>
 <script>
-const S = window.SCHOOLS || [];
-const PRIOS = [['cost','Low cost'],['premed','Premed strength'],['research','Research'],['social','Social life'],['prestige','Prestige'],['west','Stay West']];
-const BANDS = ['Safety','Likely','Target','Reach'];
-const BCOL = {Safety:'var(--green)',Likely:'var(--cyan)',Target:'var(--amber)',Reach:'var(--purple)'};
-const money = n => n==null?'—':'$'+Math.round(n).toLocaleString();
-
-let st = load();
-function load(){
-  try{ const s = JSON.parse(localStorage.getItem('admitted_app')); if(s&&s.gpa) return s; }catch(e){}
-  return null;
+"use strict";
+/* ============ ENGINE (fixed constants — do not change) ============ */
+function chance(s,gpa,sat,to){
+  const pg=Math.max(0,Math.min(1.25,(gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
+  let pos=pg;
+  if(!s.tb&&!to&&s.s25>0&&sat>0){const ps=Math.max(0,Math.min(1.25,(sat-s.s25)/Math.max(1,(s.s75-s.s25))));pos=0.5*pg+0.5*ps;}
+  return Math.max(0.02,Math.min(0.96,s.admit*(0.35+1.3*pos)));
 }
-function save(){ localStorage.setItem('admitted_app', JSON.stringify(st)); }
+function band(p){return p>=.75?'Safety':p>=.55?'Likely':p>=.30?'Target':'Reach';}
+const BANDS=['Reach','Target','Likely','Safety'];
+const BANDCOL={Safety:'#00ff88',Likely:'#00d4ff',Target:'#f5a623',Reach:'#a855f7'};
 
-/* ---------- engine (matches the live web app; constants not invented here) ---------- */
-function chance(s){
-  const gpa=st.gpa, sat=st.sat, to=st.testOptional;
-  const pg = Math.max(0, Math.min(1.25,(gpa - s.g25)/Math.max(0.05,(s.g75 - s.g25))));
-  let pos = pg;
-  if(!s.tb && !to && s.s25>0 && sat>0){
-    const ps = Math.max(0, Math.min(1.25,(sat - s.s25)/Math.max(1,(s.s75 - s.s25))));
-    pos = 0.5*pg + 0.5*ps;
+/* Fit: weighted avg of chosen priorities over sub-scores (0-100) */
+function subScores(s){
+  const cost = s.coa!=null ? Math.max(0,Math.min(10, 10 - ((s.coa-(s.merit||0))-15000)/6500 )) : 5;
+  const prestige = (1-s.admit)*10;
+  const west = (s.region==='CA'||s.region==='West')?10:3;
+  return {cost, premed:s.premed??5, research:s.research??5, social:s.social??5, prestige, west};
+}
+function fit(s,prio){
+  const ss=subScores(s);
+  const keys = (prio&&prio.length)?prio:['premed','cost','research','social','prestige'];
+  let sum=0,n=0; keys.forEach(k=>{if(ss[k]!=null){sum+=ss[k];n++;}});
+  return Math.round((n?sum/n:5)*10); // 0-100
+}
+
+/* delta to flip a Reach up one band. Returns text or null */
+function flipDelta(s,gpa,sat,to){
+  const p=chance(s,gpa,sat,to); const b=band(p);
+  if(b==='Safety') return null;
+  const targetP = b==='Reach'?0.30 : b==='Target'?0.55 : 0.75;
+  const nextB = b==='Reach'?'Target' : b==='Target'?'Likely' : 'Safety';
+  // GPA needed (hold sat)
+  let gNeed=null;
+  for(let g=gpa; g<=5.0; g+=0.01){ if(chance(s,g,sat,to)>=targetP){gNeed=g;break;} }
+  // SAT needed (hold gpa), only if test used
+  let sNeed=null;
+  const usesSat = !s.tb && !to && s.s25>0;
+  if(usesSat){ for(let x=sat; x<=1600; x+=10){ if(chance(s,gpa,x,to)>=targetP){sNeed=x;break;} } }
+  const parts=[];
+  if(gNeed!=null){ const d=(gNeed-gpa); if(d>0.005) parts.push('+'+d.toFixed(2)+' GPA'); else parts.push('current GPA'); }
+  if(sNeed!=null){ const d=Math.round((sNeed-sat)/10)*10; if(d>0) parts.push('+'+d+' SAT'); }
+  if(!parts.length){
+    if(gNeed==null && (!usesSat||sNeed==null)) return {b,nextB,txt:'Even a perfect profile stays a '+b+' here — admit rate ('+Math.round(s.admit*100)+'%) is the ceiling.'};
   }
-  let p = s.admit * (0.35 + 1.3*pos);
-  return Math.max(0.02, Math.min(0.96, p));
-}
-function band(p){ return p>=.75?'Safety':p>=.55?'Likely':p>=.30?'Target':'Reach'; }
-function net(s){ return Math.max(0,(s.coa||0)-(s.merit||0)); }
-function cost4(s){ return net(s)*4; }
-function sub(s,k){
-  if(k==='cost'){ const n=net(s); return Math.max(0,Math.min(10, 10-(n-25000)/8000)); }
-  if(k==='prestige') return Math.max(0,Math.min(10,(1-(s.admit||1))*10));
-  if(k==='west') return ['West','CA','Southwest'].includes(s.region)||['CA','WA','OR','AZ','NV','UT'].includes(s.st)?9:3;
-  const v=s[k]; return v==null?5:v;
-}
-function fit(s){
-  const P = st.prios&&st.prios.length?st.prios:['premed','cost'];
-  let sum=0; P.forEach(k=>sum+=sub(s,k));
-  return Math.round((sum/P.length)*10);
-}
-function ranked(){ return S.slice().sort((a,b)=>fit(b)-fit(a)); }
-
-/* ---------- rendering ---------- */
-function strip(){
-  const el=document.getElementById('strip');
-  const chips=(st.prios||[]).map(k=>`<span>${(PRIOS.find(p=>p[0]===k)||[])[1]||k}</span>`).join('');
-  el.innerHTML=`<div>GPA <b>${st.gpa.toFixed(2)}</b></div><div>SAT <b>${st.testOptional?'—':st.sat}</b></div><div class="chips">${chips}</div>`;
-  el.onclick=()=>tab('profile');
+  return {b,nextB,txt:parts.join(' or ')+' → '+nextB};
 }
 
-let deck=[], di=0;
-function initDeck(){ deck=ranked(); di=0; renderDeck(); }
+/* ============ STATE ============ */
+const KEY='admitted_app';
+const DEFAULT_ST={gpa:3.8, sat:1300, to:false, grad:'2027', prio:[], saved:[], onboarded:false};
+let ST = Object.assign({}, DEFAULT_ST, load()||{});
+if(!Array.isArray(ST.saved)) ST.saved=[];
+if(!Array.isArray(ST.prio)) ST.prio=[];
+function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+
+const SCHOOLS = (window.SCHOOLS||[]).slice();
+if(!SCHOOLS.length){document.body.innerHTML='<p style="color:#fff;padding:40px">Error: app-data.js failed to load.</p>';}
+
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function money(n){return n==null?'—':'$'+Math.round(n).toLocaleString();}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1600);}
+
+/* ============ ONBOARDING (conversational) ============ */
+const OB_STEPS=[
+  {key:'welcome',bot:["Hey — I'm your admissions co-pilot. 👋","I'll map all 101 schools to YOUR real odds in about 30 seconds. Ready?"],chips:["Let's go →"],free:false,capture:()=>{}},
+  {key:'gpa',bot:["First — what's your GPA? (unweighted, 4.0 scale is fine)"],
+    chips:["3.5","3.7","3.9","4.0"],free:true,placeholder:"e.g. 3.85",
+    parse:v=>{const n=parseFloat(v);return (n>=1&&n<=5)?n:null;},
+    capture:n=>{ST.gpa=Math.max(2,Math.min(4.3,n));},
+    echo:n=>"GPA "+n},
+  {key:'sat',bot:["Got it. What about the SAT? Tap 'Test-optional' if you're skipping it — plenty of these schools are test-blind anyway."],
+    chips:["1200","1300","1400","1500","Test-optional"],free:true,placeholder:"e.g. 1350",
+    parse:v=>{ if(/test|optional|skip|blind|none/i.test(v)) return 'TO'; const n=parseInt(v.replace(/\D/g,''));return (n>=400&&n<=1600)?n:null;},
+    capture:v=>{ if(v==='TO'){ST.to=true;} else {ST.to=false;ST.sat=Math.max(800,Math.min(1600,v));}},
+    echo:v=>v==='TO'?"Test-optional":("SAT "+v)},
+  {key:'grad',bot:["When do you apply / graduate high school?"],
+    chips:["2026","2027","2028"],free:true,placeholder:"grad year",
+    parse:v=>{const n=v.replace(/\D/g,'');return n.length===4?n:null;},
+    capture:v=>{ST.grad=v;}, echo:v=>"Class of "+v},
+  {key:'prio',bot:["Last thing — what matters most? Pick a few. This shapes your Fit score.","(you can pick several)"],
+    multi:true,
+    chips:[["premed","🩺 Premed / health"],["cost","💰 Low cost"],["research","🔬 Research"],["social","🎉 Social life"],["prestige","🏛️ Prestige"],["west","🌴 West coast"]],
+    free:false, done:"Build my map →",
+    capture:arr=>{ST.prio=arr;}, echo:arr=>arr.length+" priorities"},
+];
+let obIdx=0, obMulti=[];
+function startOnboard(){obIdx=0;obMulti=[];$('chatwrap').innerHTML='';renderObStep();}
+function botBubble(text,cb){
+  const w=$('chatwrap');
+  const t=document.createElement('div');t.className='typing';t.innerHTML='<span></span><span></span><span></span>';
+  w.appendChild(t);w.scrollTop=w.scrollHeight;
+  setTimeout(()=>{t.remove();const m=document.createElement('div');m.className='msg bot';m.textContent=text;
+    w.appendChild(m);w.scrollTop=w.scrollHeight;cb&&cb();},650);
+}
+function userBubble(text){const w=$('chatwrap');const m=document.createElement('div');m.className='msg user';m.textContent=text;w.appendChild(m);w.scrollTop=w.scrollHeight;}
+function renderObStep(){
+  const step=OB_STEPS[obIdx];
+  $('obInput').innerHTML='';
+  let i=0;
+  (function next(){
+    if(i<step.bot.length){botBubble(step.bot[i++],next);}
+    else{renderObControls(step);}
+  })();
+}
+function renderObControls(step){
+  const box=$('obInput');box.innerHTML='';obMulti=[];
+  const chips=document.createElement('div');chips.className='chips';
+  (step.chips||[]).forEach(c=>{
+    const val=Array.isArray(c)?c[0]:c, lab=Array.isArray(c)?c[1]:c;
+    const b=document.createElement('button');b.className='chip';b.textContent=lab;
+    b.onclick=()=>{
+      if(step.multi){ b.classList.toggle('sel'); const k=val;
+        if(obMulti.includes(k))obMulti=obMulti.filter(x=>x!==k); else obMulti.push(k); return; }
+      handleOb(step, Array.isArray(c)?c[0]:c, lab);
+    };
+    chips.appendChild(b);
+  });
+  box.appendChild(chips);
+  if(step.multi){
+    const done=document.createElement('button');done.className='sendbtn';done.style.width='100%';done.style.borderRadius='14px';
+    done.textContent=step.done||'Continue →';done.onclick=()=>handleOb(step,obMulti.slice(),step.echo(obMulti));
+    box.appendChild(done);
+  }
+  if(step.free){
+    const row=document.createElement('div');row.className='freerow';
+    const inp=document.createElement('input');inp.type='text';inp.placeholder=step.placeholder||'Type…';inp.inputMode='decimal';
+    const send=document.createElement('button');send.className='sendbtn';send.textContent='→';
+    const go=()=>{const v=inp.value.trim();if(!v)return;const p=step.parse?step.parse(v):v;
+      if(p==null){toast("Hmm, try a number like "+ (step.placeholder||'that'));return;}
+      handleOb(step,p, step.echo?step.echo(p):v);};
+    send.onclick=go; inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+    row.appendChild(inp);row.appendChild(send);box.appendChild(row);
+  }
+}
+function handleOb(step,val,echo){
+  if(echo) userBubble(echo);
+  step.capture&&step.capture(val);
+  $('obInput').innerHTML='';
+  obIdx++;
+  if(obIdx>=OB_STEPS.length){ finishOnboard(); }
+  else { setTimeout(renderObStep,300); }
+}
+function finishOnboard(){
+  ST.onboarded=true; save();
+  botBubble("Done. Building your Living Map…",()=>{
+    setTimeout(()=>{ $('onboard').classList.remove('active'); $('app').classList.add('active'); initApp(); },700);
+  });
+}
+
+/* ============ THE LIVING MAP (physics) ============ */
+const canvas=$('mapCanvas'); const ctx=canvas.getContext('2d');
+let W=0,H=0,DPR=1;
+let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit}
+let raf=null, lastPick=null;
+
+function bandColumnX(b,w){ const i=BANDS.indexOf(b); const col=w/4; return col*i+col/2; }
+
+function buildNodes(){
+  const prio=ST.prio;
+  nodes = SCHOOLS.map(s=>{
+    const f=fit(s,prio);
+    const p=chance(s,ST.gpa,ST.sat,ST.to);
+    return {s, x:Math.random()*W, y:Math.random()*H, vx:0,vy:0,
+      r:6, tr:6, col:BANDCOL[band(p)], p, band:band(p), fit:f};
+  });
+  recomputeTargets();
+  // seed positions near columns
+  nodes.forEach(n=>{ n.x=bandColumnX(n.band,W)+(Math.random()*40-20); n.y=H*(0.2+Math.random()*0.6); });
+}
+function recomputeTargets(){
+  nodes.forEach(n=>{
+    const p=chance(n.s,ST.gpa,ST.sat,ST.to);
+    n.p=p; n.band=band(p); n.col=BANDCOL[n.band];
+    n.tr = 5 + (n.fit/100)*15; // radius 5-20 by fit
+  });
+}
+function resizeCanvas(){
+  const wrap=canvas.parentElement; DPR=Math.min(window.devicePixelRatio||1,2);
+  W=wrap.clientWidth; H=wrap.clientHeight;
+  canvas.width=W*DPR; canvas.height=H*DPR; canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+function step(){
+  const cx=[]; // column centers
+  for(let i=0;i<4;i++) cx[i]=(W/4)*i+(W/8);
+  // forces
+  for(let i=0;i<nodes.length;i++){
+    const n=nodes[i];
+    n.r += (n.tr-n.r)*0.12;
+    const targetX = bandColumnX(n.band,W);
+    // pull toward band column x, and gentle gravity to vertical center-band
+    n.vx += (targetX - n.x)*0.010;
+    n.vy += (H*0.5 - n.y)*0.004;
+  }
+  // collision / repulsion (O(n^2) but n=101, fine)
+  for(let i=0;i<nodes.length;i++){
+    const a=nodes[i];
+    for(let j=i+1;j<nodes.length;j++){
+      const b=nodes[j];
+      let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
+      const min=a.r+b.r+2;
+      if(d<min){ const push=(min-d)/d*0.5; dx*=push;dy*=push;
+        a.vx-=dx;a.vy-=dy;b.vx+=dx;b.vy+=dy; }
+    }
+  }
+  for(const n of nodes){
+    n.vx*=0.82; n.vy*=0.82;
+    n.x+=n.vx; n.y+=n.vy;
+    const m=n.r+2;
+    if(n.x<m){n.x=m;n.vx*=-.4;} if(n.x>W-m){n.x=W-m;n.vx*=-.4;}
+    if(n.y<m+16){n.y=m+16;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
+  }
+  draw();
+  raf=requestAnimationFrame(step);
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // band column tint
+  for(let i=0;i<4;i++){
+    ctx.fillStyle='rgba(255,255,255,'+(i%2?0.012:0.028)+')';
+    ctx.fillRect((W/4)*i,0,W/4,H);
+  }
+  for(const n of nodes){
+    const glow = n===lastPick;
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7);
+    const g=ctx.createRadialGradient(n.x-n.r*.3,n.y-n.r*.3,1,n.x,n.y,n.r);
+    g.addColorStop(0,n.col); g.addColorStop(1,shade(n.col,-.35));
+    ctx.fillStyle=g;
+    if(glow){ctx.shadowColor=n.col;ctx.shadowBlur=22;} else {ctx.shadowColor=n.col;ctx.shadowBlur=6;}
+    ctx.fill(); ctx.shadowBlur=0;
+    if(n.r>13){ // label big bubbles
+      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='700 9px Inter,sans-serif';ctx.textAlign='center';
+      const nm=n.s.n.length>13?n.s.n.slice(0,12)+'…':n.s.n;
+      ctx.fillText(nm,n.x,n.y+3);
+    }
+  }
+}
+function shade(hex,amt){ // amt -1..1
+  const c=hex.replace('#',''); let r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
+  r=Math.max(0,Math.min(255,r+amt*255));g=Math.max(0,Math.min(255,g+amt*255));b=Math.max(0,Math.min(255,b+amt*255));
+  return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
+}
+function pickNode(px,py){
+  let best=null,bd=1e9;
+  for(const n of nodes){const d=Math.hypot(px-n.x,py-n.y); if(d<n.r+6&&d<bd){bd=d;best=n;}}
+  return best;
+}
+canvas.addEventListener('click',e=>{
+  const rect=canvas.getBoundingClientRect();
+  const n=pickNode(e.clientX-rect.left,e.clientY-rect.top);
+  if(n){lastPick=n;openSheet(n.s);}
+});
+canvas.addEventListener('touchend',e=>{
+  if(!e.changedTouches.length)return;
+  const t=e.changedTouches[0];const rect=canvas.getBoundingClientRect();
+  const n=pickNode(t.clientX-rect.left,t.clientY-rect.top);
+  if(n){lastPick=n;openSheet(n.s);}
+},{passive:true});
+
+function startMap(){ if(!nodes.length){resizeCanvas();buildNodes();} if(!raf)step(); }
+function stopMap(){ if(raf){cancelAnimationFrame(raf);raf=null;} }
+
+/* band counts UI */
+function renderBandCounts(){
+  const c={Reach:0,Target:0,Likely:0,Safety:0};
+  SCHOOLS.forEach(s=>c[band(chance(s,ST.gpa,ST.sat,ST.to))]++);
+  const el=$('bandCounts');
+  el.innerHTML=BANDS.map(b=>`<div class="bc"><b style="color:${BANDCOL[b]}">${c[b]}</b><span>${b.toUpperCase()}</span></div>`).join('');
+}
+
+/* dials */
+function syncDials(){
+  $('gpaDial').value=ST.gpa; $('gpaVal').textContent=ST.gpa.toFixed(2);
+  $('satDial').value=ST.sat; $('satVal').textContent=ST.to?'—':ST.sat;
+  $('toChk').checked=ST.to; $('satDial').disabled=ST.to;
+  $('toFlag').textContent=ST.to?'(TO)':'';
+}
+function onDialChange(){
+  ST.gpa=parseFloat($('gpaDial').value);
+  ST.sat=parseInt($('satDial').value);
+  ST.to=$('toChk').checked;
+  $('gpaVal').textContent=ST.gpa.toFixed(2);
+  $('satVal').textContent=ST.to?'—':ST.sat;
+  $('satDial').disabled=ST.to; $('toFlag').textContent=ST.to?'(TO)':'';
+  recomputeTargets(); renderBandCounts();
+  save();
+}
+
+/* ============ DECK ============ */
+let deckOrder=[], deckPos=0;
+function buildDeck(){
+  // order by fit desc, then chance
+  deckOrder = SCHOOLS.map(s=>s).sort((a,b)=> fit(b,ST.prio)-fit(a,ST.prio) || chance(b,ST.gpa,ST.sat,ST.to)-chance(a,ST.gpa,ST.sat,ST.to));
+  deckPos=0; renderDeck();
+}
 function renderDeck(){
-  const stack=document.getElementById('stack');
-  stack.innerHTML='';
-  const remaining=deck.slice(di, di+3).reverse();
-  if(remaining.length===0){
-    stack.innerHTML=`<div class="empty"><div class="big">✓</div>That's all ${deck.length} schools.<br>Check your Shortlist, or tap a band to revisit.</div>`;
-    document.getElementById('deckprog').textContent='';
+  const stage=$('deckStage'); stage.innerHTML='';
+  const remaining=deckOrder.slice(deckPos, deckPos+3).reverse();
+  if(!remaining.length){
+    stage.innerHTML=`<div class="deckempty"><div class="big">🎉</div><div><b>That's all 101.</b><br>You've been through every school.</div><button class="resetbtn" id="deckReset">Restart deck</button></div>`;
+    $('deckReset').onclick=()=>buildDeck();
     return;
   }
   remaining.forEach((s,idx)=>{
     const isTop = idx===remaining.length-1;
-    const p=chance(s), b=band(p);
-    const depth=remaining.length-1-idx;
-    const c=document.createElement('div');
-    c.className='card';
-    c.style.transform=`scale(${1-depth*0.04}) translateY(${depth*-10}px)`;
-    c.style.zIndex=idx;
-    c.innerHTML=`
-      <div class="stamp like">LIKE</div><div class="stamp nope">PASS</div>
-      <div class="rank">Fit ${fit(s)} · ${s.type||''} ${s.program?'· BS/MD':''}</div>
-      <h2>${s.n}</h2><div class="loc">${s.city||''}${s.st?', '+s.st:''}</div>
-      <div class="big"><div class="pct" style="color:${BCOL[b]}">${Math.round(p*100)}%</div>
-        <span class="band b-${b}">${b}</span></div>
-      <div class="barwrap">${chanceBar(s,p)}</div>
-      <div class="hook">${s.note?s.note.replace(/</g,'&lt;'):'A solid option on your list.'}</div>
-      <div class="foot">
-        <div>True cost<b>${money(cost4(s))}</b><span style="color:var(--tx3);font-size:10px">est · 4yr</span></div>
-        <div>Grad 4yr<b>${s.grad4!=null?s.grad4+'%':'—'}</b></div>
-        <div style="margin-left:auto"><span class="badge ${s.verified?'v-yes':'v-no'}">${s.verified?'✓ VERIFIED':'EST'}</span></div>
-      </div>`;
-    c.onclick=(e)=>{ if(!c.dataset.dragged) openDetail(s); };
-    if(isTop) makeDraggable(c);
-    stack.appendChild(c);
+    const depth = remaining.length-1-idx;
+    const card=buildCard(s);
+    card.style.transform=`translateY(${depth*10}px) scale(${1-depth*0.04})`;
+    card.style.zIndex=idx+1;
+    card.style.opacity = depth>1?0:1;
+    if(isTop) enableSwipe(card,s);
+    stage.appendChild(card);
   });
-  document.getElementById('deckprog').textContent=`${di+1} of ${deck.length}`;
 }
-function chanceBar(s,p){
-  // show user's blended position 0..1 on a track
-  const pg=Math.max(0,Math.min(1,(st.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25))));
-  let pos=pg;
-  if(!s.tb&&!st.testOptional&&s.s25>0){ const ps=Math.max(0,Math.min(1,(st.sat-s.s25)/Math.max(1,(s.s75-s.s25)))); pos=(pg+ps)/2; }
-  const b=band(p);
-  return `<div class="pbar"><i style="width:${Math.round(pos*100)}%;background:${BCOL[b]}"></i><span class="mark" style="left:calc(${Math.round(pos*100)}% - 1px)"></span></div>
-    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--tx3);margin-top:4px"><span>you vs their mid-50%</span><span>${s.tb?'test-blind':(st.testOptional?'GPA only':'GPA+SAT')}</span></div>`;
+function buildCard(s){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p); const col=BANDCOL[b];
+  const pos=posPct(s,ST.gpa,ST.sat,ST.to);
+  const saved=ST.saved.includes(s.id);
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML=`
+    <div class="cbadge" style="background:${col}22;color:${col}">${b.toUpperCase()}</div>
+    <h2>${esc(s.n)}</h2>
+    <div class="loc">${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)} · ${sizeLabel(s.size)}</div>
+    <div class="chancebig" style="color:${col}">${Math.round(p*100)}<small>% chance</small></div>
+    <div class="bandtag" style="background:${col}22;color:${col}">${b}</div>
+    <div class="posbar"><div class="posfill" style="width:${Math.min(100,pos)}%;background:${col}"></div><div class="posmark" style="left:${Math.min(99,pos)}%"></div></div>
+    <div class="poslabels"><span>${s.g25} GPA${s.tb?'':' / '+(s.s25||'—')+' SAT'}</span><span>your position</span><span>${s.g75}${s.tb?'':' / '+(s.s75||'—')}</span></div>
+    <div class="cnote">${esc(s.note)}</div>
+    <div class="cstat"><span>Cost of attendance</span><b>${money(s.coa)}/yr</b></div>
+    <div class="cstat"><span>Est. merit</span><b>${s.merit?money(s.merit)+'/yr':'—'}</b></div>
+    <div class="cstat"><span>4-yr grad rate</span><b>${s.grad4!=null?s.grad4+'%':'—'}</b></div>
+    <div class="cardactions">
+      <button class="btn-skip">✕ Skip</button>
+      <button class="btn-why">? Why</button>
+      <button class="btn-save ${saved?'saved':''}">${saved?'✓ Saved':'★ Save'}</button>
+    </div>`;
+  card.querySelector('.btn-skip').onclick=()=>swipeCard(card,-1);
+  card.querySelector('.btn-save').onclick=()=>{toggleSave(s.id);swipeCard(card,1);};
+  card.querySelector('.btn-why').onclick=()=>openSheet(s,true);
+  return card;
 }
-
-/* drag / swipe: pointer events (touch + mouse) */
-function makeDraggable(c){
+function sizeLabel(z){return {S:'Small',M:'Medium',L:'Large'}[z]||z||'';}
+function posPct(s,gpa,sat,to){
+  const pg=(gpa-s.g25)/Math.max(0.05,(s.g75-s.g25));
+  if(s.tb||to||!s.s25){return Math.max(0,Math.min(100,pg*100));}
+  const ps=(sat-s.s25)/Math.max(1,(s.s75-s.s25));
+  return Math.max(0,Math.min(100,((pg+ps)/2)*100));
+}
+function enableSwipe(card,s){
   let sx=0,sy=0,dx=0,dy=0,drag=false;
-  c.addEventListener('pointerdown',e=>{drag=true;sx=e.clientX;sy=e.clientY;c.setPointerCapture(e.pointerId);c.style.transition='none';});
-  c.addEventListener('pointermove',e=>{
-    if(!drag)return; dx=e.clientX-sx; dy=e.clientY-sy;
-    if(Math.abs(dx)>6)c.dataset.dragged='1';
-    c.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*0.06}deg)`;
-    c.querySelector('.like').style.opacity=Math.max(0,Math.min(1,dx/90));
-    c.querySelector('.nope').style.opacity=Math.max(0,Math.min(1,-dx/90));
-  });
-  const end=()=>{
-    if(!drag)return; drag=false; c.style.transition='transform .3s ease';
-    if(dx>95){ fly(c,1); } else if(dx<-95){ fly(c,-1); }
-    else { c.style.transform=''; c.querySelector('.like').style.opacity=0;c.querySelector('.nope').style.opacity=0; setTimeout(()=>c.removeAttribute('data-dragged'),50); }
+  const start=(x,y)=>{drag=true;sx=x;sy=y;card.style.transition='none';};
+  const move=(x,y)=>{ if(!drag)return; dx=x-sx;dy=y-sy;
+    card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*0.06}deg)`;
+    card.style.borderColor = dx>60?'var(--safety)':dx<-60?'var(--reach)':'var(--line)';
+  };
+  const end=()=>{ if(!drag)return; drag=false;
+    card.style.transition='transform .3s, opacity .3s, border-color .2s';
+    if(dx>90){ if(!ST.saved.includes(s.id))toggleSave(s.id); swipeCard(card,1); }
+    else if(dx<-90){ swipeCard(card,-1); }
+    else { card.style.transform=''; card.style.borderColor='var(--line)'; }
     dx=dy=0;
   };
-  c.addEventListener('pointerup',end); c.addEventListener('pointercancel',end);
+  card.addEventListener('mousedown',e=>{start(e.clientX,e.clientY);
+    const mm=e=>move(e.clientX,e.clientY),mu=()=>{end();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+    document.addEventListener('mousemove',mm);document.addEventListener('mouseup',mu);});
+  card.addEventListener('touchstart',e=>start(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
+  card.addEventListener('touchmove',e=>{move(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+  card.addEventListener('touchend',end);
 }
-function fly(c,dir){
-  c.style.transform=`translate(${dir*600}px,${-40}px) rotate(${dir*30}deg)`;
-  c.style.opacity='0';
-  setTimeout(()=>commitSwipe(dir),200);
-}
-function swipeTop(dir){
-  const c=document.querySelector('#stack .card:last-child'); if(!c)return;
-  c.style.transition='transform .3s ease'; fly(c,dir);
-}
-function commitSwipe(dir){
-  const s=deck[di];
-  if(dir>0 && s && !st.shortlist.includes(s.id)){ st.shortlist.push(s.id); save(); }
-  di++; renderDeck();
+function swipeCard(card,dir){
+  card.style.transition='transform .35s ease, opacity .35s';
+  card.style.transform=`translate(${dir*500}px,${-40}px) rotate(${dir*25}deg)`;
+  card.style.opacity=0;
+  setTimeout(()=>{ deckPos++; renderDeck(); },260);
 }
 
-function renderHome(){
-  const counts={Safety:0,Likely:0,Target:0,Reach:0};
-  S.forEach(s=>counts[band(chance(s))]++);
-  const el=document.getElementById('v-home');
-  el.innerHTML=`<div class="sec-title">Your ${S.length} schools by chance</div>
-    <div class="buckets">${BANDS.map(b=>`<div class="bucket" onclick="deckFilter('${b}')">
-      <div class="n" style="color:${BCOL[b]}">${counts[b]}</div><div class="l" style="color:${BCOL[b]}">${b}</div></div>`).join('')}</div>
-    <div class="sec-title">Best fit for your priorities</div>
-    ${ranked().slice(0,6).map(s=>rowHTML(s)).join('')}`;
+/* ============ SHORTLIST / SAVE ============ */
+function toggleSave(id){
+  if(ST.saved.includes(id)){ST.saved=ST.saved.filter(x=>x!==id);toast('Removed from shortlist');}
+  else {ST.saved.push(id);toast('★ Added to shortlist');}
+  save(); if(currentTab==='short')renderShort(); if(currentTab==='list')renderList();
 }
-function deckFilter(b){ deck=ranked().filter(s=>band(chance(s))===b); di=0; tab('deck'); renderDeck(); }
-
-function rowHTML(s){
-  const p=chance(s),b=band(p);
-  return `<div class="row" onclick="openDetail(SBYID['${s.id}'])">
-    <div><h3>${s.n}</h3><div class="sub">${s.city||''}${s.st?', '+s.st:''} · ${money(cost4(s))} est</div></div>
-    <div class="r-pct"><b style="color:${BCOL[b]}">${Math.round(p*100)}%</b><div class="band b-${b}" style="margin-top:2px">${b}</div></div>
+let showCost=true;
+function renderShort(){
+  const box=$('shortScroll');
+  const list=ST.saved.map(id=>SCHOOLS.find(s=>s.id===id)).filter(Boolean);
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">★</div>No schools saved yet.<br>Swipe right in the Deck or tap ★ on any school to build your shortlist.</div>`;return;}
+  let total4=0; list.forEach(s=>{if(s.coa!=null)total4+=(s.coa-(s.merit||0))*4;});
+  let html='';
+  if(showCost){ html+=`<div class="lrow" style="background:var(--bg0);border-color:var(--target)"><div class="linfo"><h3>Est. 4-yr net cost (all saved)</h3><p style="color:var(--est)">flat estimate · COA − merit × 4 · verify each</p></div><div class="lchance"><b style="color:var(--target)">${money(total4)}</b></div></div>`; }
+  list.forEach(s=>{ html+=rowHTML(s, showCost?`4yr ${money((s.coa!=null)?(s.coa-(s.merit||0))*4:null)}`:null); });
+  box.innerHTML=html;
+  bindRows(box);
+}
+function rowHTML(s, extra){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p); const col=BANDCOL[b];
+  return `<div class="lrow" data-id="${s.id}">
+    <div class="ldot" style="background:${col}"></div>
+    <div class="linfo"><h3>${esc(s.n)}</h3><p>${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)}${extra?' · '+esc(extra):''}</p>
+      <span class="vbadge ${s.verified?'vok':'vest'}">${s.verified?'✓ VERIFIED':'~ EST'}</span></div>
+    <div class="lchance"><b style="color:${col}">${Math.round(p*100)}%</b><span style="color:${col}">${b.toUpperCase()}</span></div>
   </div>`;
 }
-const SBYID={}; S.forEach(s=>SBYID[s.id]=s);
+function bindRows(box){box.querySelectorAll('.lrow[data-id]').forEach(r=>{r.onclick=()=>{const s=SCHOOLS.find(x=>x.id===r.dataset.id);if(s)openSheet(s);};});}
 
-let shortSort='chance';
-function renderShort(){
-  const el=document.getElementById('v-short');
-  const list=st.shortlist.map(id=>SBYID[id]).filter(Boolean);
-  if(!list.length){ el.innerHTML=`<div class="empty"><div class="big">★</div>No schools yet.<br>Swipe right on the Deck to shortlist the ones you like.</div>`; return; }
-  list.sort((a,b)=> shortSort==='chance'?chance(b)-chance(a): shortSort==='cost'?cost4(a)-cost4(b): fit(b)-fit(a));
-  el.innerHTML=`<div class="sec-title">${list.length} shortlisted</div>
-    <div class="seg">${['chance','cost','fit'].map(k=>`<button class="${shortSort===k?'on':''}" onclick="shortSort='${k}';renderShort()">by ${k}</button>`).join('')}</div>
-    ${list.map(s=>rowHTML(s)).join('')}`;
+/* ============ LIST ============ */
+let listFilter='all';
+const FILTERS=[['all','All'],['Reach','Reach'],['Target','Target'],['Likely','Likely'],['Safety','Safety'],['saved','★ Saved'],['UC','UC'],['CSU','CSU'],['Private','Private'],['Public','Public']];
+function renderFilterBar(){
+  $('filterBar').innerHTML=FILTERS.map(f=>`<button class="fchip ${listFilter===f[0]?'on':''}" data-f="${f[0]}">${f[1]}</button>`).join('');
+  $('filterBar').querySelectorAll('.fchip').forEach(b=>b.onclick=()=>{listFilter=b.dataset.f;renderFilterBar();renderList();});
 }
-
-function renderCost(){
-  const el=document.getElementById('v-cost');
-  const list=st.shortlist.map(id=>SBYID[id]).filter(Boolean);
-  if(!list.length){ el.innerHTML=`<div class="empty"><div class="big">$</div>Shortlist some schools to see total cost.</div>`; return; }
-  const total=list.reduce((a,s)=>a+cost4(s),0);
-  el.innerHTML=`<div class="sec-title">Estimated 4-year cost · shortlist</div>
-    <div style="background:var(--bg1);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:8px">
-      <div style="font-size:12px;color:var(--tx2)">Total across ${list.length} schools (est)</div>
-      <div style="font-size:34px;font-weight:800;letter-spacing:-1px;color:var(--green)">${money(total)}</div>
-      <div style="font-size:11px;color:var(--tx3);margin-top:4px">flat (COA − merit) × 4 · not need-based · verify each on its card</div></div>
-    ${list.sort((a,b)=>cost4(a)-cost4(b)).map(s=>`<div class="row" onclick="openDetail(SBYID['${s.id}'])">
-      <div><h3>${s.n}</h3><div class="sub">${money(net(s))}/yr net${s.merit?' · '+money(s.merit)+' merit':''}</div></div>
-      <div class="r-pct"><b>${money(cost4(s))}</b></div></div>`).join('')}`;
+function renderList(){
+  const box=$('listScroll');
+  let list=SCHOOLS.slice();
+  if(['Reach','Target','Likely','Safety'].includes(listFilter)) list=list.filter(s=>band(chance(s,ST.gpa,ST.sat,ST.to))===listFilter);
+  else if(listFilter==='saved') list=list.filter(s=>ST.saved.includes(s.id));
+  else if(['UC','CSU','Private','Public'].includes(listFilter)) list=list.filter(s=>s.type===listFilter);
+  list.sort((a,b)=>chance(b,ST.gpa,ST.sat,ST.to)-chance(a,ST.gpa,ST.sat,ST.to));
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">🔍</div>No schools match this filter${listFilter==='saved'?' — save some first!':''}.</div>`;return;}
+  box.innerHTML=list.map(s=>rowHTML(s)).join('');
+  bindRows(box);
 }
 
-function renderProfile(){
-  const el=document.getElementById('v-profile');
-  el.innerHTML=`<div class="sec-title">Your profile</div>
-    <label>Unweighted GPA</label>
-    <input type="range" min="2.5" max="4.0" step="0.01" value="${st.gpa}" oninput="st.gpa=+this.value;document.getElementById('gpav').textContent=(+this.value).toFixed(2);save();strip()">
-    <div class="rangeval" id="gpav">${st.gpa.toFixed(2)}</div>
-    <label>SAT (0 if test-optional)</label>
-    <input type="number" value="${st.sat}" min="0" max="1600" oninput="st.sat=+this.value||0;save();strip()">
-    <div class="toggle"><input type="checkbox" id="topt" ${st.testOptional?'checked':''} onchange="st.testOptional=this.checked;save();strip()"><label style="margin:0">Applying test-optional (ignore SAT)</label></div>
-    <label>Priorities</label>
-    <div class="prio">${PRIOS.map(p=>`<button class="${(st.prios||[]).includes(p[0])?'on':''}" onclick="togglePrio('${p[0]}')">${p[1]}</button>`).join('')}</div>
-    <div class="why" style="margin-top:22px">Everything — chances, bands, fit, cost — recomputes from these values against each school's real, sourced numbers. Nothing is pre-baked.</div>
-    <button class="dbtn" style="background:var(--bg2);color:var(--tx)" onclick="if(confirm('Reset everything?')){localStorage.removeItem('admitted_app');location.reload()}">Reset</button>`;
+/* ============ DETAIL SHEET + AI EXPLAINER ============ */
+function explainText(s){
+  const p=chance(s,ST.gpa,ST.sat,ST.to); const b=band(p);
+  const pg=(ST.gpa-s.g25)/Math.max(0.05,(s.g75-s.g25));
+  const gposTxt = pg>=1?'above their 75th-percentile GPA': pg>=0.5?'in the upper half of their admitted GPA range': pg>=0?'in the lower half of their admitted GPA range':'below their typical admitted GPA range';
+  const usesSat=!s.tb&&!ST.to&&s.s25>0;
+  let satTxt='';
+  if(s.tb) satTxt=' They\'re test-blind, so your SAT isn\'t counted.';
+  else if(ST.to) satTxt=' You\'re applying test-optional, so only GPA is weighed.';
+  else if(usesSat){ const ps=(ST.sat-s.s25)/Math.max(1,(s.s75-s.s25));
+    satTxt=' Your '+ST.sat+' SAT sits '+(ps>=1?'above':ps>=0.5?'in the upper half of':ps>=0?'in the lower half of':'below')+' their '+s.s25+'–'+s.s75+' range.'; }
+  const rate=Math.round(s.admit*100);
+  let msg=`For you this is a ${b}. Their overall admit rate is ${rate}%. Your ${ST.gpa.toFixed(2)} GPA lands ${gposTxt} (${s.g25}–${s.g75}).${satTxt} Combined, the model puts your personal odds at ${Math.round(p*100)}%.`;
+  return {msg, flip: flipDelta(s,ST.gpa,ST.sat,ST.to), band:b, col:BANDCOL[b], p};
 }
-function togglePrio(k){ st.prios=st.prios||[]; const i=st.prios.indexOf(k); if(i<0)st.prios.push(k); else st.prios.splice(i,1); save(); renderProfile(); strip(); }
+function openSheet(s,jumpExplain){
+  const {msg,flip,band:b,col,p}=explainText(s);
+  const pos=posPct(s,ST.gpa,ST.sat,ST.to);
+  const net=s.coa!=null?s.coa-(s.merit||0):null;
+  const saved=ST.saved.includes(s.id);
+  let flipHTML='';
+  if(flip){ flipHTML=`<div class="flip">📈 ${esc(flip.txt)}</div>`; }
+  const linksHTML=(s.links||[]).map(l=>`<a class="slink" href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join('')||'<div style="color:var(--tx3);font-size:13px">No source links provided.</div>';
+  $('sheetScroll').innerHTML=`
+    <span class="vbadge ${s.verified?'vok':'vest'}" style="margin-bottom:6px">${s.verified?'✓ VERIFIED DATA':'~ ESTIMATED — verify'}</span>
+    <h2>${esc(s.n)}</h2>
+    <div class="sh-loc">${esc(s.city)}, ${esc(s.st)} · ${esc(s.type)} · ${sizeLabel(s.size)}${s.program?' · '+esc(s.program.name):''}</div>
+    <div class="sh-chance"><div class="big" style="color:${col}">${Math.round(p*100)}%</div><div class="bandtag" style="background:${col}22;color:${col};margin:0">${b}</div></div>
+    <div class="posbar lg"><div class="posfill" style="width:${Math.min(100,pos)}%;background:${col}"></div><div class="posmark" style="left:${Math.min(99,pos)}%"></div></div>
+    <div class="poslabels"><span>25th: ${s.g25} GPA${s.tb?'':' / '+(s.s25||'—')}</span><span>you</span><span>75th: ${s.g75}${s.tb?'':' / '+(s.s75||'—')}</span></div>
 
-function openDetail(s){
-  if(!s)return; const p=chance(s),b=band(p);
-  const d=document.getElementById('detail');
-  const links=(s.links||[]).map(l=>`<a class="lnk" href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join('');
-  const why = b==='Safety'?`Your GPA/SAT sit at or above ${s.n}'s admitted middle-50%, and its ${Math.round((s.admit||0)*100)}% overall admit rate is forgiving — a strong bet.`
-    : b==='Reach'?`${s.n} admits about ${Math.round((s.admit||0)*100)}% and your stats land in the lower part of its range, so treat it as a reach.`
-    : `Your stats fall within ${s.n}'s admitted middle-50%; at a ${Math.round((s.admit||0)*100)}% admit rate that puts you in ${b.toLowerCase()} territory.`;
-  d.innerHTML=`<button class="close" onclick="closeDetail()">×</button>
-    <div class="rank" style="color:var(--tx3);font-size:11px;letter-spacing:1px;padding-top:6px">${s.type||''} · ${s.city||''}, ${s.st||''} ${s.program?'· BS/MD program':''}</div>
-    <h2>${s.n}</h2>
-    <div style="display:flex;align-items:baseline;gap:10px;margin:10px 0"><span style="font-size:44px;font-weight:800;letter-spacing:-2px;color:${BCOL[b]}">${Math.round(p*100)}%</span><span class="band b-${b}">${b}</span><span class="badge ${s.verified?'v-yes':'v-no'}" style="margin-left:auto">${s.verified?'✓ VERIFIED':'EST'}</span></div>
-    <div class="barwrap">${chanceBar(s,p)}</div>
-    <div class="why">${why}</div>
-    <div class="mini"><div class="lab"><span>Premed</span><span>${s.premed??'—'}/10</span></div><div class="pbar"><i style="width:${(s.premed||0)*10}%;background:var(--cyan)"></i></div></div>
-    <div class="mini"><div class="lab"><span>Research</span><span>${s.research??'—'}/10</span></div><div class="pbar"><i style="width:${(s.research||0)*10}%;background:var(--cyan)"></i></div></div>
-    <div class="mini"><div class="lab"><span>Social life</span><span>${s.social??'—'}/10</span></div><div class="pbar"><i style="width:${(s.social||0)*10}%;background:var(--cyan)"></i></div></div>
-    <div style="margin:18px 0 6px" class="sec-title">Cost (estimate)</div>
-    <div class="drow"><span class="k">Cost of attendance</span><span class="val">${money(s.coa)}/yr</span></div>
-    <div class="drow"><span class="k">Auto merit${s.meritName?' · '+s.meritName:''}</span><span class="val" style="color:var(--green)">${s.merit?'−'+money(s.merit):'—'}</span></div>
-    <div class="drow"><span class="k">Net per year</span><span class="val">${money(net(s))}</span></div>
-    <div class="drow"><span class="k">4-year total (flat est)</span><span class="val" style="color:var(--amber)">${money(cost4(s))}</span></div>
-    <div style="margin:18px 0 6px" class="sec-title">The numbers</div>
-    <div class="drow"><span class="k">Overall admit rate</span><span class="val">${Math.round((s.admit||0)*100)}%</span></div>
-    <div class="drow"><span class="k">Admitted GPA mid-50%</span><span class="val">${s.g25}–${s.g75}</span></div>
-    <div class="drow"><span class="k">SAT mid-50%</span><span class="val">${s.tb?'test-blind':(s.s25?s.s25+'–'+s.s75:'—')}</span></div>
-    <div class="drow"><span class="k">4-year grad rate</span><span class="val">${s.grad4!=null?s.grad4+'%':'—'}</span></div>
-    <div class="drow"><span class="k">Deadline</span><span class="val">${s.dl||'—'}</span></div>
-    <div style="margin:16px 0 6px">${links||''}</div>
-    <button class="dbtn" style="background:${st.shortlist.includes(s.id)?'var(--bg2)':'var(--green)'};color:${st.shortlist.includes(s.id)?'var(--tx)':'#05070e'}" onclick="toggleShort('${s.id}')">${st.shortlist.includes(s.id)?'★ Remove from shortlist':'★ Add to shortlist'}</button>`;
-  d.classList.add('open');
-}
-function closeDetail(){ document.getElementById('detail').classList.remove('open'); refreshCurrent(); }
-function toggleShort(id){ const i=st.shortlist.indexOf(id); if(i<0)st.shortlist.push(id); else st.shortlist.splice(i,1); save(); openDetail(SBYID[id]); }
+    <div class="explainbox" id="explainBox">
+      <div class="eh">✦ WHY IS THIS A ${b.toUpperCase()} FOR ME?</div>
+      <p>${esc(msg)}</p>
+      ${flipHTML}
+    </div>
 
-/* ---------- nav ---------- */
-let cur='deck';
-function tab(t){
-  cur=t;
-  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
-  document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
-  document.getElementById('v-'+t).classList.remove('hidden');
-  refreshCurrent();
-}
-function refreshCurrent(){
-  if(cur==='deck'){ if(!deck.length) initDeck(); }
-  else if(cur==='home') renderHome();
-  else if(cur==='short') renderShort();
-  else if(cur==='cost') renderCost();
-  else if(cur==='profile') renderProfile();
-}
+    <div class="sh-grid">
+      <div class="sh-cell"><div class="k">Admit rate</div><div class="v">${Math.round(s.admit*100)}%</div></div>
+      <div class="sh-cell"><div class="k">4-yr grad</div><div class="v">${s.grad4!=null?s.grad4+'%':'—'}</div></div>
+      <div class="sh-cell"><div class="k">Premed / health</div><div class="v">${s.premed??'—'}<small>/10</small></div></div>
+      <div class="sh-cell"><div class="k">Research</div><div class="v">${s.research??'—'}<small>/10</small></div></div>
+    </div>
 
-/* ---------- onboarding ---------- */
-function onboard(){
-  const o=document.getElementById('onb');
-  let tmp={gpa:3.67,sat:1440,testOptional:false,prios:['premed','cost']};
-  o.innerHTML=`<h1>Let's find your schools.</h1>
-    <div class="lead">Two numbers and a few priorities. Every chance, cost and fit is then computed live from real, sourced data — nothing faked.</div>
-    <label>Unweighted GPA</label>
-    <input type="range" min="2.5" max="4.0" step="0.01" value="3.67" oninput="document.getElementById('ogv').textContent=(+this.value).toFixed(2);window._og=+this.value">
-    <div class="rangeval" id="ogv">3.67</div>
-    <label>SAT score</label>
-    <input type="number" id="osat" value="1440" min="0" max="1600">
-    <div class="toggle"><input type="checkbox" id="oto"><label style="margin:0">I'm applying test-optional</label></div>
-    <label>Pick 3–5 priorities</label>
-    <div class="prio" id="oprio">${PRIOS.map(p=>`<button data-k="${p[0]}" class="${tmp.prios.includes(p[0])?'on':''}" onclick="this.classList.toggle('on')">${p[1]}</button>`).join('')}</div>
-    <div class="cta"><button onclick="finishOnb()">Start</button><button class="skip" onclick="finishOnb()">Use defaults</button></div>`;
-  window._og=3.67;
-  o.classList.remove('hidden');
+    <div class="sectitle">Cost breakdown (per year)</div>
+    <div class="costbreak">
+      <div class="cr"><span>Cost of attendance</span><b>${money(s.coa)}</b></div>
+      <div class="cr"><span>Est. merit${s.meritName?' · '+esc(s.meritName):''}</span><b class="neg">${s.merit?'−'+money(s.merit):'—'}</b></div>
+      <div class="cr net"><span>Est. net / year</span><b>${money(net)}</b></div>
+      <div class="cr net"><span>Est. 4-year total</span><b>${net!=null?money(net*4):'—'}</b></div>
+    </div>
+    <div class="costflag">⚠ Flat estimate — assumes constant cost & merit for 4 years, no need-based aid modeled. Always confirm with the school's official net-price calculator.</div>
+
+    <div class="sectitle">Deadline</div>
+    <div class="sh-cell" style="border-radius:13px">${esc(s.dl||'—')}</div>
+
+    <div class="sectitle">Sources</div>
+    <div class="sourcelinks">${linksHTML}</div>
+
+    <div class="sh-actions">
+      <button class="btn-skip" id="shClose2">Close</button>
+      <button class="btn-save ${saved?'saved':''}" id="shSave">${saved?'✓ On shortlist':'★ Add to shortlist'}</button>
+    </div>`;
+  $('shClose2').onclick=closeSheet;
+  $('shSave').onclick=()=>{toggleSave(s.id); const btn=$('shSave'); const now=ST.saved.includes(s.id);
+    btn.className='btn-save '+(now?'saved':''); btn.textContent=now?'✓ On shortlist':'★ Add to shortlist';};
+  $('sheet').classList.add('open');
+  if(jumpExplain){ setTimeout(()=>{const eb=$('explainBox');eb&&eb.scrollIntoView({behavior:'smooth',block:'center'});},350); }
 }
-function finishOnb(){
-  const prios=[...document.querySelectorAll('#oprio button.on')].map(b=>b.dataset.k);
-  st={ gpa:window._og||3.67, sat:+document.getElementById('osat').value||0,
-       testOptional:document.getElementById('oto').checked, prios:prios.length?prios:['premed','cost'], shortlist:[] };
-  save(); document.getElementById('onb').classList.add('hidden');
-  boot();
+function closeSheet(){$('sheet').classList.remove('open');}
+$('sheetClose').onclick=closeSheet;
+$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet();});
+
+/* ============ TABS ============ */
+let currentTab='map';
+const VIEWS={map:'mapView',deck:'deckView',list:'listView',short:'shortView'};
+const TITLES={map:['The Living Map','TAP A BUBBLE · DRAG A DIAL'],deck:['Swipe Deck','← SKIP · SAVE →'],list:['All 101 Schools','SORTED BY YOUR ODDS'],short:['Your Shortlist','SAVED SCHOOLS']};
+function switchTab(t){
+  currentTab=t;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  Object.entries(VIEWS).forEach(([k,id])=>$(id).classList.toggle('hidden',k!==t));
+  $('appTitle').textContent=TITLES[t][0]; $('appSub').textContent=TITLES[t][1];
+  if(t==='map'){startMap();} else {stopMap();}
+  if(t==='deck')buildDeck();
+  if(t==='list'){renderFilterBar();renderList();}
+  if(t==='short')renderShort();
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+
+/* ============ INIT ============ */
+function initApp(){
+  syncDials();
+  ['gpaDial','satDial'].forEach(id=>{$(id).addEventListener('input',()=>{onDialChange();});});
+  $('toChk').addEventListener('change',()=>{onDialChange();});
+  $('btnEdit').onclick=()=>{ ST.onboarded=false; save(); stopMap();
+    $('app').classList.remove('active'); $('onboard').classList.add('active'); startOnboard(); };
+  $('costToggle').onclick=()=>{showCost=!showCost; $('costToggle').classList.toggle('on',showCost);
+    $('costToggle').textContent=showCost?'💰 Show 4-yr est. cost':'💰 4-yr cost hidden'; renderShort();};
+  renderBandCounts();
+  switchTab('map');
+  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas();} });
 }
 
-/* ---------- boot ---------- */
-function boot(){
-  if(!st.shortlist) st.shortlist=[];
-  strip(); initDeck(); tab('deck');
-}
-if(!S.length){ document.getElementById('screen').innerHTML='<div class="empty">Could not load app-data.js</div>'; }
-else if(!st){ onboard(); }
-else { boot(); }
+/* boot */
+if(ST.onboarded){ $('onboard').classList.remove('active'); $('app').classList.add('active'); initApp(); }
+else { startOnboard(); }
 </script>
 </body>
 </html>
