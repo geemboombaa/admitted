@@ -9,7 +9,7 @@ Vanilla JS only. Never fabricate data (verified/EST honesty). Keep the chance()/
 Every change must run with zero console errors and recompute live from the user's stats.
 
 ## Basics + bug fixes (do these first)
-- [ ] Fix bubble tap precision: in dense/low-GPA states small bubbles overlap and are hard to hit. Add a larger tap hit-radius and a tap-to-zoom-into-a-band interaction so every school is reliably selectable; show the focused bubble's name label clearly.
+- [x] Fix bubble tap precision: in dense/low-GPA states small bubbles overlap and are hard to hit. Add a larger tap hit-radius and a tap-to-zoom-into-a-band interaction so every school is reliably selectable; show the focused bubble's name label clearly.
 - [ ] Verify and harden real finger-swipe on the Deck (touchstart/move/end), with a subtle spring + visual feedback on like/pass; ensure it also works with mouse and never leaves a stuck card.
 - [ ] Make the stat dials (GPA/SAT/test-optional) reachable and editable directly on the Map screen (not only a separate screen), so the "watch it reshape" loop is one gesture; persist changes instantly.
 - [ ] Add map filters: by type (public/private), region/West, a cost ceiling, and BS/MD-program-only; filtered-out bubbles fade/hide and band counts update.

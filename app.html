@@ -102,6 +102,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .legdot{width:10px;height:10px;border-radius:50%;}
 .maphint{position:absolute;right:10px;bottom:12px;max-width:130px;font-size:10px;color:var(--tx3);
   text-align:right;line-height:1.3;pointer-events:none;}
+.bandfocus{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:10px;
+  padding:8px 10px calc(8px + 12px);background:linear-gradient(180deg,rgba(10,14,26,.96),rgba(10,14,26,0));}
+.bfback{display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:20px;background:var(--bg2);
+  border:1px solid var(--line);color:var(--tx);font-size:13px;font-weight:700;min-height:38px;}
+.bfback:active{transform:scale(.94);}
+.bftitle{font-size:11px;font-weight:700;color:var(--tx2);line-height:1.3;}
+.bftitle b{font-size:13px;}
 
 /* dials */
 .dials{background:var(--bg1);border-top:1px solid var(--line);padding:11px var(--pad) 12px;}
@@ -256,11 +263,15 @@ input[type=range]:disabled{opacity:.4;}
       <div id="mapView">
         <div class="mapcanvas-wrap">
           <canvas id="mapCanvas"></canvas>
-          <div class="bandlabels">
+          <div class="bandlabels" id="bandLabels">
             <div class="bl" style="color:var(--reach)">Reach</div>
             <div class="bl" style="color:var(--target)">Target</div>
             <div class="bl" style="color:var(--likely)">Likely</div>
             <div class="bl" style="color:var(--safety)">Safety</div>
+          </div>
+          <div class="bandfocus hidden" id="bandFocus">
+            <button class="bfback" id="bandBack">← All bands</button>
+            <div class="bftitle" id="bfTitle"></div>
           </div>
           <div class="legend">
             <div class="legrow"><span class="legdot" style="background:var(--safety)"></span>Safety ≥75%</div>
@@ -484,8 +495,9 @@ function finishOnboard(){
 /* ============ THE LIVING MAP (physics) ============ */
 const canvas=$('mapCanvas'); const ctx=canvas.getContext('2d');
 let W=0,H=0,DPR=1;
-let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit}
-let raf=null, lastPick=null;
+let nodes=[]; // {s,x,y,vx,vy,r,tr,col,p,band,fit,zx,zy}
+let raf=null, lastPick=null, focusBand=null;
+const HIT_PAD=8, HIT_MIN=22; // tap tolerance: at least a 22px-radius finger target
 
 function bandColumnX(b,w){ const i=BANDS.indexOf(b); const col=w/4; return col*i+col/2; }
 
@@ -515,80 +527,147 @@ function resizeCanvas(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
 function step(){
-  const cx=[]; // column centers
-  for(let i=0;i<4;i++) cx[i]=(W/4)*i+(W/8);
+  const focused = !!focusBand;
+  const an = focused ? nodes.filter(n=>n.band===focusBand) : nodes;
   // forces
-  for(let i=0;i<nodes.length;i++){
-    const n=nodes[i];
-    n.r += (n.tr-n.r)*0.12;
-    const targetX = bandColumnX(n.band,W);
-    // pull toward band column x, and gentle gravity to vertical center-band
-    n.vx += (targetX - n.x)*0.010;
-    n.vy += (H*0.5 - n.y)*0.004;
+  for(const n of an){
+    const trEff = focused ? (16 + (n.fit/100)*16) : n.tr; // fatter, tappable bubbles when zoomed
+    n.r += (trEff-n.r)*0.13;
+    const tx = focused ? n.zx : bandColumnX(n.band,W);
+    const ty = focused ? n.zy : H*0.5;
+    const k  = focused ? 0.020 : 0.010;
+    n.vx += (tx - n.x)*k;
+    n.vy += (ty - n.y)*(focused?0.020:0.004);
   }
-  // collision / repulsion (O(n^2) but n=101, fine)
-  for(let i=0;i<nodes.length;i++){
-    const a=nodes[i];
-    for(let j=i+1;j<nodes.length;j++){
-      const b=nodes[j];
+  // collision / repulsion (O(n^2) but n<=101, fine)
+  for(let i=0;i<an.length;i++){
+    const a=an[i];
+    for(let j=i+1;j<an.length;j++){
+      const b=an[j];
       let dx=b.x-a.x, dy=b.y-a.y; let d=Math.hypot(dx,dy)||0.01;
-      const min=a.r+b.r+2;
+      const min=a.r+b.r+(focused?8:2);
       if(d<min){ const push=(min-d)/d*0.5; dx*=push;dy*=push;
         a.vx-=dx;a.vy-=dy;b.vx+=dx;b.vy+=dy; }
     }
   }
-  for(const n of nodes){
+  for(const n of an){
     n.vx*=0.82; n.vy*=0.82;
     n.x+=n.vx; n.y+=n.vy;
     const m=n.r+2;
+    const topM=m+(focused?54:16); // clear the focus bar / band labels
     if(n.x<m){n.x=m;n.vx*=-.4;} if(n.x>W-m){n.x=W-m;n.vx*=-.4;}
-    if(n.y<m+16){n.y=m+16;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
+    if(n.y<topM){n.y=topM;n.vy*=-.4;} if(n.y>H-m){n.y=H-m;n.vy*=-.4;}
   }
-  draw();
+  draw(focused,an);
   raf=requestAnimationFrame(step);
 }
-function draw(){
+function roundRect(x,y,w,h,r){ ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function drawLabel(n,emphasis){
+  const nm=n.s.n; const text=emphasis?nm:(nm.length>18?nm.slice(0,17)+'…':nm);
+  ctx.font=(emphasis?'800 12.5px':'700 11px')+' Inter,sans-serif';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  const tw=ctx.measureText(text).width, pw=tw+16, ph=19;
+  let px=Math.max(pw/2+4,Math.min(W-pw/2-4,n.x));
+  let py=n.y+n.r+13; if(py+ph/2>H-4) py=n.y-n.r-13;
+  ctx.fillStyle='rgba(6,10,20,.86)'; roundRect(px-pw/2,py-ph/2,pw,ph,ph/2); ctx.fill();
+  ctx.lineWidth=1; ctx.strokeStyle=n.col; ctx.globalAlpha=.75; ctx.stroke(); ctx.globalAlpha=1;
+  ctx.fillStyle='#fff'; ctx.fillText(text,px,py);
+}
+function draw(focused,an){
   ctx.clearRect(0,0,W,H);
-  // band column tint
-  for(let i=0;i<4;i++){
-    ctx.fillStyle='rgba(255,255,255,'+(i%2?0.012:0.028)+')';
-    ctx.fillRect((W/4)*i,0,W/4,H);
+  if(focused){
+    ctx.fillStyle=BANDCOL[focusBand]; ctx.globalAlpha=0.05; ctx.fillRect(0,0,W,H); ctx.globalAlpha=1;
+  } else {
+    for(let i=0;i<4;i++){ ctx.fillStyle='rgba(255,255,255,'+(i%2?0.012:0.028)+')'; ctx.fillRect((W/4)*i,0,W/4,H); }
   }
-  for(const n of nodes){
+  const list=an||nodes;
+  for(const n of list){
     const glow = n===lastPick;
     ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7);
     const g=ctx.createRadialGradient(n.x-n.r*.3,n.y-n.r*.3,1,n.x,n.y,n.r);
     g.addColorStop(0,n.col); g.addColorStop(1,shade(n.col,-.35));
     ctx.fillStyle=g;
-    if(glow){ctx.shadowColor=n.col;ctx.shadowBlur=22;} else {ctx.shadowColor=n.col;ctx.shadowBlur=6;}
+    ctx.shadowColor=n.col; ctx.shadowBlur=glow?22:6;
     ctx.fill(); ctx.shadowBlur=0;
-    if(n.r>13){ // label big bubbles
-      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='700 9px Inter,sans-serif';ctx.textAlign='center';
-      const nm=n.s.n.length>13?n.s.n.slice(0,12)+'…':n.s.n;
-      ctx.fillText(nm,n.x,n.y+3);
+    if(focused){ drawLabel(n,n===lastPick); }
+    else if(n.r>13 && n!==lastPick){ // inline label for big bubbles
+      ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='700 9px Inter,sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='alphabetic';
+      const nm=n.s.n.length>13?n.s.n.slice(0,12)+'…':n.s.n; ctx.fillText(nm,n.x,n.y+3);
     }
   }
+  if(!focused && lastPick){ drawLabel(lastPick,true); } // focused bubble's name shown clearly
 }
 function shade(hex,amt){ // amt -1..1
   const c=hex.replace('#',''); let r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
   r=Math.max(0,Math.min(255,r+amt*255));g=Math.max(0,Math.min(255,g+amt*255));b=Math.max(0,Math.min(255,b+amt*255));
   return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
 }
-function pickNode(px,py){
-  let best=null,bd=1e9;
-  for(const n of nodes){const d=Math.hypot(px-n.x,py-n.y); if(d<n.r+6&&d<bd){bd=d;best=n;}}
-  return best;
+/* hit-test: every bubble gets at least a HIT_MIN-radius finger target; returns candidates nearest-first */
+function pickCandidates(px,py){
+  const src=focusBand?nodes.filter(n=>n.band===focusBand):nodes;
+  const hits=[];
+  for(const n of src){ const d=Math.hypot(px-n.x,py-n.y);
+    if(d<=Math.max(n.r+HIT_PAD,HIT_MIN)) hits.push({n,d}); }
+  hits.sort((a,b)=>a.d-b.d);
+  return hits;
 }
+function layoutZoom(b){
+  const an=nodes.filter(n=>n.band===b).sort((x,y)=>y.p-x.p);
+  const N=an.length; if(!N)return;
+  const cols=Math.max(1,Math.round(Math.sqrt(N*W/Math.max(1,H))));
+  const rows=Math.ceil(N/cols);
+  const top=64, padX=Math.min(60,W*0.12), padB=20;
+  const cw=(W-2*padX)/cols, ch=(H-top-padB)/rows;
+  an.forEach((n,i)=>{ const r=Math.floor(i/cols), c=i%cols;
+    n.zx=padX+cw*(c+0.5); n.zy=top+ch*(r+0.5); });
+}
+function showFocusBar(b){
+  const cnt=nodes.filter(n=>n.band===b).length;
+  $('bfTitle').innerHTML=
+    `<b style="color:${BANDCOL[b]}">${b}</b> · ${cnt} school${cnt!==1?'s':''} · tap one to open · tap empty space to exit`;
+  $('bandFocus').classList.remove('hidden');
+  $('bandLabels').classList.add('hidden');
+  document.querySelector('.maphint').classList.add('hidden');
+}
+function hideFocusBar(){
+  $('bandFocus').classList.add('hidden');
+  $('bandLabels').classList.remove('hidden');
+  document.querySelector('.maphint').classList.remove('hidden');
+}
+function enterBand(b){
+  if(!nodes.some(n=>n.band===b)){toast('No schools in '+b+' at your current stats');return;}
+  focusBand=b; lastPick=null; layoutZoom(b); showFocusBar(b);
+}
+function exitBand(){ focusBand=null; hideFocusBar(); }
+function onTap(px,py){
+  const hits=pickCandidates(px,py);
+  if(focusBand){
+    if(hits.length){ lastPick=hits[0].n; openSheet(hits[0].n.s); }
+    else exitBand(); // tapping empty space in a zoomed band returns to overview
+    return;
+  }
+  if(hits.length===1){ lastPick=hits[0].n; openSheet(hits[0].n.s); return; }
+  if(hits.length>=2){ enterBand(hits[0].n.band); return; } // overlap → zoom so hidden ones become reachable
+  const bi=Math.min(3,Math.max(0,Math.floor(px/(W/4))));
+  enterBand(BANDS[bi]); // empty band area → zoom into that column
+}
+let tSX=0,tSY=0,tMoved=false,lastTouchTime=0;
+function canvasXY(cx,cy){const r=canvas.getBoundingClientRect();return [cx-r.left,cy-r.top];}
 canvas.addEventListener('click',e=>{
-  const rect=canvas.getBoundingClientRect();
-  const n=pickNode(e.clientX-rect.left,e.clientY-rect.top);
-  if(n){lastPick=n;openSheet(n.s);}
+  if(Date.now()-lastTouchTime<600)return; // swallow ghost click after a real touch
+  const [x,y]=canvasXY(e.clientX,e.clientY); onTap(x,y);
 });
+canvas.addEventListener('touchstart',e=>{ if(!e.touches.length)return;
+  tSX=e.touches[0].clientX; tSY=e.touches[0].clientY; tMoved=false; },{passive:true});
+canvas.addEventListener('touchmove',e=>{ if(!e.touches.length)return;
+  if(Math.hypot(e.touches[0].clientX-tSX,e.touches[0].clientY-tSY)>12) tMoved=true; },{passive:true});
 canvas.addEventListener('touchend',e=>{
-  if(!e.changedTouches.length)return;
-  const t=e.changedTouches[0];const rect=canvas.getBoundingClientRect();
-  const n=pickNode(t.clientX-rect.left,t.clientY-rect.top);
-  if(n){lastPick=n;openSheet(n.s);}
+  lastTouchTime=Date.now();
+  if(tMoved||!e.changedTouches.length)return; // ignore drags, only taps select
+  const t=e.changedTouches[0]; const [x,y]=canvasXY(t.clientX,t.clientY); onTap(x,y);
 },{passive:true});
 
 function startMap(){ if(!nodes.length){resizeCanvas();buildNodes();} if(!raf)step(); }
@@ -617,6 +696,10 @@ function onDialChange(){
   $('satVal').textContent=ST.to?'—':ST.sat;
   $('satDial').disabled=ST.to; $('toFlag').textContent=ST.to?'(TO)':'';
   recomputeTargets(); renderBandCounts();
+  if(focusBand){ // stats moved schools between bands — keep the zoom coherent
+    if(!nodes.some(n=>n.band===focusBand)) exitBand();
+    else { if(lastPick&&lastPick.band!==focusBand) lastPick=null; layoutZoom(focusBand); showFocusBar(focusBand); }
+  }
   save();
 }
 
@@ -827,7 +910,9 @@ function openSheet(s,jumpExplain){
 }
 function closeSheet(){$('sheet').classList.remove('open');}
 $('sheetClose').onclick=closeSheet;
-$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet();});
+$('sheet').addEventListener('click',e=>{
+  if(Date.now()-lastTouchTime<600)return; // ignore the ghost click that follows a bubble tap
+  if(e.target.id==='sheet')closeSheet();});
 
 /* ============ TABS ============ */
 let currentTab='map';
@@ -847,6 +932,7 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.t
 
 /* ============ INIT ============ */
 function initApp(){
+  focusBand=null; lastPick=null; hideFocusBar();
   syncDials();
   ['gpaDial','satDial'].forEach(id=>{$(id).addEventListener('input',()=>{onDialChange();});});
   $('toChk').addEventListener('change',()=>{onDialChange();});
@@ -855,8 +941,9 @@ function initApp(){
   $('costToggle').onclick=()=>{showCost=!showCost; $('costToggle').classList.toggle('on',showCost);
     $('costToggle').textContent=showCost?'💰 Show 4-yr est. cost':'💰 4-yr cost hidden'; renderShort();};
   renderBandCounts();
+  $('bandBack').onclick=exitBand;
   switchTab('map');
-  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas();} });
+  window.addEventListener('resize',()=>{ if(currentTab==='map'){resizeCanvas(); if(focusBand)layoutZoom(focusBand);} });
 }
 
 /* boot */
