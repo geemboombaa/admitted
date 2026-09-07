@@ -41,7 +41,7 @@ done
 log()   { printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" | tee -a "$LOG"; }
 score() { printf '[%s] SCORE | validate=%-4s review=%-7s result=%s\n' \
           "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2" "$3" >> "$LOG"; }
-revert() { git reset --hard "$1" >/dev/null 2>&1; git clean -fd >/dev/null 2>&1; }
+revert() { git reset --hard "$1" >/dev/null 2>&1; git clean -fdq .scratch >/dev/null 2>&1; }
 
 # Model IDs
 M_OPUS="claude-opus-4-8"; M_SONNET="claude-sonnet-4-6"; M_HAIKU="claude-haiku-4-5-20251001"
@@ -148,7 +148,7 @@ before finishing. Keep it scoped to this one item."
 
   # Remove any scratch the Builder left behind (downloaded PDFs/HTML/text from web research),
   # keeping everything under data/. Prevents scratch from dirtying the tree or landing in a commit.
-  git clean -fdq -e data >/dev/null 2>&1
+  git clean -fdq .scratch >/dev/null 2>&1
 
   if ! node scripts/validate.js; then
     log "REJECTED: validate.js failed. Reverting to $BASELINE."

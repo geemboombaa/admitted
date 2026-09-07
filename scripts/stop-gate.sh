@@ -18,6 +18,18 @@ if [ -f app.html ] && [ -f scripts/app-check.js ]; then
 - app-check.js FAILED — app.html JS syntax or data link broken. Run: node scripts/app-check.js"
 fi
 
+# 2c. Engine unit tests (chance/band pure functions vs real data — clamp, monotonic, bands).
+if [ -f app.html ] && [ -f scripts/test-engine.js ]; then
+  node scripts/test-engine.js >/dev/null 2>&1 || fail="${fail}
+- test-engine.js FAILED — the decision engine broke an invariant. Run: node scripts/test-engine.js"
+fi
+
+# 2d. Privacy hard gate — the public copy must never contain a real name.
+if [ -f index.html ] && [ -f scripts/privacy-check.js ]; then
+  node scripts/privacy-check.js index.html >/dev/null 2>&1 || fail="${fail}
+- privacy-check FAILED — a real name is in index.html (the deployed copy). Remove it."
+fi
+
 # 2a. PHASE GATE — every phase (requirements->design->build->prototype->ship), not just data/app.
 if [ -f scripts/phase.js ]; then
   pg=$(node scripts/phase.js gate 2>&1) || fail="${fail}

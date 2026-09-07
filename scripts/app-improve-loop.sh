@@ -19,7 +19,7 @@ M_OPUS="claude-opus-4-8"
 log(){ printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" | tee -a "$LOG"; }
 score(){ printf '[%s] SCORE | validate=%-4s review=%-7s result=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2" "$3" >> "$LOG"; }
 bar(){ local d=$1 t=$2 n=20 f k b=""; [ "$t" -gt 0 ]||t=1; f=$((d*n/t)); for((k=0;k<n;k++)); do [ $k -lt $f ]&&b+="#"||b+="-"; done; printf '[%s] %d/%d committed' "$b" "$d" "$t"; }
-revert(){ git reset --hard "$1" >/dev/null 2>&1; git clean -fdq -e data >/dev/null 2>&1; }
+revert(){ git reset --hard "$1" >/dev/null 2>&1; git clean -fdq .scratch >/dev/null 2>&1; }
 
 [ -z "$(git status --porcelain)" ] || { log "ABORT: working tree not clean."; exit 1; }
 log "mode: APP IMPROVE — Living Map (app.html), Opus builder + Chrome adversarial reviewer | batch=$ITER"
@@ -43,10 +43,10 @@ Chrome and adversarially TEST your change (mouse AND touch, empty states, recomp
 errors); fix everything before you finish. Edit ONLY app.html — do not touch APP-BACKLOG.md, SELF-IMPROVE-LOG.md, or
 other files. If you download scratch, put it under .scratch/ only."
 
-  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$M_OPUS"; then
+  if ! printf '%s' "$BUILD_PROMPT" | bash scripts/cq.sh "$M_OPUS"; then
     log "REJECTED: Builder failed."; score na na build-fail; LAST_REJECTED="$ITEM"; revert "$BASE"; continue
   fi
-  git clean -fdq -e data >/dev/null 2>&1
+  git clean -fdq .scratch >/dev/null 2>&1
 
   if ! node scripts/app-check.js; then
     log "REJECTED: app-check failed."; score FAIL na reverted; LAST_REJECTED="$ITEM"; revert "$BASE"; continue
@@ -64,7 +64,7 @@ VERDICT: APPROVE
 or
 VERDICT: REJECT"
 
-  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS")
+  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | bash scripts/cq.sh "$M_OPUS")
   VERDICT=$(printf '%s' "$REVIEW" | grep -oiE 'VERDICT:[[:space:]]*(APPROVE|REJECT)' | tail -1)
   log "review verdict: ${VERDICT:-<none emitted>}"
   if ! printf '%s' "$VERDICT" | grep -qiE 'VERDICT:[[:space:]]*APPROVE'; then
