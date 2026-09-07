@@ -55,7 +55,29 @@ Iteration reviews are fast static critiques. Cheaper, faster, still rigorous.
   prototype live, user judges, rubric adjusted.
 - **Final** — rubric full → prototype → user accepts.
 
+## Engine truth (correction — caught in CP-0 red-team)
+The **shipped** `chance()` (`app.html:393`) is **linear**: `admit*(0.35+1.3*pos)`, clamped [0.02,0.96].
+There is **no logistic / log-odds transform and no steepness `k`** in the code (`Math.exp` count = 0).
+PRODUCT-VISION.md (lines 15, 61) and my first draft describe a logistic engine — that description is
+**fabricated**, which violates the trust premise at the CP-0 doc itself. Resolution: **make the docs match
+the code** (the linear form is the real engine; keep constants frozen, they're not outcome-fitted), and add
+RUBRIC #0 = "shipped math matches its documented description." No engine math change without outcome data.
+
+## First 90 seconds (added — the retention gamble)
+For an anxious 12th-grader the whole product lives or dies on the cold-start path: profile captured → one
+real school chanced with verified/EST visible, in ≤90s, with the empty state routing there — never a blank
+or an invented "YOU:" marker. This is a required criterion (RUBRIC C), weighted above any single feature.
+
+## Basic-usability floor (added)
+"Delight second" ≠ "ship ugly." The decision-core milestone must clear a minimum floor — legible, every
+control tappable (≥44×44pt), responds to every input — before we call the core done, so engine-first never
+ships an abandonable tool. Full "top-tier" polish is a later user-judged checkpoint, not a counted criterion.
+
+## Live-testing split (refined)
+Logic criteria (chance/cost/flip math) = pure functions → static review + real computed unit tests, no
+browser. Interaction criteria (bubbles/dials/swipe) = runtime/gesture behavior a static read CANNOT verify →
+each gets a live/headless (Edge CDP) check **when that criterion is closed**, not deferred to convergence.
+
 ## Scope for THIS product cycle
 The **app** (`app.html`) as the decision engine + BS/MD wedge, wired to the existing verified core
-(`app-data.js`, 101 schools). Web face + iOS native port are separate downstream tracks. Engine
-chance-math constants stay frozen (steepness `k` = flagged placeholder; not derivable from public data).
+(`app-data.js`, 101 schools). Web face + iOS native port are separate downstream tracks.
