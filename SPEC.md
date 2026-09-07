@@ -1,24 +1,61 @@
-# SPEC — admitted (CP-1 locked target)
+# SPEC — admitted (CP-0: autonomous product review)
 
-One verified core → two faces. No fabricated data, ever.
+My review/challenge/innovation on the goal + PRODUCT-VISION — not a transcription. This is the design
+target the build loop converges to (criteria in RUBRIC.md). Data rules from RULES.md are inviolable.
 
-## Core (shared engine + data)
-- **Data:** `data/schools/*.json` → `app-data.js` (101 real schools). Each number is `verified` (with source) or flagged `EST`. Never invented. Names Hrithik/Prans never in shipped copy.
-- **Engine:** `chance(gpa,sat,testOptional)` → probability + band. Bands: Safety ≥.75 / Likely ≥.55 / Target ≥.30 / Reach else. Colors fixed: Safety `#00ff88`, Likely `#00d4ff`, Target `#f5a623`, Reach `#a855f7`. Constants frozen (steepness `k` = flagged placeholder, not derivable from public data).
+## The reframe (main challenge to the vision)
+PRODUCT-VISION makes the **Living Map (physics bubbles)** the hero. That's backwards. The map is a
+*delightful view*, not the product. For an anxious premed / BS-MD applicant the real job-to-be-done is:
 
-## Face 1 — Web dashboard (`index.html`, deployed)
-- Public, privacy-clean, PULSE theme. Chance/fit/cost per school from the one engine.
+> **Turn 100+ schools into a confident, affordable, deadline-aware apply-list I can trust — and show me
+> exactly how to move my own odds.**
 
-## Face 2 — iOS-style app (`app.html`, Living Map)
-- Physics bubble cluster of 101 schools that re-simulates as user changes GPA/SAT.
-- Onboarding → Map → Deck (swipe) → Detail → Shortlist. Live recompute on every stat change.
-- Innovation layer: "what flips it" coach, compare mode, BS/MD cluster, time-machine scrubber, true-cost view.
+So the product's spine is a **decision engine**; map / swipe / etc. are surfaces onto it. Leading with
+"cool bubbles" is how I shipped a gimmick with no decision value. Decision value first, delight second.
 
-## Ops (the machinery)
-- **One loop at a time.** Never trust TaskStop to kill bash — kill by command line (`scripts/kill-agents.sh`).
-- **Dashboard + health:** `scripts/progress-server.js` @ :7654 — live agent panel (CIM-based, wmic-free), rogue check, backlog progress, stuck-detector. Auto-refresh 60s.
-- **Gates:** `validate.js` + `app-check.js` must pass; Stop hook blocks turn exit until green; adversarial Opus reviewer must APPROVE before any commit; revert-on-fail.
-- Commit each unit immediately (nothing uncommitted that a clean/reset can wipe). No push/deploy without explicit approval.
+## The wedge (my proposed differentiator)
+**BS/MD + premed** is the sharp edge, not general college search. ~33 of the 101 schools are accelerated
+medical programs — the highest-stakes, most-confusing, worst-served niche (accelerated vs traditional,
+program-specific admit math, true cost over 6–8 yrs not 4). Own this and the product has a reason to exist
+against Naviance/BigFuture. General search is table stakes; the BS/MD decision layer is the moat.
 
-## Delta vs original proposal
-Only one real addition: **live agents + health dashboard** (this file's Ops section) — so nothing runs rogue unseen. Rest is the same locked goal, now written down.
+## What I'd change (challenge / reorder / add / cut)
+- **Elevate to the core (was buried):** trustworthy chance + true-cost + "what flips it" coach (real math
+  off `chance()`), deadline/portfolio balance, compare. These ARE the product.
+- **Add:** a visible **trust layer** (every number shows verified-with-source vs EST inline) — trust is
+  the entire premise; it can't be implicit. And a **BS/MD focused view** (program names, accelerated-vs-
+  traditional, program-length-aware cost).
+- **Keep as surfaces (not heroes):** the map view and the swipe deck — good for exploration and triage.
+- **Cut / demote:** physics-bubble spectacle as the front door; sound/haptic gimmicks until the decision
+  core clears the bar.
+- **Reorder the stages:** engine trust + decision UX **before** delight polish. Delight on top of a
+  decision that doesn't compute is the mistake I already made.
+
+## The efficient loop (how it should run — no live browser per cycle)
+```
+A. DESIGN   (once)   this SPEC + RUBRIC = the convergence target        <-- CP-0
+B. ITERATE  (cheap)  build one UNMET criterion -> static code+design review AGAINST the rubric
+                     (NO browser) -> gate (validate + app-check) -> independent reviewer flips it
+                     MET only if genuinely satisfied -> commit; revert on fail. Repeat.
+C. PROTOTYPE (once)  at convergence, open in Chrome, adversarial live-test, fix blockers, show user
+```
+Expensive live verification happens **once at convergence** and at checkpoints — not every iteration.
+Iteration reviews are fast static critiques. Cheaper, faster, still rigorous.
+
+## Two-way guardrail (built into the rubric)
+- **Always improving:** every iteration must flip exactly one UNMET criterion → MET, verified by the
+  reviewer. Progress = MET / total, monotonic.
+- **Never wasting:** a MET criterion is never re-touched; a criterion that fails to close in 2 tries is
+  marked `[~]` blocked and skipped; the loop STOPS when all MET or no unmet criterion is closeable.
+
+## Checkpoints
+- **CP-0** — this spec + rubric, red-teamed by an independent critic → **user approves/adjusts once.**
+- **Per-iteration** — automated, no user (build → rubric-review → gate → commit/revert).
+- **Milestones** — at rubric thresholds (decision-core MET; then wedge MET; then delight MET) I stop,
+  prototype live, user judges, rubric adjusted.
+- **Final** — rubric full → prototype → user accepts.
+
+## Scope for THIS product cycle
+The **app** (`app.html`) as the decision engine + BS/MD wedge, wired to the existing verified core
+(`app-data.js`, 101 schools). Web face + iOS native port are separate downstream tracks. Engine
+chance-math constants stay frozen (steepness `k` = flagged placeholder; not derivable from public data).
