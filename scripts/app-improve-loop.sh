@@ -58,7 +58,13 @@ Verify, and REJECT on any failure: the item is genuinely implemented and works; 
 onboarding / map / deck / detail / shortlist; works with mouse AND touch; recomputes when the user changes GPA/SAT;
 no dead or no-op controls; no fabricated data (verified vs EST shown honestly). Be strict — this is a wow-bar product.
 
-Give brief reasoning, then end with a final line EXACTLY:
+USEFULNESS GATE (mandatory): a change that merely 'works' is NOT enough. REJECT if this change is trivial,
+cosmetic-only, or does not deliver a real, user-noticeable improvement to UX / functionality / wow toward the goal.
+The point of the loop is that EVERY accepted iteration makes the product materially better — if it doesn't, it is
+wasted tokens and you must REJECT it. State the concrete before->after user-facing improvement on an IMPACT: line.
+
+Give brief reasoning and an IMPACT: <one line: what is materially better for the user> line, then end with a final
+line EXACTLY:
 VERDICT: APPROVE
 or
 VERDICT: REJECT"
@@ -70,11 +76,14 @@ VERDICT: REJECT"
     log "REJECTED by review: $REVIEW"; score PASS REJECT reverted; LAST_REJECTED="$ITEM"; revert "$BASE"; continue
   fi
 
+  IMPACT=$(printf '%s' "$REVIEW" | grep -iE '^IMPACT:' | head -1)
+  log "impact: ${IMPACT:-<none stated>}"
   node scripts/app-backlog.js done "$ITEM"
   git add -A
   git commit -q -m "app: ${ITEM}
 
-Reviewed by: independent Opus reviewer (opened app.html in Chrome, adversarial test)
+${IMPACT:-Impact: (not stated)}
+Reviewed by: independent Opus reviewer (Chrome adversarial test + usefulness gate)
 Co-Authored-By: Claude app-improve loop <noreply@anthropic.com>"
   log "COMMITTED: ${ITEM}"; score PASS APPROVE committed; LAST_REJECTED=""; DONE=$((DONE+1))
 done

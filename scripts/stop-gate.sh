@@ -18,6 +18,15 @@ if [ -f app.html ] && [ -f scripts/app-check.js ]; then
 - app-check.js FAILED — app.html JS syntax or data link broken. Run: node scripts/app-check.js"
 fi
 
+# 3b. A completed loop run that delivered ZERO improvements is a wasted cycle — do not let it slide.
+if [ -f SELF-IMPROVE-LOG.md ]; then
+  last_batch=$(grep -E 'batch complete: [0-9]+ (committed|done)' SELF-IMPROVE-LOG.md 2>/dev/null | tail -1)
+  if printf '%s' "$last_batch" | grep -qE 'batch complete: 0 '; then
+    fail="${fail}
+- Last loop run committed ZERO useful improvements (wasted cycle). Investigate why (all rejected? blocked?) and report it, don't finish silently."
+  fi
+fi
+
 # 3. No new stubs / TODO / fake-data markers introduced in the working diff
 if git rev-parse --git-dir >/dev/null 2>&1; then
   if git diff -- '*.js' '*.html' 2>/dev/null | grep -qE '^\+.*(TODO|FIXME|NotImplementedError|throw new Error\(.?not implemented|return \[\];?\s*//\s*stub|FAKE|PLACEHOLDER)'; then
