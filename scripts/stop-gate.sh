@@ -6,6 +6,12 @@ cd "$(dirname "$0")/.." 2>/dev/null || exit 0
 
 fail=""
 
+# 0. Required gate scripts must EXIST — a missing check must BLOCK, never silently pass.
+for req in scripts/validate.js scripts/app-check.js scripts/test-engine.js scripts/privacy-check.js scripts/phase.js scripts/rubric-score.js; do
+  [ -f "$req" ] || fail="${fail}
+- REQUIRED gate missing: $req (a protection was deleted/renamed). Restore it."
+done
+
 # 1. Data integrity (no-fabrication / schema / dup ids)
 if [ -f scripts/validate.js ]; then
   node scripts/validate.js >/dev/null 2>&1 || fail="${fail}
@@ -24,10 +30,10 @@ if [ -f app.html ] && [ -f scripts/test-engine.js ]; then
 - test-engine.js FAILED — the decision engine broke an invariant. Run: node scripts/test-engine.js"
 fi
 
-# 2d. Privacy hard gate — the public copy must never contain a real name.
-if [ -f index.html ] && [ -f scripts/privacy-check.js ]; then
-  node scripts/privacy-check.js index.html >/dev/null 2>&1 || fail="${fail}
-- privacy-check FAILED — a real name is in index.html (the deployed copy). Remove it."
+# 2d. Privacy hard gate — EVERY index*.html (the deployable copies) must contain no real name.
+if ls index*.html >/dev/null 2>&1 && [ -f scripts/privacy-check.js ]; then
+  node scripts/privacy-check.js >/dev/null 2>&1 || fail="${fail}
+- privacy-check FAILED — a real name is in a shipped index*.html. Remove it. (node scripts/privacy-check.js)"
 fi
 
 # 2a. PHASE GATE — every phase (requirements->design->build->prototype->ship), not just data/app.
@@ -36,14 +42,22 @@ if [ -f scripts/phase.js ]; then
 - ${pg}"
 fi
 
-# 2b. IMPROVEMENT METRIC — the rubric score must never REGRESS (a committed criterion undone).
+# 2b. IMPROVEMENT METRIC — rubric must not REGRESS: met-drop, blocked-rise, or total-shrink (gaming).
 if [ -f scripts/rubric-score.js ] && [ -f METRICS.md ]; then
-  cur=$(node scripts/rubric-score.js 2>/dev/null | grep -oE '[0-9]+/[0-9]+' | head -1 | cut -d/ -f1)
-  last=$(grep -oE 'rubric=[0-9]+/' METRICS.md | tail -1 | grep -oE '[0-9]+' | head -1)
-  if [ -n "$cur" ] && [ -n "$last" ] && [ "$cur" -lt "$last" ]; then
-    fail="${fail}
-- Rubric REGRESSED (${last} -> ${cur} MET) — a committed criterion was undone. Restore it before finishing."
-  fi
+  j=$(node scripts/rubric-score.js --json 2>/dev/null)
+  cmet=$(printf '%s' "$j" | grep -oE '"met":[0-9]+' | grep -oE '[0-9]+')
+  cblk=$(printf '%s' "$j" | grep -oE '"blocked":[0-9]+' | grep -oE '[0-9]+')
+  ctot=$(printf '%s' "$j" | grep -oE '"total":[0-9]+' | grep -oE '[0-9]+')
+  line=$(grep -E 'rubric=[0-9]+/[0-9]+' METRICS.md | tail -1)
+  lmet=$(printf '%s' "$line" | grep -oE 'rubric=[0-9]+' | grep -oE '[0-9]+')
+  ltot=$(printf '%s' "$line" | grep -oE 'rubric=[0-9]+/[0-9]+' | grep -oE '/[0-9]+' | grep -oE '[0-9]+')
+  lblk=$(printf '%s' "$line" | grep -oE 'blocked=[0-9]+' | grep -oE '[0-9]+')
+  if [ -n "$cmet" ] && [ -n "$lmet" ] && [ "$cmet" -lt "$lmet" ]; then fail="${fail}
+- Rubric REGRESSED (${lmet} -> ${cmet} MET) — a committed criterion was undone."; fi
+  if [ -n "$cblk" ] && [ -n "$lblk" ] && [ "$cblk" -gt "$lblk" ]; then fail="${fail}
+- Rubric GAMING: blocked rose (${lblk} -> ${cblk}) — don't mark criteria [~] to dodge the gate."; fi
+  if [ -n "$ctot" ] && [ -n "$ltot" ] && [ "$ctot" -lt "$ltot" ]; then fail="${fail}
+- Rubric SHRANK (total ${ltot} -> ${ctot}) — criteria were deleted. Restore them."; fi
 fi
 
 # 3b. A completed loop run that delivered ZERO improvements is a wasted cycle — do not let it slide.

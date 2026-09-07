@@ -22,3 +22,23 @@ Nothing finishes a turn red.
 
 **One gap left (#10):** the actual rubric-driven build loop. It's the first build after you approve CP-0 —
 not setup, it's the engine that runs the build phase. Everything that *supervises* it is now in place.
+
+## Re-audit (independent adversarial pass, 2026-09-07)
+A fresh reviewer red-teamed the whole setup. Found 3 real holes — all fixed + tested:
+1. **Guard was trivially bypassable** (`bash -c`, `git -C`, `env`/`VAR=`, `/usr/bin/rm`, `$(...)`, `+refspec`,
+   `.scratch/..`). → Rewrote `block-destructive.js` to peel wrappers before matching. Tested: all 9 named
+   bypasses now BLOCK; legit commands (mentions, scoped scratch clean, normal push) still ALLOW.
+2. **Stop hook silently skipped a check if its script was missing**, and rubric was gameable (mark `[~]`,
+   delete criteria, `- [x]` bullets uncounted). → Added a required-gate manifest (missing script = BLOCK),
+   regression now trips on met-drop **or** blocked-rise **or** total-shrink; rubric regex accepts bullets +
+   `[X]`. Privacy now scans **all** `index*.html` (not just `index.html`), fail-closed. All tested to exit 2.
+3. **Loops trusted to self-scope** their git. → Confirmed every `git clean` in both loops is `.scratch`-scoped;
+   `git reset --hard` restores tracked baseline only (correct).
+
+**Honest residual limits (by design, not oversights):**
+- The command guard stops *mistakes*, not a *malicious* agent (char-concat / base64 still evade). Real safety
+  net = commit-early git history + `loop-guard.sh` + `kill-agents.sh` + optional worktree isolation.
+- `phase.js` phase/approve is a workflow reminder an agent can set itself — the **human** is the real approver
+  at each checkpoint (`CHECKPOINTS.md`). Not a security boundary.
+- Nested agents run `bypassPermissions`, so `permissions.deny` doesn't cover them — the PreToolUse **hook**
+  (which still fires) is their backstop. That's why the guard, not the deny list, is the load-bearing layer.

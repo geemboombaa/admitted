@@ -8,9 +8,11 @@ const f = process.argv.includes('--file') ? process.argv[process.argv.indexOf('-
 const txt = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '';
 let met = 0, unmet = 0, blocked = 0;
 for (const line of txt.split('\n')) {
-  const m = line.match(/^\s*\d+[a-z]?\.\s*\[([ x~])\]/);
+  // accept numbered (1. / 6a.) OR bullet (- / *) list items; case-insensitive [x]/[X]
+  const m = line.match(/^\s*(?:\d+[a-z]?\.|[-*])\s*\[([ xX~])\]/);
   if (!m) continue;
-  if (m[1] === 'x') met++; else if (m[1] === '~') blocked++; else unmet++;
+  const c = m[1].toLowerCase();
+  if (c === 'x') met++; else if (c === '~') blocked++; else unmet++;
 }
 const total = met + unmet;                       // blocked not counted (can't close now)
 const pct = total ? Math.round((met / total) * 100) : 0;
