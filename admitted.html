@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0e14">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./web/icon.svg">
+<link rel="apple-touch-icon" href="./web/icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>admitted — honest odds</title>
 <style>
 :root{
@@ -94,9 +99,11 @@ label{display:block;color:var(--sub);font-size:13px;margin:12px 0 5px}
 .askbar .inner{max-width:640px;margin:0 auto;display:flex;gap:8px}
 .askbar input{flex:1}
 .empty{color:var(--mini);text-align:center;padding:30px 10px;font-size:14px}
+.offbar{position:fixed;top:0;left:0;right:0;background:var(--target);color:#04120a;text-align:center;font-size:12px;font-weight:700;padding:5px;z-index:50}
 </style>
 </head>
 <body>
+<div id="offbar" class="offbar hide">Offline — showing last saved verified data.</div>
 <div class="wrap">
   <header>
     <div class="brand">admitted<b>.</b></div>
@@ -151,6 +158,7 @@ label{display:block;color:var(--sub);font-size:13px;margin:12px 0 5px}
 
 <script type="module">
 import { createAgent } from './core/agent.mjs';
+import { chance } from './core/engine.mjs';
 import { renderCards, esc } from './web/render.mjs';
 import { SCHOOLS } from './web/schools.generated.mjs';
 
@@ -180,6 +188,20 @@ function showApp(){
   $('s-gpa').textContent = profile.gpa ?? '—';
   $('s-sat').textContent = profile.testOptional ? 'test-optional' : (profile.sat ?? '—');
   $('s-goal').textContent = profile.goal === 'premed' ? 'premed' : 'BS/MD';
+  // First-90s (H12): from cold start, land on ONE achievable BS/MD school chanced — not an empty picker.
+  if (!school) { const id = suggestBest(); if (id) selectSchool(id, { intro: true }); }
+}
+
+// Best-odds BS/MD program for this profile (marquee BS/MD are Reach, so pick the highest-odds one).
+function suggestBest(){
+  if (!(profile.gpa > 0)) return null;
+  let best = null, bp = -1;
+  for (const s of SCHOOLS) {
+    if (!s.program) continue;
+    const p = chance(s, profile.gpa, profile.sat || 0, !!profile.testOptional);
+    if (p > bp) { bp = p; best = s; }
+  }
+  return best ? best.id : null;
 }
 $('start').onclick = () => {
   const gpa = parseFloat($('in-gpa').value);
@@ -212,11 +234,12 @@ results.onclick = e => {
   selectSchool(el.getAttribute('data-id'));
   results.classList.add('hide'); search.value='';
 };
-function selectSchool(id){
+function selectSchool(id, opts = {}){
   school = SCHOOLS.find(s => s.id === id); if(!school) return;
   $('schoolhead').classList.remove('hide'); $('chips').classList.remove('hide'); $('empty').classList.add('hide');
   $('schoolhead').innerHTML = `<span class="nm">${esc(school.n)}</span>${school.program?'<span class="tagbsmd">BS/MD</span>':''}<span class="mt">${esc(school.city||'')}${school.st?', '+esc(school.st):''}</span>`;
   $('thread').innerHTML = '';
+  if (opts.intro) bubble('agent', `<div class="say">Starting with your best-odds BS/MD program. Search above to explore any school.</div>`);
   ask('what are my chances?');   // lead with the honest chance immediately
 }
 
@@ -234,6 +257,8 @@ $('send').onclick = () => { const v=$('ask').value.trim(); if(v){ ask(v); $('ask
 $('ask').onkeydown = e => { if(e.key==='Enter') $('send').click(); };
 
 // ---- boot ----
+const offbar = $('offbar'); const setOff = () => offbar.classList.toggle('hide', navigator.onLine); ['online','offline'].forEach(ev => window.addEventListener(ev, setOff)); setOff();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
 const shared = readShare(); if(shared){ profile = shared; persist(); }
 if(profile && (profile.gpa != null || profile.sat != null)) showApp();
 window.__ADMITTED__ = { agent, ask, selectSchool, get profile(){return profile;}, get school(){return school;}, shareLink, SCHOOLS }; // for smoke tests

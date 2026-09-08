@@ -3,7 +3,7 @@
 Single source of truth for what's DONE / NEW / PENDING + the running GAPS list. Reads with
 `VISION.md` (north star) and `MVP.md` (scope). Not a frozen tracker — updated each checkpoint.
 
-_Last updated: CP-D complete._
+_Last updated: CP-E complete — the MVP web app is built, tested, and browser-verified._
 
 ## Checkpoints
 | CP | Scope | Status |
@@ -12,8 +12,9 @@ _Last updated: CP-D complete._
 | B | Grounded tool layer — 6 tools, verified value + badge + source | ✅ DONE (`ea5eb23`) |
 | C | Agent spine — intent→tool→card router + unit-aware grounding guard | ✅ DONE (`8ac3a95`) |
 | D | Web PWA UI — chat surface + generative cards + persistence + share | ✅ DONE (this commit) |
-| E | PWA manifest + first-90s onboarding polish + broader browser E2E | 🔜 NEXT |
+| E | PWA (installable+offline) + first-90s auto-pick + browser E2E | ✅ DONE (this commit) |
 | F | Outcome-data sourcing (Scorecard/BLS/AAMC) — **gated, needs approval** | ⬜ pending (web pull) |
+| — | Wire the real Claude model into the agent seam | ⬜ pending (needs API key) |
 
 ## Done (cumulative)
 - `core/engine.mjs` — decision engine extracted verbatim from app.html (frozen math).
@@ -40,3 +41,4 @@ _Last updated: CP-D complete._
 | GAP-5 | Guard **documented gaps** (model-path safety net only): spelled-out word ratios, bare-int % with no nearby chance word, novel certainty phrasing. | only matters once a live model is attached | when wiring the real model (post-MVP) |
 | GAP-6 | iOS/web **band-threshold** reconciliation (web .75/.55/.30 vs iOS .80/.50/.20). | cross-surface consistency | Stage-2 decision |
 | GAP-7 | **GPA scale**: profile GPA is unweighted; some program bars are weighted (e.g. Drexel 3.5 weighted). Now DISCLOSED via label + caveat, but not scale-normalized — the Meets/Below GPA check is indicative, not exact, for weighted bars. | eligibility accuracy at the wedge | data-structuring (capture weighted GPA / normalize) |
+| GAP-8 | **PWA polish**: SVG-only icon (no PNG 192/512 → Lighthouse/splash + maskable safe-zone gaps); `sw.addAll` is atomic (one 404 empties offline cache — no live issue, all assets exist). Offline staleness now has a banner. | install polish / offline robustness | when hardening for store/Lighthouse |

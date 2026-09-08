@@ -1,0 +1,13 @@
+{
+  "name": "admitted — honest odds",
+  "short_name": "admitted",
+  "description": "The premed decision tool that can't lie: honest odds, what flips them, true cost, and whether you'll finish.",
+  "start_url": "./admitted.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0e14",
+  "theme_color": "#0a0e14",
+  "icons": [
+    { "src": "./web/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
