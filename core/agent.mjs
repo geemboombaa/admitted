@@ -19,7 +19,7 @@ export const TOOLS = {
 
 // ---- intent routing (deterministic, key-free default) --------------------------------------
 const INTENT_RULES = [
-  [/(attrition|retention|wash|drop\s*out|finish|make it through|survive)/i, ['attrition']],
+  [/(attrition|retention|wash|drop\s*out|finish|make it through|survive)/i, ['attrition', 'whatFlipsIt']],
   [/(cost|price|afford|tuition|pay|money|expensive|net)/i, ['cost']],
   [/(eligib|qualif|minimum|cut\s*off|bar|requirement|good enough)/i, ['eligibility']],
   [/(program (odds|rate|admit)|bs\s*\/?\s*md (odds|rate)|plme)/i, ['programOdds']],

@@ -17,7 +17,7 @@ const hasV = (vs, kind, value) => vs.some(v => v.kind === kind && (value === und
 test('deterministicRoute maps intent to the right tools', () => {
   assert.deepEqual(deterministicRoute('what are my chances?').tools, ['chance', 'whatFlipsIt']);
   assert.deepEqual(deterministicRoute('how much does it cost').tools, ['cost']);
-  assert.deepEqual(deterministicRoute('will I actually finish / wash out').tools, ['attrition']);
+  assert.deepEqual(deterministicRoute('will I actually finish / wash out').tools, ['attrition', 'whatFlipsIt']);
   assert.deepEqual(deterministicRoute('do I qualify / meet the minimum').tools, ['eligibility']);
   assert.deepEqual(deterministicRoute('what is the program admit rate').tools, ['programOdds']);
 });

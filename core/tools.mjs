@@ -88,16 +88,19 @@ export function eligibilityTool(school, profile = {}) {
   const satOK = bar.sat == null || (hasNum(profile.sat) && profile.sat >= bar.sat);
   const meets = gpaOK && satOK;
   const pv = school.programVerified || {};
+  const gpaType = pv.minGpaType || null; // 'weighted' | 'unweighted' | null
   const avgTxt = pv.avgGpa ? ` (avg admitted ~${pv.avgGpa} GPA${pv.avgSat ? ` / ${pv.avgSat} SAT` : ''})` : '';
+  // Honesty: our profile GPA is unweighted; if the bar is WEIGHTED the GPA comparison isn't like-for-like.
+  const scaleCaveat = gpaType === 'weighted' ? ' Note: this bar is a WEIGHTED GPA; your entered GPA is unweighted, so treat the GPA check as indicative, not exact.' : '';
   return {
     tool: 'eligibility', ok: true, applicable: true,
     status: meets ? 'Meets minimum' : 'Below minimum',
-    meets, bar, gpaOK, satOK,
+    meets, bar, gpaType, gpaOK, satOK,
     avgGpa: pv.avgGpa ?? null, avgSat: pv.avgSat ?? null, admitRatePct: pv.admitRatePct ?? null,
     source: pv.src || srcOf(school),
-    note: meets
+    note: (meets
       ? 'Clears the published minimum. The average ADMITTED profile is typically higher' + avgTxt + ' — minimum ≠ competitive.'
-      : "Below the program's published minimum bar.",
+      : "Below the program's published minimum bar.") + scaleCaveat,
   };
 }
 
