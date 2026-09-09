@@ -55,7 +55,7 @@ merge = a straight copy of already-sourced local fields into a JSON file. \
 judgment = needs a judgment call or honest null decision. conflict = reconcile conflicting sources. \
 engine = logic/scoring/engine change. Reply ONLY the one word.
 
-Task: $1" | claude -p --model "$M_HAIKU" --disallowedTools WebSearch WebFetch 2>/dev/null \
+Task: $1" | claude -p --permission-mode bypassPermissions --model "$M_HAIKU" --disallowedTools WebSearch WebFetch 2>/dev/null \
         | tr '[:upper:]' '[:lower:]' | grep -oE 'merge|judgment|conflict|engine' | head -1)
   case "$label" in
     merge) echo "$M_SONNET|merge->sonnet" ;;
@@ -141,7 +141,7 @@ leave scratch files anywhere else in the repo. Run 'node scripts/validate.js' yo
 before finishing. Keep it scoped to this one item."
 
   # Builder — prompt via stdin; model dynamically routed; web per mode (DISALLOW empty when --web).
-  if ! printf '%s' "$BUILD_PROMPT" | claude -p --model "$BUILD_MODEL" "${DISALLOW[@]}"; then
+  if ! printf '%s' "$BUILD_PROMPT" | claude -p --permission-mode bypassPermissions --model "$BUILD_MODEL" "${DISALLOW[@]}"; then
     log "REJECTED: Builder (claude -p) failed. Reverting to $BASELINE."
     score "na" "na" "build-fail"; LAST_REJECTED="$ITEM"; revert "$BASELINE"; continue
   fi
@@ -179,7 +179,7 @@ or
 VERDICT: REJECT"
 
   # Reviewer is always Opus (high-leverage gate). In --web mode it may fetch to verify cited sources.
-  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --model "$M_OPUS" "${DISALLOW[@]}")
+  REVIEW=$(printf '%s' "$REVIEW_PROMPT" | claude -p --permission-mode bypassPermissions --model "$M_OPUS" "${DISALLOW[@]}")
   # Parse the machine-readable final verdict anywhere in the reply (models put reasoning first,
   # verdict last). Missing/ambiguous verdict -> treat as REJECT (fail safe).
   VERDICT=$(printf '%s' "$REVIEW" | grep -oiE 'VERDICT:[[:space:]]*(APPROVE|REJECT)' | tail -1)
